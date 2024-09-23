@@ -1,0 +1,339 @@
+.wpl-profile-listing-wp {
+  .wpl_sort_options_container {
+    border: none;
+    margin: 20px auto;
+    ul {
+      margin-left: 0;
+    }
+    li {
+      font-size: 16px;
+      color: $co-6;
+      &:after {
+        @include transform(none);
+        content: "\00A6";
+        font-size: 20px;
+        background: transparent;
+        width: auto;
+        top: 3px;
+        color: $co-22;
+      }
+      &:last-child:after {
+        display: none;
+      }
+    }
+    .wpl-sort-options-selectbox.active {
+      margin: 5px;
+      display: inline-block;
+    }
+    .wpl_plist_sort {
+      padding: 4px 10px;
+      margin-bottom: 0;
+    }
+    .wpl_plist_sort_active {
+      &:before {
+        @include transform(none);
+        height: 0.5em;
+        padding: 11px 0;
+        display: inline-block;
+        text-align: center;
+        top: 8px;
+        width: 1em;
+        font-size: 16px;
+      }
+      &.sort_down:before {
+        line-height: 0;
+      }
+      &.sort_up:before {
+        line-height: 0.5em;
+      }
+    }
+  }
+  .wpl_sort_options_container_title {
+    font-family: inherit;
+    font-weight: 300;
+    color: $co-4;
+    padding: 4px 0 0 15px;
+    margin-right: 0;
+    @include for-phone {
+      text-align: left;
+      padding-bottom: 15px;
+    }
+    &:after {
+      content: ":";
+    }
+  }
+
+  .wpl-column {
+    .wpl_profile_container {
+      background-color: $co-23;
+
+      .wpl_profile_picture {
+        height: 300px;
+        margin: 5px;
+        //background: $co-5;
+        padding: 0;
+        width: calc(100% - 10px);
+        .back {
+          line-height: 305px;
+        }
+        .front {
+          @include transform(none);
+          background: transparent;
+          position: static;
+          img {
+            @include transform(scale3d(1.05, 1.05, 1));
+            -webkit-transition: opacity 0.35s, transform 0.35s;
+            -moz-transition: opacity 0.35s, transform 0.35s;
+            -o-transition: opacity 0.35s, transform 0.35s;
+            transition: opacity 0.35s, transform 0.35s;
+          }
+        }
+        .back {
+          @include transform(none);
+          font-family: inherit;
+          background: transparent !important;
+          a {
+            background: transparent !important;
+            opacity: 0;
+            font: {
+              family: inherit !important;
+              size: 26px;
+              weight: bold;
+            }
+            &:hover {
+              text-decoration: none;
+            }
+          }
+          &:before {
+            @include transform(scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, -100%, 0));
+            @include transition(transform 0.6s);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 127%;
+            background: rgba($co-2, 0.5);
+            content: "";
+          }
+        }
+        &:hover .front {
+          @include transform(none);
+          img {
+            @include transform(scale3d(1, 1, 1));
+            opacity: 0.6;
+          }
+        }
+        &:hover .back {
+          @include transform(none);
+          background: rgba($co-5, 0.5) !important;
+          a {
+            opacity: 1;
+          }
+          &:before {
+            @include transform(scale3d(1.9, 1.4, 1) rotate3d(0, 0, 1, 45deg) translate3d(0, 100%, 0));
+          }
+        }
+      }
+      .wpl_profile_container_title {
+        padding: 5px 0;
+        min-height: 68px;
+        .title {
+          text-transform: uppercase;
+          color: $co-7;
+          text-align: left;
+          padding: 0 5px;
+          font: {
+            size: 22px;
+            family: inherit;
+            weight: bold;
+          }
+        }
+        a {
+          color: $co-19 !important;
+          text-align: left;
+          padding: 0 5px;
+        }
+      }
+      ul {
+        margin: 0 auto;
+        padding: 10px 0 !important;
+        min-height: 51px;
+        width: 100%;
+        text-align: center;
+        background-color: $co-2;
+        li {
+          display: inline-block;
+          float: none;
+          margin-bottom: 0;
+          a {
+            display: block;
+            color: $co-17;
+          }
+          a:after {
+            text-indent: 0;
+            width: 30px;
+            height: 30px;
+            display: block;
+            font: 1.6em/30px $fo-wpl;
+            top: 0;
+            position: absolute;
+          }
+          &.website {
+            a:after {
+              content: "\e010";
+            }
+          }
+          .phone-link:after {
+            content: "\e00f";
+          }
+          .mobile-link:after {
+            content: "\e008";
+          }
+          &.fax {
+            vertical-align: bottom;
+            a {
+              display: block;
+              &:after {
+                content: "\e924";
+                font: 1.8em/30px $fo-wpl;
+              }
+            }
+          }
+
+          &:after {
+            display: none;
+          }
+        }
+      }
+      &.grid_box {
+        &:hover {
+          border: none;
+        }
+      }
+      &.row_box {
+        min-height: 203px;
+        .wpl_profile_picture {
+          margin: 0;
+          height: 100%;
+          line-height: 11px;
+          width: 33.3%;
+          @include for-phone {
+            float: none;
+            width: 100%;
+          }
+          .front .no_image:before {
+            font-size: 14.5em;
+          }
+        }
+        .wpl_profile_container_title {
+          padding: 0 0 0 5px;
+          @include for-phone {
+            width: 100%;
+            text-align: center;
+          }
+          .title {
+            @include for-phone {
+              text-align: center;
+            }
+            a:first-child {
+              position: relative;
+              @include for-phone {
+                left: 0;
+                right: 0;
+                display: inline-block;
+              }
+              &:before {
+                background: $co-19;
+                width: 20px;
+                height: 3px;
+                position: absolute;
+                left: 4px;
+                bottom: -1px;
+                display: block;
+                content: "";
+              }
+            }
+          }
+          & > a {
+            @include for-phone {
+              display: inline-block;
+            }
+          }
+          .view_properties {
+            display: none;
+          }
+        }
+        ul {
+          display: flex;
+          flex-direction: column;
+          width: 63%;
+          text-align: left;
+          background-color: transparent;
+          padding: 0 10px !important;
+          @include for-tablet {
+            width: 100%;
+            flex-direction: row;
+            justify-content: space-between;
+          }
+          @include for-phone {
+            width: 100%;
+            text-align: center;
+          }
+          li {
+            text-align: left;
+            width: 100%;
+            font-size: 15px;
+            color: rgba($co-7, 0.5);
+            @include for-tablet {
+              width: 23%;
+            }
+            @include for-tablet-sm {
+              float: none;
+            }
+            @include for-phone {
+              width: 100%;
+            }
+            &[itemprop="telephone"] {
+              a {
+                color: transparent;
+                &:after {
+                  color: rgba($co-7, 0.5);
+                }
+              }
+            }
+            a {
+              color: rgba($co-7, 0.5);
+            }
+            a:after {
+              left: -30px;
+              font-size: 1.2em;
+            }
+            &.website {
+              a:after {
+                top: 0;
+              }
+            }
+          }
+        }
+        .about {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .wpl-row:not(.wpl-small-up-1) {
+    .wpl-column {
+      width: 50%;
+      @include for-tablet-sm {
+        width: 100%;
+      }
+    }
+  }
+  .wpl_list_grid_switcher:before {
+    display: none;
+  }
+  .wpl-large-up-6 .wpl-column .wpl_profile_container .wpl_profile_picture {
+    height: 200px;
+  }
+} /*End profile_listing*/

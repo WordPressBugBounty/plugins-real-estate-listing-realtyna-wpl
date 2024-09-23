@@ -1,0 +1,15 @@
+.wpl-save-search-addon {
+  button[type="submit"] {
+    @include border-radius(2px !important);
+    @include transition(all 0.3s);
+    text-transform: uppercase;
+
+    border: 0;
+    padding: 10px !important;
+    color: #FFF;
+    cursor: pointer;
+    letter-spacing: 0;
+    display: inline-block;
+    position: relative;
+  }
+}

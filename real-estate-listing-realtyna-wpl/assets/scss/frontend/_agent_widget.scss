@@ -1,0 +1,321 @@
+.wpl_agents_widget_container {
+    @include clearfix_s2;
+    text-align: center;
+
+    .wpl_profile_container {
+        display: inline-block;
+        float: none;
+        width: 23% !important;
+        margin: 0 5px 30px;
+        position: relative;
+        min-height: 360px;
+        text-align: center;
+
+        @include for-tablet-land {
+            width: 48% !important;
+        }
+
+        @include for-tablet {
+            width: 48% !important;
+        }
+
+        @include for-phone {
+            float: none;
+            width: 100% !important;
+        }
+
+        &:hover {
+            border-color: $color_1;
+        }
+
+        .wpl_profile_picture {
+            @include size(230px, 230px);
+            text-align: center;
+            line-height: 230px;
+            position: relative;
+            margin: 10px auto 0;
+            overflow: visible;
+
+            &.flip {
+                .front {
+                    @include transform(rotateY(180deg));
+                }
+
+                .back {
+                    @include transform(rotateY(0deg));
+                }
+            }
+
+            div {
+                position: absolute;
+                left: 0;
+                top: 0;
+                border: 5px solid white;
+                @include border-radius(50%);
+                @include box-shadow(0 0 5px $color_3);
+                @include size(230px, 230px);
+                @include transition(all .4s ease-in-out);
+                @include backface-visibility(hidden);
+                @include transform-style(preserve-3d);
+                overflow: hidden;
+
+                &.front {
+                    @include size(100%, 100%);
+                    @include transform(rotateY(0deg));
+
+                    .no_image {
+                        background: lighten($color_3, 50%);
+                        @include size(100%, 100%);
+                        border: 0;
+
+                        &:before {
+                            content: "\e003";
+                            font: 16em/1.2em $font-frontend;
+                        }
+                    }
+
+                    img {
+                        border: medium none !important;
+                        display: block;
+                        max-width: 100%;
+                        padding: 0 !important;
+                    }
+                }
+
+                &.back {
+                    @include size(100%, 100%);
+                    @include transform(rotateY(-180deg));
+                    background: $color_1;
+                    color: $white;
+                    font: 3em/230px $font-benchnine;
+                    text-align: center;
+
+                    a {
+                        color: $white;
+                        display: block;
+                        @include size(100%, 100%);
+                    }
+                }
+            }
+        }
+
+        .wpl_profile_container_title {
+            text-align: center;
+
+            .title {
+                font: 3em/1.5em $font-benchnine;
+                color: $color_1;
+
+                &::before{
+                    content: none;
+                }
+            }
+        }
+
+        ul {
+            display: inline-block;
+            margin: -20px auto;
+
+            li {
+                @include size(30px, 30px);
+                background: $color_1;
+                @include border-radius(50%);
+                float: left;
+                margin: 0 2px;
+                position: relative;
+
+                a {
+                    position: absolute;
+                    left: 0;
+                    @include size(100%, 100%);
+                    display: block;
+                    text-indent: -9999px;
+                    z-index: 1;
+                    display: none;
+
+                    @include for-phone {
+                        display: block;
+                    }
+                }
+
+                &:hover {
+                    background: $color_3;
+                }
+
+                &:after {
+                    display: block;
+                    left: 0;
+                    top: 0;
+                    color: $white;
+                    font: 16px $font-frontend;
+                    line-height: 30px;
+                    position: absolute;
+                }
+
+                &.website:after {
+                    content: "\e010";
+                }
+
+                &.phone:after {
+                    content: "\e00f";
+                }
+
+                &.mobile:after {
+                    content: "\e008";
+                }
+
+                &.fax:after {
+                    font-family: $font-frontend;
+                    content: "\e924";
+                    font-size: 17px;
+                }
+            }
+        }
+    }
+
+    &.vertical {
+        .wpl_profile_container {
+            float: none;
+            width: 100% !important;
+        }
+    }
+
+    // Simple list layout    
+    &.list {
+        .wpl_profile_box {
+            @include pie-clearfix;
+            @include transition(background .4s ease);
+            @include border-radius(0 20px 0 20px);
+            @include box-shadow(0 0 1px darken($white, 25%));
+            position: relative;
+            padding: 0 !important;
+            margin-bottom: 5px;
+            overflow: hidden;
+
+            &:hover {
+                background: darken($white, 5%);
+            }
+
+            .profile_left {
+                float: left;
+                width: 35%;
+
+                span {
+                    position: relative;
+                    display: block;
+                    @include border-radius(0 0 0 20px);
+                    overflow: hidden;
+
+                    &:before,
+                    &:after {
+                        @include opacity(0);
+                        @include transition(all 0.4s ease);
+                        display: block;
+                        position: absolute;
+                    }
+
+                    &:before {
+                        display: block;
+                        content: "";
+                        @include size(100%, 100%);
+                        left: 0;
+                        top: 0;
+                        background: rgba($black, 0.7);
+                        @include border-radius(0 0 0 20px);
+                    }
+
+                    &:after {
+                        font: 1.8em $font-frontend;
+                        right: 32px;
+                        top: 25px;
+                        content: "\e605";
+                        color: $color_1;
+                        text-indent: 0;
+                        @include scale(0);
+                        @include rotate(90deg);
+                    }
+
+                    &:hover {
+
+                        &:before,
+                        &:after {
+                            @include opacity(1);
+                        }
+
+                        &:after {
+                            @include scale(1);
+                        }
+                    }
+                }
+            }
+
+            .profile_right {
+                float: left;
+                width: 65%;
+
+                ul {
+                    li {
+                        padding: 0 0 0 18px !important;
+                        border: 0 !important;
+                        position: relative;
+
+                        &:before {
+                            display: block;
+                            font-family: $font-frontend;
+                            font-size: 15px;
+                            position: absolute;
+                            left: 0;
+                            top: 0;
+                        }
+
+                        img {
+                            max-width: 100%;
+                        }
+
+                        &.title {
+                            color: $color_1;
+                            padding-left: 0 !important;
+                            font-weight: bold;
+                        }
+
+                        &.website {
+                            &:before {
+                                content: "\e010";
+                            }
+                        }
+
+                        &.phone {
+                            &:before {
+                                content: "\e008";
+                            }
+
+                            a {
+                                display: none;
+                            }
+
+                            @include for-phone {
+                                font-size: 0;
+
+                                a {
+                                    font-size: 13px;
+                                    display: block;
+                                }
+                            }
+                        }
+
+                        &.email {
+                            img {
+                                max-width: 100%;
+                            }
+
+                            &:before {
+                                font-family: $font-frontend;
+                                content: "\e00e";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

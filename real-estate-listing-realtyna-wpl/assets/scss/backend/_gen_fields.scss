@@ -1,0 +1,125 @@
+@include keyframes(remove-back-flash){
+  0% {opacity: 1}
+  50% {opacity: 0.5}
+  100% {opacity: 1}
+}
+
+html[data-wpl-plugin]{
+
+  //region + Tagging field
+  .wpl-gen-tagging-wp{
+    @include box-shadow(inset 0 1px 2px rgba($co-0,0.07));
+    min-width: 350px;
+    background: $co-1;
+    color: $co-5;
+    font: 13px $font-lato;
+    min-height: 26px;
+    height: auto;
+    border: 1px solid $co-8;
+    display: inline-block;
+    vertical-align: top;
+    padding: 1px 4px;
+    cursor: text;
+
+    li{
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+    }
+
+    .wpl-util-placeholder{
+      @include border-radius(2px);
+      width: 70px;
+      border: 1px dashed darken($co-23,35%);
+      background: rgba($co-23, 0.5);
+      height: 18px;
+      display: inline-block;
+      margin: 4px 2px 0;
+    }
+
+  }
+
+  .wpl-gen-tagging-tag{
+    background: rgba($co-1,0.5);
+    position: relative;
+    margin: 4px 2px 0;
+
+
+    .wpl-gen-tagging-title{
+      @include transition(background 0.1s linear);
+      @include border-radius(2px);
+      background: $co-2;
+      color: $co-1;
+      display: block;
+      @if $text-direction == ltr
+      {
+        padding: 0 20px 2px 4px;
+      } @else
+      {
+        padding: 0 4px 2px 20px;
+      }
+      height: 18px;
+      white-space: nowrap;
+      cursor: move;
+
+      &:hover{
+        background: darken($co-2,15%);
+      }
+    }
+
+    .wpl-gen-tagging-close-btn{
+      @include transition(color 0.1s linear);
+      position: absolute;
+      top: 2px;
+      @if $text-direction == ltr
+      {
+        right: 2px;
+      } @else
+      {
+        left: 2px;
+      }
+      height: 14px;
+      width: 14px;
+      color: $co-1;
+      cursor: pointer;
+
+      &:hover{
+        color: rgba($co-1,0.7);
+      }
+
+      &::before{
+        content: '\e606';
+        font: 14px $font-wpl-backend;
+      }
+    }
+
+    &.wpl-gen-tagging-will-remove{
+      //#E23160
+      .wpl-gen-tagging-title{
+        @include animation(remove-back-flash 0.8s linear infinite);
+        background-color: $co-19;
+      }
+
+    }
+  }
+
+  .wpl-gen-tagging-input-wp{
+    margin: 0;
+    min-width: 150px !important;
+
+    input[type=text]{
+      @include box-shadow(none);
+      border: none;
+      background: transparent;
+      width: 100%;
+    }
+
+  }
+  //endregion
+
+}
+

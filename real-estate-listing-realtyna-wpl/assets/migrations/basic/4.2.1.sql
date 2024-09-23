@@ -1,0 +1,2 @@
+INSERT INTO `#__wpl_cronjobs` (`id`, `cronjob_name`, `period`, `class_location`, `class_name`, `function_name`, `params`, `enabled`, `latest_run`) VALUES
+(36, 'Remove Duplicated Indexes', 240.00, 'global', 'wpl_global', 'remove_duplicated_indexes', '', 1, '2018-01-01 05:00:00');

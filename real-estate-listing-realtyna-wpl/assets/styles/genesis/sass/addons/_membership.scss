@@ -1,0 +1,348 @@
+.wpl_addon_membership {
+  input[type="submit"] {
+    border-radius: 0;
+    padding: 9px 20px;
+    border: 0;
+    font: {
+      family: inherit;
+      size: 17px;
+      weight: 300;
+    }
+  }
+  button {
+    border-radius: 0 !important;
+    border: 0 !important;
+    font: {
+      family: inherit !important;
+      size: 17px !important;
+      weight: 300 !important;
+    }
+    margin-bottom: 15px !important;
+    padding: 7px 30px !important;
+  }
+  .wpl_dashboard_links {
+    > li {
+      list-style: none;
+      cursor: pointer;
+      font-size: 14px;
+      a,
+      h4 {
+        font: {
+          family: inherit;
+          weight: 300;
+          size: 14px;
+        }
+      }
+      &:before {
+        font: {
+          size: 1em;
+        }
+        line-height: 40px;
+        padding-right: 15px;
+      }
+    }
+  }
+
+  @include for-phone {
+    .wpl-ewallet-charge {
+      input[type="number"] {
+        width: 100% !important;
+        float: none;
+      }
+      input[type="submit"] {
+        border-radius: 0;
+        display: block;
+        margin-top: 15px;
+        margin-left: auto;
+        float: none;
+      }
+    }
+  }
+  .wpl-ewallet-balance {
+    border-radius: 0;
+  }
+  .wpl-ewallet-charge {
+    input[type="number"] {
+      @include wpl-input(inline-block, initial, 10px, $co-6);
+    }
+    .wpl_payments_checkout_page {
+      .wpl-payment-invoice {
+        border-radius: 0;
+        margin-top: 15px;
+        border-width: 1px;
+
+      }
+      .wpl-payment-invoice-title,
+      .wpl-payment-invoice-amount {
+        font: {
+          family: inherit;
+        }
+      }
+      @include for-phone-2 {
+        ul {
+          li {
+            margin: 0;
+            width: 100%;
+            text-align: center;
+            a {
+              padding: 10px 0;
+              font: {
+                size: 14px;
+              }
+            }
+          }
+        }
+      }
+      @include for-tablet-landscape {
+        ul {
+          li {
+            margin: 0;
+            width: 25%;
+            text-align: center;
+            a {
+              padding: 10px 0;
+              font: {
+                size: 18px;
+              }
+            }
+          }
+        }
+      }
+      @include for-tablet-land {
+        ul {
+          li {
+            margin: 0;
+            width: 25%;
+            text-align: center;
+            a {
+              padding: 10px 0;
+              font: {
+                size: 14px;
+              }
+            }
+          }
+        }
+      }
+      @include for-desktop {
+        ul {
+          li {
+            margin: 0;
+            width: 25%;
+            text-align: center;
+            a {
+              padding: 10px 0;
+              font: {
+                weight: 700;
+                style: normal;
+                size: 18px;
+              }
+            }
+          }
+        }
+      }
+      ul {
+        margin: 0 !important;
+        li {
+          list-style: none;
+          cursor: pointer;
+          a {
+            border-radius: 0;
+            display: block;
+            font: {
+              weight: 700;
+              style: normal;
+            }
+          }
+        }
+      }
+      .wpl-util-grid-1-1,
+      .wpl-util-grid-1-2 {
+        label {
+          font: {
+            family: inherit;
+            size: 12px;
+          }
+          line-height: 35px;
+          width: 98px;
+        }
+        input[type="text"],
+        select {
+          @include wpl-input(block, calc(100% - 100px), 10px, $co-6);
+        }
+        .chosen-container {
+          //width: 100% !important;
+          .chosen-single {
+            @include wpl-dropdown(block, 10px);
+            span {
+              text-align: left;
+            }
+          }
+        }
+        .wpl-payment-paypal-icon {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+  .wpl-membership-activity-wp {
+    .wpl_activity_title {
+      border-bottom: 0;
+    }
+    .wpl-membership-tab {
+      margin: 0;
+      li {
+        list-style: none;
+        line-height: 2.8em;
+        font: {
+          size: 0.833em;
+        }
+      }
+    }
+    .wpl-gen-tab-contents-wp {
+      ul {
+        margin: 0;
+        li {
+          border-radius: 0;
+          list-style: none;
+          padding: 8px 10px;
+        }
+      }
+    }
+  }
+  .wpl-wrapper-class {
+    .prow {
+      padding-left: 15px;
+      padding-right: 15px;
+      label {
+        font: {
+          family: inherit;
+          size: 0.722em;
+        }
+        line-height: 35px;
+      }
+      input,
+      textarea {
+        @include wpl-input(inline-block, calc(100% - 155px), 10px, $co-6);
+      }
+      select {
+        @include wpl-input(inline-block, calc(100% - 270px), 10px, $co-6);
+      }
+      textarea {
+        white-space: normal;
+        overflow: auto;
+        text-overflow: clip;
+      }
+      .chosen-container {
+        //width: 100% !important;
+        .chosen-single {
+          @include wpl-dropdown(block, 10px);
+          span {
+            text-align: left;
+          }
+        }
+      }
+    }
+    .prow.prow-upload {
+      label {
+        font: {
+          size: 13px;
+        }
+      }
+      .upload-preview-wp.preview_upload {
+        .upload-preview {
+          border-radius: 0;
+          border: 0;
+          display: block;
+          text-align: center;
+        }
+      }
+    }
+  }
+  #wpl_dashboard_change_password_form {
+    label {
+      display: inline-block;
+      font: {
+        family: inherit;
+        size: 12px;
+      }
+      line-height: 35px;
+      width: 100px;
+      text-align: left;
+    }
+    input[type="password"] {
+      @include wpl-input(inline-block, calc(100% - 120px), 10px, $co-6);
+    }
+  }
+  .wpl-login-form {
+    label {
+      display: inline-block;
+      font: {
+        family: inherit;
+        size: 12px;
+      }
+      line-height: 35px;
+      width: 100px;
+      text-align: left !important;
+    }
+    label[for="wpl_login_remember"] {
+      line-height: 1;
+    }
+    input[type="text"],
+    input[type="password"] {
+      @include wpl-input(inline-block, calc(100% - 100px) !important, 10px, $co-6);
+    }
+    a {
+      font: {
+        family: inherit;
+        size: 14px;
+        weight: 300;
+      }
+    }
+  }
+  .wpl-forgot-password-form {
+    label {
+      display: inline-block;
+      font: {
+        family: inherit;
+        size: 12px;
+      }
+      line-height: 35px;
+      width: 100px;
+      text-align: left !important;
+    }
+    input[type="text"] {
+      @include wpl-input(inline-block, 100% !important, 10px, $co-6);
+    }
+  }
+
+  .wpl_dashboard_registeration {
+    p#wpl_register_info {
+      font: {
+        family: inherit;
+        size: 18px;
+      }
+    }
+    .wpl-subscription-form-container {
+      label {
+        display: inline-block;
+        font: {
+          family: inherit;
+          size: 12px;
+        }
+        line-height: 35px;
+        width: 100px;
+        text-align: left !important;
+      }
+      input[type="text"],
+      input[type="email"] {
+        @include wpl-input(inline-block, 100% !important, 10px, $co-6);
+      }
+    }
+  }
+  .wpl_memberships_container .wpl_memberships {
+    list-style-type: none;
+    .membership_details li {
+      list-style-type: none;
+    }
+  }
+}

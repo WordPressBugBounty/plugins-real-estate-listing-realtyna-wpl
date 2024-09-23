@@ -1,0 +1,31 @@
+/*Markers*/
+.wpl-richmarker-wp
+{
+  position: relative;
+  width: 42px;
+  height: 50px;
+  &:after
+  {
+    font-family: wpl-front;
+    content: '\e93d';
+    font-size: 50px;
+    text-shadow: -1px 0 $co-1, 0 1px $co-1, 1px 0 $co-1, 0 -1px $co-1;
+  }
+  img
+  {
+    width: 20px;
+  }
+}
+.wpl-richmarker-icon
+{
+  max-width: none !important;
+  position: absolute;
+  background: $co-1;
+  padding: 6px;
+  border-radius: 100%;
+  top: 4.5px;
+  left: 4.5px;
+  text-align: center;
+  height: 32px;
+  width: 32px;
+}

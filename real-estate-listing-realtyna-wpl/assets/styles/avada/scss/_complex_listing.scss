@@ -1,0 +1,19 @@
+.wpl-complex-tabs-wp>ul>li {
+  margin: 0;
+  a {
+    @include border-radius(0);
+    font-style: normal;
+    font-weight:normal;
+    border-right: 1px solid $co-11;
+    padding: 10px 15px;
+  }
+}
+.wpl-complex-unit {
+  @include wpl-avada-layout-switcher;
+  .wpl_list_grid_switcher {
+      margin-top: -65px;
+    @include for-phone {
+      margin-top: -25px;
+    }
+  }
+}

@@ -1,0 +1,607 @@
+.pmanager-wp {
+
+  #icon-pmanager {
+    @include backend-sprite(icon-48-plisting);
+  }
+
+  .pmanager-cnt {
+    padding-top: 20px;
+  }
+
+  .mass-panel-wp {
+    @include clearfix_s2;
+    border: 1px solid $color-panel-border;
+    background: $color-panel-back;
+    margin-bottom: 15px;
+    padding: 5px 10px 10px 10px;
+    h3 {
+      font: bold italic rem(14px)/rem(32px) $font-droid;
+    }
+
+    .mass-actions-wp {
+      @include clearfix_s2;
+      margin: 5px 0 10px 0;
+      .group-btn {
+        @include clearfix_s2;
+        @if $text-direction == ltr
+        {
+          float: left;
+        } @else
+        {
+          float: right;
+        }
+      }
+      .mass-btn {
+        margin-bottom: 3px;
+        @if $text-direction == ltr
+        {
+          float: left;
+        } @else
+        {
+          float: right;
+        }
+      }
+    }
+
+  }
+
+  .change-user-cnt-wp {
+    @if $text-direction == ltr
+    {
+      float: left;
+      margin-right: 30px;
+    } @else
+    {
+      float: right;
+      margin-left: 30px;
+    }
+    .change-user-wp {
+      display: inline-block;
+      @if $text-direction == ltr
+      {
+        text-align: left;
+      } @else
+      {
+        text-align: right;
+      }
+    }
+  }
+  .change-multi-agent-cnt-wp
+  {
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+    label
+    {
+      line-height: 30px;
+    }
+    label, .chosen-container, .mass-btn
+    {
+      @if $text-direction == ltr
+      {
+        float: left;
+        margin-right: 5px;
+      } @else
+      {
+        float: right;
+        margin-left: 5px;
+      }
+    }
+  }
+  .properties-wp {
+    @include border-radius(5px);
+    background: #fff;
+    border: 1px solid $color-panel-border;
+    .propery-wp {
+      @include floatChild;
+      position: relative;
+      padding: 10px;
+      border-bottom: 1px solid $color-panel-border;
+      &:last-child {
+        border-bottom: 0 none;
+      }
+      .checkbox-wp {
+        position: absolute;
+        top: 0;
+        z-index: $z-footer-logo;
+        padding: 5px;
+        @if $text-direction == ltr
+        {
+          left: 0;
+        } @else
+        {
+          right: 0;
+        }
+        input {
+          position: relative;
+          z-index: 10;
+        }
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          width: 0;
+          height: 0;
+          border-style: solid;
+          line-height: 0;
+          _border-color: #dfdfdf #000000 #000000 #000000;
+          _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+          @if $text-direction == ltr
+          {
+            border-color: #dfdfdf transparent transparent transparent;
+            border-width: 42px 42px 0 0;
+            left: 0;
+          } @else
+          {
+            border-color: transparent #dfdfdf transparent transparent;
+            border-width: 0 42px 42px 0;
+            right: 0;
+          }
+        }
+      }
+      .property-image {
+        width: 15%;
+        text-align: center;
+        @if $text-direction == rtl{
+          float: right;
+        }
+        @include for-tablet {
+          width: 30%;
+        }
+        @include for-phone {
+          float: none;
+          margin: 0 auto;
+          width: 50%;
+        }
+        .no_image_box {
+          @include gradient-radial(#fff, #f1f1f1);
+          @include border-radius(5px);
+          @include box-shadow(0 0 0 1px $color-panel-border);
+          border: 5px solid #fff;
+          padding: 10px;
+          max-width: 100%;
+          .wpl-font-no-pic {
+            font-size: rem(90px);
+            &:before{
+              content: '\e029';
+              vertical-align: middle;
+              font:{
+                family: $font-wpl-backend;
+              }
+            }
+          }
+        }
+
+        img {
+          @include border-radius(5px);
+          @include box-shadow(0 0 0 1px $color-panel-border);
+          border: 5px solid #fff;
+          max-width: 100%;
+        }
+        span {
+          display: none;
+        }
+      }
+      .finilize-msg {
+        @include border-radius(3px);
+        position: relative;
+        font: rem(13px) $font-lato;
+        display: inline-block;
+        margin-bottom: 3px;
+        padding: 4px 10px 7px 35px;
+        background: #FBE4E4 url(../img/backend/pat-plisting-info.png) 0 0 repeat;
+        color: #ff0000;
+        span {
+          @include icon-placer(icon-24-finilized, $left: 17px, $do-more: true);
+          padding-top: 2px;
+          display: inline-block;
+        }
+      }
+      .expire-msg {
+        @include border-radius(3px);
+        position: relative;
+        font: rem(13px) $font-lato;
+        display: inline-block;
+        margin-bottom: 3px;
+        padding: 4px 10px 7px 35px;
+        background: #FBE4E4 url(../img/backend/pat-plisting-info.png) 0 0 repeat;
+        color: #ff0000;
+        span {
+          @include icon-placer(icon-24-warning, $left: 17px, $do-more: true);
+          padding-top: 2px;
+          display: inline-block;
+        }
+      }	  
+      .info-action-wp {
+        width: 85%;
+        @if $text-direction == ltr
+        {
+          padding-left: 15px;
+        } @else
+        {
+          padding-right: 15px;
+        }
+        @include for-tablet {
+          width: 70%;
+        }
+        @include for-phone {
+          width: 100%;
+        }
+        .property-detailes {
+          .detail {
+            @include border-radius(5px);
+            display: block;
+            padding: 7px;
+            background: #F4F4F4 url(../img/backend/pat-plisting-info.png) 0 0 repeat;
+            color: #494949;
+            margin-bottom: 3px;
+            font: rem(13px) $font-lato;
+            .value {
+              color: #000;
+              font-weight: bold;
+            }
+            &.p-types {
+            }
+            &.p-location {
+            }
+            &.p-links {
+            }
+            &.p-add-date {
+            }
+            &.p-visit-time {
+            }
+          }
+        }
+        .property-actions {
+          margin-top: 12px;
+          @if $text-direction == ltr
+          {
+            text-align: right;
+          } @else
+          {
+            text-align: left;
+          }
+          @include for-phone {
+            text-align: center;
+          }
+          .p-action-btn {
+            vertical-align: middle;
+          }
+
+          .change-user-cnt-wp {
+            width: auto;
+            float: none;
+            display: inline-block;
+            vertical-align: middle;
+            .change-user-wp {
+              margin: 0 10px 0 0;
+            }
+          }
+        }
+      }
+
+      .p-links {
+        @include animate(all 0.2s linear);
+        @include border-radius(3px);
+        font: rem(15px) $font-lato;
+        margin-top: 5px;
+        display: block;
+        background: #F2F2F2;
+        border: 1px solid $color-panel-border;
+        color: #34AEE2;
+        width: 100%;
+        padding: 3px;
+        &:hover {
+          color: #fff;
+          background: #34AEE2;
+          border: 1px solid scale-lightness(#34AEE2, -20%);
+        }
+      }
+
+    }
+  }
+
+  .lm-search-form-wp {
+    .pwizard-panel {
+      border: 0 none;
+      .prow {
+        @include clearfix_s2;
+        padding: 0 0 10px;
+
+        & > * {
+          @include experimental-value(width, calc(20% - 10px));
+          float: left;
+          margin-left: 10px;
+          @include for-tablet {
+            width: 45%;
+          }
+        }
+
+        .chosen-container {
+          width: 100% !important;
+        }
+
+        input, input[type=text] {
+          width: 100% !important;
+          border: 1px solid #ddd;
+        }
+
+      }
+    }
+
+    .wpl-button {
+      width: 140px;
+    }
+    .wpl-btn-wp {
+      padding: 7px 20px;
+      margin-bottom: 0;
+      background: #f1f1f1;
+      border-top: 1px solid #dedede;
+    }
+  }
+
+}
+
+.p-actions-wp {
+  @include clearfix_s2;
+  .p-action-btn {
+    @include transition(all 0.2s linear);
+    @include gradient-vertical(#F9F9F9, #E2E2E2);
+    color: #494949;
+    font: rem(13px) $font-lato;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: capitalize;
+    border: 1px solid #C8C8C8;
+    height: 23px;
+    cursor: pointer;
+    margin-right: 3px;
+    overflow: hidden;
+    &:hover {
+      background: #29a9df;
+      border-color: #29A9DF;
+      color: #fff;
+      i {
+        border-color: #29A9DF;
+        color: #29A9DF;
+      }
+    }
+    i {
+      @include transition(all 0.2s linear);
+      position: relative;
+      display: inline-block;
+      background: #fff;
+      @if $text-direction == ltr
+      {
+        border-left: 1px solid #C8C8C8;
+      } @else
+      {
+        border-right: 1px solid #C8C8C8;
+      }
+      width: 24px;
+      height: 21px;
+      vertical-align: top;
+      font-style: normal;
+      &:before {
+        display: block;
+        position: absolute;
+        content: " ";
+        top: 4px;
+        left: 5px;
+      }
+    }
+    span {
+      display: inline-block;
+      vertical-align: top;
+      text-align: center;
+      padding: 2.5px 10px;
+      width: 80px;
+    }
+    label
+    {
+      padding: 2.5px 10px;
+    }
+
+    .ajax-inline-save {
+      background: $co-1 url(../img/ui-anim_basic_16x16.gif) no-repeat center center;
+    }
+    .icon-delete {
+      @include icon-placer(icon-16-pdelete);
+    }
+    .icon-edit {
+      @include icon-placer(icon-16-pedit);
+    }
+    .icon-confirm {
+      @include icon-placer(icon-16-pconfirm);
+    }
+    .icon-unconfirm {
+      @include icon-placer(icon-16-punconfirm);
+    }
+    .icon-trash {
+      @include icon-placer(icon-16-ptrash);
+    }
+    .icon-select {
+      @include icon-placer(icon-16-pselect);
+    }
+    .icon-unselect {
+      @include icon-placer(icon-16-punselect);
+    }
+    .icon-toggle {
+      @include icon-placer(icon-16-ptoggle);
+    }
+    .icon-restore {
+      @include icon-placer(icon-16-prestore);
+    }
+    .icon-clone:before {
+      content: "\e901";
+      font-family: $font-wpl-backend;
+    }
+
+    &:hover {
+      .icon-delete {
+        @include icon-placer(icon-16-pdelete_hover);
+      }
+      .icon-edit {
+        @include icon-placer(icon-16-pedit_hover);
+      }
+      .icon-confirm {
+        @include icon-placer(icon-16-pconfirm_hover);
+      }
+      .icon-unconfirm {
+        @include icon-placer(icon-16-punconfirm_hover);
+      }
+      .icon-trash {
+        @include icon-placer(icon-16-ptrash_hover);
+      }
+      .icon-select {
+        @include icon-placer(icon-16-pselect_hover);
+      }
+      .icon-unselect {
+        @include icon-placer(icon-16-punselect_hover);
+      }
+      .icon-toggle {
+        @include icon-placer(icon-16-ptoggle_hover);
+      }
+      .icon-restore {
+        @include icon-placer(icon-16-prestore_hover);
+      }
+    }
+  }
+}
+
+.pmanager-multi-agent {
+  text-align: left;
+  margin-top: 10px;
+  display: flex;
+  & > label {
+    white-space: nowrap;
+    line-height: 30px;
+    display: block;
+    @if $text-direction == ltr
+    {
+      padding-right: 10px;
+    } @else
+    {
+      padding-left: 10px;
+    }
+  }
+  select, .chosen-container {
+    width: 100%;
+    min-width: inherit !important;
+  }
+}
+
+@include for-tablet {
+  .wpl_property_stats_container {
+    @include flex-direction(column);
+    .wpl_property_stats_inner {
+      padding: 0 10px;
+    }
+    .property_stats_contacts {
+      padding-right: 10px;
+    }
+  }
+}
+@include for-tablet-land {
+  .wpl_property_stats_container {
+    @include flex-direction(column);
+    .wpl_property_stats_inner {}
+    .property_stats_contacts {
+      padding: 0 10px;
+      @include display-flex;
+      &:not(:last-child) {
+        border-right: 1px solid $co-6;
+      }
+    }
+  }
+}
+@include for-tablet-landscape-big {
+  .wpl_property_stats_container {
+    .wpl_property_stats_inner {}
+    .property_stats_contacts {
+      padding: 0 5px;
+      @include display-flex;
+      &:not(:last-child) {
+        border-right: 1px solid $co-6;
+      }
+    }
+  }
+}
+@include for-desktop {
+  .wpl_property_stats_container {
+    .wpl_property_stats_inner {}
+    .property_stats_contacts {
+      padding: 0 15px;
+      @include display-flex;
+      &:not(:last-child) {
+        border-right: 1px solid $co-6;
+      }
+    }
+  }
+}
+
+.wpl_property_stats_container {
+  margin-top: 10px;
+  border: 1px solid $co-6;
+  border-radius: 3px;
+  background: $co-83;
+  font: {
+    family: $font-lato;
+    size: 13px;
+  }
+  @include display-flex();
+  @include justify-content(space-between);
+  .wpl_property_stats_title {
+    font: {
+      weight: bold;
+    }
+    padding: 0;
+    text-align: left;
+    span {
+      display: block;
+      padding: 3px 10px;
+    }
+  }
+  .wpl_property_stats_inner {
+    @include display-flex();
+  }
+  .property_stats_contacts {
+    > div {
+      margin: auto;
+      span {
+        color: $co-16;
+      }
+      b {
+        color: $co-0;
+      }
+    }
+  }
+}
+
+@include for-tablet {
+  .wpl_listing_manager_stats_cnt {
+    width: 400px;
+  }
+}
+@include for-tablet-land {
+  .wpl_listing_manager_stats_cnt {
+    width: 500px;
+    padding: 15px;
+  }
+}
+@include for-tablet-landscape-big {
+  .wpl_listing_manager_stats_cnt {
+    width: 500px;
+    padding: 15px;
+  }
+}
+@include for-desktop {
+  .wpl_listing_manager_stats_cnt {
+    width: 500px;
+    padding: 15px;
+  }
+}

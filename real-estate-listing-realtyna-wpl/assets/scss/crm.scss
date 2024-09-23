@@ -1,0 +1,16 @@
+$text-direction: ltr !default;
+
+@import "compass";
+
+@import "rta/fonts";
+@import "rta/front_variables";
+@import "rta/mixin";
+
+@import 'common/foundation/foundation';
+@include foundation-everything;
+
+@import "frontend/plugin_full_calendar";
+@import "frontend/addon_crm";
+@import "frontend/addon_crm_responsive";
+
+

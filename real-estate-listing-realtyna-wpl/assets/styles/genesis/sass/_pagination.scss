@@ -1,0 +1,134 @@
+@include for-phone-2 {
+  .wpl_pagination_container {
+    ul.pagination {
+      display: block;
+      float: none;
+    }
+    .wpl_total_result {
+      display: block;
+      float: none;
+    }
+    .wpl_page_size {
+      float: none;
+      span {
+        display: block;
+      }
+      .wpl_page_size_options {
+        width: 100% !important;
+      }
+    }
+  }
+}
+
+@include for-tablet-landscape {
+  .wpl_pagination_container {
+    ul.pagination {
+      display: block;
+      float: none;
+    }
+    .wpl_total_result {
+      display: block;
+      float: none;
+    }
+    .wpl_page_size {
+      float: none;
+    }
+  }
+}
+
+.wpl_pagination_container {
+  border-top: none !important;
+  padding: 50px 0 !important;
+  font: {
+    size: 15px;
+  }
+  ul.pagination {
+    margin: 0;
+    li {
+      a,
+      span {
+        border-radius: 1px;
+        background: $co-1;
+        border: 2px solid $co-9;
+        padding: 10px 15px;
+        line-height: 25px;
+        display: block;
+      }
+    }
+  }
+
+  li.active {
+    a {
+      background: lighten($co-5, 1%);
+    }
+  }
+  li.prev.disabled,
+  li.next.disabled {
+    display: none !important;
+  }
+  .wpl_total_result {
+    margin: 0;
+    padding: 5px 10px;
+  }
+  .wpl_page_size {
+    margin: 0;
+    .wpl_page_size_options {
+      border: 2px solid $co-9 !important;
+      padding: 10px 0 10px 0;
+      width: 70px;
+      cursor: pointer;
+      option {
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+//Pagination styles for property listing in map view
+.wpl-property-listing-mapview {
+  .wpl_pagination_container {
+    padding: 6px !important;
+    ul.pagination {
+      float: none;
+      margin: 0;
+      display: inline-block;
+      overflow: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      white-space: nowrap;
+      li {
+        display: inline-block;
+        vertical-align: top;
+        float: none;
+        cursor: grab !important;
+        a,
+        span {
+          padding: 0 10px;
+          height: 30px;
+          line-height: 29px;
+        }
+      }
+      li.prev,
+      li.next {
+        a {
+          &:before {
+            top: 5px;
+          }
+        }
+      }
+    }
+    .wpl_page_size {
+      position: absolute;
+      bottom: -36px;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 7px;
+      .wpl_page_size_options {
+        width: 100%;
+        padding: 0;
+      }
+    }
+  }
+}

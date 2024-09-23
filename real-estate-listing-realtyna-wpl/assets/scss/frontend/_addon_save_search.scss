@@ -1,0 +1,209 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-save-search-addon {
+  width: 560px;
+  @include for-phone
+  {
+    width:300px;
+  }
+  .wpl-gen-form-row{
+    padding: 0 15px;
+  }
+
+  .wpl-addon-ss-toggle-btns{
+    a{
+      color: $co-29;
+
+      &:hover{
+        color: darken($co-29, 15%);
+      }
+    }
+  }
+
+  .wpl_message_container{
+    margin: 1em 0;
+  }
+
+}
+
+//region + Save Search Grid
+.wpl-addon-save-search-list-wp{
+  width: 100%;
+
+  .wpl-save-search-msg{
+    padding: 15px;
+
+    & > div{
+      display: inline-block;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .wpl-addon-save-search-msg-btns{
+      margin-top: 10px;
+      display: inline-block;
+      margin-left: 20px;
+    }
+
+    .wpl-addon-save-search-yes-btn{
+      background: $co-19;
+      color: $co-1;
+      padding: 4px 25px;
+      display: inline-block;
+      vertical-align: middle;
+      cursor: pointer;
+
+      &:hover{
+        background: darken($co-19, 15%);
+      }
+    }
+
+    .wpl-addon-save-search-no-btn{
+      background: $co-33;
+      color: $co-0;
+      padding: 4px 20px;
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 10px;
+      cursor: pointer;
+
+      &:hover{
+        background: darken($co-33, 15%);
+      }
+    }
+  }
+}
+
+.wpl-addon-save-search-grid{
+  width: 100%;
+  input[type=text]{
+    @include placeholder(darken($co-1,20%));
+    @include transition(all .1s linear);
+    outline: none;
+
+    &:focus{
+      @include box-shadow(inset 0 0 0 1px $co-29);
+      border-color: $co-29;
+    }
+  }
+}
+
+.wpl-addon-save-search-show-link-btn{
+  font: 14px $font-frontend;
+  cursor: pointer;
+
+  &:hover{
+    color: $co-29;
+  }
+
+  &::before{
+    content: '\e6af'
+  }
+}
+
+.wpl-addon-save-search-remove-btn{
+  font: 16px $font-frontend;
+  cursor: pointer;
+
+  &:hover{
+    color: $co-29;
+  }
+
+  &::before{
+    content: '\e653';
+  }
+}
+.wpl-addon-save-search-edit-btn{
+  font: 16px $font-frontend;
+  cursor: pointer;
+  @if $text-direction == ltr
+  {
+    margin-left: 10px;
+  } @else
+  {
+    margin-right: 10px;
+  }
+  &:hover{
+    color: $co-29;
+  }
+
+  &::before{
+    content: '\e903';
+  }
+}
+.wpl-addon-save-search-detail-btn
+{
+  font: 22px $font-frontend;
+  cursor: pointer;
+  @if $text-direction == ltr
+  {
+    margin-left: 10px;
+  } @else
+  {
+    margin-right: 10px;
+  }
+  &:hover{
+    color: $co-29;
+  }
+
+  &::before{
+    content: '\e6c1';
+  }
+}
+.wpl-addon-save-search-username{
+  padding: 10px 0 20px;
+  font-size: 14px;
+  font-weight: bold;
+
+  span{
+    color: $co-29;
+  }
+
+  &::before{
+    font-family: $font-frontend;
+    font-size: 22px;
+    content: '\e651';
+    margin-right: 10px;
+    display: inline-block;
+    vertical-align: sub;
+  }
+}
+
+.wpl-addon-save-search-msg{
+  margin: 15px;
+
+  &:empty{
+    display: none;
+  }
+}
+.wpl_save_search_name_content
+{
+  @include display-flex();
+}
+.wpl-addon-save-search-notify-mode
+{
+  @if $text-direction == ltr
+  {
+    text-align: left;
+  } @else
+  {
+    text-align: right;
+  }
+  & > input, & > label
+  {
+    display: inline-block;
+    width: auto !important;
+  }
+}
+.wpl-saved-search-criteria-box
+{
+  p
+  {
+    padding: 10px;
+  }
+}
+//endregion

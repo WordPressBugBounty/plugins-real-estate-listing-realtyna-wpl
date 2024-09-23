@@ -1,0 +1,176 @@
+.wpl-gen-form-wp{
+  .wpl-gen-form-row{
+    padding: 0 15px;
+
+    &:first-child{
+      margin-top: 15px;
+    }
+      
+    & > .wpl-gen-btn-1{
+      border-radius: 0;
+      background: $co-29;
+      color: $co-1;
+    }
+  }
+
+  label{
+    width: 115px;
+    margin: 0;
+    @if $text-direction == ltr
+    {
+      text-align: right;
+      padding: 8px 5px 8px 0;
+      float: left;
+    } @else
+    {
+      text-align: left;
+      padding: 8px 0 8px 5px;
+      float: right;
+    }
+
+    @include for-phone{
+      width: 100%;
+      float: none;
+      text-align: left;
+      padding-bottom: 3px;
+      padding-top: 3px;
+    }
+  }
+
+  @at-root {
+    .wpl-gen-form-label{
+      @extend label;
+    }
+  }
+
+  label + input[type="text"], input[type="email"], input[type="password"], input[type="tel"], label + select, label + .chosen-container, label + textarea{
+    @include calc(width, '100% - 115px');
+    float: left;
+    margin: 0;
+
+    @include for-phone{
+      width: 100% !important;
+      float: none;
+    }
+  }
+
+  input[type="text"], input[type="email"], input[type="password"], input[type="tel"], textarea{
+    @include placeholder(darken($co-1, 30%));
+    @include transition(box-shadow .1s ease);
+    outline: none;
+    border: 1px solid #e6e6e6;
+    padding: 0 5px;
+    height: 35px;
+    background: $co-1;
+    color: $co-16;
+    font-size: 13px;
+    &:focus{
+      @include box-shadow(inset 0 0 0 1px $co-29);
+      border-color: $co-29;
+    }
+  }
+  
+  textarea{
+    height: 100px;
+  }
+
+  p{
+    font-weight: bold;
+    font-size: 12px;
+  }
+
+  hr{
+    margin: 5px 0 15px;
+  }
+
+  .wpl_green_msg{
+    background: $co-1;
+    color: $co-0;
+    font-size: 17px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+    font-weight: 300;
+    padding: 45% 27% 20% 27%;
+    text-align: center;
+     
+    &::before{ 
+      content: '\e946';
+      font: 74px "wpl-front";
+      vertical-align: -4px;
+      background: #a0dc1e;
+      border-radius: 50%;
+      color: white;
+      padding: 5px;
+      margin-right: 5px;
+      margin-left: 5px;
+      position: absolute;
+      top: 30%;
+      box-shadow: inset 18px -21px 0px rgba(0, 0, 0, 0.13);
+    }
+    &::after{ 
+      content: '';
+      width: 45px;
+      height: 2px;
+      background: $co-79;
+      position: absolute;
+      top: 80%;
+    }
+  }
+}
+
+
+
+.wpl-gen-form-row{
+  @include clearfix_s2;
+  margin-bottom: 7px;
+  &.last
+  {
+    margin-bottom: 15px;
+  }
+}
+
+%wpl-gen-btn{
+  padding: 5px 25px !important;
+  border: 0;
+}
+
+.wpl-gen-btn-1{
+  @extend %wpl-gen-btn;
+
+  border-radius: 0;
+  background: $co-29;
+  color: $co-1;
+  cursor: pointer;
+
+  &:hover{
+    background: darken($co-29,20%);
+  }
+}
+
+.wpl-gen-btn-2{
+  @extend %wpl-gen-btn;
+  
+  background: $co-44;
+  color: $co-1;
+
+  &:hover{
+    background: lighten($co-44,20%);
+  }
+}
+.wpl-gen-btn-3{
+  @include border-radius(3px);
+  background: transparent;
+  color: $co-49;
+  border:1px solid $co-49;
+  border-width: 1px 2px 2px 1px;
+  &:hover{
+    background: $co-1;
+  }
+}
+.wpl-toggle-btns
+{
+  line-height: 30px;
+}

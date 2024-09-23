@@ -1,0 +1,155 @@
+$fo-wpl: "wpl-front";
+$fo-webify: "webify";
+$fo-roboto: "Roboto";
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+@mixin transform($rotate) {
+  -webkit-transform: $rotate;
+  -moz-transform: $rotate;
+  -o-transform: $rotate;
+  -ms-transform: $rotate;
+  transform: $rotate;
+}
+@mixin box-shadow($box-shadow) {
+  -webkit-box-shadow: $box-shadow;
+  -moz-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+}
+@mixin transition($properties) {
+  -webkit-transition: $properties;
+  -moz-transition: $properties;
+  -o-transition: $properties;
+  transition: $properties;
+}
+@mixin transition-delay($time) {
+  -webkit-transition-delay: $time;
+  -moz-transition-delay: $time;
+  -o-transition-delay: $time;
+  transition-delay: $time;
+}
+@mixin transition-duration($time) {
+  -webkit-transition-duration: $time;
+  -moz-transition-duration: $time;
+  -o-transition-duration: $time;
+  transition-duration: $time;
+}
+@mixin placeholder($color, $font, $family, $weight) {
+  &::-webkit-input-placeholder {
+    color: $color;
+    font-size: $font;
+    font-family: $family;
+    font-weight: $weight;
+  }
+  &::-moz-placeholder {
+    color: $color;
+    font-size: $font;
+    font-family: $family;
+    font-weight: $weight;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    font-size: $font;
+    font-family: $family;
+    font-weight: $weight;
+  }
+  &:-moz-placeholder {
+    color: $color;
+    font-size: $font;
+    font-family: $family;
+    font-weight: $weight;
+  }
+}
+
+/* Device widths */
+$small-phone: "(max-width: 380px)";
+$phone: "(max-width: 480px)";
+$middle-phone: "(max-width: 652px)";
+$tablet-smart: "(max-width: 768px)";
+$tablet-portrait: "(max-width: 991px)";
+$tablet-landscape: "(min-width: 769px) and (max-width: 991px)";
+$tablet-landscape-desktop: "(min-width: 992px) and (max-width: 1199px)";
+$tablet-small-desktop: "(max-width: 1010px)";
+$large-desktop: "(min-width: 1200px)";
+$extra-large: "(min-width: 1400px)";
+
+// Media Generator
+@mixin respond-to($media) {
+  @media #{$media} {
+    @content;
+  }
+}
+
+// For Small Phone ( Portrait and Landscape )
+@mixin for-small-phone {
+  @include respond-to($small-phone) {
+    @content;
+  }
+}
+
+@mixin for-middle-phone {
+  @include respond-to($middle-phone) {
+    @content;
+  }
+}
+
+// For Phone ( Portrait and Landscape )
+@mixin for-phone {
+  @include respond-to($phone) {
+    @content;
+  }
+}
+
+// For Tablet
+@mixin for-tablet-sm {
+  @include respond-to($tablet-smart) {
+    @content;
+  }
+}
+
+// For Tablet( Portrait Only )
+@mixin for-tablet {
+  @include respond-to($tablet-portrait) {
+    @content;
+  }
+}
+
+// For tablet ( Landscape )
+@mixin for-tablet-landscape {
+  @include respond-to($tablet-landscape) {
+    @content;
+  }
+}
+// For Tablet ( Tablet and Portrait Desktop  )
+@mixin for-tablet-land {
+  @include respond-to($tablet-landscape-desktop) {
+    @content;
+  }
+}
+@mixin for-tablet-sd {
+  @include respond-to($tablet-small-desktop) {
+    @content;
+  }
+}
+
+// For Phone ( Large Desktop  )
+@mixin for-desktop {
+  @include respond-to($large-desktop) {
+    @content;
+  }
+}
+@mixin for-ex-desktop {
+  @include respond-to($extra-large) {
+    @content;
+  }
+}
+
+// Calc
+@mixin calc($property, $expression) {
+  #{$property}: -moz-calc(#{$expression});
+  #{$property}: -webkit-calc(#{$expression});
+  #{$property}: calc(#{$expression});
+}

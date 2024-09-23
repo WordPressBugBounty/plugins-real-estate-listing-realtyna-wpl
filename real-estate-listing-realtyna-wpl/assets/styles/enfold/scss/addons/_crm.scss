@@ -1,0 +1,83 @@
+.wpl-crm-tab {
+  > li {
+    > a {
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.wpl_addon_crm_form {
+  .wpl-crm-grid-tab.wpl-gen-tab-wp {
+    position: relative;
+    background: transparent;
+    bottom: 0;
+    border-bottom: none;
+    margin-bottom: 0;
+    ul {
+      margin-left: 0;
+      li {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        border: none;
+        a {
+          border-radius: 0;
+          background: transparent;
+          border: 1px solid $co-12;
+          font: {
+            size: 13px;
+            weight: normal;
+            style: normal;
+          }
+          color: darken($co-12, 30%);
+          padding: 11px 23px;
+          &:hover,
+          &:active,
+          &:focus {
+            text-decoration: none;
+          }
+        }
+      }
+      li.wpl-gen-tab-active-parent {
+        a {
+          color: $co-28;
+          background: $co-15;
+          border-bottom: 1px solid transparent;
+        }
+      }
+    }
+  }
+  .wpl-gen-tab-contents-wp {
+    padding: 0;
+  }
+  .wpl-gen-tab-content.tab-content {
+    border: 1px solid $co-12;
+    padding: 30px;
+  }
+  .wpl-crm-contact-elements,
+  .wpl-crm-request-elements {
+    .prow.wpl_listing_field_container {
+      input {
+        display: inline-block !important;
+        margin: inherit !important;
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+  .wpl-crm-btn-cnt {
+    .wpl-crm-btn {
+      button {
+        cursor: pointer;
+      }
+    }
+  }
+
+}
+
+.wpl-crm-form.wpl-crm-wizard-cnt{
+  .chosen-container-single .chosen-single div b:before{
+    top:0;
+  }
+}

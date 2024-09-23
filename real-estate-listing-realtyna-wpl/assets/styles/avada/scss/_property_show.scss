@@ -1,0 +1,93 @@
+//Default layout
+@import "property_show/layout_default";
+
+//Layout 2
+@import "property_show/layout_2";
+
+
+.wpl_property_show {
+  .wpl_prp_container_content {
+
+    .btn,
+    .btn-primary,
+    .wpl-contact-listing-btn .btn,
+    .listing_contact input[type="submit"] {
+      @include border-radius(2px !important);
+      @include transition(all 0.3s);
+      text-transform: uppercase;
+      border: 0;
+      padding: 10px;
+      color: #FFF;
+      cursor: pointer;
+      letter-spacing: 0;
+    }
+  }
+}
+.wpl_prp_show_container .wpl-gallery-pshow-wp .lSSlideOuter .lSPager {
+  bottom: 0;
+}
+.wpl_prp_show_container .wpl-gallery-pshow-wp .lSSlideOuter .lSPager.lSpg>li>a {
+  padding-top: 0;
+  font-size: 0;
+}
+.wpl_prp_show_detail_boxes_cont .rows.feature.single:after {
+  border: 1px solid #eaeaea;
+  font-size: 15px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+//complex
+.wpl_property_listing_complexes_container {
+  .wpl-column.wpl-complex-unit-cnt {
+    padding: 0;
+  }
+}
+
+//calc
+.wpl_mcalc_container .form-field.form-result {
+  display: block;
+  hr {
+    display: none;
+  }
+  label {
+    font-weight: normal;
+  }
+}
+
+#lg-action a.cl-thumb:after,#lg-action a#lg-prev:before, #lg-action a#lg-next:after , #lg-close:after {
+  color: $co-11;
+  bottom: 0;
+}
+.wpl_property_listing_complexes_container  {
+  .row {
+    margin: 0
+  }
+}
+.wpl-complex-unit-view-detail {
+  top: -9px;
+}
+.wpl-mortgage-symbol {
+  margin-left: 3px;
+  margin-top: 10px;
+}
+.wpl-review-submit {
+  margin-bottom: 10px;
+}
+.wpl-booking-inquire-wp {
+  margin-top: 10px;
+}
+.wpl-complex-unit .wpl_list_grid_switcher {
+  background: transparent;
+  top: 7px;
+}
+.wpl-complex-unit-view-detail {
+  top: -8px;
+  right: 2px;
+}
+.wpl_listing_field_container textarea {
+  margin-left: 4px !important;
+}
+.wpl-wp.profile-wp .panel-wp .panel-body .finilize-btn button.wpl-button {
+  margin-bottom: 10px;
+}

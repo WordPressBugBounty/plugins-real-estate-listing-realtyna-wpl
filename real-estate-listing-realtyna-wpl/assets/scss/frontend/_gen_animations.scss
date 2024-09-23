@@ -1,0 +1,329 @@
+// + Steve M. Animations
+
+$wpl-fx-duration: 500ms;
+
+//region = Animation Mixin
+@mixin show-animation($name, $duration: 1s, $easing: linear, $repeat: 1, $origin: 50% 50%){
+  animation: $name $easing $duration;
+  animation-iteration-count: $repeat;
+  transform-origin: $origin;
+  -webkit-animation: $name $easing $duration;
+  -webkit-animation-iteration-count: $repeat;
+  -webkit-transform-origin: $origin;
+  -moz-animation: $name $easing $duration;
+  -moz-animation-iteration-count: $repeat;
+  -moz-transform-origin: $origin;
+  -o-animation: $name $easing $duration;
+  -o-animation-iteration-count: $repeat;
+  -o-transform-origin: $origin;
+  -ms-animation: $name $easing $duration;
+  -ms-animation-iteration-count: $repeat;
+  -ms-transform-origin: $origin;
+}
+
+@mixin fx-timing-cubic-bezier($first-time, $first-prog, $last-time, $last-prog){
+  -webkit-animation-timing-function: cubic-bezier($first-time, $first-prog, $last-time, $last-prog);
+  animation-timing-function: cubic-bezier($first-time, $first-prog, $last-time, $last-prog);
+}
+
+@mixin wpl-fx-base($duration: $wpl-fx-duration){
+  -webkit-animation-duration: $duration;
+  animation-duration: $duration;
+
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+
+  -webkit-transform-origin: 0 100%;
+  transform-origin: 0 100%;
+
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+//endregion
+
+//region = wpl-fx-fadeIn
+@-webkit-keyframes wpl-fx-fadeIn{
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
+
+@keyframes wpl-fx-fadeIn {
+  0%{
+    opacity: 0;
+  }
+
+  100%{
+    opacity: 1;
+  }
+}
+
+.wpl-fx-fadeIn{
+  @include wpl-fx-base;
+  @include fx-timing-cubic-bezier(1,0,0.58,1);
+
+  -webkit-animation-name: wpl-fx-fadeIn;
+  animation-name: wpl-fx-fadeIn;
+}
+//endregion
+
+//region = wpl-fx-fadeOut
+
+@-webkit-keyframes wpl-fx-fadeOut{
+  0%{
+    opacity: 1;
+  }
+
+  100%{
+    opacity: 0;
+  }
+}
+
+@keyframes wpl-fx-fadeOut {
+  0%{
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+
+  100%{
+    opacity: 0;
+  }
+}
+
+.wpl-fx-fadeOut{
+  @include wpl-fx-base;
+  @include fx-timing-cubic-bezier(0.58,1,1,0);
+
+  -webkit-animation-name: wpl-fx-fadeOut;
+  animation-name: wpl-fx-fadeOut;
+}
+
+//endregion
+
+//region = wpl-fx-fadeInBottom
+
+@-webkit-keyframes wpl-fx-fadeInBottom {
+
+  0% {
+    -webkit-transform: translateY(100%) rotateX(90deg);
+    transform: translateY(100%) rotateX(90deg);
+
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.2;
+  }
+
+  80% {
+    opacity: 0.6;
+  }
+
+  100% {
+    -webkit-transform: translateY(0%) rotateX(0deg);
+    transform: translateY(0%) rotateX(0deg);
+
+    opacity: 1;
+  }
+
+}
+
+@keyframes wpl-fx-fadeInBottom {
+
+  0% {
+    -webkit-transform: translateY(100%) rotateX(90deg);
+    transform: translateY(100%) rotateX(90deg);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 0.4;
+  }
+
+  80% {
+    opacity: 0.6;
+  }
+
+  100% {
+    -webkit-transform: translateY(0%) rotateX(0deg);
+    -moz-transform: translateY(0%) rotateX(0deg);
+    transform: translateY(0%) rotateX(0deg);
+    opacity: 1;
+  }
+
+}
+
+.wpl-fx-fadeInBottom {
+  @include wpl-fx-base;
+  @include fx-timing-cubic-bezier(0.4,0,0,1);
+
+  -webkit-animation-name: wpl-fx-fadeInBottom;
+  animation-name: wpl-fx-fadeInBottom;
+}
+
+//endregion
+
+//region = wpl-fx-fadeOutBottom
+@-webkit-keyframes wpl-fx-fadeOutBottom {
+
+  0% {
+    -webkit-transform: translateY(0%) rotateX(0deg);
+    transform: translateY(0%) rotateX(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: translateY(100%) rotateX(90deg);
+    transform: translateY(100%) rotateX(90deg);
+    opacity: 0;
+  }
+
+}
+
+@keyframes wpl-fx-fadeOutBottom {
+
+  0% {
+    -webkit-transform: translateY(0%) rotateX(0deg);
+    transform: translateY(0%) rotateX(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    -webkit-transform: translateY(100%) rotateX(90deg);
+    transform: translateY(100%) rotateX(90deg);
+    opacity: 0;
+  }
+
+}
+
+.wpl-fx-fadeOutBottom {
+  @include wpl-fx-base;
+  @include fx-timing-cubic-bezier(0.25,0.1,0.25,1);
+
+  -webkit-animation-name: wpl-fx-fadeOutBottom;
+  animation-name: wpl-fx-fadeOutBottom;
+}
+//endregion
+
+//region = wpl-fx-flash
+
+@-webkit-keyframes wpl-fx-flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+@keyframes wpl-fx-flash {
+  0%, 50%, 100% {
+    opacity: 1;
+  }
+
+  25%, 75% {
+    opacity: 0;
+  }
+}
+
+.wpl-fx-flash {
+  @include wpl-fx-base;
+
+  -webkit-animation-name: wpl-fx-flash;
+  animation-name: wpl-fx-flash;
+}
+
+//endregion
+
+// Wpl Display Element | wpl-display-element-anm
+@keyframes wpl-display-element-anm{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+@-moz-keyframes wpl-display-element-anm{
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+@-webkit-keyframes wpl-display-element-anm {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+@-o-keyframes wpl-display-element-anm {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+@-ms-keyframes wpl-display-element-anm {
+  0% {
+    opacity:0;
+  }
+  100% {
+    opacity:1;
+  }
+}
+
+@-webkit-keyframes rota {
+  from { }
+  to { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes rota {
+  from { }
+  to { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+
+@-webkit-keyframes opa {
+  0% { }
+  12.0% { opacity: 0.80; }
+  19.5% { opacity: 0.88; }
+  37.2% { opacity: 0.64; }
+  40.5% { opacity: 0.52; }
+  52.7% { opacity: 0.69; }
+  60.2% { opacity: 0.60; }
+  66.6% { opacity: 0.52; }
+  70.0% { opacity: 0.63; }
+  79.9% { opacity: 0.60; }
+  84.2% { opacity: 0.75; }
+  91.0% { opacity: 0.87; }
+}
+
+@keyframes opa {
+  0% { }
+  12.0% { opacity: 0.80; }
+  19.5% { opacity: 0.88; }
+  37.2% { opacity: 0.64; }
+  40.5% { opacity: 0.52; }
+  52.7% { opacity: 0.69; }
+  60.2% { opacity: 0.60; }
+  66.6% { opacity: 0.52; }
+  70.0% { opacity: 0.63; }
+  79.9% { opacity: 0.60; }
+  84.2% { opacity: 0.75; }
+  91.0% { opacity: 0.87; }
+}

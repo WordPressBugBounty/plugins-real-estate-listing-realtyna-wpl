@@ -1,0 +1,531 @@
+$height: 410px;
+$orderHeight: 540px;
+$fields-width: 79%;
+
+.wpl-util-relative{
+  position: relative;
+}
+
+// Just for wide screens
+.wpl-widget-search-4-col{
+  .search-fields-wp .search-body .active-block .search-field-wp{
+    width: 24%;
+  }
+}
+
+.chosen-container-single .chosen-single{
+  @include box-shadow(none);
+  background-color: darken($co-1,1%);
+}
+
+
+.search-fields-wp {
+  @include clearfix_s2;
+  position: relative;
+  width: $fields-width;
+  @if $text-direction == ltr
+  {
+    border-right: 1px solid #ddd;
+    float: left;
+  } @else
+  {
+    border-left: 1px solid #ddd;
+    float: right;
+  }
+
+  .search-tabs-wp {
+    @include floatChild(a);
+    @include gradient-vertical(#fff, #eee);
+    @include box-shadow(0 1px 3px rgba(#000, 0.35));
+    .search-tab {
+      @include transition(all 0.2s ease);
+      padding: 10px 5px;
+      text-decoration: none;
+      border-right: 1px solid #ddd;
+      border-left: 1px solid #fff;
+      font: 14px $font-scada;
+      color: $color-fancy-header-color;
+      text-align: center;
+      height: 38px;
+      @if $text-direction == rtl{
+        float: right;
+      }
+
+      &:first-child {
+        @if $text-direction == ltr
+        {
+          border-left: 0 none;
+        } @else
+        {
+          border-right: 0 none;
+        }
+      }
+
+      &:last-child {
+        @if $text-direction == ltr
+        {
+          border-right: 0 none;
+        } @else
+        {
+          border-left: 0 none;
+        }
+      }
+
+      &:hover, &.active {
+        @include box-shadow(0 0 25px rgba(#000, 0.1) inset);
+        color: #ff3333;
+      }
+    }
+
+    &.multi-row-tab{
+      .search-tab{
+        padding: 10px 5px;
+      }
+      .row-0{
+        border-bottom: 1px solid #ddd;
+      }
+      .row-1{
+        &:last-child{
+          border-right: 1px solid #ddd;
+        }
+      }
+    }
+    .row-0{
+      &:last-child{
+        border-right: 0 none;
+      }
+    }
+  }
+
+  .search-body {
+    .search-field-wp {
+      @include transition(all linear 0.2s, -webkit-filter 0.2s ease);
+      -webkit-transition: translate3d(0, 0, 0);
+      margin-top: 10px;
+      margin-left: 10px;
+    }
+
+    .js-blur{
+      .search-field-wp{
+        -webkit-filter: blur(5px);
+      }
+    }
+
+    .search-msg-wp {
+      background: rgba($co-0, 0.5);
+      width: 100%;
+      font-size: 12px;
+      font-style: italic;
+      font-family: sans-serif;
+      text-align: center;
+      line-height: 24px;
+      color: $co-1;
+      position: absolute;
+      bottom: 68px;
+      left: 0;
+      z-index: 99999;
+
+      .search-msg-btn {
+        @include transition(color 0.1s linear);
+        position: absolute;
+        top: 4px;
+        right: 6px;
+        color: rgba($co-1, 0.7);
+        cursor: pointer;
+
+        &:hover{
+          color: $co-1;
+        }
+
+        &::before{
+          content: '\e606';
+          font: 16px/16px "wpl-backend";
+          display: inline-block;
+        }
+      }
+    }
+    
+
+    & > div {
+      @include clearfix_s2;
+    }
+
+    .active-block {
+
+      position: relative;
+      //min-height: $height;
+      height: $height + 10px;
+      border-bottom: 1px solid #ddd;
+
+
+
+      .search-field-wp {
+        border-bottom: 1px solid #D3D3D3;
+        min-width: 256px;
+        width: 32%;
+        display: inline-block !important;
+        vertical-align: top;
+      }
+
+      .mCustomScrollBox{
+        &::before{
+          @include box-shadow(0 0 10px #bbb);
+          content:"";
+          position: absolute;
+          top: -10px;
+          left: 0;
+          width: 100%;
+          height: 10px;
+          display: inline-block;
+          z-index: 999999;
+        }
+      }
+
+      .mCSB_container {
+        overflow: visible !important;
+        padding-right: 20px;
+        padding-bottom: 15px;
+      }
+
+    }
+
+
+    $iHeight: 65px;
+    .wpl-inactive-block-wp{
+      background-image: linear-gradient(135deg, #fff 0%, #fff 10%, #f6f6f6 10%, #f6f6f6 50%, #fff 50%, #fff 60%, #f6f6f6 60%, #f6f6f6 100%);
+      background-repeat: repeat;
+      background-position: 0px 0px;
+      background-size: 16px 16px;
+      background-clip: content-box;
+      width: 100%;
+      min-height: $iHeight;
+      max-height: $iHeight;
+      height: $iHeight;
+
+      .wpl-util-scrollbar-frame{
+        width: 100%;
+      }
+
+    }
+
+    .inactive-block {
+      @include clearfix;
+
+      .search-field-wp {
+        float: left;
+        display: inline-block;
+        margin-right: 10px;
+
+        &:hover {
+          h4 {
+            @include box-shadow(0 1px 1px 1px rgba(255, 255, 255, 0.75) inset, 0 0 6px #fff);
+            background: #fff;
+          }
+        }
+
+      }
+
+    }
+
+    .all-block {
+      background: #eee;
+      max-height: 300px;
+      width: auto;
+      display: none;
+    }
+  }
+
+  .overlay-wp {
+    @include transition(background 0.2s ease);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(#fff, 0.55);
+    z-index: 10;
+    display: none;
+    .overlay-text {
+      color: #616161;
+      font: 18px $font-archivo-narrow;
+      width: 50%;
+      height: 23px;
+      overflow: auto;
+      margin: auto;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      text-align: center;
+    }
+
+    /*        &:hover{
+                background: rgba(#F9FF53,0.2);
+            }*/
+  }
+
+  .wpl-search-onhover {
+    .overlay-wp {
+      background: rgba(#F9FF53, 0.2);
+    }
+  }
+
+  .category-wp {
+    float: left;
+    width: 100px;
+  }
+
+  .search-field-wp {
+    @include border-radius(3px 3px 0 0);
+    @include box-shadow(0 6px 3px -5px rgba(#000, 0.1));
+    background: #fff;
+    padding: 0;
+    h4 {
+      @include gradient-vertical(#f9f9f9, #f5f5f5);
+      @include box-shadow(0 1px 1px 1px rgba(#fff, 0.75) inset);
+      @include border-radius(3px 3px 0 0);
+      @include transition(all 0.2s ease);
+      position: relative;
+      margin: 0;
+      border: 1px solid #ddd;
+      color: #222;
+      padding: 7px 50px 7px 15px;
+      text-shadow: #fff 0 1px 0;
+      //font-weight: bold;
+      font: 14px $font-archivo-narrow;
+      .field-btn {
+        position: absolute;
+        right: 7px;
+        top: 50%;
+        margin-top: -9px;
+      }
+    }
+    .field-body {
+      height: 100%;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-top: 0;
+      border-bottom: 0 none;
+    }
+
+    .erow {
+      margin-bottom: 10px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      select {
+        width: 100%;
+      }
+      .chosen-container{
+        min-width: 100%;
+      }
+    }
+
+    &.disable {
+      h4 {
+        @include border-radius(3px);
+      }
+      .field-body {
+        display: none;
+      }
+    }
+  }
+
+}
+
+.order-list-wp {
+  @include gradient-vertical(#fff, #eee);
+  @include box-shadow(1px 0 5px rgba(0, 0, 0, 0.12) inset);
+  position: relative;
+  @if $text-direction == ltr
+  {
+    float: left;
+  } @else
+  {
+    float: right;
+  }
+  width: 100% - $fields-width;
+  background: #fff;
+
+  h4 {
+    @include box-shadow(0 1px 5px rgba(0, 0, 0, 0.12));
+    background: #FAFAFA;
+    color: #7A7A7A;
+    padding: 10px;
+    margin: 0;
+    height: 39px;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+  }
+  .order-list-body {
+    //max-height: $orderHeight;
+  }
+  ul {
+    margin: 0;
+    li {
+      @include transition(background 0.2s linear);
+      padding: 8px 10px;
+      margin-bottom: 0;
+      border-bottom: 1px solid #eee;
+      font: 14px $font-archivo-narrow;
+      position: relative;
+
+      &:hover {
+        background: rgba(scale-lightness(#F9FF53, 60%), 0.5);
+
+        i::before{
+          background: $co-3;
+          content: '\e610';
+          color: $co-1;
+          font: 14px/20px $font-wpl-backend;
+          position: absolute;
+          top: 0;
+          left: 0;
+          text-align: center;
+          display: inline-block;
+          width: 100%;
+          height: 100%;
+
+          @include wpl-fx-base(200ms);
+          @include fx-timing-cubic-bezier(1,0,0.58,1);
+
+          -webkit-animation-name: wpl-fx-fadeIn;
+          animation-name: wpl-fx-fadeIn;
+        }
+      }
+      i {
+        @include transition(background 0.6s linear);
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        font: 10px $font-scada;
+        background: #4CBAEA;
+        color: $co-1;
+        text-align: center;
+        @if $text-direction == ltr
+        {
+          margin-right: 6px;
+        } @else
+        {
+          margin-left: 6px;
+        }
+        padding: 4px 0;
+        cursor: move;
+        position: relative;
+
+        &:hover {
+          background: scale-lightness(#4CBAEA, -30%);
+        }
+      }
+    }
+  }
+
+  .placeholder-item {
+    height: 35px;
+    width: 90%;
+    display: inline-block;
+    border: 1px dashed #ddd;
+    background: #fafafa;
+    margin: 2px;
+    margin-left: 5%;
+
+  }
+
+  /*
+  .mCSB_container {
+    margin-right: 20px;
+  }
+
+  .mCSB_scrollTools {
+    .mCSB_buttonUp {
+      margin-top: 5px;
+    }
+    .mCSB_buttonDown {
+      margin-top: -50px;
+    }
+    a + .mCSB_draggerContainer {
+      margin: 25px 0;
+    }
+  }
+  */
+
+}
+
+.wpl-widget-search-wp{
+  .chosen-container{
+    min-width: 100%;
+    margin-top: 5px;
+  }
+
+  .wpl-button{
+    margin-top: 15px;
+    top: 2px;
+  }
+}
+
+.wpl-widget-search-must-reload-wp{
+  .wpl-widget-search-must-reload{
+    display: inline-block !important;
+  }
+}
+.wpl-widget-search-must-reload{
+  $co-lighter: darken($co-12,3%);
+
+  @include border-radius(1px);
+  background-image: linear-gradient(135deg, $co-12 0%,$co-12 25%,$co-lighter 25%,$co-lighter 50%,$co-12 50%,$co-12 75%,$co-lighter 75%,$co-lighter 100%);
+  background-repeat: repeat;
+  background-position: 0px 0px;
+  background-size: 16px 16px;
+
+  font: 11px $font-lato;
+  display: inline-block;
+  padding: 4px 8px 3px;
+  margin-top: 10px;
+  color: $co-1;
+  width: 100%;
+  position: relative;
+
+  @include animation(wpl-fx-progress-bar-stripes 2s linear infinite);
+
+
+  &::before{
+    color: $co-1;
+    content: '\e623';
+    font: 16px $font-wpl-backend;
+    display: inline-block;
+    vertical-align: middle;
+    @if $text-direction == ltr
+    {
+      margin-right: 7px;
+    } @else
+    {
+      margin-left: 7px;
+    }
+  }
+
+  &::after{
+    border-style: solid;
+    border-color: transparent transparent $co-12 transparent;
+    border-width: 0 7px 8px;
+    content: '';
+    position: absolute;
+    top: -8px;
+    @if $text-direction == ltr
+    {
+      left: 45px;
+    } @else
+    {
+      right: 45px;
+    }
+  }
+}
+
+
+
+.wpl_extoptions_span{
+  input[type=text]{
+    width: 100%;
+  }
+}

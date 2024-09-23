@@ -1,0 +1,295 @@
+.wpl-icon
+{
+  font-family: 'wpl-backend' !important;
+}
+.wpl-icon-catalog:after
+{
+  content: '\e925';
+}
+.wpl-icon-lock:after
+{
+  content: '\e923';
+}
+.wpl-icon-bag:after
+{
+  content: '\e924';
+}
+.wpl-icon-publish:after
+{
+  content: '\e926';
+}
+.wpl-icon-success:after
+{
+  content: '\e621';
+}
+.wpl-icon-back:after
+{
+  content: "\e927";
+}
+.wpl-icon-app:after
+{
+  content: "\e928";
+}
+
+.wpl-back-to-dashboard-btn
+{
+  color: darken($co-8,10%);
+  font-size: 16px;
+  margin-top: 30px;
+  display: block;
+  @include for-tablet
+  {
+    text-align: center;
+  }
+  .wpl-icon
+  {
+    margin-right: 10px;
+  }
+}
+
+
+.wpl-fb-addon
+{
+  .panel-body
+  {
+    padding: 30px 50px 60px 50px !important;
+  }
+  .wpl-wizard-section
+  {
+    text-align: center;
+  }
+}
+.wpl-empty-row
+{
+  padding: 20px;
+}
+
+.wpl-wizard
+{
+  position: relative;
+}
+
+.wpl-wizard-step-title
+{
+  text-align: center;
+  margin-bottom: 50px !important;
+  margin-top: 0;
+  font-size: 30px !important;
+  font-weight: normal;
+}
+.wpl-wizard-steps
+{
+  text-align: right;
+  position: absolute;
+  right: 0;
+  top: 0;
+  @include for-tablet {
+    position: relative;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+}
+.wpl-wizard-step
+{
+  padding: 20px 0;
+  position: relative;
+  &:first-child
+  {
+    &:before
+    {
+      display: none;
+    }
+  }
+  &:last-child
+  {
+    &:after
+    {
+      display: none;
+    }
+  }
+  &:after,&:before
+  {
+    content: "";
+    width: 1px;
+    height: 50%;
+    position: absolute;
+    right: 20px;
+    background-color: $co-8;
+    z-index: 1;
+  }
+  &:after
+  {
+    top: 50%;
+  }
+  &:before
+  {
+    top: 0;
+  }
+  &.active,&.current
+  {
+    label,.wpl-icon
+    {
+      color: $co-99;
+    }
+    .wpl-icon
+    {
+      border-color: $co-99;
+    }
+    &:after,&:before
+    {
+      background-color:$co-99;
+    }
+  }
+  label
+  {
+    margin-right:10px;
+    color: $co-8;
+    display: inline-block;
+    line-height: 40px;
+    font-size: 20px;
+  }
+  .wpl-icon
+  {
+    border:1px solid $co-8;
+    border-radius: 100%;
+    color: $co-8;
+    height: 40px;
+    width: 40px;
+    line-height: 40px !important;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    background: $co-1;
+    display: inline-block;
+  }
+  @include for-tablet
+  {
+    position: relative;
+    text-align: center;
+    display: inline;
+    padding: 20px;
+    label
+    {
+      display:none !important;
+    }
+    &:after,&:before
+    {
+      width: 50%;
+      height: 1px;
+      top: 50%;
+    }
+    &:after
+    {
+      right: 0;
+    }
+    &:before
+    {
+      left: 0;
+    }
+  }
+
+}
+.wpl-form-type1
+{
+  text-align: center;
+  margin-bottom: 30px;
+  input[type="text"],
+  input[type="number"]
+  {
+    @include placeholder($co-10);
+    border:0;
+    border-bottom: 2px solid $co-38;
+    width:100%;
+    padding:10px 0;
+    background: none;
+    font-size: 18px;
+    box-shadow: none;
+  }
+  .wpl-form-element
+  {
+    margin-bottom: 20px;
+    display: flex;
+  }
+  .wpl-icon
+  {
+    color: $co-38;
+    width: 60px;
+    padding-right:15px;
+    font-size: 25px !important;
+    line-height: 45px !important;
+  }
+  .wpl-icon-lock
+  {
+    font-size: 18px !important;
+  }
+  .wpl-btn
+  {
+    margin-top:20px;
+  }
+}
+.wpl-btn
+{
+  padding: 10px 30px;
+  border:1px solid $co-8;
+  display: inline-block;
+  font-size: 20px;
+  cursor: pointer;
+}
+.wpl-btn-purple
+{
+  color:$co-99;
+  &:hover
+  {
+    background-color: $co-99;
+    color:$co-1;
+    border-color:$co-99;
+  }
+}
+.wpl-link-purple
+{
+  color:$co-99;
+}
+.wpl-wizard-section-body
+{
+  margin-bottom: 30px;
+  .wpl-switch
+  {
+    margin-left:10px;
+  }
+}
+/*Property manager*/
+.p-actions-wp .p-action-btn.p-action-facebook-btn
+{
+  @include gradient-vertical(#4267b2, #3b5ca0);
+  color:$co-1;
+  border-color: #3b5ca0;
+}
+/*Dashboard*/
+.wpl-table-img-checkbox
+{
+  input, img {
+    float: left;
+  }
+  input
+  {
+    margin-right:10px;
+    margin-top: 20px !important;
+  }
+  img
+  {
+    width: calc(100% - 30px);
+    height: 60px;
+  }
+}
+.wpl_slide_container_sync
+{
+  .mass-actins
+  {
+    float: right;
+  }
+}
+
+
+
+

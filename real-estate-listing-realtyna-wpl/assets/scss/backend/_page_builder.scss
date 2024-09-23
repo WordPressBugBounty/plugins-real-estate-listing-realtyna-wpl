@@ -1,0 +1,130 @@
+/*Visual Composer elements icon*/
+
+.vc_element-icon.wpb-wpl-icon
+{
+  background-image: url(../img/backend-svg/icon-wpl-logo.svg);
+  background-size: contain ;
+}
+.wpb_WPL,[class*="wpb_wpl"]
+{
+  .wpb_vc_param_value
+  {
+    display: none;
+  }
+}
+
+/*Divi builder elements icon*/
+.et-pb-all-modules [class*="et_pb_wpl"]
+{
+  &:before {
+    font-family: $font-wpl-backend !important;
+    color:#677481;
+  }
+}
+.et_pb_wpl_profile_wizard
+{
+  &:before
+  {
+    content:"\e905" !important;
+  }
+}
+.et_pb_wpl_profile_listing
+{
+  &:before
+  {
+    content:"\e905" !important;
+  }
+}
+.et_pb_wpl_profile_show
+{
+  &:before
+  {
+    content:"\e906" !important;
+  }
+}
+.et_pb_wpl_property_listing
+{
+  &:before
+  {
+    content:"\e907" !important;
+  }
+}
+.et_pb_wpl_property_show
+{
+  &:before
+  {
+    content:"\e908" !important;
+  }
+}
+.et_pb_wpl_addon_save_searches
+{
+  &:before
+  {
+    content:"\e909" !important;
+  }
+}
+.et_pb_wpl_widget_agents
+{
+  &:before
+  {
+    content:"\e90a" !important;
+  }
+}
+.et_pb_wpl_widget_carousel
+{
+  &:before
+  {
+    content:"\e90b" !important;
+  }
+}
+.et_pb_wpl_widget_favorites
+{
+  &:before
+  {
+    content:"\e90c" !important;
+  }
+}
+.et_pb_wpl_widget_googlemap
+{
+  &:before
+  {
+    content:"\e913" !important;
+  }
+}
+.et_pb_wpl_widget_search
+{
+  &:before
+  {
+    content:"\e90e" !important;
+  }
+}
+.et_pb_wpl_widget_summary
+{
+  &:before
+  {
+    content:"\e90f" !important;
+  }
+}
+.et_pb_wpl_widget_tags
+{
+  &:before
+  {
+    content:"\e910" !important;
+  }
+}
+.et_pb_wpl_widget_unit_switcher
+{
+  &:before
+  {
+    content:"\e911" !important;
+  }
+}
+.et_pb_wpl_user_links
+{
+  &:before
+  {
+    content:"\e912" !important;
+  }
+}
+
+

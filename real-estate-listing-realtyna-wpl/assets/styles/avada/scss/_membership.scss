@@ -1,0 +1,102 @@
+%text-box-membership {
+  background: $co-9;
+  height: 30px;
+  @include border-radius(2px);
+  padding: 0 10px;
+  border: 2px solid transparent;
+  font-family: Raleway, sans-serif;
+  @include box-sizing(border-box);
+}
+%button-membership {
+  line-height: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  font-style: normal;
+  color: $co-11;
+  border: 2px solid transparent;
+  //background-color: $co-4;
+  padding: 0 17px;
+  min-width: auto;
+  width: auto;
+  height: 30px;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: 0;
+  text-transform: uppercase;
+  @include border-radius(4px);
+  text-shadow: none;
+  @include transition(color 0.1s linear, background-color 0.1s linear, border-color 0.1s linear);
+  @include box-sizing(initial!important);
+
+  &:hover {
+    //border: 2px solid $co-4;
+    //color: $co-4;
+    //background-color: $co-11 !important;
+  }
+}
+.wpl_addon_membership_container {
+  .wpl_membership_field_row {
+    label {
+      float: left;
+      width: 100px;
+    }
+    input[type="text"] {
+      @extend %text-box-membership;
+    }
+    .btn-primary,
+    .listing_contact input[type="submit"] {
+      @extend %button-membership;
+    }
+  }
+
+  .wpl_dashboard_links li.properties_link h4 {
+    margin: 0;
+  }
+}
+.wpl_memberships_container .membership_price {
+  font-size: 14pt;
+  line-height: 37px;
+}
+
+.wpl-wp .wpl-button {
+  height: auto;
+}
+
+#wpl_login_form_container {
+  label {
+    float: left;
+    width: 90px;
+  }
+  input[type="text"],
+  input[type="password"] {
+    @extend %text-box-membership;
+  }
+  button {
+    @extend %button-membership;
+    padding: 0 30px;
+  }
+}
+.wpl-wp.pmanager-wp header .wpl-button {
+  padding-left: 30px !important;
+  &:before {
+    top: 12px;
+  }
+}
+#wpl_dashboard_bottom_container > div:first-child {
+  margin-bottom: 90px;
+  .wpl-button {
+    top: 25px;
+    right: -15px;
+    @include for-phone {
+      top: 20px;
+      right: -15px;
+      
+      float: right;
+    }
+  }
+}

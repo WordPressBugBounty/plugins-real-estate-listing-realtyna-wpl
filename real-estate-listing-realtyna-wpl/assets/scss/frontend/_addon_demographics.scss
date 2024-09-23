@@ -1,0 +1,198 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-demgr-addon {
+
+  .wpl-demgr-info-wp {
+    @include box-shadow(rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px);
+    @include border-radius(2px);
+    display: none;
+    background: $co-1;
+    /*Should Removed*/
+    /*position: absolute;
+    top: 34px;
+    right: 8px;*/
+    /*Should Removed*/
+    width: 250px;
+    padding: 8px 14px;
+    z-index: 1;
+  }
+
+  .wpl-demgr-zoomin, .wpl-demgr-zoomout {
+    font: 12px $font-lato;
+    font-weight: 700;
+    padding: 5px 8px;
+    background: $co-24;
+    color: $co-1;
+
+    &::before {
+      font: 16px/10px $font-frontend;
+      content: '\e65a';
+      vertical-align: sub;
+      display: inline-block;
+      padding-right: 8px;
+    }
+  }
+
+  .wpl-demgr-toggle-layer {
+
+    input[type=checkbox] {
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0;
+    }
+
+    label {
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 12px;
+      font: 13px $font-lato;
+
+    }
+  }
+
+  .wpl-demgr-map-guide-wp {
+    background: rgba($co-1, 0.7);
+    padding: 0;
+
+    h4 {
+      font: bold 13px $font-lato;
+      color: $co-48;
+      text-align: center;
+      margin: 0;
+      padding: 2px 0 1px;
+      float: left;
+      width: 10%;
+    }
+  }
+
+  .wpl-demgr-map-guide-cnt{
+    @include clearfix_s2;
+  }
+
+  .wpl-demgr-map-guide-row {
+    float: left;
+    width: 15%;
+    text-align: center;
+  }
+
+  .wpl-demgr-map-guide-color {
+    width: 100%;
+    height: 18px;
+    display: inline-block;
+  }
+
+  .wpl-demgr-map-guide-ranges {
+  }
+
+  .wpl-demgr-cat-wp {
+    @include clearfix_s2;
+    padding-top: 8px;
+    margin-top: 8px;
+    border-top: 1px solid rgba($co-0, 0.1);
+  }
+
+  .wpl-demgr-cat-label {
+    font: bold 13px $font-lato;
+    display: inline-block;
+    vertical-align: middle;
+    @if $text-direction == rtl{
+      float: right;
+    }
+  }
+
+  .wpl-demgr-cat-select {
+    padding-left: 12px;
+    display: inline-block;
+    vertical-align: middle;
+    float: right;
+    height: 25px;
+  }
+
+  #wpl_dmgfc_single_demographic_info {
+
+    h3 {
+      background: rgba($co-0, 0.1);
+      width: 100%;
+      font: 18px $font-lato;
+      text-align: center;
+      padding: 5px;
+      margin-top: 8px;
+    }
+  }
+
+  .wpl-demgr-info-row {
+    @include clearfix_s2;
+    padding-bottom: 5px;
+
+    label {
+      @if $text-direction == ltr
+      {
+        float: left;
+        text-align: right;
+      } @else
+      {
+        float: right;
+        text-align: right;
+      }
+      width: 65%;
+      padding-right: 5px;
+    }
+
+    output {
+      display: inline-block;
+      @if $text-direction == ltr
+      {
+        float: right;
+        text-align: right;
+      } @else
+      {
+        float: left;
+        text-align: left;
+      }
+      width: 35%;
+      padding-top: 0;
+    }
+  }
+
+  //region = For Template Only
+  //&.wpl_googlemap_container.wpl_googlemap_plisting #google_map_handle{
+  //  line-height: 206px !important;
+  //}
+  //endregion
+
+}
+
+.wpl-demgr-label-wp{
+  @include border-radius(2px);
+  @include box-shadow(0 7px 7px -5px rgba($co-0, .6));
+  border: 1px solid darken($co-36, 4%);
+  padding: 5px 12px 5px 28px;
+  background: $co-36;
+  color: $co-1;
+  position: relative;
+  display: none;
+
+  &::before{
+    content: '\e6c4';
+    position: absolute;
+    left: 6px;
+    top: 4px;
+    font-size: 14px;
+    font-family: $font-frontend;
+  }
+}
+.wpl-dmgfc-remove-shapes-btn
+{
+  .btn
+  {
+    @include text-shadow(none);
+    &:hover
+    {
+      background-image:none;
+    }
+  }
+}

@@ -1,0 +1,36 @@
+.wpl-save-search-addon {
+  button[type="submit"] {
+
+    line-height: 30px;
+    font-size: 12px;
+    font-weight: 700;
+    font-family: inherit;
+    font-style: normal;
+    color: $co-11;
+    border: 2px solid transparent;
+    //background-color: $co-4;
+    padding: 0 17px;
+    min-width: auto;
+    width: auto;
+    height: 30px;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+    outline: 0;
+    text-transform: uppercase;
+    @include border-radius(4px);
+    text-shadow: none;
+    @include transition(color .1s linear,background-color .1s linear,border-color .1s linear);
+    @include box-sizing(initial!important);
+
+    &:hover {
+     /* border: 2px solid $co-4;
+      color: $co-4;
+      background-color: $co-11 !important;
+      */
+    }
+  }
+}

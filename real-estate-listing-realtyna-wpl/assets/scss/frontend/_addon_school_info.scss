@@ -1,0 +1,153 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-school-info-activity-wp{
+
+  & > div{
+    border-bottom: 1px solid darken($co-1, 6%);
+
+    &:nth-child(even){
+      border-left: 1px solid darken($co-1, 6%);
+
+      @include for-tablet{
+        border-left: 0;
+      }
+    }
+
+    &:nth-last-child(2), &:last-child{
+      border-bottom: 0;
+    }
+
+    &:nth-last-child(2){
+      @include for-tablet{
+        border-bottom: 1px solid darken($co-1, 6%);
+      }
+    }
+  }
+}
+
+.wpl-school-info-error{
+  @include border-radius(3px);
+  background-color: $co-19;
+  color: $co-1;
+  display: block;
+  padding: 4px 15px;
+  text-align: center;
+}
+
+.wpl-school-info-wp{
+
+}
+
+.wpl-school-name{
+  font-size: 1.3em;
+  margin-bottom: 10px;
+  position: relative;
+  padding-right: 65px;
+
+  a{
+    color: $co-36;
+    position: relative;
+    padding-bottom: 3px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+
+    &:hover{
+      color: darken($co-36, 15%);
+    }
+  }
+}
+
+.wpl-school-info-content{
+  padding-left: 20px;
+  line-height: 25px;
+  font-style: italic;
+  font-weight: bold;
+
+  div{
+
+    &::before{
+      font: 15px $font-frontend;
+      position: relative;
+      left: -8px;
+      display: inline-block;
+      vertical-align: middle;
+      color: $co-36;
+    }
+
+  }
+
+
+  .wpl-school-phone::before{
+    content: '\e68b';
+  }
+
+  .wpl-school-address{
+    position: relative;
+    padding-left: 14px;
+
+    span{
+      display: block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    &::before{
+      content: '\e6c4';
+      position: absolute;
+      left: -8px;
+      top: 5px;
+    }
+  }
+
+
+  .wpl-school-type::before{
+    content: '\e6c8';
+  }
+
+  .wpl-school-grade::before{
+    content: '\e6c6';
+  }
+
+  .wpl-school-distance::before{
+    content: '\e6cc';
+    left: -6px;
+  }
+}
+
+.wpl-school-rate{
+  background-color: darken($co-1, 10%);
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 40px;
+  color: $co-1;
+
+  &.wpl-school-rate-0{
+    background-color: lighten($co-0, 20%);
+  }
+
+  &.wpl-school-rate-1, &.wpl-school-rate-2, &.wpl-school-rate-3{
+    background-color: $co-39;
+  }
+
+  &.wpl-school-rate-4,&.wpl-school-rate-5, &.wpl-school-rate-6,&.wpl-school-rate-7{
+    background-color: $co-12;
+  }
+
+  &.wpl-school-rate-8, &.wpl-school-rate-9, &.wpl-school-rate-10{
+    background-color: $co-22;
+  }
+
+
+}

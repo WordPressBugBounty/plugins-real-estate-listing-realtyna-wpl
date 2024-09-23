@@ -1,0 +1,1372 @@
+/**
+ * WPL
+ * WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+#carousel_box .wpl_search_from_box {
+  max-width: 1000px;
+}
+.wpl_search_from_box {
+  border-bottom: 1px solid lighten($color_3, 50%);
+  padding: 1em 0.3em;
+  margin: 0 auto 2em;
+  position: relative;
+  font-size: 13px;
+  *,
+  *:before,
+  *:after {
+    @include box-sizing(border-box);
+  }
+  input[type="text"],
+  input[type="number"],
+  .wpl_search_widget_location_textsearch {
+    background: $white;
+    color: $color_3;
+    border: 0;
+    vertical-align: top;
+    @include placeholder($black);
+    @include border-radius(0);
+    border: 1px solid lighten($color_3, 50%);
+    height: 35px;
+    padding: 0 10px;
+  }
+  input[type="number"] {
+    display: inline-block;
+    width: initial;
+  }
+  select {
+    padding: 0 3px;
+    height: 35px;
+    border-color: $co-25;
+    @include for-tablet {
+      width: 100%;
+    }
+  }
+  .wpl_search_from_box_top {
+    @include pie-clearfix;
+    label,
+    .wpl_search_field_separator {
+      display: none;
+    }
+    .wpl_search_field_container.checkboxes_type label {
+      display: inline-block;
+      margin: 0 5px;
+    }
+  }
+  .wpl_search_from_box_bot {
+    @include pie-clearfix;
+    display: none;
+    margin: 0 -10px;
+    .chosen-container {
+      //min-width: 4.5em;
+    }
+    .wpl_search_field_container {
+      /*&:nth-of-type(3n+1)
+      {
+        clear:left;
+      }*/
+      width: 33.3333%;
+      margin: 0;
+      padding: 0 10px;
+      @include opacity(0);
+      margin-left: 100px;
+      label {
+        @if $text-direction == ltr {
+          margin-right: 1em;
+        } @else {
+          margin-left: 1em;
+        }
+      }
+
+      &.checkboxes_type label {
+        margin: 0 5px;
+      }
+
+      &:not(.yesno_type):not(.checkbox_type):not(.wpl_search_field_separator):not(.wpl_search_field_container_300) {
+        & > label:first-of-type {
+          display: block;
+          font-weight: bold;
+        }
+      }
+      &.textbox_type,
+      &.text_type,
+      &.minmax_selectbox_plus_type:not(.wpl_search_field_area):not(.wpl_search_field_price),
+      &.minmax_selectbox_minus_type:not(.wpl_search_field_area):not(.wpl_search_field_price),
+      &.select_type,
+      &.option_multiple_type,
+      &.exacttext_type &.option_single_type {
+        & > select,
+        & > .chosen-container,
+        & > input[type="text"] {
+          width: 100% !important;
+          min-width: initial !important;
+        }
+      }
+      &.minmax_type,
+      &.minmax_selectbox_type {
+        position: relative;
+        & > label:first-of-type {
+          display: block;
+          font-weight: bold;
+        }
+        .wpl_search_widget_from_label,
+        .wpl_search_widget_to_label {
+          display: none;
+        }
+        & > select,
+        & > .chosen-container,
+        & > input[type="text"],
+        & > input[type="number"] {
+          width: 50% !important;
+          min-width: initial !important;
+          @if $text-direction == ltr {
+            float: left;
+          } @else {
+            float: right;
+          }
+        }
+        &.wpl_search_field_area,
+        &.wpl_search_field_price {
+          & > select,
+          & > .chosen-container,
+          & > input[type="text"],
+          & > input[type="number"] {
+            width: 33.3333% !important;
+          }
+        }
+      }
+      &.addon_calendar_type {
+        label:first-of-type {
+          display: block;
+          font-weight: bold;
+        }
+        input[type="text"] {
+          width: 50%;
+        }
+      }
+      &.datepicker_type {
+        .wpl_search_widget_from_container,
+        .wpl_search_widget_to_container {
+          @if $text-direction == ltr {
+            float: left;
+          } @else {
+            float: right;
+          }
+          width: 50%;
+        }
+        input[type="text"] {
+          width: 100%;
+        }
+        .wpl_search_widget_from_label,
+        .wpl_search_widget_to_label {
+          display: none;
+        }
+      }
+    }
+  }
+  .more_search_option {
+    position: absolute;
+    left: calc(50% - 70px);
+    bottom: -27px;
+    color: $color_3;
+    padding: 0 1em;
+    line-height: 25px;
+    font-family: $font-droid;
+    font-style: italic;
+    cursor: pointer;
+    border: 1px solid lighten($color_3, 50%);
+    border-top-color: $white;
+    min-width: 140px;
+    &:after {
+      font-family: $font-frontend;
+      display: block;
+      content: "\e68c";
+      font-style: normal;
+      @if $text-direction == ltr {
+        margin-right: 10px;
+        float: left;
+      } @else {
+        margin-left: 10px;
+        float: right;
+      }
+    }
+    &.active {
+      &:after {
+        content: "\e699";
+      }
+    }
+  }
+  .wpl_search_widget_location_textsearch {
+    min-width: 250px;
+    font-size: 1.2em;
+    height: 35px;
+    padding: 0 10px;
+    @include placeholder($color_3);
+  }
+  input[class*="_location_text"] {
+    width: 100%;
+    height: 35px;
+  }
+  .wpl_search_field_container,
+  .search_submit_box,
+  .wpl_search_reset,
+  .wpl_dashboard_links_container {
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    margin: 0 3px;
+  }
+  .wpl_search_from_box_top {
+    margin: 0 0 10px 0;
+    .wpl_search_field_container,
+    .search_submit_box,
+    .wpl_search_reset,
+    .wpl_dashboard_links_container a {
+      margin-bottom: 10px;
+    }
+    .wpl_search_widget_location_level_container {
+      margin-bottom: 0;
+    }
+  }
+  &.wpl_search_kind0 {
+    [id*="_search_field_container_6"] {
+      [id*="_unit_price_chosen"] {
+        //margin: 0 -2px;
+      }
+    }
+    [id*="_search_field_container_8"] {
+      .chosen-container {
+        min-width: 115px;
+        &:after {
+          font: 1.4em $font-frontend;
+          content: "\e012";
+          position: absolute;
+          @if $text-direction == ltr {
+            right: 18px;
+          } @else {
+            left: 18px;
+          }
+          top: 6px;
+        }
+        .chosen-single span {
+          @if $text-direction == ltr {
+            margin-right: 42px;
+          } @else {
+            margin-left: 42px;
+          }
+        }
+      }
+    }
+    [id*="_search_field_container_9"] {
+      .chosen-container {
+        min-width: 115px;
+        &:after {
+          font: 1.5em $font-frontend;
+          content: "\e018";
+          position: absolute;
+          @if $text-direction == ltr {
+            right: 15px;
+          } @else {
+            left: 15px;
+          }
+          top: 5px;
+        }
+        .chosen-single span {
+          @if $text-direction == ltr {
+            margin-right: 42px;
+          } @else {
+            margin-left: 42px;
+          }
+        }
+      }
+    }
+  }
+  .wpl_search_reset {
+    background: $color_3;
+    color: $white;
+    position: relative;
+    border: 0;
+    font-size: 1.3em;
+    @if $text-direction == ltr {
+      padding: 5px 30px 5px 10px;
+    } @else {
+      padding: 5px 10px 5px 30px;
+    }
+    height: 35px;
+    cursor: pointer;
+    text-align: center;
+
+    &:after {
+      font-family: $font-frontend;
+      content: "\e672";
+      font-size: 0.8em;
+      padding: 0;
+      position: absolute;
+      @if $text-direction == ltr {
+        right: 10px;
+        top: 8px;
+      } @else {
+        left: 10px;
+        top: 5px;
+      }
+      @include square(10px);
+    }
+  }
+  .search_submit_box {
+    background: $color_3;
+    color: $white;
+    position: relative;
+    &:after {
+      font-family: $font-frontend;
+      content: "\e655";
+      font-size: 1.1em;
+      padding: 0;
+      position: absolute;
+      top: 0;
+      @if $text-direction == ltr {
+        right: 5px;
+        line-height: 35px;
+      } @else {
+        transform: rotate(180deg);
+        left: 5px;
+        line-height: 32px;
+      }
+    }
+    .wpl_search_widget_submit {
+      background: transparent;
+      color: $white;
+      border: 0;
+      font-size: 1.3em;
+      @if $text-direction == ltr {
+        padding: 0 30px 0 10px;
+      } @else {
+        padding: 0 10px 0 30px;
+      }
+      height: 35px;
+    }
+  }
+  .wpl-total-results {
+    @if $text-direction == ltr {
+      float: right;
+      margin-right: 18px;
+    } @else {
+      float: left;
+      margin-left: 18px;
+    }
+    line-height: 35px;
+    padding: 0 5px;
+  }
+  .wpl-total-results-after {
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    line-height: 35px;
+    height: 35px;
+    margin: 0 5px 10px;
+  }
+  .wpl_dashboard_links_container {
+    a {
+      background: $color_3;
+      color: $white;
+      position: relative;
+      border: 0;
+      font-size: 1.3em;
+      height: 35px;
+      cursor: pointer;
+      text-align: center;
+      display: block;
+      @if $text-direction == ltr {
+        float: left;
+        padding: 5px 30px 5px 10px;
+      } @else {
+        float: right;
+        padding: 5px 10px 5px 30px;
+      }
+      &.wpl-addon-save-searches-link {
+        @if $text-direction == ltr {
+          margin-right: 6px;
+        } @else {
+          margin-left: 6px;
+        }
+      }
+      span {
+        position: absolute;
+        top: 8px;
+        @if $text-direction == ltr {
+          right: 5px;
+        } @else {
+          left: 5px;
+        }
+        padding: 0 5px;
+        background: $co-1;
+        border-radius: 10px;
+        font-size: 12px;
+        color: $color_3;
+        max-width: 18px;
+        box-sizing: content-box;
+        font-weight: bold;
+        line-height: 18px;
+      }
+    }
+  }
+  .chosen-container {
+    .chosen-single {
+      line-height: 36px;
+      height: 35px;
+      text-decoration: none;
+      &:hover {
+        color: #999;
+      }
+    }
+    &.chosen-container-active {
+      .chosen-single {
+        outline: $co-4 auto 1px;
+      }
+    }
+  }
+  /* Simple Layout */
+  &.simple {
+    @include pie-clearfix;
+    input[type="text"],
+    input[type="number"],
+    .wpl_search_widget_location_textsearch {
+      height: 25px;
+    }
+    label {
+      display: inline-block;
+      @if $text-direction == ltr {
+        padding-right: 10px;
+      } @else {
+        padding-left: 10px;
+      }
+    }
+    .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+      line-height: 25px;
+      height: 25px;
+    }
+    .chosen-container {
+      &:after {
+        display: none;
+      }
+      .chosen-single {
+        line-height: 25px;
+        height: 25px;
+      }
+    }
+    .wpl_search_feilds {
+      @include pie-clearfix;
+      float: left;
+      min-height: 35px;
+      .wpl_search_field_container {
+        width: 100%;
+        > div {
+          display: inline-block;
+        }
+      }
+      &.number,
+      &.price,
+      &.select,
+      &.text,
+      &.listings,
+      &.property,
+      &.property_types,
+      &.area {
+        width: 33.333%;
+      }
+      &.date {
+        width: 50%;
+        .wpl_search_field_container {
+          float: none;
+          label {
+            display: block;
+          }
+          .wpl_search_widget_from_container,
+          .wpl_search_widget_to_container {
+            display: inline-block;
+            margin-right: 10px;
+            label {
+              display: inline;
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+      &.feature,
+      &.neighborhood,
+      &.gallery {
+        width: 25%;
+      }
+      &.locations {
+        width: 100%;
+        .wpl_search_widget_location_level_container {
+          width: 33.333%;
+          margin-right: 0;
+          .chosen-container {
+            max-width: 150px;
+          }
+        }
+      }
+      &.textarea,
+      &.textsearch {
+        width: 50%;
+        textarea {
+          min-height: 150px;
+        }
+      }
+    }
+  }
+  .chosen-container-multi {
+    width: auto !important;
+    .chosen-choices {
+      border: 1px solid lighten($color_3, 50%);
+      background-image: none;
+      cursor: text;
+    }
+    .chosen-choices li {
+      @if $text-direction == ltr {
+        float: left;
+      } @else {
+        float: right;
+      }
+      list-style: none;
+      &.search-field {
+        margin: 0;
+        padding: 0;
+        white-space: nowrap;
+        input[type="text"] {
+          margin: 1px 0;
+          padding: 5px;
+          height: 31px;
+          outline: 0;
+          border: 0 !important;
+          background: transparent !important;
+          box-shadow: none;
+          color: #666;
+          font-size: 100%;
+          font-family: sans-serif;
+          line-height: normal;
+          border-radius: 0;
+        }
+        .default {
+          color: #999;
+        }
+      }
+      &.search-choice {
+        position: relative;
+        margin: 5px 0 5px 5px;
+        padding: 3px 20px 3px 5px;
+        border: 1px solid #aaa;
+        border-radius: 3px;
+        background-color: #e4e4e4;
+        @include background-image(linear-gradient(#f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%));
+        background-clip: padding-box;
+        box-shadow: 0 0 2px $white inset, 0 1px 0 rgba(#000, 0.05);
+        color: #333;
+        line-height: 13px;
+        cursor: default;
+        .search-choice-close {
+          position: absolute;
+          top: 4px;
+          right: 3px;
+          display: block;
+          width: 12px;
+          height: 12px;
+          background: $chosen-sprite -42px 1px no-repeat;
+          font-size: 1px;
+          &:hover {
+            background-position: -42px -10px;
+          }
+        }
+      }
+      &.search-choice-disabled {
+        padding-right: 5px;
+        border: 1px solid #ccc;
+        background-color: #e4e4e4;
+        @include background-image(linear-gradient(top, #f4f4f4 20%, #f0f0f0 50%, #e8e8e8 52%, #eee 100%));
+        color: #666;
+      }
+      &.search-choice-focus {
+        background: #d4d4d4;
+        .search-choice-close {
+          background-position: -42px -10px;
+        }
+      }
+    }
+    .chosen-results {
+      margin: 0;
+      padding: 0;
+    }
+    .chosen-drop .result-selected {
+      display: list-item;
+      color: #ccc;
+      cursor: default;
+    }
+  }
+}
+.wpl_search_field_container {
+  min-height: 35px;
+  line-height: 33px;
+  &.textbox_type {
+    label {
+      height: 35px;
+      vertical-align: top;
+      line-height: 33px;
+    }
+  }
+  &.minmax_slider_type {
+    width: 25%;
+    min-width: 250px;
+    @include for-tablet {
+      min-width: 100%;
+    }
+    label {
+      display: inline-block;
+      @if $text-direction == ltr {
+        margin-right: 10px;
+        float: left;
+      } @else {
+        margin-left: 10px;
+        float: right;
+      }
+    }
+    .chosen-container {
+      @if $text-direction == ltr {
+        float: left;
+      } @else {
+        float: right;
+      }
+      margin-top: 8px;
+    }
+    .chosen-single {
+      height: 18px;
+      line-height: 18px;
+      div b {
+        background-position: 0 0 !important;
+      }
+    }
+  }
+  /*&.minmax_selectbox_plus_type{
+    [id*="unit_price_chosen"]{
+      float: right;
+    }
+  }*/
+  &.radiussearch_type {
+    input[class*="_location_text"] {
+      width: auto;
+    }
+    .chosen-container {
+      vertical-align: top;
+    }
+  }
+  &.checkbox_type,
+  &.radios_type,
+  &.radios_any_type,
+  &.yesno_type {
+    label {
+      @if $text-direction == ltr {
+        margin: 0 1em 0 0.2em;
+      } @else {
+        margin: 0 0.2em 0 1em;
+      }
+      display: inline-block;
+    }
+  }
+  &.wpl_search_field_separator {
+    width: 100% !important;
+    label {
+      border-bottom-width: 2px;
+      border-bottom-style: solid;
+      padding-right: 10px;
+    }
+  }
+}
+/* jQuery UI Checkboxes styles*/
+.jquery-checkbox {
+  display: inline;
+  font-size: 20px;
+  line-height: 20px;
+  cursor: pointer;
+  .mark {
+    display: inline;
+    &:after {
+      font-family: wpl-front;
+      content: "\e676";
+      font-size: 14px;
+      top: 1px;
+      position: relative;
+    }
+  }
+  img {
+    border: 0 !important;
+    max-height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    @include size(14px, 14px);
+    //background: url('../img/checkbox.png') 0 -15px no-repeat;
+    @include transition(none);
+    @include box-shadow(none !important);
+    display: none;
+  }
+}
+.jquery-checkbox-checked {
+  img {
+    background-position: 0px 0;
+  }
+  .mark {
+    &:after {
+      content: "\e675";
+      color: $co-36;
+    }
+  }
+}
+/* jQuery UI Yes/No Icon styles*/
+.jquery-safari-checkbox {
+  display: inline;
+  font-size: 20px;
+  line-height: 35px;
+  cursor: pointer;
+  @if $text-direction == ltr {
+    float: left;
+    margin-right: 5px;
+  } @else {
+    float: right;
+    margin-left: 5px;
+  }
+  .mark {
+    @include size(50px, 16px);
+    @include border-radius(3px);
+    display: inline-block;
+    background: $co-44 !important;
+    color: $co-1;
+    font-size: 10px;
+    line-height: 16px;
+    position: relative;
+    &:after {
+      content: "OFF";
+      position: absolute;
+      top: 0;
+      right: 3px;
+    }
+    &:before {
+      content: "";
+      background: #b8b8b6;
+      width: 23px;
+      height: 12px;
+      position: absolute;
+      left: 2px;
+      top: 2px;
+    }
+  }
+  img {
+    @include transition(none);
+    @include box-shadow(none !important);
+    @include border-radius(2px);
+    border: 0 !important;
+    max-height: 16px;
+    display: inline-block;
+    vertical-align: middle;
+    display: none;
+  }
+}
+.jquery-safari-checkbox-checked .mark {
+  //background-position: 0px -19px;
+  background: $co-35 !important;
+  &:after {
+    content: "ON";
+    left: 4px;
+    right: auto;
+  }
+  &:before {
+    background: $co-1;
+    right: 2px;
+    left: auto;
+  }
+}
+/* jQuery UI Range Slider styles*/
+.wpl_search_field_container.minmax_slider_type {
+  @if $text-direction == rtl {
+    margin-right: 15px;
+  }
+}
+.wpl_search_slider_container {
+  .wpl_slider_show_value {
+    @if $text-direction == ltr {
+      float: right;
+      margin: 0 1em 0 0;
+    } @else {
+      float: left;
+      margin: 0 0 0 1em;
+    }
+  }
+  .wpl_span_block {
+    display: block;
+    margin-top: 0.5em;
+    height: 0.5em !important;
+    clear: both;
+    &.ui-slider-horizontal {
+      height: 0.5em;
+    }
+    .ui-slider {
+      border: 0;
+      @include border-radius(0);
+      @include background-image(linear-gradient(#c6c6c6, white));
+      position: relative;
+      .ui-slider-range {
+        background: $color_1;
+        display: block;
+        height: 100%;
+        position: absolute;
+        top: 0;
+      }
+      .ui-slider-handle {
+        @include background-image(linear-gradient(#e3e3e3, #c6c6c6));
+        @include border-radius(0);
+        @include size(1em, 1em);
+        border: 4px solid $color_3;
+        top: -0.28em;
+        position: absolute;
+        &:hover {
+          border-color: $color_1;
+          cursor: pointer;
+          @include box-shadow(0 0 1px white);
+        }
+      }
+    }
+  }
+}
+/* jQuery UI Autocomplete styles*/
+.ui-autocomplete {
+  position: absolute;
+  border: 1px solid #dbdee0;
+  border-top: 0;
+  z-index: 10000;
+  background: $white;
+  @include border-radius(0 !important);
+  //	@include box-shadow(2px 2px 0 #DBDEE0 !important);
+  .ui-menu-item {
+    padding: 2px 5px;
+  }
+  .ui-state-focus {
+    background: $color_3 !important;
+    color: white !important;
+    border: 0 !important;
+    @include border-radius(0 !important);
+    margin: 0 !important;
+    display: block;
+  }
+  .ui-autocomplete-category {
+    background: $color_3;
+    color: $co-1;
+    pointer-events: none;
+    padding: 5px;
+  }
+}
+.ui-helper-hidden-accessible {
+  position: absolute;
+  @include square(1px);
+  overflow: hidden;
+}
+
+.locationtextsearch_type {
+  width: 25%;
+}
+.wpl_search_field_locations.simple_type {
+  .wpl_search_widget_location_level_container {
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    margin: 0 3px;
+    @include for-tablet {
+      margin: 3px 0 !important;
+    }
+  }
+}
+//.select_type,.yesno_type,.checkbox_type,.minmax_selectbox_plus_type{width: 12.5%;}
+/* Media Queries
+*********************************************/
+/* Retina */
+@media screen and (-webkit-min-device-pixel-ratio: 2), screen and (max--moz-device-pixel-ratio: 2) {
+}
+/* Large desktop */
+@media (min-width: $width-large-desktop) {
+}
+/* Portrait tablet to landscape and desktop */
+@media (min-width: ($width-tablet + 1)) and (max-width: $width-desktop) {
+}
+/* Landscape phone to portrait tablet */
+@media (max-width: $width-tablet) {
+  .wpl_search_from_box {
+    .wpl_search_from_box_top {
+      .wpl_search_field_container:not(.radiussearch) {
+        @include pie-clearfix;
+        width: 50%;
+        height: auto;
+        margin: 3px 0;
+        .wpl_search_widget_location_level_container,
+        .chosen-container,
+        input[type="text"],
+        input[type="number"],
+        .wpl_search_widget_location_textsearch {
+          width: 100% !important;
+          margin: 0;
+        }
+        .wpl_search_widget_location_textsearch {
+          width: 100% !important;
+          min-width: 100%;
+        }
+        &[id*="_search_field_container_2001"] {
+          .chosen-container {
+            width: 35% !important;
+          }
+        }
+      }
+      [id*="_search_field_container_6"] {
+        &.wpl_search_field_container {
+          .chosen-container {
+            width: 50% !important;
+          }
+          [id*="_unit_price_chosen"] {
+            width: auto !important;
+          }
+        }
+      }
+
+      .search_submit_box {
+        margin: 3px 3px 3px 0;
+      }
+      .wpl_search_reset {
+        margin: 3px 3px 3px 0;
+      }
+      .wpl_dashboard_links_container {
+        margin: 0;
+        a {
+          margin: 3px 0;
+          &.wpl-addon-save-searches-link {
+            @if $text-direction == ltr {
+              margin-right: 6px;
+            } @else {
+              margin-left: 6px;
+            }
+          }
+        }
+      }
+    }
+
+    .wpl_search_from_box_bot {
+      .wpl_search_field_container {
+        width: 48%;
+      }
+    }
+  }
+}
+/* Landscape phones and down */
+@media (max-width: $width-phone-land) {
+  .wpl_search_from_box {
+    input[type="text"],
+    input[type="number"],
+    .wpl_search_from_box .wpl_search_widget_location_textsearch {
+      width: 100%;
+    }
+    .wpl_search_from_box_top {
+      .wpl_search_field_container {
+        width: 100% !important;
+        height: auto !important;
+        margin: 3px 0;
+      }
+      /*.wpl_search_widget_location_container{
+        .wpl_search_widget_location_level_container{
+          margin: 3px 0;
+        }
+        .chosen-container{
+          width: 100% !important;
+        }
+      }*/
+      .wpl_search_reset {
+        text-align: center;
+        padding: 5px 10px;
+      }
+      .wpl_search_reset,
+      .search_submit_box {
+        float: none;
+        clear: both;
+        margin-right: 0;
+      }
+      .search_submit_box {
+        .wpl_search_widget_submit {
+          text-align: center;
+          padding: 5px 10px;
+          width: 100%;
+        }
+      }
+      .wpl_dashboard_links_container {
+        float: none;
+        a {
+          float: none;
+          text-align: center;
+          padding: 5px 10px;
+        }
+        .wpl-addon-save-searches-link {
+          margin: 5px 0 !important;
+        }
+      }
+    }
+    .wpl_search_from_box_bot {
+      .wpl_search_field_container {
+        width: 100%;
+      }
+    }
+  }
+}
+/* Small Phones*/
+@media (max-width: $width-phone) {
+  .wpl_search_from_box .search_submit_box .wpl_search_widget_submit {
+    width: 85% !important;
+  }
+}
+//region + Suggestion Search
+.wpl_search_field_container_2001 {
+  width: 350px;
+  //display: flex;
+  @include for-tablet {
+    width: 100%;
+  }
+  select,
+  .chosen-container,
+  .wpl-suggestion-search-txt {
+    float: left;
+  }
+  select,
+  .chosen-container {
+    width: 35% !important;
+  }
+  .wpl-suggestion-search-txt {
+    width: 65%;
+    input {
+      width: 100%;
+    }
+  }
+}
+//endregion
+//region + Advanced search popup
+.wpl-advanced-search-popup {
+  min-height: 400px;
+  padding: 15px;
+  @include for-tablet {
+    width: 500px;
+  }
+  @include for-phone {
+    width: 300px;
+  }
+  .wpl_search_from_box {
+    border: 0;
+    margin: 0;
+    padding: 15px 0 60px 0;
+  }
+  .wpl_search_from_box_top {
+    padding-bottom: 10px;
+    border-bottom: 1px solid $co-8;
+  }
+  .wpl_search_from_box_bot {
+    border-bottom: 1px solid $co-8;
+    padding-bottom: 10px;
+    .wpl_search_field_container {
+      width: 25%;
+      margin: 0;
+      opacity: 1;
+      @include for-tablet {
+        width: 50%;
+      }
+      @include for-phone {
+        width: 100%;
+      }
+    }
+    .wpl_search_field_container {
+      & > label {
+      }
+    }
+  }
+  .more_search_option {
+    display: none;
+  }
+  .search_submit_box {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    //width: 120px;
+    margin-left: -60px;
+  }
+}
+.wpl-advanced-search-btns {
+  position: absolute;
+  bottom: 20px;
+  right: 25px;
+  .wpl-advanced-search-btn {
+    @include border-radius(4px);
+    background: $co-52;
+    border: 1px solid darken($co-52, 20%);
+    border-bottom-width: 2px;
+    float: left;
+    margin: 0 5px;
+    line-height: 30px;
+    padding: 0 10px;
+    cursor: pointer;
+    font-size: 14px;
+    &:after {
+      margin-left: 20px;
+      float: right;
+    }
+    &:hover {
+      background: $co-1;
+    }
+  }
+}
+.wpl-advanced-search-edit-radius-btn {
+  &:after {
+    font-family: "wpl-front";
+    content: "\e913";
+  }
+}
+.wpl-advanced-search-save-search-btn {
+  &:after {
+    font-family: "wpl-front";
+    content: "\e014";
+  }
+}
+// endregion
+// region: Current Search filters
+.wpl-current-search-list {
+  .wpl-currect-search-list-inner {
+    padding: 10px 0;
+    border-bottom: 1px solid $co-8;
+    margin: 0 10px;
+    & > h3 {
+      margin: 3px;
+      font-size: 13px;
+    }
+  }
+  .wpl-currect-search-list-fields {
+    @include calc(width, "100% - 130px");
+    float: left;
+  }
+  .wpl-current-search-fields {
+    @include border-radius(3px);
+    background-color: $co-36;
+    color: $co-1;
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    margin: 5px 3px;
+    display: inline-block;
+    position: relative;
+    font-size: 13px;
+    &.wpl-open-box-radius {
+      padding-right: 40px;
+      .wpl-open-box-radius-text {
+        cursor: pointer;
+        display: block;
+        &:before {
+          font-family: "wpl-front";
+          content: "\e67c";
+          margin-right: 10px;
+          font-size: 10px;
+        }
+      }
+    }
+    .wpl-delete-current-search-field {
+      @include border-radius(0 3px 3px 0);
+      position: absolute;
+      right: 0;
+      height: 30px;
+      width: 30px;
+      text-align: center;
+      background: darken($co-36, 10%);
+      cursor: pointer;
+      &:after {
+        font-family: "wpl-front";
+        content: "\e6b0";
+      }
+      &:hover {
+        background: darken($co-36, 15%);
+      }
+    }
+  }
+  .wpl-current-search-clear-btn {
+    @include border-radius(3px);
+    padding: 0 10px;
+    height: 30px;
+    line-height: 30px;
+    margin: 5px 3px;
+    float: right;
+    background: darken($co-52, 10%);
+    cursor: pointer;
+    width: 110px;
+    font-size: 13px;
+    &:after {
+      font-family: "wpl-front";
+      content: "\e6b0";
+      margin-left: 20px;
+    }
+    &:hover {
+      background: darken($co-38, 5%);
+    }
+  }
+}
+// endregion
+// region: Radius Popup
+//TODO:This code should be changed
+.wpl-box-radius {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  height: 100%;
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.wpl-radius-box-title {
+  @extend .realtyna-lightbox-title;
+}
+.wpl-radius-box-info {
+  background-color: $co-1;
+  top: 100px;
+  left: 25%;
+  width: 50%;
+  position: absolute;
+}
+.wpl-close-radius-box-info {
+  background-color: black;
+  border-radius: 40px;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+  height: 20px;
+  margin: 10px 2px;
+  position: relative;
+  right: 0;
+  text-align: center;
+  width: 20px;
+}
+.wpl-radius-box-cnt {
+  clear: both;
+  padding: 30px 30px 0 30px;
+}
+.wpl-radius-box-btn {
+  padding: 0 30px 30px 30px;
+}
+.wpl-radius-box-submit {
+  @include border-radius(2px);
+  padding: 5px 10px;
+  color: $co-1;
+  font-size: 14px;
+}
+//endregion
+//region: Search widget left sidebar
+.wpl_search_from_box.wpl-search-sidebar {
+  padding: 1em 0;
+  .wpl_search_field_container,
+  .wpl_search_reset,
+  .search_submit_box {
+    margin: 10px 0 10px 0;
+  }
+  .wpl_search_field_container,
+  .chosen-container,
+  select,
+  input,
+  .wpl_search_reset,
+  .search_submit_box,
+  .wpl_search_field_container.wpl_search_field_price .chosen-containe {
+    width: 100% !important;
+  }
+  .radios_type {
+    input {
+      width: 25px !important;
+    }
+    label {
+      width: calc(100% - 60px);
+      &:first-child {
+        display: block;
+      }
+    }
+  }
+  .checkboxes_type {
+    .jquery-checkbox {
+      width: 30px;
+      display: inline-block;
+    }
+    label {
+      width: calc(100% - 40px);
+      &:first-child {
+        display: block;
+      }
+    }
+  }
+  .wpl_search_field_price,
+  .wpl_search_field_area {
+    &.minmax_selectbox_plus_type {
+      .chosen-container-single {
+        float: left;
+        width: 70% !important;
+        &[id*="unit"] {
+          width: calc(30% - 5px) !important;
+          margin-right: 5px;
+        }
+      }
+      select[id*="unit"] {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .minmax_type,
+  .minmax_selectbox_type,
+  .minmax_selectbox_range_type {
+    input,
+    select,
+    .chosen-container {
+      margin: 5px 0;
+    }
+  }
+  .wpl_search_slider_container .wpl_span_block {
+    width: 98% !important;
+    &.ui-slider {
+      width: 100% !important;
+    }
+  }
+  .wpl_search_widget_location_textsearch,
+  .minmax_slider_type {
+    min-width: 100%;
+  }
+  .search_submit_box {
+    .wpl_search_widget_submit {
+      background: inherit;
+    }
+  }
+  .chosen-container-single .chosen-single,
+  select,
+  input,
+  .chosen-container-multi .chosen-choices {
+    font-weight: 600;
+    font-size: 13px;
+    border-color: $co-33 !important;
+  }
+  .chosen-single.chosen-default {
+    color: inherit;
+  }
+}
+.wpl-advanced-search-popup .wpl-search-sidebar {
+  padding-bottom: 60px;
+  .search_submit_box {
+    left: 0;
+  }
+}
+.pac-item{
+  color: #525252;
+}
+//endregion

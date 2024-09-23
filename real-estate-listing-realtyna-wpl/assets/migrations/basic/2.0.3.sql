@@ -1,0 +1,1 @@
+ALTER TABLE `#__wpl_user_group_types` ADD `default_membership_id` INT(10) NOT NULL DEFAULT '-1' AFTER `name`;

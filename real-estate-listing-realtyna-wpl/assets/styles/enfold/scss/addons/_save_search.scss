@@ -1,0 +1,22 @@
+.wpl-save-search-wp {
+  position: absolute;
+  right: 181px;
+  left: auto;
+  bottom: 8px;
+
+  .wpl-save-search-link {
+    border-radius: 1px;
+    background: $co-2;
+    color: $co-10;
+    border: 1px solid $co-10;
+    font: {
+      size: 13px;
+      style: normal;
+    }
+    &:hover,
+    &:active,
+    &:focus {
+      text-decoration: none;
+    }
+  }
+}

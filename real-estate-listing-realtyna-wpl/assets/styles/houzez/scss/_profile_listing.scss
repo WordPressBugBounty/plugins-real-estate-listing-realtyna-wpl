@@ -1,0 +1,263 @@
+.wpl-profile-listing-wp {
+
+  .wpl_sort_options_container{
+    border: none;
+    li:after{
+      display: none;
+    }
+    .wpl_plist_sort_active:before{
+      transform: none;
+      z-index: 10;
+    }
+
+    .wpl-sort-options-list ul{
+      margin-top: 0;
+    }
+  }
+
+  .wpl_list_grid_switcher {
+    margin-top: 0 !important;
+    font-size: 13px;
+    div {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      &:before {
+        font-size: 20px;
+        color: $co-13;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+      }
+      &.grid_view::before {
+        content: '\f009';
+        font: {
+          family: $fo-awesome;
+        }
+      }
+      &.list_view::before {
+        content: '\f00b';
+        font-family: $fo-awesome;
+      }
+      &.active {
+        &:before {
+          color: $co-0;
+        }
+      }
+    }
+    &.wpl-list-grid-switcher-icon-text {
+      div {
+        width: 55px;
+        padding-left: 18px;
+        &.active {
+          color: $co-0;
+          background: transparent;
+          border-color: $co-0;
+          &:after {
+            display: none;
+          }
+        }
+        span {
+          margin-left: 7px;
+        }
+        &:before {
+          top: 1px;
+        }
+      }
+    }
+  }
+  .wpl_profile_container {
+    border: none;
+    min-height: 340px;
+
+
+    ul li{
+      &:after{
+        background: $co-1 !important;
+        color: $co-0;
+        border-radius: 3px;
+        width: 16px;
+        height: 16px;
+        font-size: 11px;
+        line-height: 18px;
+      }
+      &.email{
+        &:after{
+          content: '\e00e';
+        }
+      }
+    }
+
+    &:not(.row_box) {
+      .wpl_profile_picture {
+        height: 340px;
+        padding: 0;
+        .front {
+          @include hover-gradient;
+        }
+        .back {
+          transform: translateX(100%);
+          opacity: .8;
+          transition: all .9s cubic-bezier(.19, 1, .22, 1) 0s;
+          font-family: inherit;
+          a{
+            font:{
+              family: inherit;
+              size: 32px;
+              weight: 500;
+            }
+          }
+        }
+        &:hover {
+          .front {
+            transform: none;
+          }
+          .back {
+            transform: translateX(0);
+          }
+        }
+      }
+      .wpl_profile_container_title {
+        position: absolute;
+        bottom: 30px;
+        width: 100%;
+        padding-bottom: 20px;
+        .title {
+          font: {
+            size: 16px;
+            weight: 700;
+            family: inherit;
+          }
+          a {
+            color: $co-1 !important;
+          }
+        }
+      }
+      .wpl_profile_company{
+        display: none;
+      }
+      ul{
+        position: absolute;
+        bottom: 10px;
+        margin: 0 auto;
+        width: 100%;
+        left: 0;
+        text-align: center;
+        line-height: 20px;
+        vertical-align: top;
+        li{
+          display: inline-block;
+          float: none;
+          width: 16px;
+          height: 16px;
+          vertical-align: top;
+        }
+      }
+    }
+    &.row_box {
+      padding: 30px;
+      background: $co-1;
+      margin: 20px 0 0;
+      @include for-phone{
+        padding: 10px;
+      }
+      .wpl_profile_picture {
+        height: auto;
+        line-height: normal;
+        @include for-phone{
+          width: 100%;
+        }
+        .back {
+          display: none;
+        }
+        &:hover {
+          .front {
+            transform: none;
+          }
+        }
+      }
+      .view_properties {
+        text-transform: capitalize;
+        width: 100%;
+        margin-top: 20px;
+        font: {
+          family: inherit;
+          size: 14px;
+          weight: 500;
+        }
+        @include for-tablet-sm{
+          font-size: 12px;
+        }
+        @include for-phone{
+          padding: 15px 5px;
+        }
+      }
+
+      .wpl_profile_container_title {
+        padding-left: 30px;
+        margin-bottom: 20px;
+        @include for-phone{
+          width: 100%;
+          padding-left: 0;
+          margin-top: 10px;
+        }
+        .title {
+          font-family: inherit;
+          margin-bottom: 20px;
+          a {
+            line-height: 24px;
+            color: $co-0 !important;
+            font: {
+              size: 18px;
+              weight: 500;
+            }
+            @include for-phone{
+              text-align: left !important;
+            }
+          }
+        }
+      }
+      .wpl_profile_company {
+        color: $co-11;
+        line-height: 20px;
+        font: {
+          size: 14px;
+          weight: 300;
+        }
+      }
+      .about{
+        font-size: 14px;
+        line-height: 22px;
+      }
+
+      ul {
+        margin-left: 30px;
+        @include for-tablet-sm{
+          margin-left: 0;
+          width: 100%;
+        }
+        li {
+          @include for-tablet{
+            font-size: 14px;
+          }
+          &:after {
+            width: 24px;
+            height: 24px;
+            background: $co-13 !important;
+            color: white;
+            font-size: 14px;
+            line-height: 22px;
+          }
+          a{
+            width: auto;
+          }
+          .phone-link, .mobile-link {
+            display: block;
+          }
+        }
+      }
+    }
+
+  }
+
+}

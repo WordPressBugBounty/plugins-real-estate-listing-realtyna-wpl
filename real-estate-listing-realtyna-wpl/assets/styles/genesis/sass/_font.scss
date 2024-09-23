@@ -1,0 +1,48 @@
+@font-face {
+  font-family: 'genesis';
+  src:  url('fonts/genesis.eot?q8ic4t');
+  src:  url('fonts/genesis.eot?q8ic4t#iefix') format('embedded-opentype'),
+  url('fonts/genesis.woff2?q8ic4t') format('woff2'),
+  url('fonts/genesis.ttf?q8ic4t') format('truetype'),
+  url('fonts/genesis.woff?q8ic4t') format('woff'),
+  url('fonts/genesis.svg?q8ic4t#genesis') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'genesis' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-grid-view:before {
+  content: "\e900";
+}
+.icon-list-view:before {
+  content: "\e901";
+}
+.icon-map-view:before {
+  content: "\e902";
+}
+.icon-pdf:before {
+  content: "\e903";
+}
+.icon-print:before {
+  content: "\e904";
+}
+.icon-rss:before {
+  content: "\e905";
+}
+.icon-save-search:before {
+  content: "\e906";
+}

@@ -1,0 +1,16 @@
+.wpl_favorite_contact_form {
+  .form-field {
+    input[type="text"],
+    textarea {
+      @include wpl-input(block, 100%, 10px, $co-6);
+    }
+
+    input[type="submit"] {
+      &:disabled {
+        cursor: not-allowed;
+        background: $co-15;
+        color: $co-16;
+      }
+    }
+  }
+}

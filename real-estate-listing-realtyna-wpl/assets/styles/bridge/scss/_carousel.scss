@@ -1,0 +1,111 @@
+.wpl-plugin-owl.wpl-carousel-multi-images {
+  margin-bottom: 30px;
+  .owl-item {
+    @include box-sizing(border-box);
+    .wpl-carousel-item {
+      border-width: 1px;
+      .title {
+        position: absolute;
+        bottom: 0;
+        height: 100% !important;
+        h3 {
+          padding: 10px;
+          font-size: 15px !important;
+          font-family: inherit !important;
+        }
+        .more_info {
+          @include transition(all 0.2s ease-in-out);
+          font-size: 15px;
+          &:before {
+            @include border-radius(0);
+            @include transition(all 0.3s ease-in-out);
+            left: 0;
+            top: 90px;
+            width: 100%;
+            height: 40px;
+          }
+        }
+      }
+    }
+  }
+  .owl-controls .owl-nav {
+    div {
+      width: 42px;
+      height: 42px;
+      line-height: 42px !important;
+      background: transparent !important;
+      border-radius: 50%;
+      border: 1px solid rgba(82, 91, 92, 0.75);
+      transition-delay: 200ms;
+      &:hover {
+        background: $co-11 !important;
+      }
+      &:before {
+        font-size: 20px;
+        color: rgba(82, 91, 92, 0.75);
+        //position: absolute;
+        //top: 10px;
+        vertical-align: top;
+      }
+      &.owl-next {
+        right: 3px;
+        &:before {
+          right: 5px;
+        }
+      }
+      &.owl-prev {
+        left: 3px;
+        &:before {
+          left: 5px;
+        }
+      }
+    }
+  }
+  .owl-controls .owl-dots {
+    bottom: -40px;
+  }
+}
+.wpl_carousel_container .details_view.wpl-plugin-owl {
+  margin-top: 0;
+  li {
+    &:after {
+      content: "";
+      width: 100%;
+      height: 100%;
+      display: block;
+      position: absolute;
+      background: rgba($co-4, 0.5);
+      z-index: 2;
+      top: 0;
+    }
+  }
+  .owl-item-prp_container {
+    z-index: 3;
+    position: relative;
+    box-sizing: border-box;
+  }
+
+  .left_section a {
+    box-sizing: border-box;
+    span {
+      border-radius: 10px;
+    }
+  }
+  .owl-controls .owl-nav {
+    .owl-prev,
+    .owl-next {
+      border: 8px solid $co-11;
+      font-size: 20px;
+      background: $co-0;
+      &:before {
+        line-height: 50px;
+      }
+    }
+    .owl-prev {
+      left: -95px;
+    }
+    .owl-next {
+      right: -95px;
+    }
+  }
+}

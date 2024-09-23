@@ -1,0 +1,63 @@
+.wpl_pagination_container {
+  padding: 0;
+
+  .pagination {
+    li {
+      a, span {
+        @include box-sizing(border-box);
+        display: block;
+        min-width: 42px;
+        height: 42px;
+        vertical-align: middle;
+        text-align: center;
+        background: $co-11;
+        border-radius: 3px;
+        border-width: 2px;
+        font-family: lato;
+        font-weight: 600;
+        font-size: 14px;
+        border-color: $co-17;
+        color: lighten($co-17, 5%) !important;
+      }
+      &.disabled a {
+        background: $co-6;
+        cursor: not-allowed;
+      }
+    }
+  }
+  .wpl_total_result , .wpl_page_size .wpl_page_size_title{
+    font-family: lato;
+    padding-top: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: lighten($co-17, 5%);
+  }
+  .wpl_page_size {
+    margin-right: 0;
+  }
+  .wpl_page_size_options {
+    height: 42px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    border-width: 2px;
+    border-color: $co-17;
+    color: lighten($co-17, 5%);
+    @include border-radius(3px);
+  }
+}
+.wpl_property_listing_container.wpl-property-listing-mapview .pagination li a,
+.wpl_property_listing_container.wpl-property-listing-mapview .pagination li span {
+  padding: 0;
+  min-width: 30px;
+}
+.wpl_property_listing_container.wpl-property-listing-mapview .pagination li.next a,
+.wpl_property_listing_container.wpl-property-listing-mapview .pagination li.prev a {
+  margin-top: 0;
+  height: 30px;
+}
+.wpl_property_listing_container.wpl-property-listing-mapview .pagination li.next a:before, .wpl_property_listing_container.wpl-property-listing-mapview .pagination li.prev a:before {
+  left: 2px;
+  top: 4px;
+}
+

@@ -1,0 +1,49 @@
+//region
+.update-wpl
+{
+  margin-left: 5px !important;
+}
+#wpadminbar
+{
+  & .ab-top-menu>li.hover>.ab-item,
+  &.nojq .quicklinks .ab-top-menu>li>.ab-item:focus,
+  &:not(.mobile) .ab-top-menu>li:hover>.ab-item,
+  &:not(.mobile) .ab-top-menu>li>.ab-item:focus
+  {
+    .wpl-update-plugin-admin-bar
+    {
+      color:$co-1 !important;
+    }
+  }
+
+  #wp-admin-bar-WPL_main_menu
+  {
+    a:hover .wpl-update-plugin-admin-bar
+    {
+      color:$co-1;
+    }
+  }
+  .wpl-update-plugin-admin-bar
+  {
+    @include border-radius(50%);
+    display: inline-block;
+    background-color: $co-80;
+    line-height: 17px;
+    span
+    {
+      display: block;
+      padding: 0 6px;
+      font-size: 9px;
+      font-weight: bold;
+      line-height: inherit;
+    }
+  }
+  #wp-admin-bar-edit-wpl-listing > .ab-item:before {
+    content: "\f464";
+    top: 2px;
+  }
+}
+.plugins .pro-link{
+  font-weight: bold; color: #8E42F7
+}
+//endregion

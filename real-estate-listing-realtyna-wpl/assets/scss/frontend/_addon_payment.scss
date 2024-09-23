@@ -1,0 +1,52 @@
+$co-12: #ffb42b !default;
+$co-18: #1cc654 !default;
+
+.wpl-payment-checkout-wp {
+
+  & > h3 {
+    display: none;
+  }
+}
+
+.wpl-payment-invoice {
+  color: $co-0;
+  padding: 10px;
+}
+
+.wpl-payment-invoice-title{
+  font: 16px $font-open-sans;
+}
+
+.wpl-payment-invoice-amount {
+  font: 20px $font-open-sans;
+
+  span{
+    color: $color-5;
+  }
+}
+
+.wpl-ewallet-balance{
+  margin-bottom: 14px;
+
+  span{
+    color: $color-5;
+  }
+}
+
+.wpl-payment-contents-wp // Tab Contents
+{
+
+}
+
+.wpl-payment-content {
+  display: none;
+  &:first-child{
+    display: block;
+  }
+  &.wpl-payment-content-active {
+    display: block;
+  }
+  h2{
+    margin:0;
+  }
+}

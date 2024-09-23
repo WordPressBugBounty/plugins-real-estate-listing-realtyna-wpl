@@ -1,0 +1,46 @@
+.wpl-backend-table {
+  font-size: .8rem;
+  line-height: 1.5;
+  border-bottom: 1px solid $co-84;
+  @include display-flex();
+  @include flex-flow(column nowrap);
+  @include flex(1 1 auto);
+  .th {
+    display: none;
+    font-weight: 700;
+    background-color: $co-50;
+    > .td {
+      white-space: normal;
+      font: 13px $font-lato;
+      color: #000;
+      font-weight: bold;
+    }
+  }
+  .tr {
+    width: 100%;
+    @include display-flex();
+    @include flex-flow(row nowrap);
+    &:nth-of-type(odd) {
+      background-color: $co-50;
+    }
+    &:nth-of-type(even) {
+      background-color: $co-1;
+    }
+  }
+  .td {
+    padding: 0.5em;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-width: 0;
+    white-space: nowrap;
+    border-bottom: 1px solid $co-84;
+    @include display-flex();
+    @include flex-flow(row nowrap);
+    @include flex-grow(1);
+    @include flex-basis(0);
+    span {
+      font: 13px $font-lato;
+    }
+  }
+}

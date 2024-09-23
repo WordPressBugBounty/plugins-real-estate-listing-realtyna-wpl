@@ -1,0 +1,2086 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl_prp_show_container {
+  @include clearfix_s2;
+  font-size: 13px;
+  color: #525252;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    & > li > a {
+      text-decoration: none;
+    }
+  }
+  .wpl-login-box {
+    ul {
+      & > li > a {
+        text-decoration: none;
+      }
+    }
+  }
+  .wpl-row {
+    & > .wpl-columns,
+    .wpl-column {
+      @if $text-direction == rtl {
+        float: right;
+      }
+    }
+  }
+  .title_text {
+    /*float: left;
+    width: 30%;*/
+    margin-top: 12px;
+    font-size: 20px;
+    &::before {
+      content: unset;
+    }
+    @include for-phone {
+      width: 100%;
+      margin-top: 0;
+      text-align: center;
+    }
+  }
+  .location_build_up {
+    /*float: left;
+    width: 55%;
+    text-align: right;*/
+    font-size: 14px;
+    margin-top: 12px;
+    &::before {
+      content: unset;
+    }
+    @include for-phone {
+      width: 100%;
+      margin-top: 0;
+      text-align: center;
+    }
+  }
+  .wpl_qrcode_container {
+    margin: 0 !important;
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+    @include for-tablet {
+      text-align: center;
+      float: none;
+    }
+  }
+  .location_box {
+    text-align: center;
+  }
+  .wpl_prp_right_boxe_details_bot > .price_box {
+    color: $color_1;
+    text-align: center;
+    font-size: 3em;
+    line-height: 1.5em;
+    @include for-tablet {
+      left: 65%;
+      top: -40px;
+    }
+  }
+  .tabs_container {
+    border-bottom: 4px solid $color_3;
+  }
+  .tabs_box {
+    padding: 0 15px;
+    .tabs {
+      @include clearfix_s2;
+      margin: 0 auto;
+      border-bottom: 1px solid lighten($color_3, 50%);
+      li {
+        @if $text-direction == ltr {
+          float: left;
+        } @else {
+          float: right;
+        }
+        position: relative;
+        padding: 0;
+        list-style: none;
+        &:after {
+          @include size(1px, 20px);
+          @include rotate(17deg);
+          background: lighten($color_3, 50%);
+          content: "";
+          display: block;
+          position: absolute;
+          @if $text-direction == ltr {
+            right: -4px;
+          } @else {
+            left: -4px;
+          }
+          top: 1.4em;
+        }
+        &:before {
+          @include size(0, 4px);
+          @include transition(all 0.25s ease);
+          background: $color_1;
+          bottom: 0;
+          content: "";
+          display: block;
+          left: 0;
+          position: absolute;
+        }
+        &:hover:before {
+          width: 100%;
+        }
+        @include for-phone {
+          float: none;
+        }
+        a {
+          color: $color_3;
+          display: block;
+          font-size: 1.3em;
+          padding: 0.8em 2.5em;
+          text-decoration: none;
+        }
+        &.active:before {
+          width: 100%;
+        }
+      }
+    }
+  }
+  //region - Agent Info
+  .wpl_agent_info {
+    .name {
+      color: $color_1;
+      font-size: 18px;
+      font-style: italic;
+      padding: 0;
+      margin-bottom: 5px;
+    }
+    .website {
+      &:before {
+        font-family: $font-frontend;
+        content: "\e010";
+      }
+    }
+    .tel {
+      &:before {
+        content: "\e68b";
+      }
+    }
+    .fax {
+      &:before {
+        content: "\e93b";
+      }
+    }
+    .mobile {
+      &:before {
+        font-family: $font-frontend;
+        content: "\e008";
+      }
+    }
+    .email,
+    .second_email {
+      img {
+        max-width: 100%;
+
+        @include for-tablet {
+          width: auto;
+        }
+      }
+      &:before {
+        font-family: $font-frontend;
+        content: "\e00e";
+      }
+    }
+    .company_details {
+      @include border-radius(0 0 5px 5px);
+      @include transition(ease 0.4s all);
+      background: lighten($color_3, 50%);
+      //border: 1px solid lighten($color_3, 40%);
+      margin-top: 3px;
+      text-align: center;
+    }
+    .company_name {
+      @include transition(ease 0.4s all);
+      background: lighten($color_3, 40%);
+      color: $white;
+      font-weight: bold;
+    }
+    .profile_image {
+      border: 1px solid lighten($color_3, 40%);
+    }
+    .logo {
+      border: 1px solid $color_1;
+    }
+    .image_container {
+      //min-height: 100px;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      .back {
+        @include transition(all 0.4s ease-in-out);
+        @include backface-visibility(hidden);
+        @include transform-style(preserve-3d);
+        background: $white;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+      .front {
+        @include transform(rotateY(0deg));
+        @include transition(all 0.4s ease-in-out);
+        @include backface-visibility(hidden);
+        @include transform-style(preserve-3d);
+        z-index: 2;
+      }
+      .back {
+        max-width: 100%;
+        @include transform(rotateY(-180deg));
+      }
+    }
+    &:hover {
+      .front {
+        &.has_logo {
+          @include transform(rotateY(180deg));
+        }
+        img {
+          border-color: $color_1;
+        }
+      }
+      .back {
+        @include transform(rotateY(0deg));
+      }
+      .company_details {
+        border-color: $color_1;
+      }
+      .company_name {
+        background: $color_1;
+      }
+    }
+  }
+  .wpl_multi_agent_info {
+    margin: 10px 0;
+    padding-bottom: 7px;
+    border-bottom: 1px dashed $co-8;
+    &:last-child {
+      border: 0;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+    .wpl_agent_info_l {
+      width: 18%;
+    }
+    .wpl_agent_info_r {
+      width: 82%;
+    }
+    .no_image:before {
+      font-size: 5em;
+    }
+  }
+  .wpl_agent_info_l {
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    width: 29%;
+  }
+  .wpl_agent_info_r {
+    @if $text-direction == ltr {
+      float: left;
+      padding-left: 5%;
+    } @else {
+      float: right;
+      padding-right: 5%;
+    }
+    width: 62%;
+    li {
+      @if $text-direction == ltr {
+        padding-left: 25px;
+        text-align: left;
+      } @else {
+        padding-right: 25px;
+        text-align: right;
+      }
+      color: #414141;
+      position: relative;
+      line-height: 24px;
+      list-style: none;
+      a {
+        color: #414141;
+        text-decoration: none;
+        &:hover {
+          color: $co-36;
+        }
+      }
+      &:before {
+        display: block;
+        font-family: $font-frontend;
+        font-size: 15px;
+        position: absolute;
+        @if $text-direction == ltr {
+          left: 0;
+        } @else {
+          right: 0;
+        }
+        top: 0;
+      }
+      &.mobile,
+      &.tel {
+        //a {
+        //  display: none;
+        //}
+        //@include for-phone {
+        //  font-size: 0;
+        //  a {
+        //    float: left;
+        //    font-size: 13px;
+        //    display: block;
+        //  }
+        //}
+      }
+      &.email,
+      &.second_email {
+        p {
+          margin: 0;
+        }
+      }
+    }
+  }
+  //endregion
+  .wpl_rooms_list_container {
+    li {
+      @if $text-direction == ltr {
+        float: left;
+        padding-left: 40px;
+      } @else {
+        float: right;
+        padding-right: 40px;
+      }
+      width: 50%;
+      position: relative;
+      margin: 5px 0;
+      min-height: 35px;
+      list-style: none;
+
+      &:before {
+        content: "\e036";
+        display: block;
+        font: 36px $font-frontend;
+        @if $text-direction == ltr {
+          left: 3px;
+        } @else {
+          right: 3px;
+        }
+        position: absolute;
+        top: -4px;
+      }
+    }
+
+    .room_name {
+      font-size: 12px;
+    }
+
+    .room_size {
+      color: $color_1;
+      font-size: 11px;
+    }
+
+    .room_1 {
+      &:before {
+        content: "\e614";
+        font-size: 29px;
+        @if $text-direction == ltr {
+          left: -1px;
+        } @else {
+          right: -1px;
+        }
+      }
+    }
+
+    .room_3 {
+      &:before {
+        content: "\e622";
+        font-size: 34px;
+        @if $text-direction == ltr {
+          left: -2px;
+        } @else {
+          right: -2px;
+        }
+      }
+    }
+
+    .room_4 {
+      &:before {
+        content: "\e016";
+        font-size: 29px;
+        @if $text-direction == ltr {
+          left: -4px;
+        } @else {
+          right: -4px;
+        }
+      }
+    }
+
+    .room_5 {
+      &:before {
+        content: "\e612";
+        font-size: 27px;
+      }
+    }
+
+    .room_6 {
+      &:before {
+        content: "\e623";
+        font-size: 26px;
+      }
+    }
+
+    .room_7 {
+      &:before {
+        content: "\e620";
+        font-size: 33px;
+        @if $text-direction == ltr {
+          left: -5px;
+        } @else {
+          right: -5px;
+        }
+      }
+    }
+
+    .room_8 {
+      &:before {
+        content: "\e634";
+        font-size: 26px;
+      }
+    }
+
+    .room_9 {
+      &:before {
+        content: "\e632";
+        font-size: 35px;
+        @if $text-direction == ltr {
+          left: -3px;
+        } @else {
+          right: -3px;
+        }
+      }
+    }
+
+    .room_20,
+    .room_2 {
+      &:before {
+        content: "\e01c";
+        font-size: 30px;
+        @if $text-direction == ltr {
+          left: -5px;
+        } @else {
+          right: -5px;
+        }
+      }
+    }
+
+    .room_21 {
+      &:before {
+        content: "\e615";
+        font-size: 32px;
+        @if $text-direction == ltr {
+          left: -5px;
+        } @else {
+          right: -5px;
+        }
+      }
+    }
+
+    .room_23 {
+      &:before {
+        content: "\e61b";
+        font-size: 33px;
+      }
+    }
+  }
+
+  .wpl_attachments_list_container {
+    li {
+      @if $text-direction == ltr {
+        float: left;
+        padding-left: 50px;
+      } @else {
+        float: right;
+        padding-right: 50px;
+      }
+      position: relative;
+      margin: 4px 1%;
+      background: #efefef;
+      height: 50px;
+      list-style: none;
+      width: 48%;
+
+      &:before {
+        display: block;
+        font: 40px/55px $font-frontend;
+        position: absolute;
+        @if $text-direction == ltr {
+          left: 5px;
+        } @else {
+          right: 5px;
+        }
+        top: -4px;
+      }
+    }
+
+    .wpl_attachment_link {
+      display: block;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    .wpl_attachment_size {
+      color: $color_1;
+      font-size: 11px;
+    }
+
+    .type_pdf {
+      &:before {
+        content: "\e039";
+      }
+    }
+
+    .type_doc,
+    .type_docx {
+      &:before {
+        content: "\e035";
+      }
+    }
+
+    .type_txt {
+      &:before {
+        content: "\e033";
+      }
+    }
+
+    .type_zip {
+      &:before {
+        content: "\e023";
+      }
+    }
+
+    .type_rar {
+      &:before {
+        content: "\e03a";
+      }
+    }
+
+    .type_tar {
+      &:before {
+        content: "\e03b";
+      }
+    }
+
+    .type_mp3 {
+      &:before {
+        content: "\e038";
+      }
+    }
+
+    .type_tar {
+      &:before {
+        content: "\e031";
+      }
+    }
+  }
+
+  .listing_links {
+    li {
+      @include size(50px, 50px);
+      position: relative;
+      float: left;
+      margin: 1px;
+      border: 1px solid lighten($color_3, 50%);
+      list-style: none;
+
+      a {
+        @include size(100%, 100%);
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 99;
+      }
+
+      &:before {
+        @include size(100%, 100%);
+        position: absolute;
+        top: 0;
+        left: 0;
+        font: 32px $font-frontend;
+        line-height: 50px;
+        text-align: center;
+        z-index: 9;
+      }
+    }
+
+    .facebook_link {
+      &:before {
+        content: "\e604";
+      }
+
+      &:hover {
+        border-color: #23487e;
+        &:before {
+          color: #23487e;
+        }
+      }
+    }
+
+    .google_plus_link {
+      &:before {
+        content: "\e603";
+      }
+
+      &:hover {
+        border-color: #da573b;
+        &:before {
+          color: #da573b;
+        }
+      }
+    }
+
+    .twitter_link {
+      &:before {
+        content: "\e600";
+      }
+
+      &:hover {
+        border-color: #00acee;
+        &:before {
+          color: #00acee;
+        }
+      }
+    }
+
+    .pinterest_link {
+      &:before {
+        content: "\e601";
+      }
+
+      &:hover {
+        border-color: #cb2027;
+        &:before {
+          color: #cb2027;
+        }
+      }
+    }
+
+    .pdf_link {
+      &:before {
+        content: "\e5ff";
+      }
+
+      &:hover {
+        border-color: #cf1312;
+        &:before {
+          color: #cf1312;
+        }
+      }
+    }
+
+    .favorite_link {
+      &:before {
+        content: "\e92b";
+        font-family: $font-frontend;
+        font-size: 23px;
+      }
+
+      &:hover {
+        border-color: #fccb0b;
+        &:before {
+          color: #fccb0b;
+        }
+      }
+
+      &.added {
+        &:before {
+          content: "\e92c";
+        }
+      }
+    }
+
+    .report_abuse_link {
+      &:before {
+        content: "\e658";
+      }
+
+      &:hover {
+        border-color: #da573b;
+        &:before {
+          color: #da573b;
+        }
+      }
+    }
+
+    .crm_link {
+      &:before {
+        content: "\e6bd";
+      }
+
+      &:hover {
+        border-color: #00acee;
+        &:before {
+          color: #00acee;
+        }
+      }
+    }
+
+    .send_to_friend_link {
+      &:before {
+        content: "\e6bd";
+      }
+
+      &:hover {
+        border-color: #00acee;
+        &:before {
+          color: #00acee;
+        }
+      }
+    }
+
+    .request_a_visit_link {
+      &:before {
+        content: "\e602";
+      }
+
+      &:hover {
+        border-color: $co-46;
+        &:before {
+          color: $co-46;
+        }
+      }
+    }
+
+    .send_to_friend_link {
+      &:before {
+        content: "\e6c3";
+      }
+
+      &:hover {
+        border-color: $co-12;
+        &:before {
+          color: $co-12;
+        }
+      }
+    }
+
+    .linkedin_link {
+      &:before {
+        content: "\e6c5";
+      }
+
+      &:hover {
+        border-color: $co-60;
+
+        &:before {
+          color: $co-60;
+        }
+      }
+    }
+
+    .adding_price_request_link {
+      &:before {
+        content: "\e93f";
+      }
+
+      &:hover {
+        border-color: $co-85;
+
+        &:before {
+          color: $co-85;
+        }
+      }
+    }
+    .watch_changes_link {
+      &:before {
+        content: "\e942";
+        font-size: 26px;
+      }
+
+      &:hover {
+        border-color: $co-94;
+
+        &:before {
+          color: $co-94;
+        }
+      }
+    }
+  }
+
+  .wpl_opendates_list_container {
+    li {
+      @include border-radius(3px);
+      @include transition(ease 0.4s all);
+      border: 1px solid lighten($color_3, 40%);
+      background: lighten($color_3, 55%);
+      margin: 3px 0;
+      line-height: 25px;
+      list-style: none;
+
+      &:hover {
+        background: $white;
+      }
+    }
+
+    .opendate_number {
+      @include border-radius(3px 0 0 3px);
+      display: inline-block;
+      color: $color_1;
+      padding: 0 5px;
+      border-right: 1px solid lighten($color_3, 40%);
+      background: $white;
+    }
+
+    .comment {
+      color: $color_1;
+      margin-left: 10px;
+      font-size: 0.9em;
+    }
+  }
+
+  .listing_contact {
+    form {
+      @include clearfix_s2;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="url"],
+    input[type="search"],
+    textarea {
+      width: 100%;
+      margin: 3px 0;
+      font-family: inherit;
+    }
+
+    input[type="button"],
+    input[type="reset"],
+    input[type="submit"] {
+      @include border-radius(0);
+      min-width: 100px;
+      float: right;
+      margin: 4px 0;
+      padding: 6px 12px;
+    }
+  }
+}
+
+.wpl_prp_container_content_title {
+  @include clearfix_s2;
+  border-bottom: 1px solid lighten($color_3, 50%);
+  font-style: italic;
+  //line-height: 55px;
+  color: $color_3;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  @include for-phone {
+    padding: 0 10px 10px;
+  }
+}
+
+.wpl_prp_show_tabs {
+  margin-bottom: 10px;
+}
+
+.wpl_prp_container_content {
+  @include clearfix_s2;
+  margin-bottom: 20px;
+}
+
+.wpl_prp_show_bottom {
+  clear: both;
+}
+
+.wpl_prp_container_content_left {
+  float: left;
+  width: 63%;
+  margin-bottom: 20px;
+
+  @include for-tablet {
+    float: none;
+    width: 100%;
+  }
+}
+
+.wpl_prp_show_detail_boxes {
+  margin-bottom: 10px;
+}
+
+.wpl_prp_show_detail_boxes_title {
+  @include clearfix_s2;
+  line-height: 40px;
+  border-bottom: 1px solid lighten($color_3, 50%);
+  font-style: italic;
+  font-size: 18px;
+  position: relative;
+  margin-bottom: 15px;
+
+  &:after {
+    background: $color_1;
+    @include size(10%, 1px);
+    position: absolute;
+    @if $text-direction == ltr {
+      left: 0;
+    } @else {
+      right: 0;
+    }
+    bottom: -1px;
+    display: block;
+    content: "";
+    @include transition(all 0.25s ease);
+  }
+}
+
+.wpl_prp_show_detail_boxes_cont {
+  @include clearfix_s2;
+  line-height: 25px;
+  padding: 10px 0;
+
+  .rows {
+    float: left;
+    width: 33.333%;
+    @if $text-direction == ltr {
+      padding-right: 15px;
+    } @else {
+      padding-left: 15px;
+    }
+    color: lighten($black, 10%);
+    font-weight: bold;
+    margin: 1px 0;
+
+    @include for-tablet {
+      width: 50%;
+    }
+
+    @include for-phone {
+      width: 100%;
+      @if $text-direction == ltr {
+        padding-right: 0;
+      } @else {
+        padding-left: 0;
+      }
+    }
+
+    /*span, a {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }*/
+
+    span {
+      @if $text-direction == ltr {
+        float: right;
+      } @else {
+        float: left;
+      }
+      max-width: 100%;
+      font-weight: normal;
+      color: lighten($black, 25%);
+    }
+
+    &.feature.single {
+      position: relative;
+      &:after {
+        content: "\e034";
+        display: block;
+        @if $text-direction == ltr {
+          float: right;
+        } @else {
+          float: left;
+        }
+        font: 16pt $font-frontend;
+        font-weight: normal;
+        background: #f2f2f2;
+        color: $color_1;
+        padding: 0 2px;
+      }
+    }
+
+    &.separator {
+      width: 100%;
+      margin-top: 2px;
+      margin-bottom: 5px;
+      padding: 5px 0 3px 4%;
+      font-size: 1em;
+      color: mix($co-0, $co-36);
+      position: relative;
+      @if $text-direction == ltr {
+        margin-left: -4%;
+      } @else {
+        margin-right: -4%;
+      }
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      &::after {
+        @include background-image(
+          linear-gradient(left, rgba($co-0, 0) 0, rgba(mix($co-0, $co-36), 0.45) 7%, rgba($co-0, 0) 100%)
+        );
+        position: absolute;
+        content: "";
+        height: 1px;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+      }
+    }
+    &.wpl-column {
+      @include for-phone {
+        width: 100%;
+        @if $text-direction == ltr {
+          padding-right: 0.625rem;
+        } @else {
+          padding-left: 0.625rem;
+        }
+      }
+    }
+  }
+
+  .neighborhood {
+    & > span {
+      @if $text-direction == ltr {
+        padding-right: 25px;
+      } @else {
+        padding-left: 25px;
+      }
+      position: relative;
+
+      &::after {
+        display: block;
+        font: 13px $font-frontend;
+        content: "\e020";
+        color: $color_1;
+        position: absolute;
+        @if $text-direction == ltr {
+          right: 0;
+        } @else {
+          left: 0;
+        }
+        top: 4px;
+        text-align: center;
+        width: 18px;
+      }
+    }
+
+    .Car::after {
+      content: "\e020";
+    }
+
+    .Train::after {
+      content: "\e037";
+      font-size: 20px;
+    }
+
+    .Walk::after {
+      content: "\f00c";
+      font-size: 20px;
+    }
+  }
+
+  ul {
+    list-style: outside disc;
+    padding: 10px 0 10px 30px;
+  }
+}
+
+.wpl_prp_container_content_right {
+  float: right;
+  width: 35%;
+  margin-bottom: 20px;
+  padding-top: 40px;
+  @include for-tablet {
+    width: 100%;
+    float: none;
+  }
+}
+
+.wpl_prp_right_boxes {
+  position: relative;
+  border: 1px solid lighten($color_3, 40%);
+  padding: 10px;
+  border-bottom: 0;
+
+  &.details {
+    @include border-radius(5px 5px 0 0);
+  }
+
+  &:last-child {
+    @include border-radius(0 0 5px 5px);
+    border-bottom: 1px solid lighten($color_3, 40%);
+  }
+
+  &:only-child {
+    @include border-radius(5px);
+    border-bottom: 1px solid lighten($color_3, 40%);
+  }
+}
+
+.wpl_prp_right_boxes_title {
+  color: $color_1;
+  font-size: 18px;
+  font-style: italic;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+
+  span {
+    color: $black;
+  }
+}
+
+.wpl_prp_right_boxes_content {
+  @include clearfix_s2;
+}
+
+.wpl_prp_right_boxe_details_left {
+  width: 100%;
+  margin: 0 auto;
+  list-style: none;
+
+  li {
+    font-weight: bold;
+    line-height: 20px;
+    color: $black;
+    list-style: none;
+
+    span.value {
+      font-weight: normal;
+      color: #717171;
+      @if $text-direction == ltr {
+        float: right;
+      } @else {
+        float: left;
+      }
+    }
+  }
+}
+
+.wpl_prp_right_boxe_details_bot {
+  position: relative;
+  margin: 10px 0 0;
+  clear: both;
+}
+
+.pshow_banners {
+  margin: 25px auto 0;
+  text-align: center;
+}
+
+//region = PShow Gallery
+
+.wpl_gallery_container {
+  position: relative;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.bxslider {
+  li {
+    margin: 0 !important;
+    padding: 0;
+    max-width: 100%;
+    text-align: center;
+    list-style: outside none none !important;
+    img {
+      margin: 0 auto;
+      display: block;
+      max-width: 100%;
+    }
+  }
+}
+
+.gallery_no_image {
+  display: block;
+  min-height: 300px;
+  background: $color_2;
+  text-align: center;
+  &:before {
+    display: block;
+    font: 27em $font-frontend;
+    content: "\e028";
+    clear: both;
+  }
+}
+
+.bx-controls-direction {
+  a {
+    @include square(25px);
+    @include border-radius(5px);
+    position: absolute;
+    top: 50%;
+    margin-top: -16px;
+    outline: 0;
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.5);
+    color: rgba($white, 0);
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.8);
+    }
+
+    &::before {
+      font: 12pt/25px $font-frontend;
+      display: block;
+      text-align: center;
+      top: 0;
+      color: $white;
+      width: 100%;
+      position: absolute;
+    }
+  }
+
+  .disabled {
+    display: none;
+  }
+
+  .bx-prev {
+    left: 10px;
+    color: transparent !important;
+    &:before {
+      content: "\e654";
+    }
+  }
+
+  .bx-next {
+    right: 10px;
+    color: transparent !important;
+    &:before {
+      content: "\e655";
+    }
+  }
+}
+
+.wpl-slider-bx-pager-wp {
+  @include border-radius(5px);
+  background: rgba($black, 0.6);
+  bottom: 5%;
+  padding: 8px 10px;
+  position: absolute;
+  right: 10%;
+  z-index: 70;
+
+  a {
+    @include border-radius(50%);
+    @include size(10px, 10px);
+    display: block;
+    position: relative;
+    background: $white;
+    float: left;
+    margin: 0 2px;
+
+    &.active {
+      background: $color_1;
+    }
+
+    img {
+      position: absolute;
+      left: -43px;
+      top: -85px;
+      border: 1px solid $white;
+      max-width: none;
+      @include opacity(0);
+      @include transition(all 0.3s ease-in-out);
+      @include transform(translateY(-40px));
+    }
+
+    &:hover {
+      background: $color_1;
+
+      img {
+        @include opacity(1);
+        @include transform(translateY(0));
+      }
+    }
+  }
+
+  @include for-phone {
+    display: none;
+  }
+}
+
+.wpl-slider-bx-img-count {
+  @include border-radius(5px);
+  font: 1.2em/1em $font-benchnine;
+  float: right;
+  background: rgba($black, 0.9);
+  position: relative;
+  padding: 5px 5px 5px 30px;
+  color: white;
+  margin: -8px -10px -8px 5px;
+
+  &:after {
+    font-size: 0.9em;
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    display: block;
+    font-family: $font-frontend;
+    content: "\e935";
+  }
+}
+
+//endregion
+
+//Todo-UI Should remove in several update after this one [v2.6.1].
+//region = Backward compatibility
+
+#bx-pager {
+  @extend .wpl-slider-bx-pager-wp;
+}
+
+#img_count {
+  @extend .wpl-slider-bx-img-count;
+}
+
+//endregion
+
+//region = wpl_prp_show_position3
+.wpl_prp_show_position3 {
+  margin-bottom: 10px;
+
+  // + Exclusive style in postion 3
+
+  // - Agent Contact Form
+  .wpl_user_contact_container {
+    .form-field.text-field {
+      width: 28%;
+    }
+
+    textarea {
+      padding: 5px;
+    }
+
+    @include for-phone {
+      .btn-primary {
+        min-width: initial;
+      }
+    }
+  }
+
+  // - Contact Listing Form
+  .wpl-contact-listing-wp {
+    @include clearfix_s2;
+
+    .form-field {
+      display: inline-block;
+      float: left;
+      width: 33.3333%;
+      padding-right: 5px;
+
+      @include for-phone {
+        width: 100%;
+        padding-right: 0;
+      }
+
+      &.wpl-contact-listing-msg {
+        width: 100%;
+      }
+
+      &.wpl-contact-listing-btn {
+        float: right;
+        text-align: right;
+
+        .btn {
+          @include border-radius(0);
+          padding: 6px 12px;
+          min-width: 90px;
+        }
+      }
+    }
+
+    .contact-recaptcha {
+      display: inline-block;
+      float: left;
+      margin: 5px 0;
+    }
+
+    input[type="text"],
+    textarea {
+      width: 100%;
+    }
+
+    textarea {
+      min-height: 100px;
+      padding: 5px;
+    }
+  }
+}
+
+.wpl_prp_position3_boxes_title {
+  line-height: 40px;
+  border-bottom: 1px solid $co-25;
+  font-style: italic;
+  font-size: 18px;
+  position: relative;
+  margin-bottom: 15px;
+
+  &:after {
+    @include transition(all 0.25s ease);
+    @include size(10%, 1px);
+    background: $color_1;
+    position: absolute;
+    @if $text-direction == ltr {
+      left: 0;
+    } @else {
+      right: 0;
+    }
+    bottom: -1px;
+    display: block;
+    content: "";
+  }
+}
+//endregion
+
+.wpl-links-send-to-friend-wp,
+.wpl-links-req-visit-wp,
+.wpl-links-report-wp,
+.wpl-frontent-lightbox-cnt,
+.wpl-links-watch-changes-wp {
+  width: 500px;
+
+  @include for-phone {
+    width: 300px;
+  }
+}
+.wpl-user-login-register {
+  width: 400px;
+  @include for-phone {
+    width: 300px;
+  }
+}
+
+.wpl_videos_container {
+  iframe {
+    display: block;
+    margin: auto;
+    max-width: 100%;
+    @include for-phone {
+      height: inherit;
+    }
+  }
+}
+.wpl-gen-form-wp.wpl-login-register-form-wp {
+  label {
+    width: 75px;
+  }
+  label + input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"] {
+    @include calc(width, "100% - 75px");
+    @include for-phone {
+      width: 100%;
+      float: none;
+    }
+  }
+}
+
+// region: Get Direction
+.wpl_prp_show_tabs .wpl-map-get-direction {
+  @include calc(max-height, "100% - 20px");
+  position: absolute;
+  bottom: 13px;
+  right: 33px;
+  margin: 10px;
+  width: 500px;
+  overflow: auto;
+}
+.wpl_googlemap_pshow {
+  position: relative;
+  .wpl-map-get-direction {
+    padding: 10px;
+    background: $co-8;
+    border: 1px solid darken($co-8, 10%);
+    @include for-tablet {
+      position: relative;
+      margin: 0;
+      width: 100%;
+    }
+  }
+  .wpl_map_canvas {
+    width: 100%;
+  }
+}
+.wpl-map-get-direction {
+  * {
+    @include box-sizing(border-box);
+  }
+  form {
+    width: 100%;
+  }
+  input[type="text"],
+  .btn {
+    height: 35px;
+    max-width: inherit;
+  }
+  .wpl-map-get-direction-address-cnt {
+    @include calc(width, "100% - 140px");
+    position: relative;
+    float: left;
+    input[type="text"] {
+      @include border-radius(2px 0 0 2px);
+      @include placeholder(darken($co-1, 40%));
+      border: 1px solid darken($co-8, 20%);
+      border-right: 0;
+      padding: 0 10px;
+      width: 100%;
+    }
+    @include for-phone {
+      @include calc(width, "100% - 40px");
+    }
+  }
+  .wpl-map-get-direction-btn-cnt {
+    @include border-radius(0 3px 3px 0);
+    border: 1px solid transparent;
+    white-space: nowrap;
+    padding: 6px 12px;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    color: $co-1;
+    font-weight: bold;
+    position: relative;
+    padding-right: 30px;
+    width: 140px;
+    text-align: left;
+    float: left;
+    line-height: 20px;
+    @include for-phone {
+      width: 40px;
+      text-align: center;
+      padding: 0;
+    }
+    &:after {
+      font-family: "wpl-front";
+      content: "\e913";
+      font-size: 16px;
+      position: absolute;
+      right: 8px;
+      top: 0;
+      line-height: 35px;
+      @include for-phone {
+        right: 10px;
+      }
+    }
+    input[type="submit"] {
+      background: none;
+      border: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: transparent !important;
+    }
+    span {
+      @include for-phone {
+        display: none;
+      }
+    }
+  }
+  .wpl-map-get-direction-reset {
+    font-family: "wpl-front";
+    position: absolute;
+    height: 35px;
+    line-height: 35px;
+    width: 30px;
+    text-align: center;
+    color: darken($co-8, 30%);
+    @if $text-direction == ltr {
+      right: 0;
+    } @else {
+      left: 0;
+    }
+    top: 0;
+    cursor: pointer;
+    &:after {
+      content: "\e6ad";
+    }
+  }
+  /*Related to direction detail*/
+  .adp-step,
+  .adp-text {
+    padding: 10px;
+  }
+}
+//endregion
+
+// region: Listing Result
+.wpl_prp_container_content_top {
+  .wpl-listing-results-links-cnt {
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+  }
+  .wpl-back-to-search-results {
+    margin-right: 30px;
+  }
+  .wpl-back-to-search-results,
+  ul {
+    float: left;
+  }
+}
+.wpl_prp_show_position3 {
+  .wpl-back-to-search-results {
+    float: left;
+    @include for-phone {
+      float: none;
+    }
+  }
+  .wpl-listing-results-links-cnt ul {
+    float: right;
+    @include for-phone {
+      float: none;
+    }
+  }
+}
+.wpl_prp_right_boxes {
+  .listing_results {
+    .wpl-back-to-search-results {
+      float: none;
+      clear: both;
+    }
+  }
+}
+.wpl-listing-results-links-cnt {
+  font-size: 16px;
+  line-height: 30px;
+  ul {
+    list-style: none;
+    & > li {
+      float: left;
+      margin: 0 10px;
+      &:first-child {
+        margin-left: 0;
+      }
+      &:last-child {
+        margin-right: 0;
+      }
+      & > a {
+        &:after,
+        &:before {
+          font-family: "wpl-front";
+        }
+      }
+    }
+  }
+  .wpl-back-to-search-results {
+    & > a {
+      &:before {
+        font-family: "wpl-front";
+        content: "\e914";
+        margin-right: 10px;
+        float: left;
+      }
+    }
+  }
+  .wpl-previous-listing {
+    & > a {
+      &:before {
+        content: "\e656";
+        margin-right: 5px;
+        float: left;
+      }
+    }
+  }
+  .wpl-next-listing {
+    & > a {
+      &:after {
+        content: "\e657";
+        margin-left: 5px;
+        float: right;
+      }
+    }
+  }
+}
+.wpl-mandatory-registration-popup {
+  .realtyna-lightbox-overlay-drp .realtyna-lightbox-close-btn {
+    display: none !important;
+  }
+}
+//endregion
+
+// region: Property show Layout 2
+.wpl_prp_show_layout2_container {
+  .wpl_prp_container_content_right {
+    padding-top: 0;
+    .wpl_prp_show_detail_boxes_cont .rows {
+      width: 100%;
+      padding-right: 0;
+    }
+    //Addones on the right side
+    .wpl_mcalc_container {
+      border: 1px solid $co-7;
+      padding: 10px;
+    }
+  }
+  .wpl_prp_right_boxe_details_top {
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid lighten($color_3, 40%);
+  }
+  .wpl_prp_show_detail_boxes {
+    margin-bottom: 30px;
+  }
+  .wpl_prp_show_detail_boxes_cont {
+    padding: 0;
+    .rows {
+      font-size: 14px;
+      font-weight: normal;
+      span {
+        color: $co-35;
+      }
+      &.feature {
+        span,
+        &.single:after {
+          background: $co-1;
+        }
+      }
+    }
+  }
+  &.wpl_prp_show_container {
+    .wpl_prp_right_boxe_details_bot > .price_box {
+      @if $text-direction == ltr {
+        text-align: left;
+      } @else {
+        text-align: right;
+      }
+      font-size: 30px;
+    }
+    .wpl_prp_listing_icon_box {
+      margin-bottom: 10px;
+      & > div {
+        @if $text-direction == ltr {
+          float: left;
+          margin: 0 20px 0 0;
+          padding-left: 30px;
+        } @else {
+          float: right;
+          margin: 0 0 0 20px;
+          padding-right: 30px;
+        }
+        font-size: 15px;
+        position: relative;
+        color: $co-0;
+        &:after {
+          position: absolute;
+          top: 0;
+          @if $text-direction == ltr {
+            left: 0;
+          } @else {
+            right: 0;
+          }
+          font-size: 18px;
+          color: $co-49;
+        }
+        & > span {
+          display: block;
+        }
+        & > span[itemprop="name"],
+        & > span.name {
+          display: none;
+        }
+      }
+    }
+  }
+  .wpl_prp_show_tabs-maps {
+    .tabs_box {
+      padding: 0;
+      .tabs {
+        margin-bottom: 10px;
+        border-bottom: 0;
+        li {
+          @if $text-direction == ltr {
+            margin: 0 10px 0 0;
+          } @else {
+            margin: 0 0 0 10px;
+          }
+          @include for-phone {
+            margin: 0;
+          }
+          &:after,
+          &:before {
+            display: none;
+          }
+          & > a {
+            padding: 10px 15px;
+            font-size: 16px;
+          }
+          &.active {
+            background: lighten($co-66, 10%);
+            & > a {
+              color: $co-1;
+            }
+          }
+        }
+      }
+    }
+    .tabs_container {
+      border: 0;
+    }
+    .wpl_googlemap_container {
+      #google_map_handle {
+        display: none;
+      }
+    }
+    .wpl_map_canvas {
+      border: 1px solid lighten($co-66, 20%);
+    }
+  }
+
+  .wpl_prp_left_box {
+    margin-bottom: 15px;
+  }
+  .wpl_prp_right_boxes {
+    &.details {
+      border: 0;
+      padding: 0;
+    }
+  }
+  .wpl_prp_show_title {
+    padding: 0;
+    & > h1 {
+      font-size: 22px;
+      margin: 0;
+      @if $text-direction == ltr {
+        text-align: left !important;
+      } @else {
+        text-align: right !important;
+      }
+      margin-bottom: 10px;
+      color: $co-0;
+    }
+    .location_build_up {
+      width: 100%;
+      text-transform: lowercase;
+      color: $co-49;
+      @if $text-direction == ltr {
+        text-align: left;
+      } @else {
+        text-align: right;
+      }
+      font-size: 16px;
+      float: none;
+      margin-bottom: 10px;
+      span {
+        color: $co-49;
+        font-size: 14px;
+        line-height: 24px;
+        letter-spacing: 0;
+        text-transform: capitalize;
+        font-weight: normal;
+      }
+    }
+  }
+  .wpl_prp_right_boxe_details_bot {
+    margin: 0 0 10px 0;
+  }
+  .wpl_prp_mls_id_box {
+    font-size: 16px;
+    color: $co-49;
+  }
+  .wpl_prp_show_detail_boxes_title,
+  .wpl_prp_right_boxes_title {
+    border: 0;
+    font-style: normal;
+    margin: 0;
+    color: lighten($co-0, 5%);
+    font-weight: bold;
+    &:after {
+      display: none;
+    }
+  }
+
+  .wpl_prp_show_position2 {
+    margin-bottom: 20px;
+    .wpl_prp_right_boxes {
+      @include border-radius(0);
+      border-width: 1px 0;
+      padding: 20px 0;
+    }
+    .listing_result {
+      border-top: 0;
+      padding: 0;
+      .wpl-listing-results-links-cnt {
+        border-top: 1px solid lighten($color_3, 40%);
+        padding: 20px 0;
+      }
+    }
+  }
+  .wpl_prp_position3_boxes {
+    margin-bottom: 30px;
+    &.mortgage_calculator {
+      border: 1px solid $co-5;
+      .wpl_prp_position3_boxes_title {
+        padding: 0 30px;
+        line-height: 70px;
+      }
+    }
+  }
+  .wpl_prp_position3_boxes_title {
+    border: 0;
+    font-style: normal;
+    margin: 0;
+    font-weight: bold;
+    &:after {
+      display: none;
+    }
+  }
+
+  /*Get Direction*/
+  .wpl_prp_show_tabs .wpl-map-get-direction {
+    position: static;
+    margin: 0;
+    margin-top: 10px;
+    width: 100%;
+    padding: 15px;
+    form,
+    input {
+      margin-bottom: 0 !important;
+    }
+  }
+  /*Slider*/
+  .wpl-gallery-pshow-wp .lSSlideOuter .lslide span {
+    &:after,
+    &:before {
+      display: none;
+    }
+  }
+  /*Rating and Review*/
+  .wpl-review-ratings-wp,
+  .wpl-review-main-review-form {
+    border-bottom: 0;
+  }
+}
+// endregion: Layout 2
+
+.vjs-default-skin .vjs-big-play-button {
+  top: 50%;
+  left: 50%;
+  margin-top: -1.3em;
+  margin-left: -2em;
+}
+//Template --> Temporary should removed after template update release
+.wpl-28-listing-outstanding .wpl_property_listing_listings_container .grid_box .wpl_prp_listing_icon_box > div span {
+  display: inline-block;
+}
+// startregion: property analytic
+.wpl-property-analytics {
+  ul {
+    li {
+      border-bottom: 1px solid $co-10;
+      &.expand {
+        .wpl-property-analytics-title:after {
+          @include rotate(180deg);
+        }
+      }
+    }
+  }
+}
+.wpl-property-analytics-title {
+  padding: 10px 0;
+  position: relative;
+  cursor: pointer;
+  &:after {
+    content: "\e68c";
+    font-family: wpl-front;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    margin-top: -10px;
+    font-size: 20px;
+    color: $co-8;
+    cursor: pointer;
+  }
+  & > span {
+    display: block;
+  }
+}
+.wpl-property-analytics-chart-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.wpl-property-analytics-property-title {
+  font-size: 14px;
+  color: lighten($co-16, 10%);
+}
+.wpl-property-analytics-content {
+  display: none;
+  padding: 10px 0 20px 0;
+}
+.wpl-property-analytics-black-night {
+  padding: 5px 0;
+  & > img,
+  & > span {
+    float: right;
+  }
+  & > span {
+    line-height: 50px;
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  & > img {
+    height: 40px;
+  }
+}
+// endregion: property analytic
+
+//region Listing additional
+.wpl_listing_additional_container {
+  ul {
+    display: table;
+    width: 100%;
+    margin: 20px auto 0;
+    li {
+      display: table-row;
+      margin: 0 auto;
+      @include for-phone {
+        display: block;
+      }
+      div {
+        display: table-cell;
+        padding: 5px;
+        @include for-phone {
+          display: block;
+          width: 100%;
+        }
+      }
+      &:nth-child(odd) {
+        background: $co-32;
+      }
+    }
+  }
+}
+.wpl_prp_show_position2 {
+  .wpl_listing_additional_container {
+    ul li {
+      display: block;
+      div {
+        display: block;
+      }
+    }
+  }
+
+  .wpl-review-rates-overall-container {
+    padding-right: 0;
+    .wpl-rate {
+      width: 100%;
+    }
+  }
+  .wpl-rate-info_overall_vote {
+    display: block;
+  }
+}
+//end region Listing additional

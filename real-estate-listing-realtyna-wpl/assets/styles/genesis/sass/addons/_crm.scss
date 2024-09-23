@@ -1,0 +1,125 @@
+//CRM
+.wpl-crm-addon {
+  body {
+    font: {
+      family: $fo-2;
+    }
+    margin: 0;
+    a {
+      text-decoration: none;
+    }
+  }
+}
+
+html.wpl-crm-admin-bar-visible {
+  .wpl-crm-form-content.wpl-util-scrollbar-frame {
+    @include calc('height', '100vh - 189px');
+  }
+}
+
+//CRM Form
+.wpl-crm-form {
+  .wpl-crm-grid-header {
+    font: {
+      family: inherit;
+      weight: 300;
+    }
+  }
+  .wpl-crm-grid-tab {
+    ul {
+      margin: 0;
+      li {
+        list-style: none;
+        a {
+          font: {
+            family: inherit;
+            weight: 300;
+            style: normal;
+          }
+        }
+      }
+    }
+  }
+  form {
+    .prow {
+      label {
+        display: block;
+        font: {
+          family: inherit;
+          size: 13px;
+        }
+        line-height: 25px;
+        width: 100%;
+        text-align: left !important;
+        .required-star {
+          color: $co-10;
+          padding-left: 3px;
+          font: {
+            size: 15px;
+          }
+        }
+      }
+      .chosen-container {
+        .chosen-single {
+          border-radius: 0 !important;
+          display: block;
+          background-color: $co-1;
+          border: 1px solid $co-7;
+          font: {
+            size: 13px;
+          }
+          span {
+            text-align: left;
+          }
+        }
+      }
+      input,
+      select {
+        border-radius: 0 !important;
+        padding: 6px;
+        font: {
+          size: 13px;
+        }
+        color: $co-11;
+        height: 30px;
+      }
+      select {
+        width: inherit;
+
+      }
+    }
+
+  }
+  .wpl-crm-btn {
+    border-radius: 0 !important;
+    .wpl-crm-input-btn {
+      &:hover,
+      &:active,
+      &:focus {
+        background-color: initial;
+        color: initial;
+        outline: none;
+      }
+    }
+    .wpl-crm-input-btn {
+      background-color: transparent;
+    }
+  }
+  .prow-date {
+    .date-wp {
+      > input[type="text"] {
+        padding: 6px;
+        font: {
+          size: 13px;
+        }
+        color: $co-11;
+      }
+    }
+  }
+}
+
+.wpl-crm-drop-list {
+  &:before {
+    top: -13px;
+  }
+}

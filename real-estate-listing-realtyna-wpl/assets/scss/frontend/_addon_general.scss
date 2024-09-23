@@ -1,0 +1,312 @@
+/**
+ * WPL
+ * WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+/*.wpl_googlemap_container.wpl_googlemap_plisting.wpl-demgr-addon.wpl-aps-addon{
+  height: 206px;
+  max-height: 206px;
+}*/
+.wpl-map-add-ons
+{
+  position: absolute;
+  top: 40px;
+  right: 8px;
+  z-index: 1;
+  @include for-tablet{
+    display: none;
+  }
+  @include for-phone{
+    top: 90px;
+  }
+  &.wpl_fixed{
+    position: fixed;
+    z-index: 100001;
+  }
+}
+
+/*Should Removed*/
+/*.wpl-aps-addon{
+
+  &.wpl-demgr-addon .wpl-demgr-info-wp{
+    top: 75px;
+    @include for-tablet
+    {
+      top:110px;
+    }
+  }
+}*/
+/*Should Removed*/
+.wpl_aps_container{
+  @include box-shadow(rgba(0, 0, 0, 0.298039) 0px 1px 4px -1px);
+  @include border-radius(2px);
+  background: $co-1;
+  /*Should Removed*/
+  /*position: absolute;
+  top: 40px;
+  right: 8px;*/
+  /*Should Removed*/
+  font: 11px/19px $font-open-sans;
+  padding: 5px 14px;
+  width: 250px;
+  z-index: 1;
+  margin-bottom: 5px;
+  & > input[type="checkbox"]
+  {
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+  }
+  label{
+    font-weight: normal;
+    @if $text-direction == ltr
+    {
+      padding-left: 10px;
+    } @else
+    {
+      padding-right: 10px;
+    }
+  }
+  &:empty {
+    padding: 0 14px;
+  }
+}
+
+.wpl_map_size,.wpl_search_on_map,.wpl_map_addons_toggle{
+  width: 35px;
+  height: 35px;
+  position: absolute;
+  border-radius: 3px;
+  background: $co-1;
+  box-shadow: 0 1px 4px rgba($co-0,.2);
+  text-align: center;
+  line-height: 35px;
+  cursor: pointer;
+  &:hover{
+    background: $co-6;
+  }
+}
+
+.wpl_search_on_map{
+  left: 10px;
+  top: 10px;
+  &:after{
+    @include rotate(-90deg);
+    content: '\e91b';
+    color: rgba($co-0,.5);
+    display: inline-block;
+    vertical-align: top;
+    font: {
+      family: $font-frontend;
+      size: 20px;
+      weight: bold;
+    }
+  }
+}
+.wpl_map_search_input{
+  top: 50px !important;
+  left: 10px !important;
+  height: 35px;
+  display: none;
+  border: none;
+  box-shadow: 0 1px 4px rgba($co-0,.2);
+  border-radius: 3px;
+  outline: none;
+  padding-left: 5px;
+  font-size: 14px;
+}
+
+.wpl_map_size{
+  left: 10px;
+  top: 10px;
+  &:after{
+    content: '\e940';
+    color: rgba($co-0,.5);
+    display: inline-block;
+    font: {
+      family: $font-frontend;
+      size: 19px;
+    }
+  }
+  &.active{
+    &:after{
+      content: '\e007';
+    }
+  }
+}
+.wpl_search_on_map + .wpl_map_size{
+  left: 55px;
+}
+
+.wpl_mapfull{
+  position: fixed !important;
+  z-index: 100000;
+  width: 100% !important;
+  height: 100% !important;
+  top:0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+}
+
+.wpl_map_addons_toggle{
+  bottom: 24px;
+  left: 100px;
+  display: none;
+  @include for-tablet{
+    display: block;
+  }
+  &:before{
+    content: '\e91e';
+    color: rgba($co-0,.5);
+    display: inline-block;
+    font: {
+      family: $font-frontend;
+      size: 28px;
+    }
+  }
+  &:after{
+    content: '\e6ad';
+    color: $co-1;
+    display: inline-block;
+    position: absolute;
+    width: 16px;
+    transform: rotate(45deg);
+    left: calc(50% - 8px);
+    top: calc(50% - 11px);
+    height: 16px;
+    background: rgba($co-0,.5);
+    line-height: 12px;
+    border-radius: 50%;
+    padding: 1px;
+    border: 1px solid #fff;
+    box-sizing: border-box;
+    font: {
+      family: $font-frontend;
+      size: 7px;
+    }
+  }
+}
+
+.wpl_googlemap_container:not(.wpl_googlemap_carousel)
+{
+  .wpl_map_canvas
+  {
+    width: 100%;
+
+    .gm-bundled-control-on-bottom
+    {
+      width: 100px;
+      height: 35px;
+      bottom: 14px !important;
+      left: 0 !important;
+      & > div
+      {
+        width: auto;
+        height: auto;
+        top:0 !important;
+        // &+div{
+        //   top: -80px !important;
+        // }
+        & > div:not(.gm-compass)
+        {
+          width: auto !important;
+          height: auto !important;
+          background: transparent !important;
+          box-shadow: none;
+          & > button, & > div
+          {
+            float: left;
+            width: 35px !important;
+            height: 35px !important;
+            border-radius: 3px;
+            background: $co-1 !important;
+            box-shadow: 0 1px 4px rgba($co-0, .2);
+            text-align: center;
+
+            &:hover
+            {
+              background: $co-6 !important;
+            }
+
+            &:after
+            {
+              font-size: 30px;
+              color: rgba($co-0, .5);
+              line-height: 35px;
+            }
+
+            &:nth-child(2)
+            {
+              display: none;
+            }
+
+            &:first-child
+            {
+              margin-right: 10px !important;
+              &:after
+              {
+                content: "+";
+                font-family: Roboto, Arial, sans-serif;
+              }
+            }
+            &:nth-child(3)
+            {
+              &:after
+              {
+                content: "-";
+                transform: scaleX(2);
+                display: inline-block;
+                font-family: Roboto, Arial, sans-serif;
+              }
+            }
+
+            img
+            {
+              display: none !important;
+            }
+          }
+        }
+      }
+    }
+    a[href*="https://maps.google.com"]
+    {
+      position: absolute !important;
+      left: 10px !important;
+      top: -22px !important;
+      img{
+        height: 24px !important;
+      }
+    }
+    button[aria-label*="fullscreen"]
+    {
+      display: none !important;
+    }
+    .gm-style .gm-style-mtc div{
+      font-size: 15px !important;
+      height: 35px !important;
+      padding: 0 15px !important;
+    }
+    .gm-compass{
+      top: -55px;
+    }
+  }
+}
+.wpl-neighborhood-addon .googlemap{
+  .wpl_search_on_map,.wpl_map_size{
+    display: none;
+  }
+  button[aria-label*="fullscreen"]{
+    display: block !important;
+  }
+}
+
+.pac-container{
+  z-index: 100000;
+}
+

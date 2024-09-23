@@ -1,0 +1,66 @@
+.realtyna-lightbox-wp,
+.wpl-frontend-lightbox-wp {
+  box-shadow: none;
+  border-radius: 0;
+  border: none;
+  background: $co-1;
+  .realtyna-lightbox-close-btn {
+    line-height: 16px;
+    top: 15px;
+    &:before {
+      font: 16px/16px $fo-4 !important;
+    }
+  }
+  h2,
+  .realtyna-lightbox-title {
+    color: $co-1 !important;
+    background: rgba($co-2, .4) !important;
+    padding: 10px 20px;
+    height: 50px;
+    font: {
+      family: $fo-1;
+      size: 20px;
+      weight: 300;
+    }
+    text-transform: uppercase;
+    line-height: 30px;
+    @include user-select(none);
+  }
+  .wpl-gen-form-row {
+    padding: 0 15px 10px 15px;
+    label {
+      width: 100px;
+      text-align: left;
+      padding: 7px 0;
+      font: {
+        size: 14px;
+      }
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea {
+      @include wpl-input(inline-block, calc(100% - 100px), 10px, $co-6);
+    }
+    textarea {
+      resize: vertical;
+    }
+    span {
+      font: {
+        family: inherit;
+        size: 14px;
+      }
+    }
+    button {
+      border-radius: 0 !important;
+      border: 0 !important;
+      font: {
+        family: inherit !important;
+        size: 17px !important;
+        weight: 300 !important;
+      }
+      margin-bottom: 15px !important;
+      padding: 7px 30px !important;
+    }
+  }
+}

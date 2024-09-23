@@ -1,0 +1,37 @@
+.wpl-imp-exp-addon{
+
+  li{
+    border-bottom: 1px solid $co-8;
+    margin-bottom: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    position: relative;
+
+    &:last-child{
+      border-bottom: none;
+      padding-bottom: 10px;
+    }
+  }
+
+  .wpl-gen-panel-label-spacer{
+    padding-top: 8px;
+  }
+
+  select, .chosen-container{
+    margin-right: 5px;
+  }
+
+  .wpl-imp-exp-imp-icon::before{
+    font: 18px $font-wpl-backend;
+    content: '\e62b';
+    position: absolute;
+    top: 22px;
+    left: 20px;
+  }
+
+  .wpl-imp-exp-exp-icon::before{
+    @extend .wpl-imp-exp-imp-icon::before;
+    content: '\e62a';
+  }
+
+}

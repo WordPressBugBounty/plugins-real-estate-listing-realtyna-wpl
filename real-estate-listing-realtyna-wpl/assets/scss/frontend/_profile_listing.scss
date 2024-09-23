@@ -1,0 +1,545 @@
+/**
+ * WPL
+ * WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-profile-listing-wp {
+	padding: 30px 0 0;
+
+	@include for-phone {
+		margin: 0 10px;
+	}
+
+	.wpl_sort_options_container {
+		@include clearfix_s2;
+		border-bottom: 1px solid lighten($color_3, 50%);
+		margin: 5px auto 25px;
+
+		@include for-phone {
+			margin-bottom: 45px;
+		}
+
+		ul {
+			@if $text-direction == ltr {
+				float: left;
+			} @else {
+				float: right;
+			}
+			margin-bottom: 10px;
+			display: block;
+		}
+
+		li {
+			@if $text-direction == ltr {
+				float: left;
+			} @else {
+				float: right;
+			}
+			padding: 0 15px;
+			line-height: 30px;
+			position: relative;
+			list-style: none;
+			cursor: pointer;
+			margin: 0;
+			&:after {
+				@include size(1px, 60%);
+				@include rotate(17deg);
+				display: block;
+				content: "";
+				background: lighten($color_3, 20%);
+				position: absolute;
+				@if $text-direction == ltr {
+					right: 0;
+				} @else {
+					left: 0;
+				}
+				top: 7px;
+			}
+
+			&:last-child {
+				border: 0;
+			}
+		}
+	}
+
+	.wpl_plist_sort_active {
+		color: $color_1;
+		position: relative;
+		@if $text-direction == ltr {
+			padding-right: 15px;
+		} @else {
+			padding-left: 15px;
+		}
+		&:before {
+			@include transform(skew(-17deg, 2deg));
+			height: 1.4em;
+			font-family: $font-frontend;
+			display: block;
+			position: absolute;
+			background: $color_1;
+			@if $text-direction == ltr {
+				right: -21px;
+			} @else {
+				left: -21px;
+			}
+			top: 6px;
+			line-height: 1em;
+			font-style: normal;
+			padding: 0 3px;
+			color: $co-1;
+			z-index: 100;
+		}
+
+		&.sort_down {
+			&:before {
+				content: "\e929";
+			}
+		}
+
+		&.sort_up {
+			&:before {
+				content: "\e92a";
+				line-height: 1.9em;
+			}
+		}
+	}
+
+	.wpl_sort_options_container_title {
+		color: $color_3;
+		line-height: 50px;
+		font: 18px/1.7em $font-lato;
+		@if $text-direction == ltr {
+			float: left;
+			margin-right: 20px;
+			padding: 0 20px 0 10px;
+		} @else {
+			float: right;
+			margin-left: 20px;
+			padding: 0 10px 0 20px;
+		}
+
+		@include for-phone {
+			float: none;
+			width: 100%;
+			@if $text-direction == ltr {
+				margin-right: 0;
+				text-align: left;
+			} @else {
+				margin-left: 0;
+				text-align: right;
+			}
+			margin-bottom: 20px;
+			cursor: pointer;
+			font-size: 1.5em;
+			font-weight: bold;
+		}
+	}
+
+	.wpl_pagination_container {
+		@include clearfix_s2;
+		border-top: 1px solid lighten($color_3, 50%);
+		padding: 0 10px;
+		clear: both;
+
+		.pagination {
+			@include clearfix_s2;
+			margin: 10px 0 10px;
+			@if $text-direction == ltr {
+				float: left;
+			} @else {
+				float: right;
+			}
+
+			@include for-phone {
+				float: none;
+				width: 100%;
+			}
+
+			li {
+				@if $text-direction == ltr {
+					float: left;
+				} @else {
+					float: right;
+				}
+				list-style: none;
+
+				@include for-phone {
+					float: none;
+					border: 0;
+					border-bottom: 1px solid #d0d0d0;
+					margin: 0 4px;
+				}
+
+				a,
+				span {
+					margin: 0 1px;
+					border: 1px solid lighten($color_3, 50%);
+					border-radius: 0;
+
+					&:hover {
+						background: lighten($color_3, 50%);
+					}
+				}
+
+				&.active {
+					a {
+						background: $white;
+						border-color: $color_1;
+						color: $color_1;
+					}
+				}
+			}
+		}
+
+		.wpl_total_result {
+			@if $text-direction == ltr {
+				float: left;
+				margin: 8px 0 10px 10px;
+			} @else {
+				float: right;
+				margin: 8px 10px 10px 0;
+			}
+			line-height: 35px;
+		}
+
+		.wpl_page_size {
+			@if $text-direction == ltr {
+				float: right;
+			} @else {
+				float: left;
+			}
+			margin: 10px;
+		}
+
+		.wpl_page_size_title {
+			margin-right: 10px;
+		}
+
+		.chosen-container {
+			min-width: 55px;
+		}
+	}
+}
+.wpl_profile_listing_container {
+	@include clearfix_s2;
+}
+
+.wpl_profile_container {
+	float: left;
+	width: 32%;
+	border-bottom: 1px solid lighten($color_3, 50%);
+	margin: 0 6px 30px;
+	position: relative;
+	min-height: 360px;
+	text-align: center;
+	@include for-tablet-land {
+		width: 48%;
+	}
+	@include for-tablet {
+		width: 48%;
+	}
+
+	@include for-phone {
+		width: 100%;
+	}
+
+	&:hover {
+		border-color: $color_1;
+	}
+
+	.about {
+		display: none;
+	}
+
+	.wpl_profile_picture {
+		//@include size(300px,250px);
+		height: 300px;
+		padding: 1px;
+		overflow: hidden;
+		text-align: center;
+		line-height: 243px;
+		position: relative;
+		margin: 10px auto 0;
+		@include for-phone {
+			width: auto;
+		}
+		&:hover {
+			.front {
+				@include transform(rotateY(180deg));
+			}
+			.back {
+				@include transform(rotateY(0deg));
+			}
+		}
+		div {
+			//@include size(310px,220px);
+			@include transition(all 0.4s ease-in-out);
+			@include backface-visibility(hidden);
+			@include transform-style(preserve-3d);
+			//position: absolute;
+			//left: 0;
+			//top: 0;
+		}
+		.front {
+			@include size(100%, 100%);
+			@include transform(rotateY(0deg));
+			background: lighten($color_3, 50%);
+			text-align: center;
+			.no_image {
+				@include size(100%, 100%);
+				background: lighten($color_3, 50%);
+				&:before {
+					content: "\e003";
+					font: 17.5em $font-frontend;
+
+					@include for-phone {
+						font-size: 7.8em;
+						line-height: 150px;
+					}
+				}
+			}
+			img {
+				margin: auto;
+			}
+		}
+		.back {
+			@include size(100%, 100%);
+			@include transform(rotateY(-180deg));
+			background: $color_1;
+			color: $white;
+			font: 3em/250px $font-benchnine;
+			text-align: center;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			position: absolute;
+			left: 0;
+			top: 0;
+			@include for-phone {
+				font-size: 1.8em;
+				line-height: 150px;
+			}
+			a {
+				color: $white;
+				text-decoration: none;
+			}
+		}
+	}
+	.wpl_profile_container_title {
+		text-align: center;
+		a {
+			color: $color_1;
+			display: block;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			text-decoration: none !important;
+			@include for-phone {
+				left: 77%;
+			}
+		}
+		.view_properties {
+			display: none;
+		}
+		.title {
+			font: 40px $font-benchnine;
+			color: $color_1;
+			@include for-phone {
+				font-size: 2em;
+				line-height: 2.5em;
+			}
+		}
+	}
+	ul {
+		display: flex;
+		margin: -15px;
+		justify-content: center;
+		padding-top: 25px;
+		@include for-phone {
+			left: 150px;
+		}
+	}
+	li {
+		@include border-radius(50%);
+		@include size(30px, 30px);
+		float: left;
+		margin: 0 2px;
+		position: relative;
+		text-indent: -9999px;
+		list-style: none;
+
+		a {
+			@include size(100%, 100%);
+			display: block;
+			position: absolute;
+			top: 0;
+			z-index: 10;
+			@include border-radius(50%);
+		}
+		&:hover:after {
+			background: $color_3;
+		}
+
+		&:after {
+			@include border-radius(50%);
+			@include size(30px, 30px);
+			display: block;
+			@if $text-direction == ltr {
+				left: 0;
+			} @else {
+				right: 0;
+			}
+			top: 0;
+			color: $white;
+			text-align: center;
+			background: $color_1;
+			font: 16px/30px $font-frontend;
+			position: absolute;
+			text-indent: 0;
+		}
+
+		&.website:after {
+			content: "\e010";
+		}
+
+		&.phone:after {
+			content: "\e00f";
+		}
+
+		&.mobile:after {
+			content: "\e008";
+		}
+		&.fax:after {
+			font: 15px/30px $font-frontend;
+			content: "\e924";
+		}
+	}
+	&.row_box {
+		width: 100%;
+		margin: 2em 0;
+		padding: 4px;
+		min-height: 0;
+		@if $text-direction == ltr {
+			text-align: left;
+		} @else {
+			text-align: right;
+		}
+		@include pie-clearfix;
+		border: 1px solid lighten($color_3, 50%);
+		@include for-tablet {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+		.about {
+			display: block;
+		}
+		ul {
+			margin: 15px 10px;
+			width: 63%;
+			float: right;
+			@include for-tablet {
+				width: 100%;
+				flex-wrap: wrap;
+			}
+			li {
+				width: 48%;
+				@if $text-direction == ltr {
+					padding-left: 35px;
+				} @else {
+					padding-right: 35px;
+				}
+				margin-bottom: 5px;
+				line-height: 30px;
+				text-indent: 0;
+				list-style: none;
+				border-radius: 0px;
+				overflow: hidden;
+				@include for-tablet {
+					width: 100%;
+				}
+				&.phone,
+				&.mobile {
+					@include for-phone {
+						text-indent: -9999px;
+					}
+				}
+				a {
+					&.phone-link,
+					&.mobile-link {
+						display: none;
+					}
+					@include for-phone {
+						&.phone-link,
+						&.mobile-link {
+							display: block;
+							text-indent: 0;
+						}
+					}
+				}
+			}
+		}
+		.wpl_profile_picture {
+			width: 33.3333%;
+			margin: 0 auto;
+			@if $text-direction == ltr {
+				float: left;
+				text-align: left;
+			} @else {
+				float: right;
+				text-align: right;
+			}
+			@include for-phone {
+				width: 100%;
+			}
+		}
+
+		.wpl_profile_container_title {
+			width: 66.6666%;
+			@if $text-direction == ltr {
+				float: left;
+				padding-left: 10px;
+				text-align: left;
+			} @else {
+				float: right;
+				padding-right: 10px;
+				text-align: right;
+			}
+			@include for-tablet {
+				width: 100%;
+			}
+			.view_properties {
+				@if $text-direction == ltr {
+					float: right;
+				} @else {
+					float: left;
+				}
+				display: block;
+				font-size: 24px;
+				padding: 5px;
+				@include for-phone {
+					float: none;
+				}
+			}
+			a {
+				@include for-phone {
+					float: none;
+					text-align: center;
+				}
+			}
+		}
+	}
+}
+.wpl-prp-disable-image-hover {
+	.wpl_profile_container {
+		.wpl_profile_picture:hover {
+			.front {
+				@include transform(rotateY(0deg));
+			}
+			.back {
+				display: none;
+			}
+		}
+	}
+}

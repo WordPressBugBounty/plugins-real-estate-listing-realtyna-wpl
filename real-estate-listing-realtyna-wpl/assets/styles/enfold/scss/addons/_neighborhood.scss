@@ -1,0 +1,130 @@
+//Neighborhoods Listing
+.wpl-neighborhood-addon {
+  .wpl_property_listing_list_view_container {
+    .wpl_prp_cont.grid_box {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      border: 1px solid $co-7 !important;
+      @include wpl_prp_top;
+      .wpl_prp_bot {
+        padding: 10px;
+        min-height: 170px;
+        a {
+          .wpl_prp_title {
+            font: {
+              size: 1.5em;
+              family: $fo-1;
+              weight: bold;
+            }
+            text-transform: uppercase;
+            overflow: hidden;
+            text-align: inherit;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: block;
+            margin-bottom: 0;
+            .wpl_prp_listing_location {
+              height: auto;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              margin-top: 0;
+              margin-bottom: 10px;
+              text-align: left;
+              font: {
+                size: 14px;
+                family: $fo-1;
+                weight: 500;
+              }
+              color: $co-4;
+            }
+          }
+        }
+        .wpl_prp_listing_location {
+          height: auto;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          margin-top: 0;
+          margin-bottom: 10px;
+          text-align: left;
+          font-size: 14px;
+          font-family: $fo-1, sans-sarif;
+          font-weight: 500;
+          color: $co-4;
+        }
+        .wpl_prp_listing_icon_box {
+          span {
+            display: inline-block;
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+    .wpl_prp_cont.row_box {
+      .wpl_prp_bot {
+        padding: 10px;
+        a {
+          .wpl_prp_title {
+            font: {
+              size: 1.5em;
+              family: $fo-1;
+              weight: bold;
+            }
+            text-transform: uppercase;
+            overflow: hidden;
+            text-align: inherit;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            display: block;
+            margin-bottom: 0;
+            .wpl_prp_listing_location {
+              height: auto;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              white-space: nowrap;
+              margin-top: 0;
+              margin-bottom: 10px;
+              text-align: left;
+              font: {
+                size: 14px;
+                family: $fo-1;
+                weight: 500;
+              }
+              color: $co-4;
+            }
+          }
+        }
+        .wpl_prp_listing_location {
+          height: auto;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          margin-top: 0;
+          margin-bottom: 10px;
+          text-align: left;
+          font-size: 14px;
+          font-family: $fo-1, sans-sarif;
+          font-weight: 500;
+          color: $co-4;
+        }
+        .wpl_prp_listing_icon_box {
+          span {
+            display: inline-block;
+            padding-left: 10px;
+          }
+        }
+      }
+    }
+    .wpl_pagination_container {
+      border-top: none;
+    }
+  }
+  &.wpl_prp_show_container{
+    .wpl_prp_show_detail_boxes_cont .wpl-nh-item{
+        width: auto;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+  }
+}

@@ -1,0 +1,29 @@
+
+@import "../common/variables";
+@import "../common/colors";
+
+
+/* Device widths */
+$width-phone:               320px;
+$width-phone-land:          480px;
+$width-tablet:              768px;
+$width-desktop:             979px;
+$width-large-desktop:       1200px;
+
+/* fonts */
+$font-benchnine: 'BenchNine',Arial, Helvetica, sans-serif;
+
+/* Device widths */
+$small-phone: '(max-width: 320px)';
+$phone: '(max-width: 480px)';
+$tablet-portrait: '(max-width: 768px)';
+$tablet-landscape-desktop: '(min-width: 769px) and (max-width: 979px)';
+$all-non-desktop-devices:'(max-width: 1199px)';
+$large-desktop: '(min-width: 1200px)';
+$non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
+$retina: 'screen and (-webkit-min-device-pixel-ratio: 2)';
+
+
+
+/* Fonts and Sizes */
+$html-default-font-size: 10px;

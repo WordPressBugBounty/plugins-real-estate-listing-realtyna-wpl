@@ -1,0 +1,514 @@
+/*!
+  Author UI Department of Realtyna Inc.
+ */
+
+$text-direction: ltr !default;
+
+@import "common/variables";
+@import "rta/mixin";
+@import "common/gen_util";
+
+@mixin vf($name, $argument) {
+  -webkit-#{$name}: #{$argument};
+  -ms-#{$name}: #{$argument};
+  -moz-#{$name}: #{$argument};
+  -o-#{$name}: #{$argument};
+  #{$name}: #{$argument};
+}
+
+$co-0: #000;
+$co-1: #fff;
+$co-2: #ebebeb;
+$co-3: #666;
+$co-4: #29a9df;
+$co-5: #717171;
+$co-6: #f2f2f2;
+$co-7: #ddd;
+
+$fo-sans-serif: arial, helvetica, sans-serif;
+
+@page {
+  size: 11.69in 16.53in;
+  padding-left: 0;
+  padding-right: 0;
+  margin-top: 1cm;
+  margin-left: 0;
+  margin-right: 0;
+  margin-bottom: 1cm;
+  margin-header: .2in;
+  margin-footer: .2in;
+}
+
+.wpl-pdf-clear{
+  clear: both;
+}
+
+.wpl-pdf-container{
+  width: 675px;
+  margin: auto;
+}
+
+html,body{
+  padding: 0;
+  margin: 0;
+}
+
+body{
+  font: 14px $fo-sans-serif;
+}
+
+.wpl-pdf-toolbar{
+
+}
+
+.wpl-pdf-logo {
+  width: 135px;
+
+  img {
+    width: 100%;
+  }
+}
+
+.wpl-pdf-logo-top{
+  padding: 30px 10px 10px;
+}
+
+.wpl-pdf-header{
+  background: $co-2;
+  color: $co-0;
+  padding: 10px;
+}
+
+.wpl-pdf-title{
+  font-size: 26px;
+}
+
+.wpl-pdf-header-left{
+  padding: 18px 0;
+  float: left;
+  text-align: left;
+  width: 50%;
+}
+
+.wpl-pdf-header-right{
+  float: right;
+  text-align: right;
+  width: 50%;
+
+  .wpl-pdf-box-wp{
+    padding: 0;
+    width: auto;
+    float: none;
+  }
+}
+
+.wpl-pdf-gallery{
+  width: 100%;
+  margin: 10px 0;
+}
+
+.wpl_gallery_images
+{
+  //box-shadow: 0px 9px 7px -5px rgba($co-0,0.45);
+  float: left;
+  width: 200px !important;
+  text-align: center;
+  padding: 10px 12px;
+
+  div{
+    border-radius: 1px;
+    overflow: hidden;
+    display: inline-block;
+    border: 1px solid $co-5;
+  }
+
+  img{
+    max-width: 100%;
+  }
+}
+
+.wpl-pdf-box-wp{
+  float: left;
+  width: 48%;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.wpl-pdf-right{
+  padding-left: 2%;
+  padding-right: 0;
+}
+
+.wpl-pdf-left{
+  padding-right: 2%;
+  padding-left: 0;
+}
+
+.wpl-pdf-box-title{
+  border-bottom: 2px solid $co-7;
+  padding: 10px 0;
+  position: relative;
+  color: $co-4;
+  display: block;
+  width: 100%;
+  font-size: 16px;
+
+  span {
+    color: $co-0;
+  }
+}
+
+.wpl-pdf-box-desc{
+  text-align: justify;
+  
+  .wpl-pdf-box-cnt{
+    padding-top: 10px;
+  }
+}
+
+.col-left, .col-right{
+  .rows{
+    margin-bottom: 8px;
+
+    img{
+      display: inline-block;
+      vertical-align: middle;
+    }
+  }
+}
+
+.wpl-pdf-field-title{
+  display: inline-block;
+  width: 44%;
+  float: left;
+  text-align: right;
+  padding-right: 6%;
+}
+
+.wpl-pdf-field-value{
+  display: inline-block;
+  font-weight: bold;
+  float: left;
+  width: 44%;
+  padding-right: 6%;
+  text-align: right;
+}
+
+.wpl-pdf-field-tick{
+  float: left;
+  width: 25%;
+}
+
+.wpl-pdf-field-feature{
+  float: left;
+  width: 48%;
+  margin-bottom: 10px;
+
+  .wpl-pdf-field-title{
+    text-align: left;
+    width: 75%;
+    padding-right: 0;
+    font-size: 12px;
+  }
+
+}
+
+.wpl-pdf-field-feature-by-value{
+  width: 100%;
+  float: left;
+  padding-top: 0;
+  padding-bottom: 10px;
+  font-size: 12px;
+
+  .wpl-pdf-field-tick{
+    width: 12%;
+    margin-top: 3px;
+  }
+
+  .wpl-pdf-field-title{
+    //margin-top: 5px;
+    padding-right: 5px;
+    text-align: left;
+    width: 34%;
+  }
+
+  .wpl-pdf-field-value{
+    color: $co-4;
+    background: $co-6;
+    font-weight: normal;
+    padding: 5px;
+    text-align: center;
+
+  }
+
+}
+
+.wpl-pdf-field-other{
+  padding-top: 7px;
+  padding-bottom: 7px;
+  border-bottom: 1px solid darken($co-1, 10%);
+  width: 100%;
+  overflow: hidden;
+  .wpl-pdf-field-title{
+    padding-right: 5px;
+    text-align: left;
+    width: 34%;
+  }
+
+}
+
+.wpl-pdf-last{
+  border-bottom: 0 none !important;
+}
+
+.wpl-pdf-odd{
+  background-color: darken($co-1, 2%) !important;
+
+  & > div{
+    background-color: darken($co-1, 2%);
+  }
+}
+
+.wpl-pdf-feature-first{
+  padding-top: 10px;
+}
+
+.wpl-pdf-field-location{
+  @extend .wpl-pdf-field-other;
+}
+
+.wpl-pdf-field-neighborhood{
+  @extend .wpl-pdf-field-other;
+}
+
+.wpl_agent_info_r {
+  display: inline-block;
+  padding-left: 30px;
+  div {
+    height: 25px;
+    .email_url {
+      //width: 120px;
+    }
+  }
+
+  .name {
+    color: $co-4;
+    font: bold 15px $fo-sans-serif;
+  }
+
+  table{
+    td{
+      font-size: 14px;
+    }
+  }
+
+}
+
+.wpl-pdf-pos-1{
+
+  .wpl-pdf-box-wp{
+    width: 100%;
+  }
+
+  .wpl-pdf-box-title{
+    margin-bottom: 10px;
+  }
+
+}
+
+.wpl-pdf-co-info{
+  margin-top: 20px;
+  font-size: 12px;
+  font-style: italic;
+}
+
+.wpl-pdf-copyright{
+  border-top: 1px solid $co-3;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  padding-top: 7px;
+}
+
+.wpl-pdf-copyright-text{
+  font-size: 12px;
+  font-weight: bold;
+}
+
+
+.wpl_agent_info
+{
+  td
+  {
+    vertical-align: top;
+    &.wpl_agent_info_td_no_image
+    {
+      background: $co-2;
+      text-align: center;
+      vertical-align: middle;
+    }
+  }
+  .no_image
+  {
+    color:lighten($co-5, 10%);
+    text-align: center;
+    display: block;
+  }
+}
+.wpl_agent_info_td_r
+{
+  padding-left: 20px;
+}
+.wpl_multi_agent_info
+{
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px;
+  margin: 5px 0;
+  border: 1px solid darken($co-7,5%);
+}
+.wpl-print-page-container{
+  a{
+    text-decoration: none;
+  }
+  .wpl_prp_title{
+    margin: 0;
+  }
+  .wpl-listing-tag{
+    background: rgba(0,0,0,0.5);
+  }
+  .wpl_prp_top_boxes{
+    height: auto;
+    position: relative;
+    transform: none !important;
+    .wpl_gallery_container{
+      height: auto;
+    }
+  }
+  .wpl_agent_container
+  {
+    margin-top:10px;
+    border-bottom:1px solid #ddd;
+  }
+  .wpl_agent_contact {
+    //@include box-sizing(border-box);
+    @include calc('width','100% - 50px');
+    float:left;
+    padding:10px;
+    text-align: left;
+    margin:0;
+    & > li
+    {
+      text-align: left
+    }
+  }
+  .wpl_agent_biography
+  {
+    float:left;
+    width: 50px;
+  }
+  .wpl_agent_profile_picture
+  {
+    max-width: 100%
+  }
+  .wpl_prp_cont {
+    float: left;
+    width: 31.333333%;
+    padding: 0 0 20px;
+    margin: 0 1%;
+    position: relative;
+    text-align: center;
+    & > div{
+      float:left;width:100%
+    }
+    .wpl_prp_listing_location
+    {
+
+      height: 45px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      text-align: center;
+      font: 18px "Lato",Arial,Helvetica,sans-serif;
+      font-size:10pt !important;
+      font-weight: 500;
+    }
+    .price_box{
+      position:relative;
+      border-bottom:1px solid #e6e6e6;
+      height:auto;
+      padding:10px 0;
+      span
+      {
+        display: inline-block;
+        background: #fff;
+        color: #29a9df;
+        font-size: 1.3em;
+        padding: 0 10px;
+        text-align: center;
+      }
+    }
+  }
+  .wpl_gallery_container{
+    height:260px;
+    width:100%;
+    overflow:visible;
+    position:relative;
+    .wpl_gallery_image{
+      position:relative;
+      z-index:99;
+      display:block;
+      width:250px!important;
+      height:200px!important
+    }
+    .wpl-listing-tags-wp{display:none}
+  }
+  .wpl_prp_title
+  {
+    font:20px Arial;
+    margin-top:10px;
+    color: #29a9df;
+    overflow: hidden;
+    text-align: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    display: block;
+  }
+  .wpl_prp_listing_icon_box{
+    display:table;
+    margin:0 auto
+  }
+  .print_view_rooms
+  {
+    text-align:center;
+    min-width:250px;
+    margin:0 auto;
+    display:table;
+    height: 30px;
+  }
+  .print_view_rooms div
+  {
+    display:block;
+    float:left;
+    font-size:9pt;
+    font-family:Lato,Arial;
+    width:33.3%;
+    text-align:center;
+    margin:0
+  }
+  .print_view_images
+  {
+    float:left;
+    text-align:center;
+    width:100%
+  }
+  .print_view_images img
+  {
+    height:250px;
+    margin:0 auto;
+    width:360px;
+    max-width:100%
+  }
+}

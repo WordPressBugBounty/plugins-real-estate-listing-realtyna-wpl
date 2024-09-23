@@ -1,0 +1,21 @@
+
+//
+$fancy-base-width: 480px;
+$fancy-base-height: 80px;
+
+//Common fonts
+$font-open-sans: 'Open Sans',Arial,Helvetica, sans-serif;
+$font-lato: 'Lato',Arial, Helvetica, sans-serif;
+$font-droid: 'Droid Serif',Arial, Helvetica, sans-serif;
+$font-arial: Arial, Helvetica, sans-serif;
+$font-frontend:'wpl-front';
+
+/* Device widths */
+$small-phone: '(max-width: 320px)';
+$phone: '(max-width: 480px)';
+$tablet-portrait: '(max-width: 768px)';
+$tablet-landscape-desktop: '(min-width: 769px) and (max-width: 979px)';
+$tablet-landscape: '(min-width: 980px) and (max-width: 1199px)';
+$large-desktop: '(min-width: 1200px)';
+$non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
+$retina: 'screen and (-webkit-min-device-pixel-ratio: 2)';

@@ -1,0 +1,304 @@
+//Fix for some templates that set min-width for html element
+html.wpl-crm-addon
+{
+  min-width: 100%;
+}
+
+@include for-small-phone
+{
+  .wp-crm-fullscreen
+  {
+    display: none;
+  }
+}
+
+@include for-phone
+{
+  .wpl-crm-logo-cnt
+  {
+    width: 140px;
+    @include display-flex();
+    & > img
+    {
+      height: 20px;
+      margin: auto;
+    }
+  }
+  .wpl-crm-main-toolbar
+  {
+    .wpl-crm-btn
+    {
+      padding: 5px 30px 5px 5px;
+      margin-right: 0;
+      font:
+      {
+        size: 10px;
+      }
+      .wpl-crm-icon
+      {
+        font:
+        {
+          size: 12px;
+        }
+        top: 8px;
+      }
+    }
+  }
+  .wpl-crm-content
+  {
+    > .wpl-gen-tab-contents-wp
+    {
+      width: 100%;
+    }
+  }
+}
+
+@include for-tablet
+{
+  .wpl-crm-quote
+  {
+    display: none;
+  }
+  .wpl-crm-profile-image-cnt
+  {
+    &.img40
+    {
+      display: none;
+    }
+    &.img70
+    {
+      width: 40px;
+      height: 40px;
+    }
+  }
+  .wpl-crm-tab
+  {
+    & > li
+    {
+      & > a
+      {
+        padding: 8px 10px;
+      }
+    }
+  }
+  .wpl-crm-sidebar
+  {
+    display: none;
+    z-index: 999;
+    width: 140px;
+  }
+  .wpl-crm-sidebar-collapse
+  {
+    display: block;
+    width: 40px;
+    .wpl-crm-user
+    {
+      padding: 0;
+    }
+  }
+  .wpl-crm-content
+  {
+    @if $text-direction == ltr
+    {
+      margin-left: 0;
+    } @else
+    {
+      margin-right: 0;
+    }
+  }
+  .wpl-crm-content-collapse
+  {
+    @if $text-direction == ltr
+    {
+      margin-left: 40px;
+    } @else
+    {
+      margin-right: 40px;
+    }
+  }
+  .wpl-crm-user
+  {
+    padding: 5px;
+  }
+  .wpl-crm-profile-status-cnt
+  {
+    .wpl-crm-welcome,
+    .wpl-crm-onlinestatus
+    {
+      font: {
+        size: 10px;
+      }
+    }
+    .wpl-crm-username
+    {
+      font:
+      {
+        size: 9px;
+      }
+      height: 20px;
+      line-height: 20px;
+    }
+  }
+  .wpl-crm-onlinestatus-btn
+  {
+    font:
+    {
+      size: 10px;
+    }
+  }
+  .wpl-crm-addon
+  {
+    .wpl-util-scrollbar-wrap
+    {
+      overflow-y: scroll;
+    }
+  }
+  .wpl-crm-grid-header,
+  .wpl-crm-form-wp header
+  {
+    padding: 5px 10px;
+    font:
+    {
+      size: 14px;
+    }
+  }
+  .wpl-crm-form-wp
+  {
+    footer
+    {
+      padding: 0;
+      .wpl-crm-form-submit-btn
+      {
+        position: absolute;
+        top: 3px;
+        @if $text-direction == ltr
+        {
+          right: 3px;
+          padding: 3px 30px 3px 10px;
+        } @else
+        {
+          left: 3px;
+          padding: 3px 10px 3px 30px;
+        }
+      }
+    }
+    .realtyna-lightbox-close-btn
+    {
+      height: 32px;
+      line-height: 32px;
+      &::before
+      {
+        font: 10px/10px $font-frontend;
+        line-height: 32px;
+      }
+    }
+    .wpl-util-scrollbar-scroll
+    {
+      display: none;
+    }
+  }
+  .wpl-crm-addon .realtyna-lightbox-wp,
+  .wpl-crm-form-wp.realtyna-lightbox-right-pos
+  {
+    width: 80% !important;
+    height: 85% !important;
+    top: 10% !important;
+    @if $text-direction == ltr
+    {
+      left: 10% !important;
+      margin-left: 0 !important;
+    } @else
+    {
+      right: 10% !important;
+      margin-right: 0 !important;
+    }
+  }
+  .wpl-crm-table-scroll
+  {
+    overflow-y: scroll;
+  }
+  .wpl-crm-notifications-cnt
+  {
+    .wpl-crm-drop-list
+    {
+      width: 150px;
+    }
+  }
+  .wpl-crm-no-result
+  {
+    font:
+    {
+      size: 16px;
+    }
+  }
+  .wpl-crm-table-row-header
+  {
+    .wpl-crm-table-cell
+    {
+      font:
+      {
+        size: 12px;
+      }
+      line-height: 12px;
+      text-align: center;
+    }
+  }
+  .wpl-crm-sort-cnt
+  {
+    .wpl-crm-icon
+    {
+      bottom: -4px;
+    }
+  }
+  .wpl-crm-grid-search
+  {
+    width: 100%;
+    padding-top: 10px;
+    > input[type="text"]
+    {
+      /*Fallback for old browsers*/
+      width: 100%;
+    }
+    .wpl-crm-search-icon,
+    .wpl-crm-close-icon
+    {
+      top: 10px;
+    }
+  }
+  .wpl-crm-grid-lightbox
+  {
+    .wpl-crm-grid-search
+    {
+      > input[type="text"]
+      {
+        /*Fallback for old browsers*/
+        width: 85%;
+        width: calc(100% - 30px);
+      }
+    }
+    .wpl-crm-search-icon,
+    .wpl-crm-close-icon
+    {
+      right: 30px;
+    }
+  }
+  .wpl-crm-content-sidebar
+  {
+    margin-bottom: 10px;
+  }
+}
+
+@include for-tablet-land
+{
+  .wpl-crm-quote
+  {
+    display: none;
+  }
+  .wpl-crm-addon
+  {
+    .wpl-util-scrollbar-wrap
+    {
+      overflow-y: scroll;
+    }
+  }
+}

@@ -1,0 +1,22 @@
+/**!
+ * WPL Theme
+ * WPL UI Department of Realtyna Inc.
+
+ * Copyright 2016 Realtyna Inc. | realtyna.com
+ **/
+@import "compass";
+
+/*Config*/
+@import "scss/Configs/colors";
+@import "scss/Configs/mixin";
+@import "scss/Configs/parts";
+
+/*WPL*/
+@import "scss/property_listing";
+@import "scss/property_show";
+@import "scss/search";
+@import "scss/addon_general";
+@import "scss/widgets";
+@import "scss/profile_listing";
+@import "scss/profile_show";
+@import "scss/addon_membership";

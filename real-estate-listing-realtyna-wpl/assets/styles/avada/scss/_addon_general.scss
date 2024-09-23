@@ -1,0 +1,339 @@
+/*Addon Booking*/
+.wpl_property_listing_container {
+
+  .wpl-print-rp-wp {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 6px 1px;
+
+    .wpl-print-rp-link {
+      width: 24px;
+      height: 24px;
+      border-radius: 2px;
+      position: relative;
+      background: $co-43;
+      border: 2px solid $co-43;
+      margin: 3px 0;
+      padding: 0;
+      display: block;
+      font-size:14px;
+      color: $co-24;
+      span {
+        position: absolute;
+        top: -2px;
+        left: 4px;
+      }
+    }
+  }
+
+  .wpl-rss-wp {
+    position: relative;
+    float: right;
+    bottom: auto;
+    right: auto;
+    margin-top: 5px;
+
+    .wpl-rss-link {
+      width: 24px;
+      height: 24px;
+      border-radius: 2px;
+      position: relative;
+      background: $co-43;
+      border:2px solid $co-43;
+      margin: 4px;
+      padding: 0;
+
+      &:after {
+        position: absolute;
+        left: 4px;
+        font-size: 12px;
+        color: $co-24;
+        top: 4px;
+        margin: 0;
+      }
+      span {
+        display: none;
+      }
+    }
+  }
+  .wpl-save-search-wp {
+    bottom: auto;
+    position: relative;
+    float: right;
+    bottom: auto;
+    left: auto;
+    margin: 9px 2px;
+    .wpl-save-search-link {
+      width: 24px !important;
+      border: 0 !important;
+      height: 24px !important;
+
+      &:hover {
+        border: 0;
+      }
+
+      &:after {
+        font-size: 15px !important;
+        line-height: 23px;
+      }
+    }
+    span {
+      display: none
+    }
+
+    @include for-tablet {
+      position: relative;
+      float: right;
+      bottom: auto;
+      right: auto;
+      margin-top: 8px;
+      margin-right: 4px;
+      top: auto;
+      width: 24px;
+      height: 24px;
+      .wpl-save-search-link {
+        width: 24px !important;
+        height: 24px !important;
+        border: 0 !important;
+        &:after {
+          font-size: 14px;
+          line-height: 22px !important;
+        }
+      }
+
+    }
+    @include for-phone {
+      top: auto;
+      bottom: 0;
+      height: 24px;
+      position: relative;
+      float: right;
+      margin-top: 9px;
+      margin-right: 2px;
+    }
+
+    .wpl-save-search-link {
+      @include border-radius(2px !important);
+      @include transition(0.2s);
+      background: $co-43;
+      font-size: 12px;
+      font-family: Lato;
+      width: 96px;
+      height: 21px;
+      padding: 1px 4px 2px 6px;
+      border: 1px solid $co-6;
+      font-style: normal;
+      color: $co-16;
+      @include for-phone {
+        width: 24px;
+        height: 24px;
+        border: 0;
+
+        &:after {
+          top: 1px;
+          left: 6px;
+          position: absolute;
+          font-size: 14px !important;
+        }
+      }
+
+      &:after {
+        font-family: "wpl-front";
+        content: "\e6cb";
+        font-size: 12px;
+        color: $co-16;
+        top: 4px;
+        left: 5px;
+      }
+
+      &:hover {
+        background: $co-43;
+      }
+    }
+  }
+  &.wpl-property-listing-mapview {
+    .wpl-rss-wp {
+      position: relative;
+      float: right;
+      bottom: auto;
+      right: auto;
+      margin: 0;
+
+      .wpl-rss-link {
+        width: 24px;
+        height: 24px;
+        border-radius: 2px;
+        position: relative;
+        background: $co-43;
+        border:2px solid $co-43;
+        margin: 4px;
+        padding: 0;
+
+        &:after {
+          position: absolute;
+          left: 4px;
+          font-size: 12px;
+          color: $co-24;
+          top: 4px;
+          margin: 0;
+        }
+        span {
+          display: none;
+        }
+      }
+    }
+    .wpl-save-search-wp {
+      margin-right: 4px;
+      position: relative;
+      float: right;
+      top: auto;
+      bottom: auto;
+      margin: 4px;
+      .wpl-save-search-link {
+        width: 24px;
+        height: 24px;
+        border: 0;
+        position: relative;
+        span {
+          display: none;
+        }
+      }
+    }
+    .wpl-print-rp-wp {
+      position: relative;
+      top: auto;
+      right: auto;
+
+    }
+  }
+}
+
+/*Addon Mortgage*/
+.wpl_mcalc_container
+{
+  .wpl-mortgage-percent
+  {
+    display: inline-block;
+    padding: 0;
+  }
+  label
+  {
+    @include for-tablet
+    {
+      float: none;
+      text-align: left;
+    }
+    @include foundation-medium{
+      float: left;
+      text-align: right;
+    }
+  }
+}
+
+.wpl-gen-form-wp label+input[type="text"], .wpl-gen-form-wp .wpl-gen-form-label+input[type="text"], .wpl-gen-form-wp input[type="email"], .wpl-gen-form-wp input[type="password"], .wpl-gen-form-wp input[type="tel"], .wpl-gen-form-wp label+select, .wpl-gen-form-wp .wpl-gen-form-label+select, .wpl-gen-form-wp label+.chosen-container, .wpl-gen-form-wp .wpl-gen-form-label+.chosen-container, .wpl-gen-form-wp label+textarea, .wpl-gen-form-wp .wpl-gen-form-label+textarea {
+  width: -moz-calc(100% - 140px);
+  width: -webkit-calc(100% - 140px);
+  width: calc(100% - 140px);
+}
+
+
+
+
+//booking
+
+#wplbooking_submit_book {
+  @include border-radius(2px !important);
+  @include transition(all 0.3s);
+  text-transform: uppercase;
+  border: 0;
+  padding: 10px !important;
+  color: #FFF;
+  cursor: pointer;
+  letter-spacing: 0;
+  display: inline-block;
+  position: relative;
+}
+.wpl-booking-addon h3 {
+  font-style: normal;
+}
+.wpl-booking-comment-txt {
+  resize: vertical;
+}
+
+.wpl-util-form-row>input[type=text] {
+  width: -moz-calc(100% - 104px);
+  width: -webkit-calc(100% - 104px);
+  width: calc(100% - 104px);
+}
+
+#wpl_paypal_direct_expiration_date_year_chosen {
+  width: calc( 100% - 167px) !important;
+  min-width: calc( 100% - 167px) !important;
+}
+#wpl_paypal_direct_card_type_chosen {
+  min-width: calc(100% - 104px) !important;
+  width: calc(100% - 104px) !important;
+}
+#wpl_dashboard_change_password_form input[type="text"],
+#wpl_dashboard_change_password_form input[type="password"],
+#wpl_lostpassword_form_container input[type="text"],
+#wpl_lostpassword_form_container input[type="password"],
+#wpl_resetpass_form input[type="text"],
+#wpl_resetpass_form input[type="password"] {
+  padding: 8px;
+  border: 1px solid $co-8;
+}
+#wpl_dashboard_change_password_form label,
+#wpl_dashboard_change_password_form .wpl-gen-form-label,
+#wpl_lostpassword_form_container label,
+#wpl_lostpassword_form_container .wpl-gen-form-label,
+#wpl_resetpass_form label,
+#wpl_resetpass_form .wpl-gen-form-label {
+  width: 120px;
+  float: left;
+}
+
+#wpl_dashboard_change_password_form input[type="submit"],
+#wpl_dashboard_change_password_form button,
+#wpl_lostpassword_form_container input[type="submit"],
+#wpl_lostpassword_form_container button,
+#wpl_resetpass_form input[type="submit"],
+#wpl_resetpass_form button,
+.wpl-button {
+  @include border-radius(2px !important);
+  @include transition(all 0.3s);
+  text-transform: uppercase;
+  border: 0;
+  padding: 10px !important;
+  color: #FFF;
+  cursor: pointer;
+  letter-spacing: 0;
+  display: inline-block;
+  position: relative;
+}
+table#wpl_addon_save_searches_list_container {
+  width: 100%;
+}
+.wpl-review-review-content-wp .wpl-review-review-reply-btn {
+  //float: left;
+  padding: 0 10px !important;
+}
+
+/*Neighborhood Add-on*/
+.wpl-neighborhood-addon.wpl_prp_show_container
+{
+  &.wpl_prp_show_default_container .wpl_prp_container .wpl_prp_container_content
+  {
+    .wpl_prp_container_content_title
+    {
+      position: static;
+      width: 100%;
+      overflow: hidden;
+      margin: 0 auto;
+    }
+    .wpl_prp_container_content_left{
+      margin-top: 0;
+    }
+  }
+}

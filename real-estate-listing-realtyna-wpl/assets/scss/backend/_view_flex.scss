@@ -1,0 +1,111 @@
+.flex-wp {
+
+  .sidebar-wp .side-tabs-wp a {
+    padding-top: 60px;
+    padding-bottom: 15px;
+  }
+
+  .sidebar-wp {
+    .flex-content {
+      @if $text-direction == ltr
+      {
+        margin-right: 15px;
+      } @else
+      {
+        margin-left: 15px;
+        float: right;
+      }
+    }
+
+    .flex-right-panel {
+      width: $size-side-flex-right !important;
+      @if $text-direction == ltr
+      {
+        float: right;
+      } @else
+      {
+        float: left;
+      }
+    }
+  }
+
+  &.user-flex{
+    .side-tabs-wp{
+      display: none;
+    }
+    .side-content-wp{
+      margin-left: 0;
+
+      &.flex-content{
+        @include calc(width, '100% - #{$size-side-flex-right + 15}');
+      }
+
+    }
+  }
+
+}
+
+
+//region + Icons
+#icon-flex {
+  @include backend-sprite(icon-64-flex);
+  display: inline-block;
+  margin-top: 5px;
+}
+
+// Basic Details
+#wpl_slide_label_id1 {
+  @include side-tab-icon(icon-48-basic);
+}
+
+// Features
+#wpl_slide_label_id4 {
+  @include side-tab-icon(icon-48-features);
+}
+
+// Appliances
+#wpl_slide_label_id5 {
+  @include side-tab-icon(icon-48-appliances);
+}
+
+// Address Map
+#wpl_slide_label_id2 {
+  @include side-tab-icon(icon-48-address);
+}
+
+// Neighborhood
+#wpl_slide_label_id6 {
+  @include side-tab-icon(icon-48-neighbornhood);
+}
+
+// Image Gallery
+#wpl_slide_label_id3 {
+  @include side-tab-icon(icon-48-image-gallery);
+}
+
+// Video
+#wpl_slide_label_id7 {
+  @include side-tab-icon(icon-48-videos);
+}
+
+// Attachments
+#wpl_slide_label_id9 {
+  @include side-tab-icon(icon-48-attachments);
+}
+
+// Specialties
+#wpl_slide_label_id11 {
+  @include side-tab-icon(icon-48-specialist);
+}
+
+// MLS
+#wpl_slide_label_id31 {
+  @include side-tab-icon(icon-48-mls);
+}
+
+// Importer
+#wpl_slide_label_id34 {
+  @include side-tab-icon(icon-48-importer);
+}
+
+//endregion

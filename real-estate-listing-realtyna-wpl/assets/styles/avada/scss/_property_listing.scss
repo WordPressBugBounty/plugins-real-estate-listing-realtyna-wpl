@@ -1,0 +1,819 @@
+.wpl_property_listing_container {
+  margin-top: 15px;
+  margin-left: -15px;
+  margin-right: -15px;
+
+  @include wpl-avada-layout-switcher;
+  @include wpl-avada-layout-sort-option;
+
+  &.wpl-property-listing-mapview {
+    .wpl_sort_options_container {
+      border-top: 0;
+      padding-bottom: 0;
+      padding-top: 3px;
+
+      .wpl_sort_options_container_title {
+        display: block;
+        padding-left: 10px;
+        padding-top: 7px;
+        font-weight: 600;
+        word-spacing: 10000px;
+        overflow-x: hidden;
+        width: 55px;
+        white-space: nowrap;
+        position: relative;
+        padding-bottom: 10px;
+        color: $co-0;
+        float: left;
+
+        &:after {
+          position: absolute;
+          font-weight: bold;
+          position: absolute;
+          right: 8px;
+          font-size: 19px;
+          top: 6px;
+          color: $co-0;
+        }
+      }
+      .wpl-sort-options-selectbox {
+        margin: 0;
+        .wpl_plist_sort {
+          @include border-radius(0);
+          width: 150px;
+          font-family: lato;
+          font-size: 13px;
+          padding: 1px;
+          height: 24px !important;
+          margin-top: 4px;
+          border: 1px solid $co-29;
+          box-shadow: inset 0 0 9px 0 $co-41;
+        }
+      }
+    }
+
+    .wpl_list_grid_switcher {
+      position: relative;
+      margin-top: 4px;
+      margin-right: 5px;
+    }
+    .wpl-landing-page-generator-wp{
+      position: relative;
+      float: right;
+      bottom: auto;
+      left: auto;
+      a{
+        border-radius: 2px;
+        padding: 4px 6px !important;
+        height: 24px;
+        margin: 4px 2px;
+        background: $co-43;
+      }
+    }
+  }
+
+  //Property listing image
+  .wpl_prp_top {
+    width: 100%;
+    height: 100%;
+    float: left;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    cursor: default;
+    background: -webkit-linear-gradient(45deg, #ff89e9 0%, #05abe0 100%);
+    background: linear-gradient(45deg, #ff89e9 0%,#05abe0 100%);
+    margin: 0;
+
+    .wpl_prp_top_boxes {
+
+      &.back {
+        @include transform(none);
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        overflow: hidden;
+        top: 0;
+        left: 0;
+        background: transparent;
+        text-align: left;
+        z-index: 10;
+        a.view_detail {
+          @include transform(translate3d(-10px,0,0));
+          @include transition(opacity 0.35s, transform 0.45s);
+          align-items: flex-end;
+          justify-content: flex-start;
+          padding-bottom: 10px;
+          padding-left: 20px;
+          color: rgba(255,255,255,0.7);
+          opacity: 0;
+          filter: alpha(opacity=0);
+          background: transparent !important;
+          font-size: 20px;
+        }
+
+        &:before {
+          @include transform(translate3d(-20px,0,0));
+          @include transition(opacity 0.35s, transform 0.45s);
+          position: absolute;
+          top: 20px;
+          right: 20px;
+          bottom: 10px;
+          left: 17px;
+          border-bottom: 1px solid rgba(255,255,255,0.4);
+          content: '';
+          opacity: 0;
+          filter: alpha(opacity=0);
+        }
+      }
+
+      &.front {
+        @include transform(none);
+        img,
+        .no_image_box
+        {
+          @include transition(opacity 0.35s, transform 0.45s);
+          position: relative;
+          max-width: none;
+        }
+        /*img {
+          width: 100% !important;
+        }*/
+      }
+    }
+    &:hover {
+      .wpl_prp_top_boxes.front{
+        @include transform(none);
+        img,
+        .no_image_box {
+          opacity: 0.5;
+          filter: alpha(opacity=50);
+        }
+      }
+
+      .wpl_prp_top_boxes.back {
+        a.view_detail,
+        &:before
+        {
+          @include transform(translate3d(0,0,0));
+          opacity: 1;
+          filter: alpha(opacity=100);
+        }
+      }
+    }
+  }
+    //grid box view
+    .grid_box {
+      @include transition(0.2s);
+      padding: 0;
+      margin: 1px;
+      margin-bottom: 30px;
+      border-bottom: 0;
+
+      &:hover {
+        background: $co-43;
+      }
+
+      .wpl_prp_top_boxes {
+        &.back {
+          a.view_detail {
+            padding-bottom: 24px;
+            padding-left: 30px;
+            font-size: 40px;
+          }
+
+          &:before {
+            bottom: 20px;
+            left: 20px;
+          }
+        }
+      }
+
+
+      .wpl-listing-tags-wp {
+        top: 0;
+        right: 10px;
+      }
+
+      .wpl-listing-tags-cnt {
+        padding: 5px 0;
+
+        & > div {
+          text-transform: uppercase;
+          font: 14px $font-open-sans;
+          font-weight: 400;
+          padding: 2px 6px;
+
+          &::after {
+            display: none;
+          }
+        }
+      }
+
+      .wpl_prp_bot {
+        padding: 0;
+      }
+
+      .wpl_prp_title {
+        margin: 0;
+        text-transform: uppercase;
+        text-align: left;
+        padding: 12px 0px 0px 10px;
+        line-height: 25px;
+        width: 80%;
+        color: lighten($co-2,2%);
+        letter-spacing: 1px;
+      }
+
+      .wpl_prp_listing_location {
+        color: rgba($co-2, .7);
+        text-align: left;
+        height: auto;
+        margin: 0;
+        padding: 3px 10px 0px 10px;
+        height: 29px;
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .wpl_prp_listing_icon_box {
+        border-top: 1px solid $co-8;
+        text-align: left;
+        position: relative;
+        padding: 8px 0;
+        min-height: 50px;
+
+        & > div {
+          color: rgba(0, 0, 0, 0.78);
+          @include text-shadow(0 0px 1px $co-13);
+          float: left;
+          width: 50%;
+          margin: 0;
+          padding: 7px 5px 5px 45px;
+          position: relative;
+          text-align: left;
+          font-size:14px;
+
+          &::after {
+            display: inline-block;
+            position: absolute;
+            left: 10px;
+            top: 5px;
+            color: $co-27;
+            font-size: 20px;
+            text-shadow: none;
+          }
+          span {
+            margin-left: 5px;
+            display: inline-block;
+          }
+        }
+      }
+
+      .price_box {
+        border-top: 1px solid $co-8;
+        position: static;
+        text-align: right;
+        height: auto;
+
+        span {
+          margin-top: 9px;
+          padding-right: 10px;
+          padding-bottom: 5px;
+          font-size: 19px;
+          font-weight: 600;
+          background: transparent;
+        }
+      }
+    }
+    //list view - row box
+    .row_box {
+      @include clearfix;
+      background: #FFF;
+      border: 1px solid $co-6;
+      @include box-sizing(border-box);
+      padding: 0;
+      margin: 0;
+      margin-bottom: 15px !important;;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      justify-content: flex-start;
+      @include for-phone {
+        flex-direction: column;
+        border: 0;
+      }
+
+      .wpl_prp_top {
+        @include for-tablet {
+          flex: 1 !important;
+          margin: 0;
+        }
+        @include for-phone {
+          flex: 1;
+          width: 100% !important;
+          margin: 0;
+        }
+        margin: 0;
+        position: relative;
+        overflow: hidden;
+        width: auto !important;
+
+        .wpl_prp_top_boxes {
+            &.back {
+              a.view_detail {
+                padding-bottom: 10px;
+                padding-left: 20px;
+                font-size: 20px;
+              }
+
+              &:before {
+                bottom: 10px;
+                left: 17px;
+              }
+            }
+          &.front {
+            width: auto;
+            height: auto;
+            img {
+              width: 150px !important;
+              height: auto !important;
+              min-height: 110px;
+
+              @include for-tablet {
+                width: 100% !important;
+              }
+              @include for-phone {
+                width: 100% !important;
+              }
+
+            }
+          }
+
+        }
+
+        .wpl-listing-tags-wp {
+          right: 10px;
+          top: 0;
+          font-size: 10px;
+        }
+
+        .wpl-listing-tags-cnt {
+          padding: 5px 0;
+
+          & > div {
+            text-transform: uppercase;
+            font-weight: 400;
+            padding: 2px 6px;
+
+            &::after {
+              display: none;
+            }
+
+          }
+        }
+      }
+      //bottom position
+      .wpl_prp_bot {
+        flex: 3;
+
+        @include for-tablet {
+          flex: 2;
+        }
+
+        @include for-phone {
+          padding: 0;
+        }
+
+        .wpl_prp_desc {
+          display: none;
+        }
+
+        .wpl_prp_title {
+          text-transform: uppercase;
+          text-align: left;
+          line-height: 25px;
+          font-size: 19px;
+          font-weight: 600;
+          color: lighten($co-2,2%);
+          letter-spacing: 1px;
+          width: auto;
+          margin: 0;
+          //position: absolute;
+          //top: 12%;
+          //left: 16%;
+          @include for-tablet {
+            padding: 0;
+            //left: 35%;
+            //top: 10%;
+          }
+          @include for-phone {
+            position: relative;
+            margin: 0;
+            left: 0;
+            padding: 12px 0px 0px 10px;
+          }
+        }
+        //show location
+        .wpl_prp_listing_location {
+          //position: absolute;
+          //top: 35%;
+          //left: 16%;
+          overflow: hidden;
+          text-overflow: clip;
+          white-space: normal;
+          color: rgba($co-2, .7);
+          font-size: 14px;
+          text-align: left;
+          margin: 0;
+          //height: 29px;
+          width: 100%;
+
+          @include for-tablet-landscape {
+            display: block !important;
+          }
+          @include for-tablet {
+            padding: 0;
+            //left: 35%;
+            width: 100%;
+          }
+          @include for-phone {
+            position: relative;
+            left: 0;
+            top:0;
+            margin-top:0;
+            height: auto;
+            padding: 2px 10px 10px 10px;
+          }
+        }
+        //icon box
+
+        .wpl_prp_listing_icon_box {
+          text-align: left;
+          //position: absolute;
+          bottom: 0;
+          //left: 16%;
+          max-height: 70px;
+          border-top: 1px solid $co-31;
+          padding: 10px 0 0 0;
+          top: auto;
+          height: 35px;
+          margin: 0;
+
+          @include for-desktop {
+            margin-bottom: 10px;
+          }
+
+          @include for-tablet {
+            //width: 65%;
+            //left: 35%;
+            padding-top:4px;
+          }
+
+          @include for-phone {
+            min-height: auto;
+            padding: 10px 10px 0px 10px;
+            left: 0;
+            width: 100%;
+            position: relative;
+          }
+          & div {
+            @include text-shadow(0 0px 1px $co-13);
+            float: left;
+            margin-left: 0;
+            margin-right: 25px;
+            margin-bottom: 14px;
+            position: relative;
+            text-align: left;
+            color: rgba(0, 0, 0, 0.78);
+            font-size:14px;
+            padding-left: 40px;
+            @include for-tablet {
+              margin-right: 20px;
+              span {
+                display: none !important;
+              }
+            }
+            @include for-phone {
+              width: 50%;
+              margin-right: 0;
+              span {
+                display: inline-block !important;
+              }
+            }
+            &:after {
+              display: inline-block;
+              position: absolute;
+              top: 0;
+              left: 0;
+              color: $co-30;
+              font-size: 20px;
+              text-shadow: none;
+              @include for-phone {
+                display: inline-block;
+                position: absolute;
+                left: 2px;
+                top: 2px;
+              }
+            }
+            &:before {
+              display: none !important;
+            }
+            span {
+              margin-left: 5px;
+              display: inline-block;
+              padding-top:3px;
+            }
+          }
+        }
+      }
+      .price_box {
+        position: absolute;
+        float: left;
+        text-align: left;
+        bottom: 4px;
+        right: 1%;
+        top: auto;
+        display: inline-block;
+        background: transparent !important;
+
+        @include for-tablet-landscape {
+          bottom: 4px;
+          right: 1%;
+        }
+
+        @include for-tablet {
+          padding: 0;
+          top: 4px;
+          right: 1%;
+        }
+
+        @include for-phone {
+          border-top: 1px solid $co-8;
+          position: static;
+          text-align: right;
+          height: auto;
+          position: relative;
+        }
+        span {
+          margin-top: 9px;
+          font-size: 20px;
+          padding-right: 0;
+          padding-bottom: 5px;
+          font: 24px "lato";
+        }
+      }
+      .wpl_prp_listing_like{
+        bottom: auto;
+        top: 0;
+        right: auto;
+        left: 0;
+      }
+    }
+  &.wpl-property-listing-mapview {
+    .wpl_property_listing_listings_container {
+      margin: 0;
+      height: -webkit-calc(90vh - 81px);
+      height: calc(90vh - 81px);
+      border-bottom: 1px solid $co-6;
+
+      .wpl-column {
+        padding: 0;
+        .wpl_prp_cont {
+          margin: -1px 0 0 0;
+          border-left: 0;
+          border-right: 0;
+          padding: 10px;
+
+          &:last-child {
+            border-bottom: 0;
+          }
+
+          .wpl_prp_top {
+            max-width: 40%;
+            .wpl_prp_top_boxes.back a.view_detail {
+              font-size: 20px;
+            }
+            .wpl-listing-tags-wp {
+              bottom: auto;
+              right: 10px;
+              top: 0;
+              .wpl-listing-tags-cnt>div::after {
+                display: none;
+              }
+            }
+          }
+          .wpl_prp_bot {
+            width: 59%;
+            padding: 0;
+            padding-left: 8px;
+            .wpl_prp_title {
+              margin: 0;
+              text-transform: uppercase;
+              text-align: left;
+              padding: 0;
+              line-height: 25px;
+              font-size: 19px;
+              font-weight: 600;
+              width: 80%;
+              color: lighten($co-2,2%);
+              letter-spacing: 1px;
+            }
+
+            .wpl_prp_listing_location {
+              color: rgba($co-2, .7);
+              font-size: 13px;
+              text-align: left;
+              height: auto;
+              margin: 0;
+              padding: 0;
+              height: 29px;
+              width: 100%;
+              overflow: hidden;
+              text-overflow: ellipsis;
+              white-space: nowrap;
+            }
+            .wpl_prp_listing_icon_box {
+              width:100%;
+              border-top: 1px solid $co-6;
+              border-bottom: 1px solid $co-31;
+              padding: 5px 0;
+              & div {
+                @include text-shadow(0 0px 1px $co-13);
+                float: left;
+                margin-left: 0;
+                margin-right: 10px;
+                position: relative;
+                text-align: left;
+                color: rgba(0, 0, 0, 0.78);
+                font-size: 14px;
+                padding-left: 32px;
+                &:last-child {
+                  margin-right: 0;
+                }
+                @include for-phone {
+                  width: 50%;
+                  margin-right: 0;
+                }
+                &:before {
+                  display: none;
+                }
+                &:after {
+                  display: inline-block;
+                  position: absolute;
+                  top: 0;
+                  left: 0;
+                  color: $co-30;
+                  font-size: 18px;
+                  text-shadow: none;
+                }
+              }
+            }
+          }
+          .price_box {
+            line-height: auto;
+            span {
+              font-family: lato;
+              font-weight: bold;
+              font-size: 15px !important;
+            }
+          }
+          .wpl_prp_listing_like{
+            bottom: auto;
+            top: 15px;
+            right: auto;
+            left: 10px;
+          }
+        }
+      }
+    }
+    .wpl_property_listing_list_view_container {
+      margin-right: 1.28%;
+      width: 30%;
+      margin-top: 0;
+      border-left: 1px solid $co-6;
+      box-shadow: -3px 3px 4px 0 rgba(116, 116, 116, 0.27);
+      height: 90vh;
+      margin-bottom: 0;
+      //overflow: hidden;
+      border-top: 1px solid $co-6;
+      border-bottom: 1px solid $co-6;
+      @include for-tablet-small{
+        margin-right: -98%;
+        width: 100%;
+        min-width: 100%;
+      }
+      .map_view_handler
+      {
+        &.op
+        {
+          top: 5px;
+          left: 16px;
+        }
+        &::before
+        {
+          top: 0;
+        }
+      }
+    }
+
+    .pagination {
+      margin-top: 7px;
+      @include foundation-medium {
+        margin-top: 3px;
+      }
+      li {
+        a {
+          width: 30px;
+          height: 30px;
+          min-width: 30px;
+          line-height: 26px;
+          font-size: 13px;
+          padding: 0;
+        }
+        &.next a:before {
+          font-size: 15px;
+          left: 2px;
+          top: 4px;
+        }
+        &.prev a:before {
+          font-size: 15px;
+          left: 2px;
+          top: 4px;
+        }
+      }
+    }
+
+    .wpl_page_size {
+      display: none;
+    }
+  }
+  &.wpl-prp-disable-image-hover {
+    .wpl_prp_top {
+      background: none;
+
+      &:hover {
+        .wpl_prp_top_boxes.front{
+          img,
+          .no_image_box {
+            opacity: 1;
+            filter: alpha(opacity=100);
+          }
+        }
+      }
+    }
+  }
+}
+/*Map view*/
+.wpl-property-listing-mapview {
+  .wpl_googlemap_container {
+    display:block !important;
+  }
+}
+.wpl_plisting_top_sidebar_container {
+  margin-top: 60px;
+}
+.side-header .wpl_property_listing_container.wpl-property-listing-mapview{
+  width: 100%;
+  left: auto;
+}
+
+
+@media screen and (min-width: 1024px) {
+  .wpl-large-up-6.wpl_property_listing_listings_container .grid_box .wpl_prp_top_boxes.back a.view_detail {
+    font-size: 30px;
+    padding-left: 23px;
+  }
+}
+
+/*Boxed layout*/
+.layout-boxed-mode{
+  .wpl_property_listing_container.wpl-property-listing-mapview{
+    width: 100%;
+    left: auto;
+    .wpl_pagination_container{
+      bottom: 60px;
+    }
+  }
+}
+.wpl_prp_cont
+{
+  .wpl-mls-brokerage-info
+  {
+    line-height: initial;
+    margin-top: 0;
+  }
+  &.grid_box .wpl-mls-brokerage-info
+  {
+    margin: 0;
+    text-align: left;
+    padding: 0 10px;
+  }
+  &.map_box .wpl-mls-brokerage-info
+  {
+    font-size: 12px;
+    margin-top: 0;
+  }
+}
+

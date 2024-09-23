@@ -1,0 +1,221 @@
+.wpl-membership-activity-wpluser-wp{
+  position: relative;
+
+  h4{
+    margin: 0 0 15px 0;
+  }
+}
+
+//region + Tabs
+.wpl-membership-wpluser-head{
+  @include clearfix_s3;
+  position: absolute;
+  top: -50px;
+  @if $text-direction == ltr
+  {
+    right: -15px;
+  } @else
+  {
+    left: -15px;
+  }
+
+  .wpl_activity_title{
+    display: none;
+  }
+}
+
+.wpl-membership-tab {
+  @include clearfix_s3;
+
+  .wpl-membership-tab-title {
+    margin-bottom: 0;
+    @if $text-direction == ltr
+    {
+      float: left;
+      border-left: 1px solid darken($co-7, 15%);
+    } @else
+    {
+      float: right;
+      border-right: 1px solid darken($co-7, 15%);
+    }
+
+    a {
+      @include transition(background 0.15s linear, box-shadow 1s ease);
+      display: inline-block;
+      width: 100%;
+      height: 40px;
+      color: $co-20;
+      padding: 0 15px;
+      background: darken($co-7, 5%);
+      font: 1em/40px $font-archivo-narrow;
+
+      &:hover {
+        background: darken($co-7, 8%);
+      }
+
+      &.wpl-gen-tab-active {
+        @include box-shadow(0 -3px 0 rgba($co-3, 0.75) inset);
+        background: $co-21;
+      }
+    }
+  }
+}
+//endregion
+
+.wpl-membership-wpluser{
+  @include clearfix_s3;
+
+  li{
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+    width: 50%;
+  }
+}
+
+.membership-label{
+  width: 175px;
+  display: inline-block;
+  vertical-align: middle;
+  @if $text-direction == ltr
+  {
+    text-align: right;
+  } @else
+  {
+    text-align: left;
+  }
+}
+
+.membership-value{
+  @include border-radius(3px);
+  padding: 2px 8px;
+  background: lighten($co-2,15%);
+  color: $co-1;
+  font-size: 0.8em;
+  display: inline-block;
+  vertical-align: middle;
+  @if $text-direction == ltr
+  {
+    margin-left: 5px;
+  } @else
+  {
+    margin-right: 5px;
+  }
+}
+
+.wpl_membership_wrap{
+  width: 1000px;
+
+  .wpl_memberships_label{
+    background: $color-fancy-gcolor-top;
+    font: 1rem $font-archivo-narrow;
+    color: $color-fancy-header-color;
+    margin: 0;
+    padding: 10px 15px;
+    min-height: 36px;
+  }
+
+  .wpl_memberships_container{
+    @include clearfix_s3;
+
+    & > li{
+      padding: 10px;
+      display: inline-block;
+      float: left;
+      width: 33.3333%;
+
+      .wpl_memberships_wrap{
+        background: $co-1;
+        border: 1px solid $co-6;
+        min-height: 206px;
+      }
+      
+      h3{
+        @include clearfix_s2;
+        margin: 0;
+        font: 1.6em $font-archivo-narrow;
+        padding: 5px 10px;
+        background-color: $co-7;
+      }
+
+      .membership_name{
+        @if $text-direction == ltr
+        {
+          float: left;
+        } @else
+        {
+          float: right;
+        }
+      }
+
+      .membership_price{
+        @if $text-direction == ltr
+        {
+          float: right;
+        } @else
+        {
+          float: left;
+        }
+      }
+
+      .membership_details{
+        padding: 0 10px;
+
+        & > li{
+          @include clearfix_s2;
+          background: $co-9;
+          margin: 0 0 1px;
+          padding: 5px 10px;
+        }
+
+        .membership-label{
+          font-size: 0.8em;
+          width: auto;
+          text-align: left;
+        }
+
+        .membership-value{
+          font-size: 0.8em;
+          background: transparent;
+          color: $co-5;
+          padding: 1px 0;
+          @if $text-direction == ltr
+          {
+            float: right;
+          } @else
+          {
+            float: left;
+          }
+        }
+      }
+
+      p{
+        padding: 0 10px !important;
+      }
+
+      .membership_upgrade{
+        @include transition(background 0.2s linear);
+        padding: 10px;
+        width: 100%;
+        display: block;
+        text-align: center;
+        background-color: $co-7;
+        border: 1px solid $co-6;
+        border-top: 0;
+        cursor: pointer;
+        font: 1.2em $font-archivo-narrow;
+
+        &:hover{
+          background: $co-1;
+          color: $co-4;
+        }
+      }
+    }
+  }
+}
+
+

@@ -1,0 +1,859 @@
+.wpl-page {
+  .the_content_wrapper ul li,
+  .the_content_wrapper ul:not(.chosen-results) {
+    margin: 0;
+  }
+  i {
+    font-style: normal;
+  }
+}
+
+/*CALCULATOR*/
+.mortgage_calculator {
+  .form-field {
+    input,
+    .wpl-mortgage-symbol {
+      display: inline-block;
+    }
+    @include for-phone {
+      white-space: normal;
+    }
+  }
+  .form-result {
+    input {
+      padding: 8px;
+    }
+  }
+}
+/*COMPLEX*/
+.wpl_prp_show_container .wpl-js-tab-system {
+  @include border-radius(5px);
+  border: 1px solid rgba($co-7, 0.08);
+  background: $co-2;
+  padding-bottom: 20px;
+}
+.wpl_prp_show_layout2_container {
+  .wpl-js-tab-system {
+    background: transparent;
+    box-shadow: none;
+  }
+  .wpl-complex-tab-contents-wp {
+    background: $co-2;
+    box-shadow: none;
+  }
+}
+.wpl_prp_show_container .wpl-complex-tab-contents-wp .wpl_prp_show_detail_boxes:first-child {
+  border-radius: 0 !important;
+}
+.wpl-complex-tab-contents-wp {
+  margin: 20px;
+  .wpl_prp_show_detail_boxes {
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+}
+
+.wpl-complex-tabs-wp,
+.wpl-crm-form.wpl-crm-form-frontend .wpl-crm-grid-tab {
+  border-bottom: 1px solid rgba($co-7, 0.08) !important;
+  & > ul {
+    display: block;
+    margin: 0 !important;
+    background: {
+      image: url(img/bg_panel.png);
+      repeat: repeat-x;
+      position: left top;
+    }
+    &:before {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    &:after {
+      content: "";
+      display: table;
+      clear: both;
+    }
+    & > li {
+      white-space: nowrap;
+      border-style: solid;
+      font-weight: 400;
+      margin: 0 !important;
+      list-style: none !important;
+      position: relative;
+      border: {
+        width: 0 1px 0 0 !important;
+        color: rgba($co-7, 0.08);
+      }
+      @include for-tablet {
+        width: 100%;
+      }
+      & > a {
+        @include border-radius(0);
+        text-decoration: none;
+        display: block;
+        padding: 14px 30px !important;
+        color: $co-18;
+        background-color: transparent;
+        font: {
+          size: 13px;
+          weight: 700;
+          style: normal;
+        }
+        &.wpl-gen-tab-active {
+          background-color: $co-2 !important;
+          color: $co-18;
+          &:after {
+            content: "";
+            display: block;
+            height: 5px;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            z-index: 1;
+            background: $co-2;
+          }
+        }
+      }
+      &.wpl-gen-tab-active-parent {
+        &:before {
+          content: "";
+          position: absolute;
+          display: block;
+          height: 1px;
+          width: 80%;
+          left: 50%;
+          margin-left: -40%;
+          bottom: -1px;
+          z-index: 2;
+          background: $co-5;
+        }
+      }
+    }
+  }
+}
+.wpl-gen-tab-wp.wpl-complex-tabs-wp {
+  margin: 0;
+}
+.wpl-complex-unit {
+  padding-top: 20px;
+  .wpl_list_grid_switcher {
+    top: -20px;
+  }
+}
+.wpl-complex-unit-cnt.row_box {
+  float: none;
+  width: 100%;
+}
+.wpl-complex-unit-view-detail {
+  top: -1px;
+  right: 3px;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.wpl-complex-unit-wp {
+  background: $co-2;
+}
+.wpl_prp_container_content_right {
+  padding: 0;
+}
+.wpl_property_listing_complexes_container {
+  padding: 15px;
+}
+.wpl-complex-unit-details {
+  .wpl-row {
+    margin-left: 0;
+    margin-right: 0;
+    li {
+      padding: 0 10px;
+      list-style: none !important;
+    }
+  }
+}
+
+/*REVIEW*/
+.wpl-rate-info {
+  top: 10px;
+}
+.br-wrapper .br-widget {
+  .br-current-rating {
+    float: left;
+    width: 13%;
+  }
+}
+.wpl-review-review-content-wp .wpl-review-review-reply-btn {
+  display: inline-block;
+  width: auto;
+  color: $co-2;
+  font-size: 16px;
+  padding: 5px;
+  span {
+    padding: 5px;
+  }
+}
+.wpl-review-submit .btn {
+  font-size: 16px;
+}
+
+/*MEMBERSHIP*/
+.wpl_addon_membership_container {
+  margin: 20px auto;
+  li {
+    list-style: none !important;
+  }
+}
+.wpl-membership-activity-wp.links-tmpl {
+  .wpl_dashboard_links {
+    margin: 0;
+    li {
+      h4 {
+        font-size: 18px;
+      }
+      ul {
+        margin: 0;
+      }
+    }
+  }
+}
+#wpl_ewallet_charge_form {
+  input {
+    margin-bottom: 0;
+    display: inline-block;
+    @include for-phone {
+      float: none;
+    }
+  }
+}
+.pmanager-cnt {
+  .properties-wp .propery-wp {
+    margin: 20px 9px;
+    @include for-tablet-sm {
+      width: 100%;
+    }
+    .property-actions {
+      box-sizing: border-box;
+      @include for-tablet-sm {
+        height: 48px;
+      }
+      .change-user-wp {
+        label {
+          display: inline-block;
+          margin-bottom: 0;
+        }
+        select {
+          @extend label;
+        }
+      }
+    }
+  }
+  input[type="text"] {
+    margin-bottom: 0;
+  }
+}
+.wpl-membership-tab li.wpl-gen-tab-active-parent {
+  line-height: 3.1em;
+}
+
+/*Get direction*/
+.wpl_googlemap_pshow {
+  .wpl-map-get-direction {
+    background: transparent;
+    border: none;
+    padding: 15px 0 !important;
+    bottom: 0;
+    @include for-tablet-sm {
+      right: auto;
+      bottom: auto;
+    }
+    .wpl-map-get-direction-address-cnt {
+      width: calc(100% - 151px);
+      input {
+        @include placeholder($co-27, 17px);
+        border: 1px solid $co-17;
+        margin-bottom: 0;
+      }
+    }
+    .wpl-map-get-direction-btn-cnt {
+      @include border-radius(0);
+      margin-left: 10px;
+      padding: 6px 12px;
+      text-align: center;
+      @include for-phone {
+        width: 140px;
+      }
+      span {
+        font: {
+          size: 16px;
+          weight: 400;
+        }
+        @include for-phone {
+          display: block;
+        }
+      }
+      &:after {
+        display: none;
+      }
+    }
+    .wpl_map_direction_text {
+      background: $co-10;
+    }
+    .wpl-map-get-direction-reset {
+      z-index: 2;
+    }
+  }
+}
+
+/*Mortgage Calculator*/
+.wpl_prp_show_layout2_container .wpl_prp_position3_boxes.mortgage_calculator {
+  border: none;
+  .wpl_prp_position3_boxes_title {
+    padding: 0;
+    line-height: 40px;
+  }
+}
+.wpl_prp_position3_boxes {
+  &.mortgage_calculator {
+    @include for-phone {
+      padding: 10px 5px !important;
+    }
+  }
+  .wpl_mcalc_container {
+    .form-field {
+      width: 50%;
+      float: left;
+      @include for-tablet-land {
+        width: 48%;
+      }
+      @include for-tablet {
+        width: 100%;
+        float: none;
+      }
+      label {
+        margin-left: 16px;
+        @include for-phone {
+          margin-left: 0;
+          width: 110px;
+        }
+      }
+      & > span {
+        position: relative;
+        & > span {
+          position: relative;
+          display: block;
+        }
+        input + span {
+          position: absolute;
+          top: 8px;
+          right: 10px !important;
+          font-size: 14px;
+          color: $co-20;
+        }
+      }
+      input + .wpl-mortgage-symbol {
+        top: 8px;
+        right: 20px;
+        font-size: 14px;
+        color: $co-20;
+        i {
+          display: inline-block;
+        }
+      }
+    }
+    .text-box {
+      width: 185px;
+      @include for-tablet-land {
+        width: 165px;
+      }
+      @include for-phone {
+        width: 154px;
+      }
+    }
+    .wpl-mortgage-percent {
+      width: auto;
+    }
+  }
+}
+.wpl_mcalc_container {
+  .text-box {
+    @include border-radius(0);
+    height: 35px;
+    font: {
+      family: $fo-lato;
+      size: 15px;
+    }
+    color: $co-4;
+  }
+  .form-field {
+    label {
+      line-height: 40px;
+      font-size: 14px;
+      color: $co-15;
+      text-transform: uppercase;
+    }
+  }
+  .form-result {
+    float: left;
+    width: 100% !important;
+    padding: 20px 0;
+    border-bottom: 1px dashed $co-17;
+    border-top: 1px dashed $co-17;
+    margin-top: 20px;
+    @include for-phone {
+      display: block;
+    }
+    hr {
+      display: none;
+    }
+    label {
+      font-size: 14px;
+      color: $co-15;
+      text-transform: uppercase;
+    }
+    .text-box {
+      box-shadow: none;
+      height: 35px;
+      background: darken($co-2, 10%);
+      color: $co-3;
+      display: inline-block;
+      font: {
+        size: 18px;
+        weight: 500;
+      }
+    }
+    span {
+      margin-left: -24px;
+      font-size: 18px;
+      color: $co-3;
+    }
+  }
+}
+/*CRM*/
+.wpl_prp_show_position2 {
+  .wpl_listing_links_container {
+    ul {
+      position: relative;
+      overflow: hidden;
+      .crm_link {
+        position: static;
+        width: 100%;
+        display: block;
+        border: none;
+        margin-top: 15px;
+        &:before {
+          display: none;
+        }
+        a {
+          background-color: $co-5;
+          position: relative;
+          cursor: pointer;
+          display: block;
+          width: 70%;
+          margin: 0 auto;
+          &:hover {
+            background-color: darken($co-5, 10%);
+          }
+          &:before {
+            content: "Request More Info";
+            color: $co-2;
+            position: absolute;
+            top: calc(50% - 10px);
+            left: 0;
+            text-align: center;
+            width: 100%;
+            font: {
+              size: 16px;
+              weight: 400;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.wpl-crm-form.wpl-crm-form-frontend {
+  background: transparent;
+
+  .wpl-js-tab-system {
+    @include border-radius(5px);
+    padding-bottom: 20px;
+  }
+  li {
+    list-style: none !important;
+  }
+  .prow-separator .seperator-wp {
+    background: $co-29;
+    text-transform: uppercase;
+  }
+  label {
+    text-transform: uppercase;
+  }
+  .wpl-crm-grid-tab > ul > li {
+    background-color: transparent;
+    &.wpl-gen-tab-active-parent {
+      border-bottom-color: $co-29;
+      background-color: $co-29 !important;
+    }
+    & > a {
+      text-transform: uppercase;
+      font-style: normal;
+      &.wpl-gen-tab-active {
+        background: $co-29 !important;
+        &:after {
+          background-color: $co-29 !important;
+        }
+      }
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+
+  input[type="text"],
+  input[type="number"],
+  .chosen-container-single .chosen-single,
+  .chosen-container-multi .chosen-choices,
+  .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+    box-sizing: border-box;
+    margin: 0;
+    border: none !important;
+  }
+  .wpl_minmax_textbox {
+    display: inline-block;
+  }
+  .wpl-crm-form-content {
+    @include border-radius(0 0 5px 5px);
+    border: solid rgba($co-7, 0.08);
+    border-width: 0 1px 1px 1px;
+    margin-top: -3px;
+  }
+  .wpl-crm-grid-tab.wpl-gen-tab-wp {
+    @include border-radius(5px);
+    background: transparent;
+    box-shadow: none;
+    border: 1px solid rgba($co-7, 0.08);
+  }
+  .wpl-crm-grid {
+    background: transparent;
+  }
+}
+
+.wpl-crm-checkbox[type="checkbox"],
+.wpl-crm-radio-button {
+  display: none;
+}
+.ui-datepicker .ui-datepicker-title select {
+  color: inherit;
+}
+.wpl_addon_crm_container {
+  .wpl-crm-input-btn {
+    background: transparent;
+    padding: 0;
+    position: absolute;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+.wpl-crm-grid-pagination {
+  select {
+    width: auto;
+    padding: 0;
+    margin: 0;
+  }
+}
+.wpl-crm-filter-form {
+  select {
+    margin-bottom: 0;
+  }
+}
+.wpl-crm-grid-search > input[type="text"] {
+  margin-bottom: 0;
+}
+.wpl-page.wpl_addon_crm {
+  padding-right: 0 !important;
+  .nicescroll-rails,
+  .nicescroll-cursors {
+    display: none !important;
+    opacity: 0 !important;
+    position: static !important;
+  }
+  .wpl-crm-content > .wpl-gen-tab-contents-wp {
+    height: calc(100% - 76px);
+  }
+}
+
+/*Booking*/
+.wpl-booking-addon.container {
+  margin: 20px auto;
+  & > div {
+    @include for-tablet-sm {
+      float: none;
+      width: 100%;
+      padding: 15px !important;
+    }
+  }
+  h3 {
+    padding-top: 10px;
+    font-style: normal;
+    text-transform: uppercase;
+    span::after {
+      display: none;
+    }
+  }
+  label {
+    display: inline-block;
+    padding-right: 5px;
+  }
+}
+.wpl-booking-inquire-wp {
+  a {
+    color: $co-2;
+    padding: 3px 50px;
+    &:hover {
+      color: $co-2;
+    }
+  }
+}
+.wpl-booking-button-date {
+  .btn {
+    color: $co-2;
+    font-size: 16px;
+  }
+  a {
+    font-size: 16px;
+  }
+}
+.wpl-booking-buttons-wp {
+  .btn {
+    @include border-radius(4px);
+    color: $co-2;
+    padding: 7px 30px;
+  }
+}
+.ui-state-disabled,
+.ui-widget-content .ui-state-disabled,
+.ui-datepicker-unselectable.ui-state-disabled.undefined {
+  opacity: 1 !important;
+  span {
+    color: rgba($co-7, 0.5);
+  }
+}
+.wpl-booking-payment-forms-wp {
+  .wpl-util-form-row > label,
+  .wpl-util-form-row > .wpl-gen-form-label {
+    box-sizing: border-box;
+  }
+  .chosen-container {
+    width: calc(100% - 100px);
+    float: left;
+  }
+}
+
+/*Calendar*/
+.wpl-calendar-seasons-opt,
+.wpl-calendar-bookings-opt {
+  label {
+    display: inline-block;
+    margin: 0 !important;
+  }
+  li {
+    list-style: none !important;
+    margin: 0 !important;
+  }
+}
+/*Addon Neighborhood*/
+.wpl-neighborhood-addon {
+  .wpl_list_grid_switcher:before {
+    display: none;
+  }
+  .wpl_sort_options_container h3 {
+    text-align: center;
+    padding-left: 87px;
+    border: none;
+    @include for-phone {
+      padding-left: 0;
+    }
+  }
+  .wpl_prp_cont {
+    .price_box {
+      span {
+        font-size: 16px;
+      }
+    }
+    &.row_box {
+      .wpl_prp_listing_icon_box {
+        width: 84%;
+        @include for-middle-phone {
+          position: static;
+          width: 100%;
+          margin: 0;
+        }
+        & > div {
+          width: 12%;
+        }
+      }
+    }
+  }
+  .wpl_prp_container_content_right {
+    padding-right: 15px;
+  }
+  .wpl_property_listing_container {
+    .wpl_plisting_top_sidebar_container .widget_wpl_search_widget {
+      position: static;
+      width: 100%;
+      padding: 0 !important;
+    }
+    &.wpl-property-listing-mapview .wpl_search_from_box {
+      max-width: 100%;
+    }
+    .wpl_prp_cont {
+      .price_box {
+        span {
+          line-height: normal;
+          font: {
+            size: 20px;
+          }
+        }
+      }
+    }
+  }
+  .wpl_prp_right_boxes.googlemap,
+  .wpl_prp_right_boxe_details_top {
+    border: none !important;
+  }
+
+  &.wpl_prp_show_default_container {
+    .wpl_prp_container_content_title {
+      background: transparent;
+      div:first-child {
+        padding: 0 15px;
+      }
+      h1,
+      h2 {
+        display: block;
+      }
+    }
+  }
+}
+
+/*Advance search*/
+.wpl-advanced-search-wp {
+  .realtyna-lightbox-title {
+    text-transform: uppercase;
+    font: {
+      family: inherit;
+      size: 24px;
+    }
+  }
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+.wpl-advanced-search-popup {
+  min-width: 1000px;
+  @include for-tablet-sd {
+    min-width: 500px;
+  }
+  @include for-tablet {
+    width: 400px;
+    min-width: 400px;
+  }
+  @include for-phone {
+    width: 300px;
+    min-width: 300px;
+  }
+  label {
+    text-transform: uppercase;
+  }
+  .wpl_search_field_listings {
+    float: none;
+  }
+  .wpl_search_from_box {
+    .search_submit_box {
+      .wpl_search_widget_submit {
+        background-color: inherit;
+        margin-bottom: 0;
+        padding: 5px 10px;
+      }
+      &:after {
+        display: none;
+      }
+    }
+    .wpl_search_field_locations {
+      float: none;
+      overflow: hidden;
+      input {
+        @include placeholder($co-4, 14px);
+        border: none;
+      }
+    }
+  }
+  .chosen-container-single .chosen-single {
+    border: none;
+    span {
+      text-transform: uppercase;
+      color: $co-4;
+    }
+  }
+  .wpl_search_field_container {
+    @include for-tablet-sm {
+      float: none;
+      width: 100% !important;
+    }
+    select {
+      text-transform: uppercase;
+      color: $co-4;
+    }
+  }
+  .chosen-container-multi .chosen-choices,
+  input[type="text"] {
+    border: none;
+  }
+}
+/*Zillow*/
+
+.wpl-zillow-review-inner.wpl-callout {
+  background-color: transparent;
+}
+.wpl-zillow-container.profileshow {
+  float: left;
+  width: 70%;
+  padding: 10px 20px 10px 10px;
+}
+
+/*Login*/
+
+#wpl_login_form_container {
+  #wpl_login_submit:after,
+  #wpl_logout_submit:after {
+    width: auto;
+    opacity: 1;
+    left: auto;
+    background: transparent;
+  }
+}
+
+.wpl-school-info-activity-wp {
+  ul li {
+    list-style: none !important;
+  }
+}
+
+/*Map*/
+.wpl_map_canvas .gm-bundled-control-on-bottom > div > div > button:after,
+.wpl_map_canvas .gm-bundled-control-on-bottom > div > div > div:after {
+  opacity: 1;
+  line-height: 30px;
+  width: 100%;
+}
+.wpl_map_search_input[type="search"] {
+  display: none;
+}
+
+/*Compare*/
+.wpl-compare-table > thead th > span {
+  text-align: right;
+}

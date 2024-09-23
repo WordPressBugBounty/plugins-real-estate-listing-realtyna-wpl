@@ -1,0 +1,316 @@
+.wpl_property_listing_list_view_container,
+.wpl_profile_listing_container {
+  .wpl_sort_options_container {
+    border-top: 2px solid $co-4;
+    border-bottom: 2px solid $co-4;
+    padding: 10px 0;
+    @include for-phone-2 {
+      .wpl_sort_options_container_title {
+        display: none;
+      }
+      .wpl-sort-options-selectbox {
+        width: 100%;
+      }
+    }
+    @include for-tablet-landscape {
+      .wpl_sort_options_container_title {
+        display: none;
+      }
+      .wpl-sort-options-list {
+        display: none;
+      }
+      .wpl-sort-options-selectbox {
+        display: block;
+        width: 100%;
+      }
+    }
+    @include for-tablet-land {
+      .wpl_sort_options_container_title {
+        display: none;
+      }
+      .wpl-sort-options-list {
+        ul {
+          top: 0;
+        }
+      }
+      ul {
+        top: 0;
+      }
+    }
+    @include for-desktop {
+      .wpl-sort-options-list {
+        ul {
+          top: 4px;
+        }
+      }
+      ul {
+        top: 4px;
+      }
+    }
+
+    //Sort title
+    .wpl_sort_options_container_title {
+      font: {
+        size: 20px;
+        family: $fo-1;
+      }
+      line-height: normal;
+      color: $co-2;
+      text-transform: uppercase;
+      padding: 6px 0;
+      margin-right: 0;
+    }
+
+    //Style for sorting
+    .wpl-sort-options-list {
+      padding-top: 4px;
+      ul {
+        position: relative;
+        margin: 0;
+        li {
+          .wpl_plist_sort {
+            font: {
+              size: 16px;
+            }
+          }
+          .wpl_plist_sort_active.sort_down,
+          .wpl_plist_sort_active.sort_up {
+            padding-right: 26px;
+            margin-right: 11px;
+            &:before {
+              right: -16px;
+              padding: 0 0 0 0;
+              width: 15px;
+              height: 20px;
+              text-align: center;
+              @include transform(none);
+            }
+          }
+          &:after {
+            height: 20px;
+            top: 6px;
+            @include transform(none);
+          }
+        }
+      }
+    }
+
+    //Sort container for agent listing
+    ul {
+      position: relative;
+      margin: 0;
+      li {
+        .wpl_plist_sort {
+          font: {
+            size: 16px;
+          }
+        }
+        .wpl_plist_sort_active.sort_down,
+        .wpl_plist_sort_active.sort_up {
+          padding-right: 26px;
+          margin-right: 11px;
+          &:before {
+            right: -16px;
+            padding: 0 0 0 0;
+            width: 15px;
+            height: 20px;
+            text-align: center;
+            @include transform(none);
+          }
+        }
+        &:after {
+          height: 20px;
+          top: 6px;
+          @include transform(none);
+        }
+        &:last-child {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+
+    //Sort options on mobile
+    .wpl-sort-options-selectbox {
+      float: left;
+      @include for-phone-2 {
+        margin-bottom: 20px;
+      }
+      select{
+        padding: 6px;
+        margin-left: 5px;
+        @include for-phone-2{
+          margin-left: 0;
+        }
+      }
+    }
+
+    //Style for layour switcher
+    .wpl_list_grid_switcher {
+      position: relative;
+      margin: 6px 0 0 35px;
+      &:before {
+        display: block;
+        position: absolute;
+        content: '';
+        width: 2px;
+        height: 30px;
+        background: $co-8;
+        left: -20px;
+        top: -4px;
+      }
+      &.wpl-list-grid-switcher-icon-text {
+        margin: 1px 0 0 35px;
+      }
+      //Styles for all switchers
+      > div {
+        margin-right: 10px;
+        &:before {
+          font: 16pt $fo-5;
+        }
+      }
+      .grid_view {
+        &:before {
+          content: '\e900';
+        }
+      }
+      .list_view {
+        &:before {
+          content: '\e901';
+        }
+      }
+      .map_view {
+        &:before {
+          content: '\e902';
+        }
+      }
+    }
+
+    .wpl-rss-wp,
+    .wpl-save-search-wp,
+    .wpl-print-rp-wp,
+    .wpl-landing-page-generator-wp {
+      position: relative;
+      float: right;
+      bottom: 0;
+      margin: 5px 0 0 10px;
+    }
+
+    .wpl-rss-link,
+    .wpl-save-search-wp a,
+    .wpl-print-rp-wp a,
+    .wpl-landing-page-generator-wp a {
+      transition: none !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      padding: 0 !important;
+      height: auto;
+      border-bottom: none;
+      color: inherit;
+      &:after {
+        margin-top: 1px;
+        font: {
+          size: 21px;
+        }
+      }
+      span {
+        display: none;
+      }
+    }
+
+    .wpl-rss-link,
+    .wpl-save-search-wp a,
+    .wpl-print-rp-wp a {
+      &:after {
+        font: 21px $fo-5;
+      }
+    }
+
+    //Styles for rss
+    .wpl-rss-link {
+      display: block !important;
+      width: auto !important;
+      &:after {
+        content: '\e905';
+        margin-left: 0;
+      }
+    }
+
+    //Pring button
+    .wpl-print-rp-wp {
+      right: initial;
+      .wpl-print-rp-link {
+        color: inherit;
+        &:after {
+          content: '\e903';
+          font: {
+            family: $fo-5;
+          }
+        }
+      }
+    }
+
+    //Styles for save search
+    .wpl-save-search-wp {
+      a {
+        &:after {
+          content: '\e906';
+        }
+      }
+    }
+
+    //Landing page generator button
+    .wpl-landing-page-generator-wp {
+      left: initial;
+      > a {
+        font: {
+          size: 0;
+          style: normal;
+        }
+        &:after {
+          position: relative;
+          right: initial;
+          top: 0;
+        }
+      }
+    }
+  }
+}
+
+//Sort panel for agent listing page
+.wpl_profile_listing_container {
+  .wpl_sort_options_container {
+    @include for-phone {
+      ul {
+        width: 100%;
+      }
+    }
+  }
+}
+
+//Grid switcher styles for complex pages
+.wpl-complex-unit {
+  .wpl_list_grid_switcher {
+    position: relative;
+    margin: 0;
+    padding: 0;
+    top: -6px;
+    > div {
+      margin-right: 10px;
+      &:before {
+        font: 16pt $fo-5;
+      }
+    }
+    .grid_view {
+      &:before {
+        content: '\e900';
+      }
+    }
+    .list_view {
+      &:before {
+        content: '\e901';
+      }
+    }
+  }
+}

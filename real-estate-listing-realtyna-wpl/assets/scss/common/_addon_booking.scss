@@ -1,0 +1,829 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-booking-button-date{
+  text-align: center;
+  padding: 15px 0;
+  .btn{
+    @include border-radius(0);
+  }
+  & > input,& > span, & > a
+  {
+    text-decoration: unset;
+    margin: 0 2px;
+    @if $text-direction == rtl{
+      display: inline-block;
+    }
+  }
+}
+
+.wpl-booking-checks-wp{
+  @include clearfix_s2;
+}
+
+.wpl-booking-check-row{
+  width: 50%;
+  @if $text-direction == ltr
+  {
+    float: left;
+  } @else
+  {
+    float: right;
+  }
+
+  &:nth-child(odd){
+    @if $text-direction == ltr
+    {
+      padding-right: 5px;
+    } @else
+    {
+      padding-left: 5px;
+    }
+  }
+
+  &:nth-child(even){
+    @if $text-direction == ltr
+    {
+      padding-left: 5px;
+    } @else
+    {
+      padding-right: 5px;
+    }
+  }
+
+  input[type=text]{
+    @include placeholder(darken($co-1, 25%));
+    width: 100%;
+  }
+}
+
+.wplbooking-show-messages{
+  margin-top: 10px;
+}
+
+.wpl-booking-confirmed-message-wp{
+  width: 100%;
+  background-color: rgba($co-18, .1);
+  border: 1px solid $co-18;
+  margin: 20px 0;
+  position: relative;
+  @if $text-direction == ltr
+  {
+    padding: 20px 20px 20px 120px;
+  } @else
+  {
+    padding: 20px 120px 20px 20px;
+  }
+  
+  h4{
+    font-weight: bold;
+  }
+
+  &:before{
+    content: '\e610';
+    font: 90px $font-frontend;
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: darken($co-18, 10%);
+  }
+}
+
+.wpl-booking-not-confirmed-message-wp{
+  width: 100%;
+  background-color: rgba($co-18, .1);
+  border: 1px solid $co-18;
+  padding: 20px 20px 20px 90px;
+  margin: 20px 0;
+  position: relative;
+
+  &:before{
+    content: '\e610';
+    font: 70px $font-frontend;
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    color: darken($co-18, 10%);
+  }
+}
+
+//region - Price
+.wpl-booking-show-price-wp{
+  border: 1px solid darken($co-1, 15%);
+  padding: 2px;
+}
+
+.wpl-booking-price-row{
+  @include clearfix_s2;
+  background-color: lighten($co-1, 15%);
+  margin-bottom: 2px;
+  padding: 8px 5px;
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+
+  & > div{
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+  }
+}
+
+.wpl-booking-price-days{
+  width: 50%;
+  position: relative;
+  @if $text-direction == ltr
+  {
+    padding-left: 5px;
+  } @else
+  {
+    padding-right: 5px;
+  }
+}
+
+.wpl-booking-price-value{
+  width: 50%;
+  @if $text-direction == ltr
+  {
+    text-align: right;
+    padding-right: 5px;
+  } @else
+  {
+    text-align: left;
+    padding-left: 5px;
+  }
+}
+
+.wpl-booking-price-type{
+  @include border-radius(30px);
+  position: absolute;
+  top: -4px;
+  padding: 4px 10px;
+  font-size: .9em;
+  @if $text-direction == ltr
+  {
+    right: 0;
+  } @else
+  {
+    left: 0;
+  }
+}
+
+.wpl-booking-price-row-total{
+  font-weight: bold;
+}
+
+.wpl-booking-inquire-wp{
+  text-align: center;
+  padding: 10px;
+
+  .btn{
+    @include border-radius(3px);
+    padding-right: 50px;
+    padding-left: 50px;
+  }
+}
+//endregion
+
+//region - Booking Final
+.wpl-booking-addon{
+
+  h3{
+    $_padding-bottom: 10px;
+
+    border-bottom: 1px solid rgba($co-33,.5);
+    color: $co-4;
+    font-size: 1.4em;
+    font-style: italic;
+    padding-bottom: $_padding-bottom;
+
+    span{
+      display: inline-block;
+      position: relative;
+
+      &::after{
+        background-color: $co-36;
+        bottom: -1 * ($_padding-bottom + 1px);
+        content: '';
+        height: 1px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+      }
+    }
+
+  }
+
+  .row{
+    @include clearfix_s2;
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  [class*=" col-md-"]{
+    float: left;
+  }
+
+  .col-md-8{
+
+    @media (min-width: 992px){
+      width: 66.66666667%;
+    }
+
+  }
+
+  .col-md-6{
+    @media (min-width: 992px){
+      width: 50%;
+    }
+  }
+
+  .col-md-4{
+    @media (min-width: 992px){
+      width: 33.33333333%;
+    }
+  }
+  
+}
+
+.wpl-booking-right-side{
+  border: 1px solid rgba($co-33,.5);
+  padding: 8px !important;
+
+  .wpl-booking-show-price-wp{
+    border: 0;
+    padding: 0;
+  }
+
+  .wpl-booking-price-row-total{
+    background-color: darken($co-1, 5%);
+
+    .wpl-booking-price-days{
+      width: 30%;
+    }
+
+    .wpl-booking-price-value{
+      width: 70%;
+    }
+
+    &:last-child{
+      background-color: $co-1;
+
+      .wpl-booking-price-days{
+        line-height: 40px;
+      }
+
+      .wpl-booking-price-value {
+        font-size: 2em;
+        line-height: 40px;
+      }
+    }
+  }
+}
+
+.wpl-booking-right-section{
+  border-bottom: 1px solid rgba($co-33, .5);
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.wpl-booking-row{
+
+  label{
+
+    &::after{
+      content: ':';
+      display: inline-block;
+      margin-left: 1px;
+    }
+  }
+}
+
+.wpl-booking-property-image-wp{
+
+  img{
+    width: 100% !important;
+  }
+
+}
+
+.wpl-booking-comment-txt{
+  @include placeholder(darken($co-1, 35%));
+  padding: 8px;
+  min-height: 100px;
+  overflow: auto;
+  width: 100%;
+  outline: none;
+}
+
+.wpl-booking-payment-desc-txt{
+  height: 100px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.wpl-booking-payment-forms-wp{
+  margin-top: 20px;
+}
+
+.wpl-booking-property-title-wp{
+  text-align: center;
+  padding: 10px 0 15px;
+
+  a{
+    font-size: 1.4em;
+  }
+}
+
+.wpl-booking-policies-wp{
+
+  .wpl-booking-row{
+    padding: 5px 0;
+
+    label{
+      font-weight: normal;
+
+      &::after{
+        display: none;
+      }
+    }
+
+
+    span{
+      text-align: right;
+      color: $co-19;
+      @include for-tablet
+      {
+        text-align: left;
+      }
+    }
+  }
+
+}
+
+.wpl-booking-agree-terms{
+  padding: 15px 0;
+}
+
+.wpl-booking-buttons-wp{
+  margin-top: 20px;
+
+  .btn{
+    padding-right: 60px;
+    padding-left: 60px;
+  }
+}
+
+.wplbooking-add-new-book-show-messages{
+  margin: 20px 0;
+}
+
+//endregion
+
+//region + Booking Backend
+.wpl-booking-addon{
+
+  @include for-phone {
+    table {
+      border-collapse: collapse;
+      display: block;
+      overflow-x: scroll;
+    }
+  }
+
+  .wpl-booking-search-row{
+    @include clearfix_s2;
+
+    input[type="text"], select{
+      display: block;
+      width: 100%;
+      height: 30px;
+    }
+
+    .chosen-container{
+      display: block;
+      width: 100% !important;
+    }
+
+    .wpl-booking-search-field{
+      padding: 5px 10px;
+      width: 15%;
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      @include for-phone {
+        width: 50%;
+      }
+    }
+  }
+
+  .wpl-booking-search-btns{
+    @include clearfix_s2;
+    padding: 10px;
+
+    .button{
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      min-width: 80px;
+
+      & + .button{
+        @if $text-direction == ltr
+        {
+          margin-left: 15px;
+        } @else
+        {
+          margin-right: 15px;
+        }
+      }
+
+      &.wpl-booking-search-delete-all{
+        @if $text-direction == ltr
+        {
+          float: right;
+        } @else
+        {
+          float: left;
+        }
+      }
+
+      &.button-primary{
+        min-width: 120px;
+      }
+
+    }
+
+  }
+
+  .wpl-booking-info-show-property{
+
+    .wpl-gen-icon-property{
+      margin-right: 5px;
+    }
+
+  }
+
+
+
+}
+
+.wpl-booking-book-details-wp{
+  width: 800px;
+  color: lighten($co-0, 35%);
+  padding: 8px;
+  
+  & >div{
+    min-height: 250px;
+  }
+
+  .wpl-booking-detail-left-wp{
+    @if $text-direction == ltr
+    {
+      border-right: 1px solid $co-1;
+    } @else
+    {
+      border-left: 1px solid $co-1;
+    }
+  }
+
+  .wpl-booking-detail-right-wp{
+    @if $text-direction == ltr
+    {
+      border-left: 1px solid darken($co-1, 12%);
+    } @else
+    {
+      border-right: 1px solid darken($co-1, 12%);
+    }
+  }
+
+  .wpl-booking-date-available{
+    border-bottom: 1px solid darken($co-1, 12%);
+    padding-bottom: 15px;
+
+    & > div{
+
+      &:first-child{
+        margin-top: 0;
+      }
+
+      &:last-child{
+        margin-bottom: 0;
+      }
+
+    }
+
+  }
+
+  .wpl-booking-detail-availability{
+    
+    b{
+      color: $co-18;
+    }
+
+    i{
+      font-style: normal;
+      font-weight: normal;
+      color: lighten($co-0, 55%);
+    }
+  }
+
+
+  %wpl-booking-detail-msg{
+    @include border-radius(3px);
+    color: $co-1;
+    padding: 2px 8px;
+    margin: 7px 0;
+  }
+
+  .wpl-booking-detail-red-msg{
+    @extend %wpl-booking-detail-msg;
+    background-color: $co-19;
+  }
+
+  .wpl-booking-detail-gray-msg{
+    @extend %wpl-booking-detail-msg;
+    background-color: darken($co-1, 35%);
+  }
+
+  .wpl-booking-detail-green-msg{
+    @extend %wpl-booking-detail-msg;
+    background-color: $co-18;
+  }
+
+  .wpl-booking-detail-property{
+    border-bottom: 1px solid darken($co-1, 12%);
+    border-top: 1px solid $co-1;
+  }
+
+  .wpl-booking-detail-property-image{
+
+    img{
+      max-width: 100%;
+      max-height: 110px;
+    }
+
+  }
+  
+
+  .wpl-booking-detail-property-row{
+    margin: 10px 0;
+  }
+
+  .wpl-booking-detail-title{
+    font-weight: bold;
+    text-decoration: none;
+  }
+
+  .wpl-booking-detail-property-address{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .wpl-booking-detail-property-info{
+    float: left;
+
+    & + .wpl-booking-detail-property-info{
+      margin-left: 15px;
+    }
+
+    b{
+      font-weight: normal;
+    }
+
+    span{
+      font: 15px $font-frontend;
+      
+      &::after{
+        display: inline-block;
+        vertical-align: middle;
+        margin-left: 2px;
+      }
+    }
+  }
+
+  .wpl-booking-detail-property-bed{
+
+    &::after{
+      content: "\e01d";
+      
+    }
+
+  }
+
+  .wpl-booking-detail-property-bath{
+
+    &::after{
+      content: "\e01a";
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+  }
+
+  .wpl-booking-detail-property-img{
+
+    &::after{
+      content: "\e001";
+      display: inline-block;
+      margin-left: 5px;
+    }
+
+  }
+
+  .wpl-booking-detail-comment-wp{
+    border-top: 1px solid $co-1;
+    padding: 10px 0;
+    
+    label{
+      font-weight: bold;
+    }
+  }
+
+  .wpl-booking-detail-comment{
+    min-height: 40px;
+    padding-top: 7px;
+    font-style: italic;
+  }
+
+  .wpl-booking-detail-price{
+    @include clearfix_s2;
+    @include border-radius(3px);
+    background-color: $co-1;
+    padding: 5px 10px;
+    margin-bottom: 10px;
+    font-size: 1em;
+    
+    label{
+      @if $text-direction == ltr{
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      width: 30%;
+      display: inline-block;
+      vertical-align: middle;
+      font-weight: bold;
+    }
+
+    span{
+      font-size: .9em;
+      width: 70%;
+      @if $text-direction == ltr{
+        float: left;
+        text-align: right;
+      } @else
+      {
+        float: right;
+        text-align: left;
+      }
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    &.wpl-booking-detail-price-total{
+      padding: 15px 10px;
+
+      span{
+        font-size: 1.7em;
+      }
+    }
+  }
+
+  .wpl-booking-detail-payment{
+    margin-top: 10px;
+    text-align: center;
+
+    .wpl-button{
+      margin-top: 20px;
+      height: auto;
+      padding: 8px 20px;
+
+      &::before{
+        font: 18px $font-frontend;
+        content: '\e63e';
+        display: inline-block;
+        vertical-align: middle;
+        position: relative;
+        @if $text-direction == ltr
+        {
+          left: -7px;
+        } @else
+        {
+          right: -7px;
+        }
+      }
+
+    }
+  }
+}
+
+.wpl_slide_container50{
+    textarea{
+      width: 80%;
+    }
+}
+
+//endregion
+
+.wpl-booking-setting-cancellation{
+  
+    .wpl-booking-cancel-add-btn-wp{
+      margin-bottom: 20px;
+      color: darken($co-1, 30%);
+      outline: none;
+
+      span{
+        display: inline-block;
+        vertical-align: middle;
+      }
+    }
+  
+}
+
+.wpl-booking-setting-table{
+
+  input[type="text"], textarea{
+    width: 100%;
+  }
+
+}
+
+.wpl-booking-payment-wp{
+
+  .chosen-container.chosen-with-drop .chosen-drop{
+    width: 100%;
+  }
+
+}
+
+.wpl-payment-paypal-icon{
+  background: $co-50 url("../img/backend-svg/icon-paypal-color.svg") no-repeat scroll center center ;
+  border-radius: 5px;
+  height: 80px;
+  margin: 10px 0 15px;
+  padding: 10px;
+  background-size: 85% auto;
+  width: 230px;
+}
+/*Contact Form*/
+.wpl-booking-contact-form-cnt
+{
+   .wpl_red_msg
+   {
+     margin-bottom: 10px;
+   }
+  label
+  {
+    display: none;
+  }
+  .wpl-gen-form-row
+  {
+    padding: 0;
+  }
+  label + input[type="text"], input[type="email"], input[type="password"], input[type="tel"], label + select, label + .chosen-container, label + textarea{
+    width:100%;
+  }
+  textarea
+  {
+    height: 80px !important;
+  }
+  .wpl-booking-contact-btn
+  {
+    float: right;
+  }
+  .wpl-booking-register-me-chbox
+  {
+    float: left;
+    & > input
+    {
+      margin-right: 5px;
+    }
+  }
+}
+
+#wpl-dbst-show1910, #wpl-dbst-show1911, #wpl-dbst-show1905
+{
+  width:100%;
+  span
+  {
+    float: none;
+  }
+}

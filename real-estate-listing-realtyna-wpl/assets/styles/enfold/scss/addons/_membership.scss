@@ -1,0 +1,292 @@
+//Membership (Dashboard)
+.wpl_addon_membership_container {
+  .wpl_dashboard_side2 {
+    border-right: 0;
+  }
+  .wpl_dashboard_links {
+    margin-bottom: 0 !important;
+    li {
+      list-style: none;
+      margin-left: 0 !important;
+      border-bottom: 1px solid $co-12;
+      border-right: 1px solid $co-12;
+      &:before {
+        color: $co-31;
+      }
+      &:hover {
+        background: $co-2;
+        color: $co-11 !important;
+        &:before {
+          color: $co-11 !important;
+        }
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+      a {
+        color: $co-31 !important;
+        font: {
+          size: 11px;
+        }
+        &:hover {
+          color: $co-11 !important;
+          text-decoration: none !important;
+        }
+      }
+    }
+    li.active {
+      background: $co-2 !important;
+      border-right: 0;
+      position: relative;
+      z-index: 3;
+      a {
+        color: $co-11 !important;
+        font: {
+          weight: bold;
+        }
+      }
+    }
+    li.properties_link {
+      z-index: 4;
+      position: relative;
+      background: $co-2;
+      &:before {
+        color: $co-31;
+      }
+      &:after {
+        color: $co-31;
+      }
+      &:hover {
+        &:before {
+          color: $co-11;
+        }
+        &:after {
+          color: $co-11;
+        }
+        h4 {
+          color: $co-11;
+        }
+      }
+      h4 {
+        font: {
+          size: 13px;
+        }
+        color: $co-31;
+      }
+      ul {
+        border: none !important;
+        li {
+          border-top: 1px solid $co-12;
+          border-bottom: 1px solid $co-12;
+          border-left: 1px solid $co-12;
+          border-right: 0;
+          background: $co-2;
+          margin-bottom: 0;
+          color: $co-31;
+          &:before {
+            color: $co-31;
+          }
+          &:hover {
+            color: $co-11 !important;
+            &:before {
+              color: $co-11 !important;
+            }
+          }
+          &:first-child {
+            border-bottom: none;
+          }
+        }
+      }
+    }
+    li.properties_link.open {
+      &:before {
+        color: $co-11;
+      }
+      &:after {
+        color: $co-11;
+      }
+      h4 {
+        color: $co-11;
+      }
+    }
+  }
+  .wpl_dashboard_side1 { //right side
+    box-shadow: -8px 0px 20px -10px rgba(0, 0, 0, 0.2);
+    border-left: 0 !important;
+    background: $co-2 !important;
+  }
+  .wpl-ewallet-wp {
+    input[type="number"] {
+      border-radius: 0 !important;
+      background: none repeat scroll 0 0 $co-2 !important;
+      border: 1px solid $co-9 !important;
+      color: $co-11 !important;
+      height: 35px !important;
+      padding: 0 5px !important;
+      vertical-align: top !important;
+      display: inline-block !important;
+      width: 161px !important;
+    }
+    ul {
+      margin-bottom: 0 !important;
+    }
+    .wpl-payment-cnt {
+      .wpl-util-form-row {
+        label {
+          display: inline-block !important;
+        }
+        input[type=text] {
+          display: inline-block !important;
+          width: calc(100% - 100px) !important;
+        }
+      }
+    }
+  }
+  .wpl-membership-activity-wp {
+    .wpl-gen-tab-wp.wpl-membership-wpluser-head {
+      .wpl-membership-tab {
+        li {
+          list-style: none;
+          margin-left: 0 !important;
+          line-height: 2.6em;
+          &:before {
+            background: $co-31;
+          }
+        }
+      }
+    }
+    .wpl-gen-tab-contents-wp.wpl-membership-wpluser-tab-container {
+      .wpl-membership-wpluser {
+        li {
+          list-style: none;
+          padding: 5px 21px;
+        }
+      }
+      .wpl_payments_checkout_page.wpl_view_container.wpl-payment-checkout-wp {
+        .wpl-payment-cnt {
+          .wpl-js-tab-system {
+            .wpl-gen-tab-wp.wpl-payment-tabs-wp {
+              ul {
+                margin-bottom: 0 !important;
+              }
+            }
+          }
+          .wpl-payment-tabs-wp {
+            ul {
+              margin-bottom: 0;
+            }
+          }
+          .wpl-payment-contents-wp {
+            label {
+              display: inline-block;
+            }
+            input {
+              display: inline-block !important;
+              width: calc(100% - 100px) !important;
+            }
+          }
+        }
+      }
+      .wpl_addon_membership_container.wpl_view_container.wpl_membership_wrap {
+        .wpl_memberships_container {
+          li {
+            list-style: none;
+            .wpl_memberships_wrap {
+              height: auto !important;
+              .membership_details {
+                padding: 10px 15px;
+                li {
+                  list-style: none;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .profile-wp {
+    .panel-wp {
+      .panel-body {
+        .pwizard-panel {
+          .pwizard-section {
+            div {
+              label {
+                .required-star {
+                  font-size: 10px !important;
+                }
+              }
+              input,
+              textarea {
+                display: inline-block !important;
+                margin: 0 !important;
+              }
+            }
+            .upload-preview {
+              display: block !important;
+              text-align: center !important;
+            }
+          }
+          .text-left.finilize-btn {
+            padding-bottom: 20px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.pwizard-wp {
+  .chosen-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 13px;
+    zoom: 1;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    width: 45px !important;
+    min-width: 45px;
+    max-width: 100%;
+    .chosen-single {
+      min-width: 85px;
+    }
+  }
+  .side-content-wp {
+    .prow {
+      .wpl_c_field_312,
+      .wpl_c_field_313 {
+        width: calc(100% - 160px) !important;
+        display: inline-block !important;
+      }
+      input {
+        display: inline-block !important;
+        width: auto !important;
+        margin-bottom: 0 !important;
+      }
+    }
+  }
+}
+
+#top label {
+  font-weight: normal;
+  font-size: 13px;
+}
+
+.properties-wp {
+  .pmanager-multi-agent {
+    .chosen-container-multi {
+      width: initial !important;
+      .chosen-choices {
+        li.search-field {
+          input[type="text"] {
+            width: initial !important;
+            margin-bottom: 0 !important;
+          }
+        }
+      }
+    }
+  }
+}

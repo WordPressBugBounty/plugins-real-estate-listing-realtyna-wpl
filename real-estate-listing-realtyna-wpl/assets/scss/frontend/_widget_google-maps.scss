@@ -1,0 +1,41 @@
+.wpl-googlemap-widget{
+  margin: 10px 0;
+  .wpl-googlemap-widget-link{
+    width: 100%;
+    height: auto;
+    min-height: 140px;
+    background: url("../img/wpl_map_view_widget_big.png") no-repeat center;
+    line-height: 140px;
+    text-align: center;
+    a{
+      vertical-align: middle;
+      color: $co-1;
+      text-transform: uppercase;
+      padding: 5px 15px 5px 5px;
+      background: rgba($co-0,.6);
+      opacity: 0;
+      font: {
+        family: $font-open-sans;
+        size: 15px;
+        weight: bold;
+      }
+      &:before{
+        content: '\e913';
+        padding-right: 10px;
+        font: {
+          family: "wpl-front";
+          size: 17px;
+        }
+      }
+    }
+    &:hover{
+      //@include transition-delay(350ms);
+      //-webkit-filter: brightness(110%);
+      //filter: brightness(110%);
+      a{
+        //@include transition-delay(650ms);
+        opacity: 1;
+      }
+    }
+  }
+}

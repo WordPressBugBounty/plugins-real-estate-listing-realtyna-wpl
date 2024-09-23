@@ -1,0 +1,462 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+
+.wpl-rating{
+  position: relative;
+  padding: 10px 0;
+}
+
+.wpl-rate-title{
+  font-size: 1.5em;
+  font-weight: bold;
+  color: lighten($co-0, 40%);
+}
+
+.wpl-rate-info{
+  font-size: .8em;
+  position: absolute;
+  top: 20px;
+  color: lighten($co-0, 30%);
+  @if $text-direction == ltr
+  {
+    right: 20%;
+  } @else
+  {
+    left: 20%;
+  }
+}
+
+.wpl-review-ratings-wp{
+  border-bottom: 1px solid darken($co-1, 15%);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+}
+
+.wpl-review-main-review-form{
+  @extend .wpl-review-ratings-wp;
+  margin-bottom: 0;
+}
+
+// region + Overall
+.wpl-review-rates-overall-container
+{
+  padding-right: 20%;
+  width: 100%;
+  @include for-tablet{
+    padding-right: 0;
+  }
+
+  .wpl-rating{
+    width: 100% !important;
+  }
+
+  .wpl-rate
+  {
+    overflow: hidden;
+    width: 80%;
+    margin: 0 auto;
+    @include for-tablet{
+      width: 100%;
+    }
+  }
+}
+.wpl-rate-pie_wrap{
+  position: relative;
+}
+.wpl-rate-pie_count{
+  position: absolute;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  .wpl-rate-title{
+    font-size: 15px;
+  }
+}
+.wpl-rate-info_overall_percent{
+  font-size: 34px;
+  font-weight: bold;
+  @include for-phone{
+    font-size: 30px;
+  }
+}
+.wpl-rate-info_overall_vote{
+  font-size: 12px;
+  font-weight: 300;
+}
+
+//region + Review Form
+.wpl-review-review-form-container{
+
+  .wpl_red_msg{
+    margin-top: 10px;
+  }
+
+  .wpl-review-review-form-row{
+    margin-bottom: 8px;
+  }
+
+  .wpl-review-review-txt{
+    @include border-radius(3px);
+    @include box-shadow(inset 0 3px 3px -1px rgba($co-0,0.1));
+    @include placeholder(darken($co-1, 25%));
+    border-color: darken($co-1, 15%);
+    width: 100%;
+    background-color: $co-1;
+    outline: none;
+    resize: none;
+  }
+
+  .wpl-review-review-txt-content{
+    @extend .wpl-review-review-txt;
+    padding: 8px;
+    min-height: 100px;
+  }
+
+}
+
+.wpl-review-submit{
+  @if $text-direction == ltr
+  {
+    text-align: right;
+  } @else
+  {
+    text-align: left;
+  }
+
+  .btn{
+    @include border-radius(0);
+    padding: 2px 10px;
+    font-size: 1em;
+  }
+}
+
+.wpl-review-review-max-chars{
+  @if $text-direction == ltr
+  {
+    float: left;
+  } @else
+  {
+    float: right;
+  }
+  font-style: italic;
+  color: darken($co-1, 40%);
+}
+//endregion
+
+//region + Review List
+.wpl-review-reviews{
+  .btn.btn-primary.wpl_load_review{
+    display: none;
+    @if $text-direction == ltr
+    {
+      float: right;
+    } @else
+    {
+      float: left;
+    }
+    border-radius: 0;
+    margin-top: 10px;
+  }
+}
+
+.wpl-review-list-wp{
+
+  & > .wpl-review-review-wp{
+    border-bottom: 1px dashed darken($co-1, 15%);
+
+    &:last-child{
+      border-bottom: 0;
+    }
+  }
+}
+
+.wpl-review-review-wp{
+  padding: 15px;
+  display: none;
+
+  .wpl-review-list-wp{
+    padding-top: 10px;
+    margin-top: 15px;
+
+    .wpl-review-review-wp{
+      border-top: 1px dashed darken($co-1, 15%);
+      padding: 0;
+      margin-left: 20px;
+      padding-left: 10px;
+
+      .wpl-review-likes-container{
+        bottom: 0;
+      }
+    }
+  }
+}
+
+.wpl-review-review-content-wp{
+  position: relative;
+
+  .wpl-review-review-reply-btn{
+    @include border-radius(0);
+    padding: 0 15px 1px;
+    font-size: 1em;
+  }
+}
+
+.wpl-review-review-title{
+  @include clearfix_s2;
+  padding: 10px 0;
+  color: $co-36;
+}
+
+.wpl-review-review-name{
+  @if $text-direction == ltr
+  {
+    float: left;
+  } @else
+  {
+    float: right;
+  }
+  width: 55%;
+  font-size: 1.2em;
+  text-transform: capitalize;
+
+}
+
+.wpl-review-review-date{
+  @if $text-direction == ltr
+  {
+    float: left;
+    text-align: right;
+  } @else
+  {
+    float: right;
+    text-align: left;
+  }
+  width: 45%;
+  font-size: .8em;
+}
+
+.wpl-review-review-content{
+  padding: 10px 0 20px;
+  color: rgba($co-0, .7);
+  position: relative;
+}
+
+.wpl-review-likes-container{
+  @include clearfix_s2;
+  position: absolute;
+  bottom: -20px;
+  @if $text-direction == ltr
+  {
+    right: 0;
+  } @else
+  {
+    left: 0;
+  }
+
+  & > div{
+    @include transition(background .1s linear);
+    cursor: pointer;
+    padding: 0 7px;
+  }
+
+  &.wpl-review-has-like{
+
+    .wpl-review-like-btn{
+      @include border-radius(3px);
+      border: 1px solid $co-24;
+    }
+
+  }
+
+  &.wpl-review-has-dislike{
+
+    .wpl-review-dislike-btn {
+      @include border-radius(3px);
+      border: 1px solid $co-56;
+    }
+
+  }
+
+}
+
+.wpl-review-like-btn{
+  @include border-radius(3px 0 0 3px);
+  border: 1px solid $co-24;
+  color: $co-24;
+  border-right: 0;
+  float: left;
+
+  &:hover{
+    background-color: $co-24;
+    color: $co-1;
+  }
+
+  &::after{
+    content: '+';
+    font-weight: bold;
+  }
+}
+
+.wpl-review-dislike-btn{
+  @include border-radius(0 3px 3px 0);
+  border: 1px solid $co-56;
+  color: $co-56;
+  float: left;
+  border-left: 1px solid lighten($co-0, 30%);
+
+  &:hover{
+    background-color: $co-56;
+    color: $co-1;
+  }
+
+  &::before{
+    content: '-';
+    font-weight: bold;
+  }
+}
+
+
+
+//endregion
+
+//region + Bar Rating
+.br-wrapper{
+  *
+  {
+    @include box-sizing(border-box);
+  }
+  .br-widget {
+    height: 18px;
+
+    .br-current-rating {
+      @include transition(color .1s linear);
+      color: $co-36;
+      font: bold 1.7em $font-droid;
+      font-style: italic;
+      padding: 0 8px;
+      width: 20%;
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      line-height: 30px;
+      position: relative;
+      top: -7px;
+
+      &::after{
+        content: '%';
+      }
+    }
+
+    &:hover{
+
+      .br-current-rating {
+        @include transition(color .1s linear);
+        color: $co-12;
+      }
+    }
+  }
+
+  a {
+    @include box-shadow(inset 0 5px 1px -3px rgba($co-0,0.1));
+    background-color: darken($co-1, 6%);
+    display: block;
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+    height: 18px;
+    text-align: center;
+    width: 16%;
+
+    &:first-child{
+      @if $text-direction == ltr
+      {
+        @include border-radius(3px 0 0 3px);
+      } @else
+      {
+        @include border-radius(0 3px 3px 0);
+      }
+    }
+
+    &:last-child, &:nth-child(5){
+      @if $text-direction == ltr
+      {
+        @include border-radius(0 3px 3px 0);
+      } @else
+      {
+        @include border-radius(3px 0 0 3px);
+      }
+    }
+
+    &.br-selected {
+      @include box-shadow(none);
+      background-color: $co-36;
+    }
+
+    &.br-active{
+      @include box-shadow(none);
+      background-color: rgba($co-12, .6);
+
+      &:first-child{
+
+      }
+    }
+  }
+
+  .wpl-review-rate-is-selected{
+
+    .br-current-rating{
+      color: darken($co-12, 8%);
+    }
+
+    a.br-selected{
+      background-color: darken($co-12, 8%);
+      border-top: 1px solid darken($co-12, 13%);
+      border-bottom: 1px solid darken($co-12, 13%);
+
+      &:first-child{
+        @if $text-direction == ltr
+        {
+          border-left: 1px solid darken($co-12, 13%);
+        } @else
+        {
+          border-right: 1px solid darken($co-12, 13%);
+        }
+      }
+
+      &.br-current{
+        @if $text-direction == ltr
+        {
+          border-right: 1px solid darken($co-12, 13%);
+        } @else
+        {
+          border-left: 1px solid darken($co-12, 13%);
+        }
+      }
+
+      &.br-current ~ a{
+        @include box-shadow(inset 0 3px 3px -3px rgba($co-0, .45));
+      }
+    }
+  }
+
+}
+
+
+//endregion

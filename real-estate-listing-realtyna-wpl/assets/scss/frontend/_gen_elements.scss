@@ -1,0 +1,226 @@
+
+// Grid
+.clearfix
+{
+  &:after,&:before
+  {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+.wpl-gen-grid-wp{
+
+  &.wpl-gen-grid-full{
+    width: 100%;
+  }
+
+  th{
+    background: darken($co-1, 4%);
+    text-align: center;
+    padding: 10px 0;
+    border-right: 1px solid darken($co-1, 17%);
+    border-top: 1px solid darken($co-1, 10%);
+    border-bottom: 3px solid darken($co-1, 17%);
+
+    &:first-child{
+      border-left: 1px solid darken($co-1, 17%);
+    }
+  }
+
+  td{
+    @include transition(background .3s linear);
+    border-bottom: 1px solid darken($co-1, 7%);
+    padding: 4px 8px;
+
+    input{
+      width: 100%;
+    }
+  }
+
+  tr{
+
+    $co-local-1:rgba($co-23, .1);
+
+    &:hover{
+      td{
+        background: $co-local-1;
+      }
+    }
+
+    &:nth-child(even){
+
+      td{
+        background: darken($co-1, 1.5%);
+      }
+
+      &:hover{
+        td{
+          background: $co-local-1;
+        }
+      }
+
+    }
+
+  }
+
+  .wpl-gen-grid-no-result{
+    padding: 20px 0;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  &.wpl-gen-grid-center{
+    td{
+      text-align: center;
+    }
+  }
+}
+.wpl-gen-link
+{
+  color:$co-36;
+  text-decoration: underline;
+}
+.realtyna-lightbox-close-btn
+{
+  &::before
+  {
+    content: '\e6ad';
+    font: 16px/16px $font-frontend;
+  }
+}
+/*btn*/
+.btn-primary, .form-field > .btn-primary {
+  color: $co-1;
+  background-color: $co-36;
+  border-color: darken($co-36,5%);
+
+  &:hover{
+    background-color: darken($co-36,15%);
+  }
+}
+.btn , .form-field > .btn {
+  display: inline-block;
+  margin-bottom: 0;
+  font-weight: normal;
+  text-align: center;
+  vertical-align: middle;
+  touch-action: manipulation;
+  cursor: pointer;
+  background-image: none;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143;
+  border-radius: 4px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/*map*/
+.wpl_map_canvas{
+  @include box-sizing(content-box);
+
+  img{
+    max-width: none !important;
+  }
+
+  label{
+    display: inline !important;
+    width: auto !important;
+  }
+}
+/*no image*/
+.no_image{
+  background: $color_2;
+  &:before{
+    line-height: 1.5;
+    content: "\e003";
+    font-family: "wpl-front";
+    font-size: 5em;
+    display: block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+}
+
+//region = Messages Styles
+.wpl_message_container{
+  @include border-radius(5px);
+  margin: 3em 1em;
+  padding: 2em;
+  background-color: $co-73;
+  border:1px solid $co-72;
+  color: $co-71;
+  text-align: center;
+  font-weight: bold;
+}
+
+.wpl_red_msg{
+  color: $co-39; 
+  // border: 1px solid rgba(216, 80, 48, 0.3);
+  // background: $co-75;
+  padding: 10px 5px;
+  font-size: 14px;
+  font-weight: bold;
+  width: 100%;
+  text-align: right;
+  float: right;
+  &::before{ 
+    content: '\e6b0';
+    font: 20px $font-frontend;
+    vertical-align: -4px;
+    background: $co-39;
+    border-radius: 50%;
+    color: $co-1;
+    padding: 1px 1px 0px 1px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+
+.wpl_green_msg{
+  padding: 15px 5px; 
+  background:$co-102;
+  color: $co-1;
+  font-size: 14px;
+  margin-bottom: 10px;
+
+  &::before{ 
+    content: '\e946';
+    font: 22px "wpl-front";
+    vertical-align: -4px;
+    background: white;
+    border-radius: 50%;
+    color: $co-102;
+    padding: 2px;
+    margin-right: 5px;
+    margin-left: 5px;
+  }
+}
+
+//endregion
+//region = Style reset
+.wpl-page ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+input[type=text], input[type=mail], input[type=password], input[type=tel]{
+  outline: none;
+}
+//endregion
+//region = Print Media
+@media print {
+  a[href]:after {
+    content: none !important;
+  }
+}
+//endregion

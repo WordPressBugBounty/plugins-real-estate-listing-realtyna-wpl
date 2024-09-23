@@ -1,0 +1,35 @@
+.mortgage_calculator,
+.wpl_mcalc_container {
+  border: none !important;
+  .form-field {
+    .text-box {
+      width: 100px !important;
+      display: inline-block !important;
+      margin: 5px 0 !important;
+    }
+    .wpl-mortgage-symbol {
+      display: inline-block !important;
+      padding-left: 5px;
+    }
+    label{
+      @include for-phone-2{
+        float: none;
+        text-align: left;
+      }
+      @media (max-width: 640px){
+        float: left;
+        text-align: right;
+      }
+    }
+  }
+  .form-result {
+    label {
+      display: inline-block;
+    }
+    .text-box {
+      display: inline-block !important;
+      width: 110px !important;
+      margin: 5px 0 !important;
+    }
+  }
+}

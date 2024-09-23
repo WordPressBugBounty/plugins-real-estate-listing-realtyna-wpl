@@ -1,0 +1,503 @@
+/* Device widths */
+$small-phone: '(max-width: 320px)';
+$phone: '(max-width: 480px)';
+$phone-2: '(max-width: 767px)';
+$tablet-portrait: '(max-width: 991px)';
+$tablet-landscape: '(min-width: 768px) and (max-width: 991px)';
+$tablet-landscape-desktop: '(min-width: 992px) and (max-width: 1200px)';
+$large-desktop: '(min-width: 1200px)';
+$non-retina: 'screen and (-webkit-max-device-pixel-ratio: 1)';
+$retina: 'screen and (-webkit-min-device-pixel-ratio: 2)';
+
+// Media Generator
+@mixin respond-to($media) {
+  @media #{$media}{
+    @content
+  }
+}
+
+// For Small Phone ( Portrait and Landscape )
+@mixin for-small-phone {
+  @include respond-to($small-phone) {
+    @content;
+  }
+}
+
+// For Phone ( Portrait and Landscape )
+@mixin for-phone {
+  @include respond-to($phone) {
+    @content;
+  }
+}
+
+// For Phone ( Portrait and Landscape )
+@mixin for-phone-2 {
+  @include respond-to($phone-2) {
+    @content;
+  }
+}
+
+// For Tablet( Portrait Only )
+@mixin for-tablet {
+  @include respond-to($tablet-portrait) {
+    @content;
+  }
+}
+
+// For tablet ( Landscape )
+@mixin for-tablet-landscape {
+  @include respond-to($tablet-landscape) {
+    @content;
+  }
+}
+
+// For Tablet ( Tablet and Portrait Desktop  )
+@mixin for-tablet-land {
+  @include respond-to($tablet-landscape-desktop) {
+    @content;
+  }
+}
+
+// For Phone ( Large Desktop  )
+@mixin for-desktop {
+  @include respond-to($large-desktop) {
+    @content;
+  }
+}
+
+@mixin placeholder($color) {
+  &::-webkit-input-placeholder {
+    color: $color !important;
+  }
+  &:-moz-placeholder {
+    color: $color !important;
+  }
+  &::-moz-placeholder {
+    color: $color !important;
+  }
+  &:-ms-input-placeholder {
+    color: $color !important;
+  }
+}
+
+@mixin wpl_prp_top() {
+  .wpl_prp_top {
+    margin: 0;
+    position: relative;
+    max-width: 100%;
+    overflow: hidden;
+    z-index: 6;
+    .wpl_prp_top_boxes.front {
+      width: 100%;
+      height: 100%;
+      z-index: 2;
+      @include transform(none);
+      .wpl_gallery_container {
+        position: relative;
+        margin: 0;
+        max-width: 100%;
+        height: auto !important;
+        width: 100% !important;
+        overflow: hidden;
+        background: $co-2;
+        .wpl-slider-bx-pager-wp {
+          display: none;
+        }
+        .bxslider {
+          margin: 0;
+          li {
+            padding: 0;
+            img {
+              margin: 0;
+              display: block;
+              max-width: 100% !important;
+              width: 100% !important;
+              max-height: 100% !important;
+            }
+          }
+        }
+        a {
+          .image-overlay {
+            visibility: hidden;
+          }
+        }
+      }
+    }
+    .wpl_prp_top_boxes.back {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      color: $co-2;
+      text-align: center;
+      z-index: 3;
+      visibility: hidden;
+      opacity: 0;
+      @include transform(none);
+      &:before,
+      &:after {
+        display: block;
+        position: absolute;
+        content: '';
+        width: 50%;
+        height: 1px;
+        background: #fff;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      &:before {
+        transition: top 0.2s linear;
+        top: -1%;
+      }
+      &:after {
+        transition: bottom 0.2s linear;
+        bottom: -1%;
+      }
+      a.view_detail {
+        &:hover,
+        &:active,
+        &:focus {
+          text-decoration: none;
+        }
+      }
+    }
+    &:hover {
+      .wpl_prp_top_boxes.front {
+        opacity: 1;
+        visibility: visible;
+        @include transform(none);
+      }
+      .wpl_prp_top_boxes.back {
+        opacity: 0.8;
+        visibility: visible;
+        z-index: 3;
+        @include transform(none);
+        &:before {
+          top: 30%;
+          transition: top 0.2s linear;
+        }
+        &:after {
+          bottom: 30%;
+          transition: bottom 0.2s linear;
+        }
+      }
+    }
+  }
+}
+
+@mixin agent-image() {
+  @include for-phone {
+    .back {
+      a.view_properties {
+        line-height: 250px;
+      }
+    }
+  }
+  .front {
+    overflow: hidden;
+    background: $co-2;
+    border: 2px solid $co-24;
+    @include transform(none !important);
+  }
+  .back {
+    z-index: 3;
+    overflow: hidden;
+    opacity: 0;
+    @include transform(none !important);
+    &:before,
+    &:after {
+      display: block;
+      position: absolute;
+      content: '';
+      width: 50%;
+      height: 1px;
+      background: #fff;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    &:before {
+      transition: top 0.2s linear;
+      top: -1%;
+    }
+    &:after {
+      transition: bottom 0.2s linear;
+      bottom: -1%;
+    }
+    a.view_properties {
+      padding-top: 0;
+      &:hover,
+      &:active,
+      &:focus {
+        text-decoration: none;
+      }
+    }
+  }
+  &:hover {
+    .front {
+      opacity: 1;
+      visibility: visible;
+      @include transform(none);
+    }
+    .back {
+      opacity: 0.8;
+      visibility: visible;
+      z-index: 3;
+      @include transform(none);
+      &:before {
+        transition: top 0.2s linear;
+        top: 30%;
+      }
+      &:after {
+        transition: bottom 0.2s linear;
+        bottom: 30%;
+      }
+    }
+  }
+}
+
+@mixin general-search-style() {
+  .wpl_search_field_container {
+    padding: 10px;
+    margin: 0;
+    label {
+      font: {
+        size: inherit !important;
+        weight: 400 !important;
+      }
+    }
+    > input[type=text],
+    .chosen-container .chosen-single {
+      transition: all 0.3s linear !important;
+      border-radius: 3px !important;
+      height: 44px !important;
+      color: $co-21 !important;
+      background: $co-2 !important;
+      font: {
+        family: $fo-5 !important;
+        size: 17px !important;
+      }
+      line-height: 44px !important;
+      @include placeholder($co-21);
+      &:active,
+      &:focus,
+      &:hover {
+        transition: all 0.3s linear !important;
+        outline: none !important;
+      }
+    }
+    .chosen-container {
+      width: inherit !important;
+      &:after {
+        top: 15px;
+        color: $co-21;
+      }
+      .chosen-single {
+        span {
+          text-align: left;
+          color: inherit !important;
+        }
+        div {
+          top: -8px;
+        }
+      }
+      .chosen-choices {
+        .search-field {
+          input[type="text"] {
+            color: $co-21;
+            font: {
+              family: $fo-5;
+            }
+            @include placeholder($co-21);
+          }
+        }
+      }
+    }
+    .wpl_search_widget_location_level_container {
+      margin: 0;
+      position: relative;
+      input {
+        border-radius: 3px !important;
+        height: 44px !important;
+        min-width: 0;
+        color: $co-21 !important;
+        font: {
+          family: $fo-5 !important;
+          size: 17px !important;
+        }
+        @include placeholder($co-21);
+        &:active,
+        &:focus,
+        &:hover {
+          outline: none !important;
+        }
+      }
+    }
+  }
+}
+
+@mixin chosen-container() {
+  .chosen-container-single {
+    .chosen-single {
+      div {
+        b {
+          background: none !important;
+          &:before {
+            transition: all 0.3s linear;
+            display: block;
+            position: absolute;
+            top: 9px;
+            color: $co-21 !important;
+            font: {
+              family: 'wpl-front';
+              size: 13px;
+            }
+            content: '\e929';
+            @include rotate(0deg);
+          }
+        }
+      }
+    }
+    .chosen-drop {
+      .chosen-search {
+        input[type="text"] {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
+  }
+  .chosen-container-active.chosen-with-drop {
+    .chosen-single {
+      div {
+        b {
+          background: none;
+          &:before {
+            transition: all 0.3s linear;
+            display: block;
+            position: absolute;
+            font: {
+              family: 'wpl-front';
+            }
+            content: '\e92a';
+            @include rotate(180deg);
+          }
+        }
+      }
+    }
+  }
+}
+
+@mixin search-button() {
+  .search_submit_box,
+  .wpl_search_reset {
+    border-radius: 4px;
+    transition: all 0.3s linear;
+    cursor: pointer;
+    width: 60px;
+    height: 42px;
+    margin: 11px 0 10px 10px;
+    &:hover,
+    &:active,
+    &:focus {
+      transition: all 0.3s linear;
+      outline: none;
+    }
+    .wpl_search_widget_submit {
+      font-size: 0;
+      background: transparent !important;
+      position: relative;
+      z-index: 2;
+      cursor: pointer;
+      width:100%;
+      height:100%;
+      &:hover,
+      &:active,
+      &:focus {
+        outline: none;
+      }
+    }
+    &:after {
+      font: {
+        size: 22px;
+        weight: normal;
+      }
+      padding: 5px;
+      text-align: center;
+      line-height: 40px;
+      z-index: 1;
+      position: absolute;
+      right: 37px;
+      top: -5px;
+    }
+  }
+  .search_submit_box {
+    padding:0;
+    &:after {
+      right: 0;
+      width: 100%;
+      height: 100%;
+      font: {
+        family: $fo-4;
+      }
+      content: "\e91b";
+    }
+  }
+  .wpl_search_reset {
+    font: {
+      size: 0;
+    }
+    &:after {
+      font: {
+        family: $fo-4;
+      }
+      content: "\e939";
+    }
+  }
+}
+
+@mixin prp_show_title_line {
+  position: relative;
+  font: {
+    family: inherit;
+    size: 28px;
+    weight: 500;
+    style: normal;
+  }
+  text-transform: uppercase;
+  border-bottom: none;
+  margin-bottom: 20px;
+  color: inherit !important;
+  &:before {
+    border-radius: 6px;
+    content: "";
+    display: block;
+    width: 9px;
+    height: 9px;
+    position: absolute;
+    border: 2px solid $co-12;
+    left: 0;
+    bottom: -15px;
+    background: $co-2 !important;
+    z-index: 1;
+  }
+  &:after {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 145px;
+    height: 1px;
+    left: 0;
+    bottom: -9px;
+    background: $co-12 !important;
+  }
+}
+
+@mixin calc($property, $expression, $important:"") {
+  #{$property}: -moz-calc(#{$expression}) #{$important};
+  #{$property}: -webkit-calc(#{$expression}) #{$important};
+  #{$property}: calc(#{$expression}) #{$important};
+}

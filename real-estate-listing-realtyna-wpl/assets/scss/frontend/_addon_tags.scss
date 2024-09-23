@@ -1,0 +1,20 @@
+.wpl-listing-tags-wp {
+  position: absolute;
+  z-index: 999;
+  .wpl-listing-tags-cnt {
+    display: table-cell;
+    padding: 10px 0;
+    vertical-align: bottom;
+    div {
+      font-family: $font-lato;
+      line-height: 2em;
+      margin: 5px 0;
+      padding: 0 5px;
+      position: relative;
+      text-align: center;
+      z-index: 2;
+      font-size: 15px;
+    }
+  }
+}
+

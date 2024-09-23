@@ -1,0 +1,107 @@
+/**!
+ * WPL
+ * Author WPL UI Department of Realtyna Inc.
+ * Copyright 2018 Realtyna Inc. | realtyna.com
+ **/
+
+$text-direction: rtl;
+@import "compass";
+
+@import "rta/fonts";
+@import "rta/front_variables";
+@import "rta/mixin";
+@import "rta/loading";
+
+//region + Commons
+@import "common/gen_util";
+@import "common/plugin_qtips";
+@import "common/gen_listing";
+@import "common/text_effect";
+@import "common/admin_bar";
+@import "common/property_wizard";
+@import "common/realtyna_lightbox";
+//endregion
+
+//region + frontend
+@import "frontend/gen_forms";
+@import "frontend/gen_elements";
+@import "frontend/gen_animations";
+@import "frontend/chosen";
+@import "frontend/carousel";
+@import "frontend/search";
+@import "frontend/favorites";
+@import "frontend/property_listing";
+@import "frontend/property_show";
+@import "frontend/profile_listing";
+@import "frontend/profile_show";
+@import "frontend/infowindow";
+@import "frontend/agent_widget";
+@import "frontend/profile_wizard";
+@import "frontend/property_wizard";
+@import "frontend/property_manager";
+@import "frontend/compare";
+@import "frontend/pshow_preview";
+@import "frontend/googlemap";
+
+//region + Plugins
+@import "frontend/plugin_owl";
+//@import "frontend/plugin_jquery_ui";
+//@import "frontend/plugin_custom_scrollbar";
+//TODO: Addon CRM can be exclude from frontend.css
+@import "frontend/plugin_full_calendar";
+
+@import "common/plugin_time_picker";
+@import "common/plugin_date_picker";
+@import "frontend/plugin_property_show_slider";
+@import "frontend/plugin_responsive_slider";
+
+//endregion
+
+//region + Add-ons
+@import "frontend/addons";
+@import "frontend/addon_general";
+@import "frontend/addon_calendar";
+@import "frontend/addon_payment";
+@import "frontend/addon_demographics";
+@import "frontend/addon_neighborhoods";
+//TODO: Addon CRM can be exclude from frontend.css
+@import "frontend/addon_crm";
+@import "frontend/addon_crm_responsive";
+@import "frontend/addon_save_search";
+@import "frontend/addon_aps";
+@import "frontend/addon_school_info";
+@import "frontend/addon_mortgage_calc";
+@import "common/addon_review";
+@import "common/addon_multilingual";
+@import "common/addon_booking";
+@import "frontend/addon_complex";
+@import "frontend/zillow";
+@import "frontend/addon_tags";
+@import "frontend/addon_mobile_app";
+@import "frontend/addon_yelp";
+@import "frontend/addon_brokerage";
+//endregion
+
+//region + Widgets
+@import "frontend/widget_carousel";
+@import "frontend/widget_summary";
+@import "frontend/widget_tags";
+@import "frontend/widget_google-maps";
+@import "frontend/widget_mls_estimator";
+@import "frontend/widget_mls_disclaimer";
+@import "common/addon_market_reports";
+@import "frontend/addon_market_reports";
+//@import "frontend/widget_links";
+//endregion
+
+@import "common/table";
+
+//foundation SCSS files
+/******below is rtl foundation-it is commented now*******/
+//$global-text-direction: rtl;
+@import 'common/foundation/foundation';
+@include foundation-everything;
+//end foundation scss files
+
+// recaptcha
+@import "frontend/recaptcha";

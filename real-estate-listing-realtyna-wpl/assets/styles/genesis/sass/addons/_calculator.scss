@@ -1,0 +1,99 @@
+@include for-phone-2 {
+  .wpl_prp_position3_boxes.mortgage_calculator {
+    .wpl_mcalc_container {
+      form {
+        display: block;
+      }
+    }
+  }
+}
+@include for-tablet-landscape {
+  .wpl_prp_position3_boxes.mortgage_calculator {
+    .wpl_mcalc_container {
+      form {
+        width: 100%;
+        @include display-flex(flex);
+        @include flex-wrap(wrap);
+        .form-field {
+          width: 50%;
+        }
+      }
+    }
+  }
+  .wpl_mcalc_container{
+    label{
+      text-align: left;
+    }
+  }
+}
+@include for-tablet-land {
+  .wpl_prp_position3_boxes.mortgage_calculator {
+    .wpl_mcalc_container {
+      form {
+        width: 100%;
+        @include display-flex(flex);
+        @include flex-wrap(wrap);
+        .form-field {
+          width: 50%;
+        }
+      }
+    }
+  }
+  .wpl_mcalc_container{
+    label{
+      text-align: left;
+    }
+  }
+}
+@include for-desktop {
+  .wpl_prp_position3_boxes.mortgage_calculator {
+    .wpl_mcalc_container {
+      form {
+        width: 100%;
+        @include display-flex(flex);
+        @include flex-wrap(wrap);
+        .form-field {
+          width: 50%;
+        }
+      }
+    }
+  }
+}
+
+.wpl_prp_position3_boxes.mortgage_calculator {
+  .wpl_mcalc_container {
+    form {
+      .form-field {
+        label {
+          font: {
+            weight: bold;
+          }
+        }
+        span {
+          input {
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}
+
+.wpl_prp_right_boxes.mortgage_calculator {
+  .wpl_mcalc_container {
+    form {
+      .form-field {
+        label {
+          font: {
+            weight: bold;
+          }
+        }
+        span {
+          input {
+            height: auto;
+          }
+        }
+      }
+    }
+  }
+}

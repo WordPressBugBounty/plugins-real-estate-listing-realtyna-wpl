@@ -1,0 +1,16 @@
+.wpl-addon-market-reports-search-form-wp{
+  form{
+    .wpl-addon-market-reports-sf-col-dates{
+      label:after{
+        content: '\e69d';
+        font-family: $font-frontend;
+        font-weight: 400;
+      }
+    }
+  }
+}
+.wpl-addon-market-reports-col-list{
+  li{
+    background: $co-21;
+  }
+}

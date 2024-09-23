@@ -1,0 +1,68 @@
+@include for-phone {
+  .wpl_list_grid_switcher {
+    position: relative;
+    top: -10px;
+  }
+}
+
+.wpl_list_grid_switcher {
+  margin: 6px 0 0 35px;
+  > div {
+    display: block;
+    position: relative;
+    width: 25px;
+    height: 25px;
+    border: 1px solid transparent !important;
+    &:before {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      font: {
+        size: 15px;
+        family: $fo-4;
+      }
+      text-align: center;
+      padding: 4px 0;
+    }
+  }
+  > div.active {
+    border-radius: 2px;
+    border: 1px solid $co-4 !important;
+  }
+  .grid_view {
+    &:before {
+      content: '\e920';
+    }
+  }
+  .list_view {
+    &:before {
+      content: '\e921';
+    }
+  }
+  .map_view {
+    &:before {
+      content: '\e922';
+    }
+  }
+  &.wpl-list-grid-switcher-icon-text {
+    > div {
+      &:before {
+        display: block;
+        position: relative;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+        font: {
+          size: 15px;
+          family: $fo-4;
+        }
+        text-align: left;
+        padding: 0;
+      }
+    }
+  }
+}

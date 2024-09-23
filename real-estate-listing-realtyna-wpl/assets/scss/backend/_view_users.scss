@@ -1,0 +1,36 @@
+.user-wp {
+  #icon-flex {
+    @include backend-sprite(icon-64-flex);
+  }
+}
+
+.profile-wp {
+
+  #icon-profile {
+    @include backend-sprite(icon-48-profile);
+  }
+
+  .pwizard-panel {
+    border: 0 none;
+    .pwizard-section {
+      .prow {
+        padding-right: 0;
+        padding-left: 0;
+      }
+    }
+  }
+
+  .finilize-btn {
+    @if $text-direction == ltr
+    {
+      padding-left: 154px;
+    } @else
+    {
+      padding-right: 154px;
+    }
+    .wpl-button{
+      width: 125px;
+      margin-bottom: 20px;
+    }
+  }
+}

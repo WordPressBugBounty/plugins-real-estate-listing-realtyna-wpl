@@ -1,0 +1,303 @@
+.wpl-crm-calender
+{
+  .fc-toolbar
+  {
+    margin: 0;
+    .fc-left
+    {
+      float: none;
+      width: 100%;
+      overflow: hidden;
+      background: $co-52;
+      .fc-state-default
+      {
+        @include border-radius(0);
+        @include box-shadow(none);
+        @include text-shadow(none);
+        background: $co-50;
+        border: 0;
+        border-right: 1px solid $co-6;
+        height: auto;
+        padding: 10px 20px;
+        font-weight: bold;
+        font-size: 14px;
+        margin: 0;
+        &:focus
+        {
+          outline: none;
+        }
+        &.fc-state-active,&.fc-state-down
+        {
+          background: $co-1;
+        }
+      }
+    }
+    .fc-center
+    {
+      display: table;
+      margin: auto;
+      h2
+      {
+        min-width: 150px;
+      }
+      .fc-state-default
+      {
+        @include box-shadow(none);
+        @include text-shadow(none);
+        float: left;
+        background: none;
+        border: 0;
+        line-height: 40px;
+      }
+      .fc-prev-button,.fc-next-button
+      {
+        color: $co-49;
+        height: auto;
+        &:hover
+        {
+          color: $co-44;
+        }
+        &:focus
+        {
+          outline: none;
+        }
+      }
+      h2
+      {
+        float: left;
+        font-size: 14px;
+        line-height: 40px;
+        font-weight: bold;
+      }
+    }
+  }
+  .fc-head
+  {
+    td.fc-widget-header
+    {
+      border-left: 0;
+      border-right: 0;
+    }
+    th
+    {
+      background: $co-52;
+      line-height: 30px;
+      &:first-child
+      {
+        border-left:0;
+      }
+      &:last-child
+      {
+        border-right:0;
+      }
+    }
+  }
+  .fc-body
+  {
+    td
+    {
+      border-width: 0 1px;
+      border-color: $co-38;
+      &:first-child
+      {
+        border-left:0;
+      }
+      &:last-child
+      {
+        border-right:0;
+      }
+    }
+    hr.fc-divider.fc-widget-header
+    {
+      padding: 0;
+      border-color: $co-54;
+    }
+    .fc-time-grid
+    {
+      .fc-slats
+      {
+        tr:nth-child(4n+1), tr:nth-child(4n+2)
+        {
+          background: rgba(0,0,0,0.02);
+        }
+        tr.fc-minor
+        {
+          border-top: 1px dotted $co-38;
+        }
+      }
+    }
+    .fc-axis
+    {
+      font-weight: bold;
+      text-align: center;
+    }
+  }
+  .fc-agendaWeek-view,.fc-agendaDay-view
+  {
+    .fc-row
+    {
+      background: $co-55;
+    }
+  }
+  .fc-month-view
+  {
+    .fc-row:nth-child(2n+1)
+    {
+      background: rgba(0,0,0,0.02);
+    }
+  }
+  .fc-event
+  {
+    background: $co-57;
+    border: 0;
+    color: $co-1;
+    &:hover
+    {
+      color:$co-1;
+    }
+    .fc-content
+    {
+      padding: 3px;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+      height: 100%;
+      padding-right: 30px;
+    }
+  }
+  .fc-day-grid-event
+  {
+    margin: 2px 5px 0;
+  }
+  .fc-day-number
+  {
+    font-weight: bold;
+  }
+  .fc-time-grid-event
+  {
+    &.fc-short
+    {
+      .fc-time
+      {
+        position: static;
+      }
+    }
+    .fc-time
+    {
+      position: absolute;
+      left:3px;
+      bottom: 3px;
+    }
+  }
+  .fc-event-toolbar
+  {
+    position: absolute;
+    right:3px;
+    bottom: 3px;
+    z-index: 1000;
+    .wpl-crm-icon
+    {
+      display: inline-block;
+      margin-left: 5px;
+      &:hover
+      {
+        color: $co-0;
+      }
+    }
+  }
+
+  .fc-month-view
+  {
+    .fc-event
+    {
+      position: relative;
+      &:hover
+      {
+        background: $co-35;
+      }
+    }
+  }
+  .fc-icon-right-single-arrow::after,
+  .fc-icon-left-single-arrow::after
+  {
+    font-family: "wpl-front";
+    font-size:14px;
+    top:0;
+    left:0;
+  }
+  .fc-icon-left-single-arrow::after
+  {
+    content:"\e654";
+
+  }
+  .fc-icon-right-single-arrow::after
+  {
+    content:"\e655";
+  }
+}
+.fc-event-detail
+{
+  @include border-radius(3px 3px 3px 0);
+  position: absolute;
+  background: $co-1;
+  border: 1px solid $co-35;
+  color: $co-45;
+  padding: 10px;
+  z-index: 10;
+  font-size: 13px;
+  font-weight: bold;
+  max-width: 200px;
+  .fc-description
+  {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    .wpl-crm-reminder-icon
+    {
+      color:$co-54;
+      float: right;
+      margin-left: 20px;
+      font-weight:normal;
+    }
+  }
+  .fc-event-detail-arrow,.fc-event-detail-arrow-inner
+  {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 10px 10px 0 0;
+    border-color: $co-35 transparent transparent transparent;
+    position: absolute;
+    left: -1px;
+    bottom: -10px;
+  }
+  .fc-event-detail-arrow-inner
+  {
+    border-width: 9px 9px 0 0;
+    border-color: $co-1 transparent transparent transparent;
+    left: 0;
+    bottom: -8px;
+  }
+  .fc-event-toolbar
+  {
+    position: absolute;
+    right: 2px;
+    bottom: 2px;
+    display: none;
+    z-index: 1000;
+    .wpl-crm-icon
+    {
+      display: inline-block;
+      margin-left: 5px;
+      color: $co-35;
+      font-size: 11px;
+      padding: 0 2px;
+      &:hover
+      {
+        color: $co-1;
+        background: $co-35;
+      }
+    }
+  }
+}

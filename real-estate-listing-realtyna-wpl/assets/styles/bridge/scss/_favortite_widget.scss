@@ -1,0 +1,117 @@
+.wpl-bridge-header-favorite.widget_wpl_favorites_widget,
+.header_bottom_widget.widget_wpl_favorites_widget{
+  @include transition(all .2s ease-in-out);
+  @include transform-origin(0 0);
+  position: absolute;
+  opacity: 0;
+  visibility: hidden;
+  background: $co-40;
+  padding: 10px;
+  width: 300px;
+  right: -40px;
+  top: 50px;
+
+  &:after {
+    bottom: 100%;
+    right: 10%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: $co-40;
+    border-width: 10px;
+    margin-left: -10px;
+  }
+  .wpl_favorite_listings {
+
+    .wpl_favorites_items {
+      border-color: $co-0;
+      li {
+        .wpl_favorite_item_title {
+          color: $co-11;
+          font-weight: normal;
+          margin-left: 10px;
+        }
+        .wpl_favorite_item_remove {
+          color: $co-11;
+        }
+      }
+    }
+  }
+}
+
+.wpl-bridge-header-favorite-open {
+  opacity: 1 !important;
+  visibility: visible !important;
+  top: 40px !important;
+}
+.wpl_favorite_listings {
+  .wpl_favorite_widget_title {
+    color: $co-0;
+    font-weight: normal;
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .wpl_favorites_items {
+    border-bottom-width: 1px;
+    li {
+      padding: 0;
+      padding-top: 10px;
+      text-align: left;
+
+      .wpl_favorite_item_title {
+        font-weight: normal;
+        text-align: left;
+      }
+      .wpl_favorite_item_remove {
+        @include border-radius(0px);
+        float: right;
+        background: transparent;
+        border: 1px solid $co-0;
+        width: auto;
+        color: $co-0;
+        padding: 13px 10px;
+        line-height: 1px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  .badge {
+    @include border-radius(50%);
+    background: $co-0;
+    display: inline-block;
+    min-width: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    color: $co-11;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    height: 30px;
+    width: 30px;
+    padding: 0;
+    line-height: 30px;
+    margin-left: 10px;
+  }
+}
+
+.wpl_favorite_contact_form {
+  padding: 10px 0;
+  input[type=text],
+  textarea {
+    @include box-sizing(border-box);
+    border: 0;
+    padding: 10px;
+    outline: none;
+    border:1px solid $co-9;
+  }
+}
+.wpl-favorite-icon:hover {
+  opacity: 1 !important;
+}
+

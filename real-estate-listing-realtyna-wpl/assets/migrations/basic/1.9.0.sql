@@ -1,0 +1,3 @@
+ALTER TABLE `#__wpl_users` ADD `access_receive_notifications` TINYINT(4) NOT NULL DEFAULT '1' AFTER `access_change_user`;
+ALTER TABLE `#__wpl_items` ADD `item_extra4` TEXT NULL AFTER `item_extra3`, ADD `item_extra5` TEXT NULL AFTER `item_extra4`;
+ALTER TABLE `#__wpl_properties` ADD `source` VARCHAR(100) NOT NULL DEFAULT 'wpl' AFTER `alias`, ADD `last_sync_date` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `source`;

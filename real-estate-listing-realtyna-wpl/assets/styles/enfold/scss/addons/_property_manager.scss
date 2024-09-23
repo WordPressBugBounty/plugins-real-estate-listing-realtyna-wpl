@@ -1,0 +1,320 @@
+.wpl_property_manager {
+  font-size: 13px !important;
+
+  select {
+    width: initial !important;
+  }
+
+  .side-tabs-wp {
+    ul {
+      margin: 0;
+      li {
+        a {
+          border: 1px solid;
+          font: {
+            family: inherit;
+          }
+          line-height: initial;
+          &:hover {
+            text-decoration: none;
+          }
+        }
+      }
+      .wpl-listing-discard-btn,
+      .finilized {
+        a {
+          text-align: center;
+          span {
+            padding-left: 0;
+          }
+        }
+      }
+    }
+  }
+
+  .prow {
+    .video-tabs-wp {
+      ul {
+        margin: 0;
+        li {
+          a {
+            font: {
+              size: 14px;
+            }
+            padding: 7px 30px;
+          }
+        }
+      }
+    }
+    .wpl-meta-wp {
+      .wpl-top-row-wp {
+        label {
+          font: {
+            size: 13px;
+          }
+        }
+      }
+      @include calc("width", "100% - 160px");
+      textarea {
+        width: 100%;
+        resize: vertical;
+      }
+    }
+  }
+
+  //Separator
+  .prow-separator {
+    display: none;
+  }
+
+  .prow-price,
+  .prow-area {
+    .chosen-container {
+      width: initial !important;
+      .chosen-single {
+        display: inline-block;
+        // background-color: $co-1;
+        border: 1px solid $co-7;
+        font: {
+          size: 13px;
+        }
+        height: 30px;
+        line-height: 20px;
+        padding: 5px 11px;
+        width: 100%;
+      }
+    }
+  }
+
+  .prow-feature {
+    .checkbox-wp {
+      input[type="checkbox"] {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .prow-rooms {
+    .rooms-list-wp {
+      div {
+        font: {
+          size: 14px;
+          style: normal;
+        }
+      }
+    }
+  }
+
+  .prow-googlemap {
+    .map-form-wp {
+      button {
+        padding: 0 18px;
+        height: 36px;
+      }
+    }
+  }
+
+  .prow-neighborhood {
+    .checkbox-wp {
+      input[type="checkbox"],
+      label {
+        cursor: pointer;
+      }
+      .distance-wp.distance_items_box {
+        .distance-item.minute-by {
+          font: {
+            size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .prow-gallery {
+    .gallary-btn-wp {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .wpl_gallery_method_container {
+      font: {
+        size: 14px;
+      }
+      .button-upload,
+      button {
+        text-transform: none;
+      }
+    }
+
+    #progress_img {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+    .gallary-images-wp {
+      padding-left: 15px;
+      padding-right: 15px;
+      .wpl-mass-actions {
+        padding-bottom: 15px;
+        button {
+          text-transform: none;
+        }
+      }
+      .ui-sortable {
+        margin: 0;
+        li {
+          .action-gal-btn {
+            border-radius: 0;
+            i {
+              font: {
+                size: 13px;
+                style: normal;
+              }
+              &:after {
+                top: 0 !important;
+              }
+            }
+          }
+        }
+      }
+      p {
+        font: {
+          size: 14px;
+        }
+        text-align: center;
+      }
+    }
+  }
+
+  .prow-addon_video {
+    .video-content-wp {
+      padding: 15px;
+    }
+    .content-wp {
+      button {
+        text-transform: none;
+      }
+      .video-embed-wp {
+        .row {
+          textarea {
+            resize: vertical;
+          }
+        }
+      }
+    }
+  }
+
+  .prow-attachments {
+    .attach-btn-wp {
+      padding-left: 15px;
+      padding-right: 15px;
+      .field-desc {
+        font: {
+          size: 14px;
+        }
+      }
+    }
+    .attachment-wp {
+      padding: 15px;
+      .wpl-mass-actions {
+        padding-bottom: 15px;
+        button {
+          text-transform: none;
+        }
+      }
+      .ui-sortable {
+        margin: 0;
+        li {
+          .image-box-wp {
+            .actions-wp {
+              .action-gal-btn {
+                border-radius: 0;
+                i {
+                  font: {
+                    size: 13px;
+                    style: normal;
+                  }
+                  &:after {
+                    top: 0;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+      p {
+        font: {
+          size: 14px;
+        }
+        text-align: center;
+      }
+    }
+  }
+
+  .prow-tag {
+    .checkbox-wp {
+      input[type="checkbox"],
+      label {
+        cursor: pointer;
+      }
+    }
+  }
+
+  .prow-openhouse_dates {
+    .openhouse-dates-comment {
+      max-width: none;
+      font: {
+        size: 14px;
+      }
+    }
+  }
+}
+
+#wpl_listings_top_tabs_container {
+  .wpl-tabs {
+    margin-bottom: 0;
+    margin-left: 0;
+    li {
+      margin-left: 0;
+      padding: 0;
+    }
+  }
+}
+
+.lm-search-form-wp {
+  .pwizard-section {
+    .prow {
+      .wpl_listing_manager_search_form_element_cnt {
+        input[type="text"] {
+          @include input-placeholder {
+            font: {
+              size: 13px;
+            }
+          }
+          font: {
+            size: 13px;
+          }
+          padding: 0 10px;
+        }
+      }
+    }
+  }
+}
+
+.mass-panel-wp {
+  .change-user-cnt-wp {
+    .chosen-container,
+    select {
+      width: 100px !important;
+    }
+  }
+}
+
+.properties-wp {
+  .pmanager-multi-agent {
+    select {
+      width: 100% !important;
+      margin-bottom: 0 !important;
+      padding: 0 !important;
+    }
+  }
+}

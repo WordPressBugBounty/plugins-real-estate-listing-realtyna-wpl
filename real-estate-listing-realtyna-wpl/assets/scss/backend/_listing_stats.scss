@@ -1,0 +1,28 @@
+.wpl_property_stats_list,.wpl_crm_stats_list{
+  padding: 10px;
+}
+
+.wpl_property_stats_list + .pstats-cnt {
+  .wpl-backend-table {
+    .td {
+      flex: 1;
+      display: block;
+      &:first-child {
+        flex: 0.5;
+      }
+      &:nth-child(2) {
+        flex: 2;
+      }
+      &:nth-child(3) {
+        flex: 3;
+      }
+      &:nth-child(5) {
+        flex: 0.7;
+      }
+    }
+  }
+}
+
+.pstats-cnt .pwizard-panel .pwizard-section{
+  padding-bottom: 0 !important;
+}

@@ -1,0 +1,613 @@
+
+.wpl-idx-plan
+{
+  border: 1px solid $co-38;
+  width: 100%;
+  text-align: center;
+  display: block;
+  &:hover
+  {
+
+  }
+  & > span
+  {
+    display: block;
+  }
+  .title
+  {
+    background: $co-38 url("../img/idx/trial.png") center center no-repeat !important;
+    text-transform: uppercase;
+    font-size: 20px !important;
+    padding: 65px 20px;
+    font-weight: bold !important;
+    color:$co-16;
+  }
+  .description
+  {
+    color:$co-16;
+    background: $co-1;
+    line-height: 20px !important;
+    padding: 40px 20px;
+  }
+}
+
+.wpl-idx-plan-valid
+{
+  .title
+  {
+    //@include filter-gradient(#0ddc72, #00aeef, horizontal); // IE6-9
+    //@include background-image(linear-gradient(left, #0ddc72 0%,#00aeef 100%));
+    color:$co-1;
+    background: transparent url("../img/idx/full.png") center center no-repeat !important;
+  }
+}
+
+
+/*Wizard Tabs*/
+.wpl-wizard-tabs
+{
+  margin-bottom: 40px;
+  ul
+  {
+    margin: auto !important;
+  }
+  li
+  {
+    text-align: center;
+    font-size:20px;
+    position: relative;
+    color: darken($co-8, 10%);
+    @if $text-direction == rtl{
+      float: right;
+    }
+    &:first-child::before, &:last-child::after
+    {
+      display: none;
+    }
+    &::after
+    {
+      content: '';
+      height: 2px;
+      width: 50%;
+      position: absolute;
+      top:25px;
+      @if $text-direction == ltr
+      {
+        left: 50%;
+      } @else
+      {
+        right: 50%;
+      }
+      background: $co-8;
+      z-index: 1;
+    }
+    &::before
+    {
+      content: '';
+      height: 2px;
+      width: 50%;
+      position: absolute;
+      top:25px;
+      @if $text-direction == ltr
+      {
+        left: 0;
+      } @else
+      {
+        right: 0;
+      }
+      background: $co-8;
+      z-index: 1;
+    }
+    span
+    {
+      display: block;
+    }
+    .number
+    {
+      @include border-radius(100%);
+      @include box-shadow(0px 0px 0px 2px $co-8);
+      background: $co-1;
+      border: 2px solid $co-1;
+      height: 50px;
+      width: 50px;
+      line-height: 50px !important;
+      text-align: center;
+      color: $co-8;
+      margin: 0 auto 10px auto;
+      position: relative;
+      z-index: 2;
+    }
+    &.current,&.active
+    {
+      color:$co-93;
+      .number
+      {
+        @include box-shadow(0px 0px 0px 2px rgba(30,209,182,1));
+        background: $co-93;
+        color:$co-1;
+      }
+      &::after, &::before
+      {
+        background: $co-93;
+      }
+    }
+  }
+}
+.wpl-wizard-sections
+{
+  margin-bottom: 40px;
+}
+.wpl-wizard-section
+{
+  display: none;
+  &.current
+  {
+    display: block;
+  }
+}
+/*Wizard Form*/
+.wpl-idx-sign-up
+{
+  max-width: 400px;
+  margin: auto;
+}
+.wpl-idx-form
+{
+  input[type="text"], input[type="number"], input[type="email"],input[type="tel"]
+  {
+    @include box-sizing(border-box);
+    border: 0;
+    border-bottom: 2px solid $co-8;
+    background: none;
+    box-shadow: none;
+    padding: 10px 0;
+    width: 100%;
+    height: 40px;
+    @if $text-direction == rtl{
+      text-align: right;
+    }
+    &:focus
+    {
+      outline: none;
+      border-color: $co-93;
+      box-shadow: none;
+    }
+    &.required
+    {
+      border-color: $co-56;
+    }
+  }
+  .chosen-container
+  {
+    width: 100% !important;
+    padding: 5px 0;
+    border: 0;
+    border-bottom: 2px solid #ddd;
+    .chosen-choices
+    {
+      border: 0;
+      background: none;
+      box-shadow: none;
+      height: auto !important;
+      li:first-child
+      {
+        margin-left: 0;
+      }
+      input[type="text"]
+      {
+        width: auto !important;
+        &:first-child
+        {
+          margin-left: 0;
+          font-size: 14px;
+        }
+      }
+    }
+    .search-field input
+    {
+      font-size: 14px;
+    }
+  }
+}
+.wpl-idx-form-element
+{
+  margin-bottom: 10px;
+  position: relative;
+  @if $text-direction == ltr
+  {
+    padding-left: 35px;
+  } @else
+  {
+    padding-right: 35px;
+  }
+  .wpl-idx-icon
+  {
+    position: absolute;
+    top: 0;
+    @if $text-direction == ltr
+    {
+      left: 0;
+    } @else
+    {
+      right: 0;
+    }
+    &:after
+    {
+      font-family: wpl-backend;
+      color:$co-8;
+      line-height: 40px;
+      font-size: 20px;
+    }
+  }
+
+}
+.wpl-idx-icon
+{
+  &.user-icon:after
+  {
+    content: "\e91d";
+  }
+  &.email-icon:after
+  {
+    content: "\e919";
+  }
+  &.phone-icon:after
+  {
+    content: "\e91f";
+  }
+  &.search-icon:after
+  {
+    content: "\e920";
+  }
+  &.card-icon:after
+  {
+    content: "\e918";
+  }
+  &.calender-icon:after
+  {
+    content: "\e917";
+  }
+  &.agent-icon:after
+  {
+    content: "\e90d";
+  }
+  &.office-icon:after
+  {
+    content: "\e91e";
+  }
+  &.bed-icon:after
+  {
+    content: "\e916";
+  }
+  &.bath-icon:after
+  {
+    content: "\e915";
+  }
+  &.price-icon:after
+  {
+    content: "\e914";
+  }
+  &.sqft-icon:after
+  {
+    content: "\e91a";
+  }
+  &.zipcode-icon:after
+  {
+    content: "\e91b";
+  }
+  &.tooltip-icon
+  {
+    left: auto !important;
+    right: 0;
+    /*&:after
+    {
+      content: "\e921";
+    }*/
+    &:hover
+    {
+      color: darken($co-8,10%);
+      .wpl_help_description
+      {
+        display: block !important;
+      }
+    }
+  }
+}
+
+.wpl-idx-wizard-navigation
+{
+  margin-top: 30px;
+  .btn
+  {
+    @include border-radius(5px);
+    @include box-shadow(0px 0px 0px 2px $co-16);
+    background: $co-1;
+    border: 2px solid $co-1;
+    padding: 5px 20px;
+    text-align: center;
+    color: $co-16;
+    position: relative;
+    font-size: 16px;
+    cursor: pointer;
+    &.next
+    {
+      @include box-shadow(0px 0px 0px 2px rgba(30,209,182,1));
+      background: $co-93;
+      color:$co-1;
+      @if $text-direction == ltr
+      {
+        float: right;
+      } @else
+      {
+        float: left;
+      }
+    }
+    &.prev
+    {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+    }
+  }
+}
+/*IDX Table*/
+.wpl-idx-addon-table
+{
+  width: 100%;
+  border: 1px solid $co-8;
+  background: $co-1;
+  .wpl-idx-addon-table-row
+  {
+    border-bottom: 1px solid $co-8;
+    td
+    {
+      padding: 10px;
+      position: relative;
+      &:after
+      {
+        content: '';
+        width: 1px;
+        height: 70%;
+        position: absolute;
+        top:15%;
+        right: 0;
+        background: $co-8;
+      }
+      &:last-child:after
+      {
+        display: none;
+      }
+    }
+  }
+
+  .price
+  {
+    color:$co-93;
+    del
+    {
+      color:$co-80;
+      margin-right: 10px;
+    }
+    .price_total
+    {
+      font-size:16px;
+    }
+  }
+  .recurring
+  {
+    float: right;
+  }
+  .message
+  {
+    font-size: 20px;
+    text-align: center;
+    padding: 20px;
+    font-weight: bold;
+    display: block;
+    color:$co-8;
+  }
+  .wpl-idx-config-form
+  {
+    display: block !important;
+  }
+  .mls_info
+  {
+    padding: 10px;
+    border-bottom: 1px solid $co-8;
+    & > span
+    {
+      display: inline-block;
+      padding: 0 10px;
+      border-right: 1px solid $co-8;
+      font-weight: bold !important;
+      &:last-child
+      {
+        border: 0;
+      }
+    }
+  }
+  .wpl-idx-config-row
+  {
+    padding: 10px 0;
+  }
+}
+.wpl-idx-addon-table-title
+{
+  font-weight: bold;
+}
+.wpl-idx-total-price
+{
+  float: right;
+  padding: 10px;
+  .price
+  {
+    color:$co-93;
+    font-weight: bold;
+  }
+}
+.wpl-idx-table-tools
+{
+  margin-bottom: 20px;
+}
+.wpl-idx-add-mls-request .btn
+{
+  @include border-radius(0 10px 0 10px);
+  border: 2px solid $co-8;
+  padding: 10px;
+  float: right;
+}
+/*IDX payment*/
+.wpl-idx-payment
+{
+  margin: auto;
+}
+/*Config form*/
+
+.wpl-idx-config-form
+{
+  display: none;
+
+}
+.wpl-idx-config-form-part2
+{
+  @include border-radius(10px);
+  background: $co-38;
+  padding: 15px 10px;
+  margin: 10px;
+}
+.wpl-idx-form-checkbox
+{
+  padding: 11px 0;
+}
+
+.jquery-safari-checkbox{
+  display: inline;
+  font-size: 20px;
+  line-height: 35px;
+  cursor: pointer;
+  float: left;
+  margin-right: 10px;
+  .mark
+  {
+    width: 40px;
+    height: 22px;
+    @include border-radius(15px);
+    display: inline-block;
+    background: $co-8;
+    color: $co-1;
+    font-size: 10px;
+    line-height: 16px;
+    position: relative;
+    &:after
+    {
+      position: absolute;
+      top: 0;
+      right: 3px;
+    }
+    &:before
+    {
+      content: "";
+      background: $co-1;
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      left: 3px;
+      top: 3px;
+      border-radius: 50%;
+    }
+  }
+}
+.jquery-safari-checkbox-checked .mark{
+  background: $co-93;
+  &:after
+  {
+    left: 4px;
+    right:auto;
+  }
+  &:before
+  {
+    background: $co-1;
+    right: 2px;
+    left:auto;
+  }
+}
+/*Thank you page*/
+.wpl-idx-thank-you
+{
+  text-align: center;
+  .title
+  {
+    color: $co-93;
+    font-size: 22px;
+  }
+  p
+  {
+    font-size: 16px;
+  }
+  .wpl-button
+  {
+    margin: 0 10px;
+  }
+}
+/*Progress Bar*/
+.wpl-idx-progress-bar{
+  width:50%;
+  margin:auto;
+  text-align:center;
+  color:#c4c4c4;
+  .title
+  {
+    font-size:22px;
+    margin:10px 0;
+    color:#aaa
+  }
+  .subtitle{
+    font-size:16px;
+    line-height:20px;
+    padding:0;
+    color:#c4c4c4
+  }
+  #progress_img
+  {
+    height:20px
+  }
+  .bar, .progress
+  {
+    height:100%
+  }
+}
+/*Settings*/
+#wpl-idx-setting-table
+{
+  .status
+  {
+    &.pending
+    {
+      color:$co-12;
+    }
+    &.active
+    {
+      color:$co-76;
+    }
+  }
+}
+/*Need Help*/
+.wpl-idx-help
+{
+  margin:10px 0;
+}
+.wpl-idx-form-field-subtitle
+{
+  color: #999;
+  margin-left: 20px;
+  display:block
+}
+
+
+
+
+

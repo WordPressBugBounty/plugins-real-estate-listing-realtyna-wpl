@@ -1,0 +1,131 @@
+.mce-floatpanel
+{
+    z-index: 10000000 !important;
+}
+.short-code-wp{
+    font-size: 13px;
+    padding-top: 75px;
+
+
+    h2{
+        padding-bottom: 10px;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: $co-1;
+        box-shadow: 0 1px 0 $co-8;
+        padding-left: 20px;
+        padding-right: 20px;
+        box-sizing: border-box;
+        z-index: 10000;
+        & > *{
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .icon-shortcode{
+            @include backend-sprite(icon-48-shortcode-head);
+        }
+        span{
+            @if $text-direction == ltr
+            {
+                margin-left: 10px;
+            } @else
+            {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    h3{
+        margin: 25px 0;
+        text-transform: uppercase;
+        box-shadow: 0px -.5px 0px $co-8;
+        padding-top: 15px;
+        font:{
+            weight: 500;
+            size: 15px;
+        }
+    }
+
+    .short-code-body{
+
+    }
+    
+    .wpl-button.button-1
+    {
+        @if $text-direction == ltr
+        {
+            float: right;
+        } @else
+        {
+            float: left;
+        }
+        margin-top: 12px;
+    }
+
+    .plugin-row{
+        margin-bottom: 8px;
+        label{
+            min-width: 110px;
+            display: inline-block;
+            @if $text-direction == ltr
+            {
+                text-align: right;
+                padding-right: 10px;
+            } @else
+            {
+                text-align: left;
+                padding-left: 10px;
+            }
+        }
+
+        select, input[type=text], option{
+            font-size: 13px;
+            min-width: 280px;
+            max-width: 280px;
+            padding: 5px;
+            height: 36px;
+            box-sizing: border-box;
+            vertical-align: middle;
+        }
+        .chosen-container{
+            min-width: 280px;
+            max-width: 280px;
+            vertical-align: middle;
+        }
+        .chosen-container .chosen-single{
+            height: 36px;
+            span{
+                line-height: 34px !important;
+            }
+        }
+        .chosen-container-multi .chosen-choices,
+        .chosen-container .chosen-single{
+            box-sizing: border-box;
+        }
+        .chosen-container-multi .chosen-choices{
+            height: auto;
+            line-height: 34px;
+            background: $co-1;
+            border-color: #dfdfdf;
+        }
+
+        &.plugin-row-buttons{
+            text-align: right;
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+
+    }
+
+    .wpl-shortcode-wizard-filters-wp{
+        margin-bottom: 8px;
+        select, input[type=text], option, .chosen-container{
+            max-width: 138px;
+            min-width: 138px !important;
+        }
+    }
+}

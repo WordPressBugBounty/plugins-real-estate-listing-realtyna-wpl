@@ -1,0 +1,342 @@
+.wpl-complex-unit
+{
+  position: relative;
+  .wpl_property_listing_listings_container
+  {
+    clear: both;
+    & > .row
+    {
+      margin-left:-5px;
+      margin-right: -5px;
+    }
+  }
+  .wpl_list_grid_switcher
+  {
+    position: absolute;
+    top: -32px;
+    @if $text-direction == ltr
+    {
+      right: 0;
+      padding-left: 10px;
+    } @else {
+      left: 0;
+      padding-right: 10px;
+    }
+    margin: 0;
+    background-color: $co-1;
+
+    @include for-phone
+    {
+      position: static;
+      @if $text-direction == ltr
+      {
+        float: right;
+      } @else {
+        float: left;
+      }
+      margin-bottom: 10px;
+    }
+    @include for-tablet-land
+    {
+      position: static;
+      @if $text-direction == ltr
+      {
+        float: right;
+      } @else {
+        float: left;
+      }
+      margin-bottom: 10px;
+    }
+    &.wpl-list-grid-switcher-icon-text
+    {
+      top:-35px;
+    }
+  }
+}
+.wpl-complex-tabs-wp
+{
+  border-bottom: 2px solid $co-36;
+  margin-bottom: 20px;
+  & > ul
+  {
+    & > li
+    {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else {
+        float: right;
+      }
+      margin:0 3px;
+      @include for-phone
+      {
+        float: none;
+        margin:0;
+      }
+      &:first-child
+      {
+        margin-left: 0;
+      }
+      &:last-child
+      {
+        margin-right: 0;
+      }
+      & > a
+      {
+        @include border-radius(5px 5px 0 0);
+        @include for-phone
+        {
+          @include border-radius(0);
+          border-bottom: 1px solid darken($co-25,10%);
+        }
+        outline: none;
+        padding: 5px 15px;
+        background: $co-25;
+        display: block;
+        font-style: italic;
+        font-weight: bold;
+        font-size: 16px;
+        &.wpl-gen-tab-active
+        {
+          background: $co-36;
+          color:$co-1;
+        }
+        &:focus,&:active
+        {
+          text-decoration: none;
+        }
+      }
+    }
+  }
+}
+.wpl-complex-unit-row
+{
+  margin-left: -5px !important;
+  margin-right: -5px !important;
+}
+.wpl-complex-unit-cnt
+{
+  margin-bottom: 10px;
+
+  &:after
+  {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  .wpl_gallery_image
+  {
+    width: 100% !important;
+    height:auto !important;
+  }
+  .no_image_box
+  {
+    width: 100% !important;
+    height: 130px !important;
+    background: $co-38;
+    display: table;
+    vertical-align: middle;
+    text-align: center;
+    &:after
+    {
+      display: table-cell;
+      vertical-align: middle;
+      font: 6em "wpl-front";
+      content: "\e029";
+    }
+  }
+  .wpl-complex-unit-bot
+  {
+    padding: 10px;
+  }
+  .wpl-complex-unit-details
+  {
+    font-size: 12px;
+    & > ul
+    {
+      & > li
+      {
+        &:after
+        {
+          content: '';
+          display: table;
+          clear: both;
+        }
+        & > label
+        {
+          @if $text-direction == ltr
+          {
+            float: left;
+            margin-right: 10px;
+          } @else {
+            float: right;
+            margin-left: 10px;
+          }
+        }
+        & > span
+        {
+          color: darken($co-10,10%);
+          @if $text-direction == ltr
+          {
+            float: right;
+            text-align: right;
+          } @else {
+            float: left;
+            text-align: left;
+          }
+        }
+      }
+    }
+  }
+  &.row_box
+  {
+    float: none;
+    width: 100%;
+    .wpl-complex-unit-top
+    {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      width: 25%;
+      padding: 0;
+      @include for-phone
+      {
+        width: 100%
+      }
+    }
+    .wpl-complex-unit-bot
+    {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      width: 75%;
+      padding: 5px 10px;
+      @include for-phone
+      {
+        width: 100%
+      }
+    }
+    .wpl-complex-unit-details
+    {
+      padding: 0;
+      & > ul
+      {
+        @if $text-direction == ltr
+        {
+          padding-right: 30%;
+        } @else
+        {
+          padding-left: 30%;
+        }
+        @include for-phone
+        {
+          padding: 0;
+          padding-bottom: 25px;
+        }
+      }
+    }
+  }
+  &:not(.row_box)
+  {
+    @if $text-direction == rtl{
+      float: right;
+    }
+    &.wpl-complex-unit-cnt
+    {
+      .wpl_gallery_image
+      {
+        @include for-phone
+        {
+          height: auto !important;
+        }
+      }
+      @include for-phone
+      {
+        width: 100% !important;
+      }
+    }
+    .wpl-complex-unit-details
+    {
+      @include for-phone
+      {
+        height: auto;
+      }
+      height: 150px;
+      overflow: hidden;
+      padding-bottom: 20px;
+      & > ul > li
+      {
+        width: 100% !important;
+        float: none !important;
+      }
+    }
+    .wpl_gallery_image
+    {
+      height:130px !important;
+    }
+  }
+}
+.wpl-complex-unit-wp
+{
+  border:1px solid $co-25;
+  position: relative;
+  width: 100%;
+}
+.wpl-complex-unit-title
+{
+  color:$co-36;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 0;
+  @if $text-direction == rtl{
+    text-align: right;
+  }
+}
+.wpl-complex-unit-view-detail
+{
+  @if $text-direction == ltr
+  {
+    @include rotate(90deg);
+    top: -5px;
+    right: 0;
+  } @else
+  {
+    top: 0;
+    left: 0;
+  }
+  position: absolute;
+  &:after
+  {
+    content:'\e68d';
+    font-family: 'wpl-front';
+    color:$co-36;
+    font-size: 25px;
+    z-index: 2;
+  }
+}
+.wpl-complex-unit-price-box
+{
+  position: absolute;
+  @if $text-direction
+  {
+    right: 5px;
+  } @else
+  {
+    left: 5px;
+  }
+  bottom:5px;
+  font-weight: bold;
+  font-size: 16px;
+}
+.wpl-complex-tab-contents-wp .wpl_prp_show_detail_boxes
+{
+  width:100%;
+}

@@ -1,0 +1,241 @@
+//mixins
+@mixin fa-star(){
+  font-size:20px;
+  color: $co-79;
+  margin-right:-7px;
+  margin-top: 2px;
+}
+//end
+
+.wpl-zillow-container {
+  .wpl-zillow-info {
+    margin-bottom: 10px;
+    border-bottom: 1px solid $co-7;
+    padding-bottom:10px;
+    .wpl-zillow-info-left {
+      img {
+        border: 1px solid lighten($co-0, 90%);
+        padding: 2px;
+      }
+    }
+    .wpl-zillow-info-right {
+      padding-left:10px;
+
+      .rating {
+        .wpl-zillow-item-ratings {
+          margin-left: -4px;
+          .fa{
+            @include fa-star();
+          }
+        }
+      }
+      div {
+        color: lighten( $co-0, 50%);
+        &.name {
+          font-size: 17px;
+          font-family: $font-lato;
+          margin-top: 4px;
+        }
+        &.title {
+          font-size:12px;
+          margin-bottom: 10px;
+        }
+        &.address {
+          margin: 8px 0;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+
+  .wpl-zillow-list-reviews-container {
+    font-family: $font-lato;
+    width: 100%;
+    .wpl-zillow-review {
+      padding-left: 0;
+      height: auto !important;
+      display:none;
+      width: 100%;
+
+      .wpl-zillow-review-inner {
+        float: left;
+        padding-left: 0;
+        margin-bottom:10px;
+        border: 0;
+        border-bottom: 1px solid $co-7;
+        padding-top: 0;
+        width: 100%;
+        .wpl-zillow-review-top {
+          display: block;
+          cursor: pointer;
+          float: left;
+          width: 100%;
+          .wpl-zillow-review-rating-avg {
+            float: left;
+            width: 100%;
+            .wpl-zillow-review-rating-avg-left {
+              float: left;
+              width: 130px;
+              .fa{
+                @include fa-star();
+              }
+            }
+            .wpl-zillow-review-rating-avg-right {
+              font-weight:bold;
+              color:$co-16;
+              float: left;
+              font-size:17px;
+              padding-left:4px;
+            }
+          }
+          .wpl-zillow-review-date-user {
+            float: left;
+            font-size:15px;
+          }
+          .wpl-zillow-review-location {
+            float: left;
+            width: 100%;
+            font-size:13px;
+            margin-bottom:10px;
+          }
+          .wpl-zillow-review-situation {
+            &:before {
+              font-family: $font-frontend;
+              position: absolute;
+              border: 1px solid darken($co-7 ,10%);
+              padding: 0px 4px;
+              font-size: 12px;
+              right: 0;
+              line-height:20px;
+              color: darken($co-7 ,10%);
+              @include border-radius(3px);
+            }
+            &.opened {
+              &:before {
+                content: "\e90f";
+              }
+            }
+            &.closed {
+              &:before {
+                content: "\e907";
+              }
+            }
+          }
+        }
+        .wpl-zillow-review-bot {
+          float: left;
+          padding-bottom:14px;
+          display:none;
+          .wpl-zillow-review-ratings {
+            float: left;
+            width: 100%;
+            div {
+              float: left;
+              width: 100%;
+              span {
+                float:left;
+                width:130px;
+                font-weight:bold;
+                color:$co-16;
+                line-height:37px;
+              }
+              .wpl-zillow-item-ratings {
+                float: left;
+                display:inline-block;
+                width: 40%;
+                padding-top: 8px;
+                .fa{
+                  @include fa-star();
+                  font-size: 18px;
+                }
+              }
+            }
+          }
+          .wpl-zillow-review-description {
+            float: left;
+            width:100%;
+            font-size: 15px;
+            color: $co-16;
+            line-height:24px;
+            min-height: 100px;
+            max-height:200px;
+          }
+        }
+        &:last-child {
+          .wpl-zillow-bot {
+            padding-bottom:10px;
+          }
+        }
+      }
+      &:last-child:not(:first-child) {
+        float: left;
+      }
+    }
+  }
+  .wpl-zillow-pagination {
+    width: 100%;
+    text-align: center;
+    li {
+      display: inline-block;
+      padding: 4px 7px;
+      cursor: pointer;
+      border: 1px solid lighten($co-4, 30%);
+      margin-left: 4px;
+      font-size: 12px;
+      width: auto;
+      height: auto;
+      line-height: 17px;
+      @include border-radius(3px);
+      &.active {
+        background: $co-5;
+        border: 1px solid $co-5 !important;
+        color: $co-1;
+      }
+    }
+  }
+  //default layout
+  &.default {
+    .wpl-zillow-info-left {
+      padding: 0;
+    }
+    .wpl-zillow-info-right {
+      .rating {
+        .wpl-zillow-item-ratings {
+          .fa {
+            font-size:18px;
+          }
+        }
+      }
+      div.title {
+        margin-bottom: 3px;
+        margin-top: -4px;
+      }
+    }
+    .wpl-zillow-item-inner {
+      padding: 0;
+      .wpl-zillow-top {
+        .wpl-zillow-review-rating {
+          margin-bottom:10px;
+        }
+      }
+      .wpl-zillow-ratings {
+        div {
+          .wpl-zillow-item-ratings {
+            margin-top: 7px;
+          }
+        }
+      }
+    }
+  }
+  &.profileshow {
+    .wpl-zillow-review-inner {
+      padding: 0;
+      .wpl-zillow-review-bot {
+        .wpl-zillow-item-ratings {
+          line-height: 1px;
+        }
+      }
+    }
+  }
+}
+

@@ -1,0 +1,52 @@
+.wpl-carousel-default {
+  .owl-nav {
+    top: 45%;
+    left: 50%;
+    @include transform(translate(-50%, -50%));
+    .owl-prev {
+      left: 2%;
+    }
+    .owl-next {
+      right: 2%;
+    }
+  }
+}
+
+.simple_list {
+  .left_section {
+      span {
+        &:after {
+          position: absolute;
+          margin: 0;
+          top: 50%;
+          left: 50%;
+          @include transform(translate(-50%, -50%));
+        }
+      }
+  }
+  .right_section {
+    text-align: left;
+  }
+  .more_info {
+    &:after {
+      right: 3px !important;
+      top: 10px !important;
+    }
+  }
+}
+
+.wpl_carousel_container {
+  ul {
+    margin: 0 !important;
+  }
+  li {
+    list-style: none !important;
+  }
+}
+
+.wpl-plugin-owl.wpl-carousel-multi-images .owl-controls .owl-nav .owl-prev{
+   left: 0;
+}
+.wpl-plugin-owl.wpl-carousel-multi-images .owl-controls .owl-nav .owl-next{
+  right: 0;
+}

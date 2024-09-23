@@ -1,0 +1,560 @@
+//slider {
+//bx slider {
+.bx-controls-direction .bx-next:before {
+  content: "\e657" !important;
+  font-family: "wpl-front";
+  font-size: 25px;
+  top: 27%;
+  color: $co-33;
+}
+.bx-controls-direction .bx-prev:before {
+  content: "\e656" !important;
+  font-family: "wpl-front";
+  font-size: 25px;
+  top: 27%;
+  color: $co-33;
+}
+.bx-controls-direction a {
+  width: 54px !important;
+  height: 54px !important;
+  background: transparent !important;
+  border: 2px solid $co-33;
+  @include border-radius(50% !important);
+}
+.bx-controls-direction .bx-next {
+  right: 20px !important;
+}
+.bx-controls-direction .bx-prev {
+  left: 20px !important;
+}
+// } end bx slider
+
+.wpl_prp_show_container:not(.wpl-neighborhood-addon) {
+  .tabs_container {
+    position: relative;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+  }
+  .wpl_agent_info {
+    .name {
+      font-family: Raleway !important;
+      font-style: normal !important;
+      font-weight: 700 !important;
+    }
+  }
+}
+// }end slider
+
+.wpl_prp_container {
+  .wpl_prp_show_tabs {
+    .tabs_box {
+      padding: 0;
+      .tabs {
+        .active {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+  .wpl_prp_container_content {
+    font-family: Raleway, sans-serif;
+
+    .btn,
+    .btn-primary,
+    .wpl-contact-listing-btn .btn,
+    .listing_contact input[type="submit"] {
+      line-height: 30px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: inherit;
+      font-style: normal;
+      color: $co-11;
+      border: 2px solid transparent;
+      //background-color: $co-4;
+      padding: 0 17px;
+      min-width: auto;
+      width: auto;
+      height: 30px;
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      outline: 0;
+      text-transform: uppercase;
+      @include border-radius(4px);
+      text-shadow: none;
+      @include transition(
+        color 0.1s linear,
+        background-color 0.1s linear,
+        border-color 0.1s linear
+      );
+      @include box-sizing(initial!important);
+
+      &:hover {
+        //border: 2px solid $co-4;
+        //color: $co-4;
+        //background-color: $co-11 !important;
+      }
+    }
+
+    .form-field {
+      @include box-sizing(border-box);
+      .text-box,
+      .text-input-extendable {
+        background: darken($co-9, 4%);
+        height: 40px;
+        @include border-radius(2px);
+        padding: 0 10px;
+        border: 2px solid transparent;
+        font-family: Raleway, sans-serif;
+      }
+    }
+    .wpl_prp_container_content_title {
+      .title_text {
+        position: relative;
+        font-family: Raleway, sans-serif;
+        text-transform: uppercase;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 25px;
+
+        &:before {
+          position: absolute;
+          width: 22px;
+          content: "";
+          background: lighten($co-19, 2%);
+          height: 2px;
+          top: 33px;
+        }
+      }
+      .location_build_up {
+        font-family: Raleway, sans-serif;
+        font-style: normal;
+        margin-top: 25px;
+        font-size: 18px;
+        text-transform: capitalize;
+        color: $co-36;
+        font-weight: 500;
+      }
+    }
+    .wpl_prp_container_content_left {
+      .wpl_prp_show_detail_boxes {
+        .wpl_prp_show_detail_boxes_title {
+          border: none;
+          font-style: normal;
+          line-height: 40px;
+          font-size: 24px;
+          position: relative;
+          margin-bottom: 15px;
+          color: $co-38;
+
+          text-transform: uppercase;
+          &:after {
+            width: 25px;
+            height: 2px;
+            background: lighten($co-19, 2%);
+          }
+        }
+
+        .wpl_prp_show_detail_boxes_cont {
+          font-size: 15px;
+          [id*="wpl-dbst-show"] {
+            color: #525252;
+            font-weight: 500;
+            span {
+              font-weight: normal;
+              color: #9e9e9e;
+              font-family: lato;
+            }
+            &.separator {
+              height: auto;
+              padding-left: 15px;
+              margin: 10px 0;
+            }
+          }
+        }
+      }
+    }
+    .wpl_prp_container_content_right {
+      padding-top: 0;
+      .wpl_prp_right_boxes {
+        @include border-radius(0);
+        border: 0;
+        background: #fff;
+        padding: 15px;
+        .wpl_prp_right_boxes_title {
+          font-size: 22px;
+          font-family: Raleway;
+          text-transform: uppercase;
+          color: #353535;
+          font-weight: 500;
+          margin-top: 10px;
+          font-style: normal;
+        }
+        .wpl_prp_right_boxe_details_top {
+          .wpl_prp_right_boxe_details_left {
+            width: 100%;
+
+            li {
+              font-weight: 600;
+              color: $co-36;
+              margin-bottom: 4px;
+              span {
+                font-size: 14px;
+              }
+            }
+          }
+        }
+        .price_box {
+          font-family: Raleway;
+          font-size: 25px;
+        }
+      }
+      .wpl_prp_show_position2 {
+        .wpl_prp_right_boxes {
+          margin-bottom: 30px;
+          &.listing_links {
+            .wpl_prp_right_boxes_content {
+              padding-top: 12px;
+              border-top: 1px solid $co-5;
+            }
+          }
+          &.booking {
+            input[type="text"] {
+              background: darken($co-9, 4%);
+              height: 30px;
+              @include border-radius(2px);
+              padding: 0 10px;
+              border: 2px solid transparent;
+              font-family: Raleway, sans-serif;
+              box-sizing: border-box;
+            }
+          }
+          &.zillow_reviews {
+            .wpl-zillow-info-right {
+              line-height: 17px;
+              padding-left: 15px;
+              .title {
+                margin-top: 2px;
+                height: inherit;
+              }
+            }
+            .wpl-zillow-review-top {
+              position: relative;
+            }
+          }
+        }
+      }
+    }
+
+    //activities styles
+    //links
+    .listing_links {
+      .wpl_listing_links_container {
+        li {
+          width: 48px;
+          height: 48px;
+        }
+      }
+    }
+    //rooms
+    .listing_rooms {
+      .wpl_rooms_container {
+        .wpl_rooms_list_container {
+          li {
+            width: 50%;
+
+            .room_name {
+              font-size: 15px;
+              font-family: lato;
+              font-weight: 500;
+            }
+            &:before {
+              font-size: 35px;
+              color: $co-40;
+            }
+          }
+        }
+      }
+    }
+    //review
+    .review {
+      .wpl-review-rates-container {
+        .wpl-rating {
+          width: 100%;
+          float: left;
+          padding: 0;
+        }
+        .wpl-rate-title {
+          font-size: 15px;
+          font-family: lato;
+          font-weight: 500;
+          float: left;
+          width: 100%;
+        }
+        .wpl-rate {
+          .br-wrapper {
+            .br-widget {
+              a {
+                @include box-shadow(none);
+                @include border-radius(0);
+                width: 20%;
+                border: 0;
+              }
+              .br-current-rating {
+                font-family: lato;
+                font-size: 15px;
+                font-style: normal;
+                padding: 0;
+                width: 15%;
+              }
+            }
+          }
+          .wpl-rate-info {
+            top: 0;
+            right: 0;
+          }
+        }
+      }
+      .wpl-review-reviews-container {
+        .wpl-review-review-txt-content {
+          @extend .text-input-extendable;
+          background: $co-9;
+          @include border-radius(2px);
+          padding: 10px 10px 0 10px;
+          border: 2px solid transparent;
+          font-family: Raleway, sans-serif;
+          @include box-shadow(none);
+        }
+      }
+    }
+    //contact
+    .listing_contact {
+      .wpl_contact_container {
+        .form-field {
+          .text-box {
+            width: calc(100% - 20px);
+          }
+          textarea {
+            height: 100px;
+            padding-top: 10px;
+          }
+        }
+      }
+    }
+    .listing_result {
+      .wpl-listing-results-links-cnt {
+        border-top: none;
+      }
+    }
+  }
+}
+/*Layout2*/
+.wpl_property_show_layout2 {
+  .header_top_bottom_holder {
+    @include box-shadow(0 4px 4px -2px lighten($co-24, 20%));
+  }
+  .container {
+    color: $co-11 !important;
+  }
+  .wpl_prp_show_layout2_container {
+    margin-top: 50px !important;
+  }
+
+  //sidebar
+  .wpl_prp_container_content_right {
+    .wpl_prp_right_boxes {
+      padding-bottom: 1px !important;
+    }
+    .wpl_prp_right_boxe_details_top {
+      border-bottom: 1px dashed $co-24;
+      .wpl_prp_show_title {
+        h1.title_text {
+          color: lighten($co-19, 2%);
+          text-transform: uppercase;
+          font-weight: normal;
+          font-size: 36px;
+        }
+        .location_build_up {
+          span {
+            color: $co-42;
+            font-size: 17px;
+            font-family: Raleway;
+          }
+        }
+      }
+      .price_box {
+        font-family: lato !important;
+      }
+
+      .wpl_prp_listing_icon_box {
+        div {
+          width: 50%;
+          margin: 0;
+          padding: 0;
+          text-align: left;
+          padding-left: 34px;
+
+          color: lighten($co-42, 20%);
+          &:after {
+            font-size: 23px;
+            color: $co-42;
+          }
+          span {
+            display: inline-block;
+            color: lighten($co-42, 20%);
+          }
+        }
+      }
+    }
+    .wpl_prp_show_detail_boxes {
+      .wpl_prp_show_detail_boxes_title {
+        color: lighten($co-19, 2%);
+        text-transform: uppercase;
+        font-weight: 500;
+        font-size: 20px;
+      }
+      .rows {
+        padding-left: 10px;
+        @include box-sizing(border-box);
+      }
+    }
+
+    .wpl_prp_show_position2 {
+      .wpl_prp_right_boxes {
+        padding: 0;
+        margin-bottom: 15px !important;
+        border-top: 1px dashed $co-24;
+        .wpl_prp_right_boxes_content {
+          border: 0 !important;
+        }
+        &.mortgage_calculator {
+          .wpl_mcalc_container {
+            border: none;
+            padding: 0;
+            .text-box {
+              width: 90px;
+              background: $co-46;
+              height: 40px;
+              padding: 0 10px;
+              border: 2px solid transparent;
+              font-family: Raleway, sans-serif;
+              margin-left: 10px;
+            }
+            label {
+              line-height: 4;
+            }
+            .form-result .wpl-mortgage-symbol {
+              line-height: 4;
+            }
+          }
+        }
+      }
+      .wpl_prp_right_boxes_title {
+        color: lighten($co-19, 2%) !important;
+        text-transform: uppercase !important;
+        font-weight: 500 !important;
+        font-size: 20px !important;
+      }
+    }
+  }
+
+  .wpl_prp_container_content_left {
+    .wpl_prp_show_detail_boxes {
+      .wpl_prp_show_detail_boxes_title {
+        font-style: normal;
+        line-height: 40px;
+        font-size: 24px;
+        position: relative;
+        margin-bottom: 15px;
+        color: $co-38;
+        text-transform: uppercase;
+        font-weight: normal;
+        &:after {
+          width: 25px;
+          content: "";
+          display: table;
+          height: 2px;
+          background: #303030;
+        }
+      }
+    }
+    .wpl_prp_show_tabs-maps {
+      .tabs_box {
+        border-bottom: 2px solid $co-43;
+        margin-bottom: 10px;
+        .tabs {
+          margin-bottom: 0;
+          li {
+            border: 2px solid transparent;
+            margin-bottom: -4px;
+            &.active {
+              border: 2px solid $co-43;
+              border-bottom: 0;
+              @include border-radius(3px 3px 0 0);
+              background: $co-11;
+              a {
+                color: lighten($co-19, 2%);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .wpl_prp_show_container {
+    .tabs_container {
+      width: auto;
+      left: auto;
+    }
+  }
+}
+.wpl_prp_show_container .wpl-gallery-pshow-wp .lSSlideOuter .lSPager {
+  bottom: 9px;
+}
+.wpl_prp_show_container
+  .wpl-gallery-pshow-wp
+  .lSSlideOuter
+  .lSPager.lSpg
+  > li
+  > a {
+  padding-top: 0;
+  font-size: 0;
+}
+.wpl_prp_show_detail_boxes_cont .rows.feature.single:after {
+  border: 1px solid #eaeaea;
+  font-size: 15px;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+.wpl_prp_show_container
+  .wpl-gallery-pshow-wp
+  .lSSlideOuter
+  .wpl-lSSlider-thumbnails {
+  bottom: 9px;
+  padding-top: 9px;
+}
+
+//complex
+.wpl_property_listing_complexes_container {
+  .wpl-column.wpl-complex-unit-cnt {
+    padding: 3px;
+  }
+}
+.wpl-complex-unit-wp {
+  background: $co-11;
+}
+.wpl-complex-tab-contents-wp {
+  padding: 0 0.9375rem;
+}
+.wpl-complex-unit .wpl_list_grid_switcher {
+  top: -50px;
+  right: -16px;
+  background: transparent;
+}
+.wpl-complex-unit-view-detail {
+  top: -4px;
+  right: 4px;
+}

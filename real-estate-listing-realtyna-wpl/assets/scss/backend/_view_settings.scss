@@ -1,0 +1,472 @@
+.settings-wp {
+  #icon-settings {
+    height: 43px;
+    width: 65px;
+    background-image: url(../img/backend/icon-64-settings.png);
+    background-position: 0 0;
+    background-repeat: no-repeat;
+  }
+
+  .sidebar-wp .side-tabs-wp ul li a {
+    background-position: center 15px;
+    padding-top: 60px;
+    padding-bottom: 15px;
+
+    &:before {
+      content: "";
+      display: none;
+    }
+
+    // Global
+    &#wpl_slide_label_id1 {
+      background-image: url(../img/backend/icon-48-global.png);
+    }
+
+    // Gallery
+    &#wpl_slide_label_id2 {
+      background-image: url(../img/backend/icon-48-gallery.png);
+    }
+
+    // Locations
+    &#wpl_slide_label_id3 {
+      background-image: url(../img/backend/icon-48-location.png);
+    }
+
+    // SEO
+    &#wpl_slide_label_id4 {
+      background-image: url(../img/backend/icon-48-sef.png);
+    }
+
+    // Notifications
+    &#wpl_slide_label_id5 {
+      background-image: url(../img/backend/icon-48-notifi.png);
+    }
+
+    // Multilingaul
+    &#wpl_slide_label_id7{
+      background-image: url(../img/backend/icon-48-multilingual.png);
+    }
+
+    // Membership
+    &#wpl_slide_label_id6{
+      background-image: url(../img/backend/icon-48-membership.png);
+    }
+  }
+}
+.wp-picker-container
+{
+  display: inline-block;
+  input[type="text"]
+  {
+    height: auto !important;
+  }
+}
+
+.wpl-wp{
+  .wpl-setting-langs{
+
+    .wpl-btns-wp{
+      display: block;
+      padding: 5px 0;
+      @if $text-direction == ltr
+      {
+        text-align: left;
+      } @else
+      {
+        text-align: right;
+      }
+
+      .button-1{
+        display: inline-block;
+        vertical-align: middle;
+        padding: 5px 28px;
+      }
+
+    }
+
+    .wpl-languages-generate-keywords{
+      margin-top: 15px;
+      @if $text-direction == ltr
+      {
+        padding-left: 50px;
+      } @else
+      {
+        padding-right: 50px;
+      }
+
+      .wpl-button{
+        padding-right: 23px;
+        padding-left: 23px;
+      }
+    }
+
+    .ajax-inline-save{
+      @if $text-direction == ltr
+      {
+        margin-left: 5px;
+      } @else
+      {
+        margin-right: 5px;
+      }
+
+    }
+
+    .wpl-notify-msg{
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0;
+      padding: 4px 20px;
+      font-size: 12px;
+      @if $text-direction == ltr
+      {
+        margin-left: 5px;
+      } @else
+      {
+        margin-right: 5px;
+      }
+    }
+
+    .wpl-lang-table-wp {
+      width: 100%;
+      margin-top: 20px;
+
+      .wpl-language-row{
+
+        input[type=text]{
+          height: 31px;
+        }
+
+        & + .wpl-language-row{
+          margin-top: 10px;
+        }
+
+        label{
+          width: 50px !important;
+        }
+      }
+    }
+
+    .wpl-languages-labels{ // ul
+      @include clearfix_s1;
+
+      width: 100%;
+      list-style: none;
+      padding: 0;
+      @if $text-direction == ltr
+      {
+        padding-left: 50px;
+      } @else
+      {
+        padding-right: 50px;
+      }
+
+      li{
+        display: inline-block;
+        font-size: 11px;
+        width: 165px;
+        text-align: center;
+        @if $text-direction == ltr
+        {
+          float: left;
+        } @else
+        {
+          float: right;
+        }
+      }
+    }
+  }
+}
+
+.wpl-customizer-addon-wp{
+
+  h4{
+    background-color: rgba($co-0, .1);
+    margin: 5px -20px 20px;
+    padding: 10px 40px;
+    font: 16px $font-archivo-narrow;
+  }
+}
+
+.wpl-customizer-btns-wp{
+  padding: 0 30px;
+  margin-bottom: 15px;
+
+  .wpl-button{
+    padding-left: 15px;
+    padding-right: 20px;
+
+    &::before{
+      content: '\e635';
+      display: inline-block;
+      vertical-align: sub;
+      font: normal 16px $font-wpl-backend;
+      @if $text-direction == ltr
+      {
+        margin-right: 5px;
+      } @else
+      {
+        margin-left: 5px;
+      }
+    }
+  }
+}
+.wpl-customizer-fields-wp{
+
+}
+
+.wpl-customizer-row{
+  margin-bottom: 15px;
+}
+
+.wpl-color-picker-save
+{
+  position: relative;
+  top:1px;
+  @if $text-direction == ltr
+  {
+    margin-left: 10px;
+  } @else
+  {
+    margin-right: 10px;
+  }
+}
+
+//sample properties
+.wpl-sample-properties {
+
+  margin-bottom: 0;
+  padding-top: 20px;
+  position: relative;
+
+  &:before {
+    font: 18px "wpl-backend";
+    content: '\e62b';
+    position: absolute;
+    top: 22px;
+    @if $text-direction == ltr
+    {
+      left: 20px;
+    } @else
+    {
+      right: 20px;
+    }
+  }
+  
+  .wpl-sample-properties-note {
+    @if $text-direction == ltr
+    {
+      padding-left: 66px;
+    } @else
+    {
+      padding-right: 66px;
+    }
+  }
+
+  .wpl_show_message {
+    padding: 3px 0.6em;
+    margin: 0;
+    @if $text-direction == ltr
+    {
+      float: right;
+    } @else
+    {
+      float: left;
+    }
+  }
+}
+/*Clusterer Iconset*/
+.wpl_st_typeimagepicker
+{
+  label
+  {
+    height: 100%;
+    display: table-cell !important;
+    vertical-align: top;
+  }
+  .wpl-imagepicker-images-wp
+  {
+    display: table-cell;
+  }
+  .wpl-imagepicker-image-wp
+  {
+    @include box-shadow(0 1px 3px rgba(#000,0.2),0 0 2px 2px #fff inset);
+    @include transition(all 0.2s linear);
+    @include border-radius(2px);
+    @include gradient-radial(#fff,#eee);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+    cursor: pointer;
+    @if $text-direction == ltr
+    {
+      float: left;
+      margin-right: 10px;
+    } @else
+    {
+      float: right;
+      margin-left: 10px;
+    }
+    &:hover
+    {
+      @include box-shadow(0 1px 3px rgba(#000,0.2),0 0 0 2px #777);
+    }
+    img
+    {
+      display: block;
+      max-width: 200px;
+    }
+  }
+  .wpl-imagepicker-active
+  {
+    @include box-shadow(0 1px 3px rgba(#000,0.2),0 0 0 2px #777);
+  }
+}
+/*Advanced Markers*/
+.wpl-advanced-markers-status-wp
+{
+  margin-bottom: 10px;
+}
+.wpl-advanced-markers-status-wp,
+.wpl-advanced-markers-property-types-images
+{
+  display: inline-block;
+}
+.wpl-advanced-markers-listing-types-wp,
+.wpl-advanced-markers-property-types-wp
+{
+  & > div
+  {
+    padding:10px;
+  }
+}
+.wpl-advanced-markers-save-button-wp
+{
+  margin-top: 10px;
+  button
+  {
+    @if $text-direction == ltr
+    {
+      margin-left: 10px;
+    } @else
+    {
+      margin-right: 10px;
+    }
+  }
+}
+.wpl-setting-select-img
+{
+  img
+  {
+    @include box-shadow(0 1px 3px rgba(#000,0.2),0 0 2px 2px #fff inset);
+    @include transition(all 0.2s linear);
+    @include border-radius(2px);
+    @include gradient-radial(#fff,#eee);
+    @if $text-direction == ltr
+    {
+      float: left;
+      margin-right: 10px;
+    } @else
+    {
+      float: right;
+      margin-left: 10px;
+    }
+    margin-bottom: 0;
+    padding: 5px;
+    cursor: pointer;
+    height: 26px;
+    &:hover,&.wpl-am-pt-icon-active
+    {
+      @include box-shadow(0 1px 3px rgba(#000,0.2),0 0 0 2px #777);
+    }
+  }
+}
+
+
+
+/* The switch - the box around the slider */
+.wpl-switch {
+   position: relative;
+   display: inline-block;
+   width: 60px;
+   height: 30px;
+  .realtyna-spin
+  {
+    top: 10px !important;
+    @if $text-direction == ltr
+    {
+      left: 70px !important;
+    } @else
+    {
+      right: 70px !important;
+    }
+  }
+  /* Hide default HTML checkbox */
+  input {display:none;}
+  input:checked + .wpl-slider {
+    background-color: $co-36;
+    border-color: $co-36;
+  }
+
+  input:focus + .wpl-slider {
+    box-shadow: 0 0 1px $co-36;
+  }
+
+  input:checked + .wpl-slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+}
+
+/* The slider */
+.wpl-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: $co-38;
+  -webkit-transition: .4s;
+  transition: .4s;
+  &:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 1px;
+    bottom: 1px;
+    background-color: white;
+    -webkit-transition: .4s;
+    transition: .4s;
+    box-shadow: 0 0 9px rgba(0,0,0,0.12);
+  }
+  /* Rounded sliders */
+  &.wpl-round {
+    border-radius: 34px;
+    height: 24px;
+    line-height: 24px;
+    width: 50px;
+    border: 1px solid $co-8;
+    &:before {
+      border-radius: 50%;
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

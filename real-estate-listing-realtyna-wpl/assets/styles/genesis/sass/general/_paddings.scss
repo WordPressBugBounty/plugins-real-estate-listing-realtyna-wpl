@@ -1,0 +1,84 @@
+//Propert listing
+.wpl-page {
+  .entry {
+    background: transparent;
+    padding: $padd-0;
+  }
+}
+
+.wpl_property_listing_container {
+  padding: $padd-0;
+}
+
+//Agents listing
+.wpl_profile_listing {
+  .entry {
+    padding: $padd-0 !important;
+    background: transparent;
+    .wpl-profile-listing-wp {
+      .wpl_profile_listing_profiles_container {
+        background: $co-1;
+        padding: 40px 20px;
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@include for-phone {
+}
+
+@include for-phone-2 {
+  //Agent show page
+  .wpl_profile_show_container {
+    .wpl_profile_show_container_box {
+      padding: $padd-20;
+    }
+  }
+}
+
+@include for-tablet-landscape {
+  //Agent show page
+  .wpl_profile_show_container {
+    .wpl_profile_show_container_box {
+      padding: $padd-40;
+    }
+  }
+}
+
+@include for-tablet-land {
+  //Agent show page
+  .wpl_profile_show_container {
+    .wpl_profile_show_container_box {
+      padding: $padd-40;
+    }
+  }
+}
+
+@include for-desktop {
+  //Agent show page
+  .wpl_profile_show_container {
+    .wpl_profile_show_container_box {
+      padding: $padd-40;
+    }
+  }
+}
+
+.wpl_red_msg,
+.wpl_green_msg {
+  font: {
+    family: inherit;
+  }
+}
+
+//Disable default theme padding in the full-width page
+.full-width-content.wpl_property_show {
+  .entry {
+    padding: 0;
+  }
+}
+
+.wpl-tags-wp li a{
+  padding-right: 45px;
+}

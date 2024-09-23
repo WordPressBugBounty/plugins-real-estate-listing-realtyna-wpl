@@ -1,0 +1,221 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+
+.ui-datepicker{
+  $si-arrow-size: 7px;
+
+  @include box-shadow(0 6px 8px -3px rgba($co-0,0.15), 0 2px 9px 0px rgba($co-0,0.1));
+  background-color: $co-1;
+  border: 1px solid darken($co-1, 10%);
+  width: 247px;
+  margin-top: $si-arrow-size + 3px;
+  @if $text-direction == ltr
+  {
+    margin-left: -44px;
+  } @else
+  {
+    margin-right: -44px;
+  }
+  font-size: .8em;
+  line-height: 1em;
+  display: none;
+  z-index:10000 !important;
+
+  &::before{
+    display: block;
+    border-color: transparent transparent darken($co-28, 10%) transparent;
+    border-style: solid;
+    border-width: 0 $si-arrow-size $si-arrow-size $si-arrow-size;
+    content: '';
+    left: 50%;
+    margin-left: -1 * $si-arrow-size / 2;
+    position: absolute;
+    top: -1 * $si-arrow-size - 1;
+    z-index: 1;
+  }
+
+  &::after{
+    display: block;
+    border-color: transparent transparent $co-28 transparent;
+    border-style: solid;
+    border-width: 0 $si-arrow-size $si-arrow-size $si-arrow-size;
+    content: '';
+    left: 50%;
+    margin-left: -1 * $si-arrow-size / 2;
+    position: absolute;
+    top: -1 * $si-arrow-size;
+    z-index: 2;
+  }
+
+
+  .ui-datepicker-header{
+    height: 35px;
+    background: lighten($co-28,10%);
+  }
+
+  .ui-datepicker-prev {
+    @include transition(background .1s linear);
+    @include size(35px, 35px);
+    color: $co-16;
+    cursor: pointer;
+    font-size: 1.4em;
+    left: auto;
+    right: 35px;
+    line-height: 35px;
+    overflow: hidden;
+    position: absolute;
+    text-align: center;
+    top: 0;
+
+    &::after {
+      display: block;
+      font-family: $font-frontend;
+      content: "\e656";
+      transform: rotateZ(90deg);
+    }
+
+    &:hover{
+      background-color: rgba($co-58, .06);
+    }
+
+    span {
+      display: none !important;
+    }
+
+  }
+
+  .ui-datepicker-next {
+    @extend .ui-datepicker-prev;
+    left: auto;
+    right: 0;
+
+    &::after {
+      content: "\e657";
+      transform: rotateZ(90deg);
+    }
+
+  }
+
+  .ui-datepicker-title {
+    margin: auto !important;
+    text-align: left;
+    line-height: 35px;
+    font-weight: bold;
+    font-size: 12px;
+    padding-left: 10px;
+    vertical-align: middle;
+    color: $co-16;
+
+    span{
+      vertical-align: middle;
+    }
+
+    select {
+      @include border-radius(2px);
+      @include box-shadow(none);
+      height: 23px;
+      background: darken($color_1, 5%);
+      border: 0 none;
+      color: $co-16;
+    }
+
+    .ui-datepicker-year{
+      width: auto;
+      background: transparent;
+      font-size: 12px;
+    }
+  }
+}
+
+.ui-datepicker-calendar{
+
+  thead{
+
+    th{
+      height: 23px;
+      text-transform: uppercase;
+      font-weight: bold;
+      background-color: rgba($co-0, .02);
+
+      span{
+        @include box-shadow(inset 1px 1px 0 0px $co-1);
+        line-height: 23px;
+      }
+    }
+
+    tr{
+      th:last-child{
+        border-right: 0;
+      }
+    }
+
+  }
+
+  tbody{
+
+    td{
+
+    }
+
+    tr{
+      td:last-child{
+        border-right: 0;
+      }
+    }
+
+  }
+
+  th, td{
+    //border-right: 1px solid darken($co-1, 10%);
+    //border-top: 1px solid darken($co-1, 10%);
+    text-align: center;
+    width: 35px;
+    height: 33px;
+    position: relative;
+    padding: 0;
+
+    a, span{
+      @include user-select(none);
+      display: block;
+      line-height: 33px;
+      color: $co-16;
+    }
+
+    span{
+
+    }
+
+    a{
+      text-decoration: none;
+    }
+  }
+
+  .ui-state-disabled{
+    background-color: rgba($co-0, .02);
+    color: rgba($co-0, .2);
+
+    &.ui-datepicker-other-month{
+      background-color: rgba($co-0, .06);
+      color: rgba($co-0, .12);
+    }
+  }
+
+  .ui-datepicker-today a{
+    background-color: $co-58;
+    color: $co-1;
+    font-weight: bold;
+  }
+
+  .ui-datepicker-current-day a{
+    //@include box-shadow(inset 0 0 0 2px $co-12);
+    background-color: $co-28;
+    //color: darken($co-12, 10%);
+    //font-weight: bold;
+  }
+
+
+}

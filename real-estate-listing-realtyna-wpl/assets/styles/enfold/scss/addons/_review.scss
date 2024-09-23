@@ -1,0 +1,62 @@
+.review {
+  .wpl-review-submit {
+    button {
+      border-radius: 3px;
+      display: inline-block;
+      position: relative;
+      font: {
+        size: 13px;
+        weight: normal;
+      }
+      padding: 9px 10px 7px;
+      margin: 3px 0;
+      max-width: 100%;
+      min-width: 80px;
+      border: 1px solid;
+      color: $co-2;
+      text-decoration: none;
+      line-height: 1.2em;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+  .wpl-rate-info {
+    top: 10px;
+  }
+  .wpl-review-rates-overall-container,
+  .wpl-rating {
+    .wpl-rate {
+      .br-wrapper {
+        a {
+          box-shadow: none !important;
+          &:first-child {
+            border-radius: 0 !important;
+          }
+          &:nth-child(5) {
+            border-radius: 0 !important;
+          }
+        }
+        .br-widget {
+          .br-current-rating {
+            font: {
+              style: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+  .wpl-review-main-review-form {
+    border-bottom: none !important;
+    padding-right: 15px;
+  }
+  .wpl-review-list-wp {
+    .wpl-review-review-reply-btn {
+      width: 60px;
+      cursor: pointer;
+      span {
+        color: $co-2;
+      }
+    }
+  }
+}

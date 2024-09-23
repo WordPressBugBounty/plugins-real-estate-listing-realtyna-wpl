@@ -1,0 +1,223 @@
+/*
+ * Author: Steve M / UI Department
+ */
+
+// Short-hand for Scale-lightness
+@function lighter($color, $percent){
+    @return scale_lightness($color, $percent);
+}
+
+// List to String
+@function to-string($list, $glue: '', $is-nested: false) {
+    $result: null;
+
+    @for $i from 1 through length($list) {
+        $e: nth($list, $i);
+
+        @if type-of($e) == list {
+            $result: $result#{to-string($e, $glue, true)};
+        }
+
+        @else {
+            $result: if($i != length($list) or $is-nested, $result#{$e}#{$glue}, $result#{$e});
+        }
+    }
+
+    @return $result;
+}
+
+@mixin wpl-font-icon($code:'', $size: 16px, $center: true, $mleft: false, $mtop: false, $before:'before'){
+
+    position: relative;
+    vertical-align: middle;
+
+    @if($mleft != false){
+        margin-left: $mleft;
+    }
+
+    @if($mtop != false){
+        margin-left: $mtop;
+    }
+
+    &::#{$before}{
+
+        font: $size $font-wpl-backend;
+        content: $code;
+        display: inline-block;
+        vertical-align: middle;
+
+        @if($center == true){
+
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -1 * ($size / 2);
+            margin-left: -1 * ($size / 2);
+
+        }@else{
+
+            position: relative;
+
+        }
+
+    }
+
+}
+
+@mixin wpl-set-svg($file:"no-file", $where:"corrent", $align: (center, center),
+                        $back-size: contain,
+                        $height: "auto", $width: "auto", $top: 50%, $left: 50%,
+                        $important: false, $important-all: false, $image-path: $image-path-backend){
+
+    $important-back: "";
+    $important-all-text: "";
+
+    @if $important == true{
+        $important-back: "!important";
+    }
+
+    @if $important-all == true{
+        $important-back: "";
+        $important-all-text: "!important";
+    }
+
+    @if $where == "corrent"{
+
+        background: transparent url("#{$image-path}/#{$file}.svg") to-string($align," ") no-repeat #{$important-back}#{$important-all-text};
+        background-size: $back-size #{$important-all-text};
+
+        @if $height != "auto"{
+            height: $height #{$important-all-text};
+        }
+
+        @if $width != "auto"{
+            width: $width #{$important-all-text};
+        }
+
+
+    }@else {
+        position: relative;
+
+        &::#{$where} {
+            position: absolute;
+            content: "";
+            background: transparent url("#{$image-path}/#{$file}.svg") to-string($align, " ") no-repeat #{$important-back}#{$important-all-text};
+            background-size: contain#{$important-all-text};
+            left: $left#{$important-all-text};
+            top: $top#{$important-all-text};
+
+            @if $height != "auto" {
+                height: $height#{$important-all-text};
+
+                @if nth($align,2) == center {
+                    margin-top: -1 * $height / 2#{$important-all-text};
+                }
+            }
+
+            @if $width != "auto" {
+                width: $width#{$important-all-text};
+
+                @if nth($align,1) == center {
+                    margin-left: -1 *  $width / 2#{$important-all-text};
+                }
+            }
+
+        }
+    }
+}
+
+// Use for left tab icon placement
+@mixin side-tab-icon($file-name,$top: 20px, $left: 50%){
+    &:before{
+        @include backend-sprite($file-name);
+        margin-left: -1 * round(backend-sprite-width($file-name)/2);
+        left: $left;
+        top:$top;
+        content: " ";
+        position: absolute;
+    }
+}
+
+
+// Use place icon of any element that is in :before
+@mixin icon-placer($file-name,$top: 50%, $left: 50%, $right: null, $is-before: true, $do-more: false){
+    @if $is-before == true{
+        &:before{
+            @include backend-sprite($file-name);
+            margin-left: -1 * round(backend-sprite-width($file-name)/2);
+            margin-top: -1 * round(backend-sprite-height($file-name)/2);
+            @if $right == null{
+                left: $left;
+            }@else{
+                right: $right;
+            }
+            top:$top;
+            @if $do-more == true{
+                content: " ";
+                position: absolute;
+            }
+        }
+    }@else{
+        @include backend-sprite($file-name);
+        //background: sprite($wpl-icons,$file-name) !important;
+        margin-left: -1 * round(backend-sprite-width($file-name)/2);
+        margin-top: -1 * round(backend-sprite-height($file-name)/2);
+        @if $right == null{
+            left: $left;
+        }@else{
+            right: $right;
+        }
+        top:$top;
+        @if $do-more == true{
+            content: " ";
+            position: absolute;
+        }
+    }
+}
+
+
+@mixin gradient-angled($back-color: #aaa,$over-color1: #fff,$over-color2: null,$over-color3: null, $opacity: 0.2,$degree: 45deg){
+
+    // Declare color variables
+    $color1: $over-color1;
+    $color2: $over-color2;
+    $color3: $over-color3;
+
+    @if $over-color2 == null{
+        $color2: $over-color1;
+    }
+
+    @if $over-color3 == null{
+        $color3: $over-color1;
+    }
+
+    background-color: $back-color;
+    background-image: -webkit-linear-gradient($degree, rgba($color1, $opacity) 25%, transparent 25%,
+        transparent 50%, rgba($color2, $opacity) 50%, rgba($color3, $opacity) 75%,
+        transparent 75%, transparent);
+    background-image: -moz-linear-gradient($degree, rgba($color1, $opacity) 25%, transparent 25%,
+        transparent 50%, rgba($color2, $opacity) 50%, rgba($color3, $opacity) 75%,
+        transparent 75%, transparent);
+    background-image: linear-gradient($degree, rgba($color3, $opacity) 25%, transparent 25%,
+        transparent 50%, rgba($color2, $opacity) 50%, rgba($color3, $opacity) 75%,
+        transparent 75%, transparent);
+    -pie-background: linear-gradient($degree, rgba($color1, $opacity) 25%, transparent 25%,
+        transparent 50%, rgba($color2, $opacity) 50%, rgba($color3, $opacity) 75%,
+        transparent 75%, transparent) 0 0 / 50px 50px $back-color;
+    behavior: url(/pie/PIE.htc);
+}
+
+
+@mixin wordpress-reset{
+    h3{
+        margin: 0;
+    }
+
+    ul{
+        margin: 0;
+    }
+
+    a{
+        text-decoration: none;
+    }
+}

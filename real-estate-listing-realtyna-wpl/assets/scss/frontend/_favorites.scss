@@ -1,0 +1,103 @@
+.wpl_favorite_widget_title {
+  padding: 5px 10px;
+  font: 700 12pt/26px $font-lato;
+  .badge {
+    display: inline-block;
+    min-width: 10px;
+    padding: 3px 7px;
+    font-size: 12px;
+    font-weight: bold;
+    color: $co-1;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    text-align: center;
+    background-color: $co-34;
+    border-radius: 10px;
+  }
+}
+.wpl_favorites_items {
+  border-bottom: 2px solid $color_1;
+  list-style: none;
+  li {
+    padding: 5px 10px;
+    border-bottom: 1px solid lighten($color_3, 40%);
+    &:last-child {
+      border: 0;
+    }
+    & > a {
+      text-decoration: none !important;
+    }
+  }
+  .no_image_box {
+    display: inline-block;
+    background: $color_2;
+    text-align: center;
+    @include size(37px, 32px);
+    border-left: 5px solid $color_1;
+    &:before {
+      display: block;
+      font: 18pt $font-frontend;
+      content: "\e029";
+      clear: both;
+    }
+  }
+}
+.wpl_favorite_item_image {
+  border-left: 5px solid $color_1;
+}
+.wpl_favorite_item_title {
+  color: $color_1;
+  font: 700 10pt/20px $font-lato;
+  vertical-align: top;
+}
+.wpl_favorite_contact_form {
+  padding: 5px 10px;
+  #wpl_favorite_ajax_loader_2 {
+    float: right;
+  }
+  .form-field {
+    margin-bottom: 7px;
+  }
+  input[type="text"],
+  textarea {
+    width: 100%;
+    padding: 2px 8px;
+  }
+  textarea {
+    height: 100px;
+  }
+  .btn-primary {
+    float: right;
+    @include border-radius(0);
+    color: $white;
+  }
+  .btn-primary {
+    @include for-phone {
+      font-size: 12px !important;
+      padding: 4px 8px;
+      height: 28px;
+      line-height: 20px;
+    }
+  }
+}
+.widget_wpl_favorites_widget .form-field > .btn {
+  @include for-phone {
+    font-size: 12px !important;
+    padding: 4px 8px;
+    height: 28px;
+    line-height: 20px;
+  }
+}
+.wpl_favorite_item_remove {
+  color: $color_1;
+  vertical-align: top;
+  display: inline-block;
+  @include square(16px);
+  border: 1px solid lighten($color_3, 40%);
+  @include border-radius(8px);
+  line-height: 12px;
+  text-align: center;
+  font-size: 9pt;
+  cursor: pointer;
+}

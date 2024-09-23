@@ -1,0 +1,105 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-tags-wp{
+  @include clearfix_s2;
+  padding: 10px 0;
+  text-align: center;
+
+  li{
+    display: inline-block;
+    margin: 2px 0;
+    min-width: 12.5%;
+    list-style: none;
+
+    @include for-tablet{
+      @include calc(width, '25% - 4px');
+    }
+    @include for-phone{
+      @include calc(width, '50% - 4px');
+    }
+    
+    a{
+      display: block;
+      text-align: center;
+      position: relative;
+      padding: 6px 30px 6px 10px;
+
+      &::after{
+        content: '';
+      }
+
+      &:hover{
+        .wpl-tags-item-count{
+          background-color: rgba($co-1, .4);
+        }
+      }
+
+    }
+  }
+
+  .wpl-tags-item-count{
+    @include transition(all .2s linear);
+    @include border-radius(2px);
+    position: absolute;
+    top: 4px;
+    display: inline-block;
+    padding: 2px 5px;
+    background-color: rgba($co-1, .12);
+    @if $text-direction == ltr
+    {
+      right: 10px;
+    } @else
+    {
+      left: 10px;
+    }
+  }
+
+  &.wpl-tags-without-count li a{
+    padding: 6px 10px;
+  }
+
+}
+
+//region = For Footer
+
+.top_footer_cont{
+
+  .wpl-tags-wp{
+
+    li {
+      display: block;
+      width: 100%;
+      margin-top: 3px;
+      margin-bottom: 3px;
+      list-style: none;
+
+      a{
+        padding: 2px 10px 2px 60px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+
+    }
+
+    .wpl-tags-item-count{
+      line-height: 22px;
+      right: auto;
+      left: 10px;
+      width: 50px;
+      text-align: center;
+    }
+
+    &.wpl-tags-without-count li a{
+      padding: 6px 10px;
+    }
+
+  }
+
+
+}
+
+//endregion

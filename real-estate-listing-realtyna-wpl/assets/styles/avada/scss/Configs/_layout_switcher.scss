@@ -1,0 +1,54 @@
+@mixin wpl-avada-layout-switcher {
+  .wpl_list_grid_switcher {
+    margin-top: 9px;
+    position: relative;
+    div {
+      width: 24px;
+      height: 24px;
+      border-radius: 2px;
+      position: relative;
+      background: $co-43;
+      border:2px solid $co-43;
+      &:before {
+        @include border-radius(2px);
+        font-size: 14px;
+        color: $co-24;
+        position: absolute;
+        top: 3px;
+        left: 3px;
+      }
+      &.grid_view::before {
+        content: '\e91c';
+      }
+      &.list_view::before {
+        font-size: 13px;
+        content: '\e91d';
+        top: 4px;
+      }
+      &.map_view::before {
+        content: '\e91e';
+        left: 4px;
+      }
+      &.active {
+        background: #FFF;
+      }
+    }
+
+
+    &.wpl-list-grid-switcher-icon-text {
+      div {
+        width: 55px;
+        padding-left: 18px;
+        &.active {
+          &:after {
+            display: none;
+          }
+        }
+      }
+    }
+  }
+  &.wpl-property-listing-mapview .wpl_list_grid_switcher.wpl-list-grid-switcher-icon-text div {
+    width: 24px;
+  }
+}
+

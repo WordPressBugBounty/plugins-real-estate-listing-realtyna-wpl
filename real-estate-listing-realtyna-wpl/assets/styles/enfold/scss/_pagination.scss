@@ -1,0 +1,70 @@
+.wpl_pagination_container,
+.pagination-wp {
+  .pagination {
+    padding: 10px 2px 0 0;
+    .prev.disabled,
+    .next.disabled {
+      display: none;
+    }
+
+    .prev,
+    .next {
+      a {
+        visibility: hidden;
+        &:after {
+          box-shadow: 0 0 1px 0 rgba($co-1, 0.2);
+          visibility: visible;
+          display: block;
+          position: absolute;
+          top: 12px;
+          height: 35px;
+          width: 35px;
+          line-height: 35px;
+          text-align: center;
+          padding: 0;
+          border-radius: 100px;
+          margin-right: 3px;
+          background: inherit;
+          color: inherit;
+        }
+      }
+    }
+
+    .prev {
+      a {
+        &:after {
+          content: '<'
+        }
+      }
+    }
+    .next {
+      a {
+        &:after {
+          content: '>'
+        }
+      }
+    }
+
+    li {
+      margin-left: 0 !important;
+      a {
+        margin-right: 0 !important;
+        &:hover {
+          background: transparent !important;
+        }
+      }
+      span {
+        border-radius: 100px !important;
+        box-shadow: 0 0 1px 0 rgba($co-1, 0.2);
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
+  .wpl_total_result {
+    padding: 14px 0;
+  }
+  .wpl_page_size {
+    margin: 7px 0 0 0 !important;
+  }
+}

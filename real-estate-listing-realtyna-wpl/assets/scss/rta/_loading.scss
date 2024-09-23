@@ -1,0 +1,46 @@
+.wpl_loading{
+  /******* Spinner ******/
+  &.spinner {
+    top: 43%;
+    left: 45%;
+    position: relative;
+    font-size: 100px;
+    @include square(1em);
+    @include border-radius(50%);
+    @include box-shadow(inset 0 0 0 .12em rgba($black,0.2), 0 0 0 .12em rgba($white,0.1));
+    background: $color_1;
+    @include gradient-reverse($color_1,darken($color_1,12%),darken($color_1,24%),darken($color_1,36%));
+    background-size: 50% 100%, 50% 100%;
+    background-position: 0 0, 100% 0;
+    background-repeat: no-repeat;
+    opacity: 0.7;
+    @include animation(mask 3s infinite alternate);
+    &:after {
+      top: 25%;
+      left: 25%;
+      content: "";
+      position: absolute;
+      border: .12em solid rgba($white,0.3);
+      @include square(50%);
+      @include border-radius(inherit);
+    }
+
+  }
+}
+
+
+@-webkit-keyframes mask {
+  0% { }
+  25%  { @include rotate(270deg); }
+  50%  { @include rotate( 90deg); }
+  75%  { @include rotate(360deg); }
+  100% { @include rotate(180deg); }
+}
+
+@keyframes mask {
+  0% { }
+  25%  { @include rotate(270deg); }
+  50%  { @include rotate( 90deg); }
+  75%  { @include rotate(360deg); }
+  100% { @include rotate(180deg); }
+}

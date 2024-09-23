@@ -1,0 +1,239 @@
+.wpl_agents_widget_container {
+  .wpl-column {
+    float: left !important;
+  }
+}
+
+.widget_wpl_agents_widget {
+
+  //default widget layout
+  .wpl_profile_container {
+    border-bottom: 0;
+    .wpl_profile_picture {
+      div {
+        border-radius: 0 !important;
+        @include transform-style(initial !important);
+        @include transform(none !important);
+      }
+      .front {
+        .no_image {
+          position: relative;
+          &:before {
+            width: initial;
+            height: initial;
+            font: {
+              size: 6em !important;
+            }
+            margin: 0;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            @include transform(translate(-50%, -50%));
+          }
+        }
+      }
+      .back {
+        opacity: 0;
+        visibility: hidden;
+        background: none !important;
+        a {
+          background: none !important;
+          font: {
+            size: 0;
+          }
+          background: transparent;
+          transition: all 0.35s;
+          opacity: 0;
+          @include display-flex(flex !important);
+          &:before {
+            margin: auto;
+            content: '\e010';
+            font: {
+              family: $fo-4;
+              size: 30px;
+            }
+            color: $co-1;
+            z-index: 2;
+          }
+          &:after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            background: rgba($co-2, .0);
+            transition: all 0.35s;
+          }
+        }
+      }
+    }
+    .wpl_profile_picture.flip {
+      .back {
+        opacity: 1;
+        visibility: visible;
+        a {
+          opacity: 1;
+          &:after {
+            transition: all 0.35s;
+            background: rgba($co-2, .4);
+          }
+        }
+      }
+    }
+    .wpl_profile_container_title {
+      padding-top: 20px;
+      &:after {
+        display: block;
+        position: absolute;
+        content: '';
+        width: 22px;
+        height: 2px;
+        background: $co-10;
+        left: 0;
+        right: 0;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      a {
+        h2.title {
+          font: {
+            family: inherit;
+            size: 17px;
+          }
+          text-transform: uppercase;
+        }
+      }
+
+    }
+    ul {
+      position: absolute;
+      width: 100%;
+      height: 30px;
+      left: 0;
+      right: 0;
+      margin: 30px auto;
+      padding-top: 0;
+      li {
+        border-radius: 0 !important;
+        float: none;
+        line-height: 50px;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        background: transparent !important;
+        &:after {
+          border-radius: 0 !important;
+          background-color: transparent !important;
+          color: $co-12;
+        }
+        a {
+          border-radius: 0 !important;
+        }
+      }
+    }
+
+  }
+
+  //list widget layout
+  ul.list {
+    @include for-phone-2 {
+      li.wpl_profile_box {
+        width: 100%;
+        min-height: 230px;
+        float: left;
+        .profile_left {
+          width: 45%;
+        }
+        .profile_right {
+          width: 55%;
+        }
+      }
+    }
+    @include for-tablet-landscape {
+      li.wpl_profile_box {
+        width: 100%;
+        min-height: 230px;
+        float: left;
+        .profile_left {
+          width: 35%;
+        }
+        .profile_right {
+          width: 65%;
+        }
+      }
+    }
+    @include for-tablet-land {
+      li.wpl_profile_box {
+        width: 100%;
+        min-height: 230px;
+        float: left;
+        .profile_left {
+          width: 25%;
+        }
+        .profile_right {
+          width: 75%;
+        }
+      }
+    }
+    @include for-desktop {
+      li.wpl_profile_box {
+        width: 50%;
+        min-height: 230px;
+        float: left;
+        .profile_left {
+          width: 40%;
+        }
+        .profile_right {
+          width: 60%;
+        }
+      }
+    }
+
+    li.wpl_profile_box {
+      border-radius: 0;
+      .profile_left {
+        .more_info {
+          span {
+            border-radius: 0;
+            &:before {
+              border-radius: 0;
+            }
+          }
+        }
+      }
+      .profile_right {
+        ul {
+          li {
+            padding: 0 0 0 30px !important;
+          }
+          li, a {
+            text-align: left;
+            font: {
+              size: 13px;
+            }
+          }
+          li.title {
+            font: {
+              size: 18px;
+              family: inherit;
+              weight: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.wpl_agents_widget_container .wpl_profile_container .wpl_profile_picture div{
+  border: none;
+}
+.wpl_agents_widget_container .wpl_profile_container .wpl_profile_picture div.front {
+  background: transparent;
+}
+.wpl_agents_widget_container .wpl_profile_container .wpl_profile_picture div{
+  -webkit-box-shadow:none;
+  animation: none;
+}

@@ -1,0 +1,289 @@
+.wp-admin {
+  .fancybox-overlay {
+    background: $color-fancy-overlay;
+    overflow-y: auto !important;
+
+    .fancybox-inner {
+      overflow: visible;
+    }
+  }
+
+  .fanc-settings {
+    label {
+      width: 160px!important;
+    }
+
+    .prow {
+      padding-bottom: 10px!important;
+    }
+  }
+
+  .fancybox-skin {
+    @include border-radius($border-radius-fancy);
+    background: $color-fancy-back;
+    font: rem(13px) $font-lato;
+    border-top: 3px solid $color-fancy-border-top;
+    border-bottom: 3px solid $color-fancy-border-top;
+
+    input, select {
+      font-weight: bold;
+    }
+    .fanc-content {
+      @for $i from 1 to 6 {
+        &.size-width-#{$i} {
+          width: $i * $fancy-base-width;
+        }
+        &.size-width-#{$i}-more {
+          $width-more: $i * $fancy-base-width;
+          width: $width-more + ($width-more / 2);
+        }
+        &.size-height-#{$i} {
+          height: $i * $fancy-base-height;
+        }
+      }
+
+      h2 {
+        //@include gradient-vertical($color-fancy-gcolor-top, $color-fancy-gcolor-bottom);
+        background: $color-fancy-gcolor-top;
+        font: 1rem $font-archivo-narrow;
+        color: $color-fancy-header-color;
+        margin: 0;
+        padding: 10px 15px;
+        min-height: 36px;
+      }
+      .fanc-body {
+        padding: 20px 0;
+        .fanc-row {
+          padding-bottom: 10px;
+          &:last-child {
+            padding-bottom: 0;
+          }
+        }
+        .fanc-button-row {
+          text-align: right;
+          padding-right: 66px;
+        }
+
+        .fanc-button-row-2 {
+          @include box-shadow(0 1px 2px rgba(#000, 0.25));
+          background: #fff;
+          text-align: right;
+          margin-top: -20px;
+          margin-bottom: 15px;
+          padding: 10px;
+
+        }
+
+        label {
+          display: inline-block;
+          padding-right: 5px;
+          width: 100px;
+          text-align: right;
+        }
+
+        select {
+          min-width: 157px;
+        }
+
+        .fanc-inline-title {
+          padding: 0 10px;
+          border-left: 5px solid #4ebcec;
+          margin-left: 8px;
+          margin-bottom: 10px;
+          margin-top: 10px;
+          font-weight: bold;
+          color: #4ebcec;
+          & ~ .fanc-row {
+            padding-left: 15px;
+          }
+        }
+      }
+    }
+
+    .fancybox-close {
+      @include backend-sprite(icon-24-fanc-close-icon);
+      @include transition(none);
+      top: 9px;
+      right: 9px;
+      position: absolute;
+      display: inline-block;
+      &:hover {
+        @include backend-sprite(icon-24-fanc-close-icon_hover);
+      }
+    }
+
+    // For Params Activity view only
+    .fanc-params-wp {
+      input[type=text] {
+        width: 136px;
+      }
+      .fanc-body {
+        .fanc-row {
+          padding-right: 20px;
+          padding-left: 20px;
+        }
+      }
+    }
+  }
+
+  .col-wp {
+    @include floatChild;
+    .col-fanc-left, .col-fanc-right {
+      width: 50%;
+      min-width: 180px;
+    }
+
+    div.fanc-tabs-wp {
+      width: 20%;
+      min-width: 120px;
+
+      ul {
+        li {
+          margin: 0;
+          border-bottom: 1px solid scale-lightness(#e1e1e1, -10%);
+
+          &:last-child {
+            border-bottom: 0 none;
+            &.active {
+              a, a:hover {
+                border-bottom: 1px solid scale-lightness(#e1e1e1, -10%);
+              }
+            }
+          }
+
+          &.active {
+            a, a:hover {
+              @include box-shadow(0 -1px 0 rgba(#000, 0.1));
+              border-top: 1px solid #f5f5f5;
+              background: #e1e1e1;
+
+            }
+          }
+          a {
+            @include animate(background 0.2s linear);
+            display: block;
+            text-align: right;
+            padding-right: 15px;
+            padding: 5px 20px 5px 0;
+            text-decoration: none;
+            font: 13px $font-lato;
+            color: #666;
+            &:hover {
+              background: #eee;
+            }
+          }
+        }
+      }
+    }
+
+    div.fanc-content-wp {
+      width: 80%;
+      padding: 10px 20px;
+      border-left: 1px solid #ebebeb;
+
+      .access-checkbox-wp {
+        .checkbox-wp {
+          display: inline-block;
+          margin-left: 40px;
+          margin-bottom: 10px;
+          & > * {
+            vertical-align: middle;
+          }
+          &:first-child {
+            margin-left: 0 none;
+          }
+
+          label {
+            padding-left: 5px !important;
+            padding-right: 0 !important;
+            text-align: left !important;
+            text-transform: capitalize;
+          }
+        }
+      }
+
+      .mark-controls {
+        @include border-radius(3px);
+        background: #fff;
+        border: 1px solid #ebebeb;
+        padding: 8px 10px;
+        margin: 10px 0 10px;
+        .wpl-button {
+          padding: 2px 7px;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+
+  //// Notifications
+  .fanc-notify-wp {
+    .fancy-search-body {
+
+      .fanc-main-body-wp {
+        min-height: 150px;
+        padding: 15px;
+      }
+    }
+
+    .fanc-message-icon {
+      display: block;
+      height: 65px;
+      width: 100%;
+      margin: 40px 0;
+    }
+    .fanc-message-body {
+      padding: 20px 15%;
+    }
+
+  }
+
+  .fancybox-close {
+    @include backend-sprite(icon-24-fanc-close-icon-2);
+    &:hover {
+      @include backend-sprite(icon-24-fanc-close-icon-2_hover);
+    }
+  }
+
+  .fanc-error {
+    h2 {
+      background: #c62121 !important;
+    }
+    .fancybox-skin {
+      border-color: #e15a5a !important;
+    }
+    .fanc-message-icon {
+      @include icon-placer(icon-fancy-error, $do-more: true);
+    }
+  }
+
+  .fanc-warning {
+    h2 {
+      background: #efbe15 !important;
+    }
+    .fancybox-skin {
+      border-color: #f7dc42 !important;
+    }
+    .fanc-message-icon {
+      @include icon-placer(icon-fancy-warning, $do-more: true);
+    }
+  }
+
+  .fanc-info {
+    h2 {
+      background: #818181 !important;
+    }
+    .fancybox-skin {
+      border-color: #b5b5b5 !important;
+    }
+    .fanc-message-icon {
+      @include icon-placer(icon-fancy-info, $do-more: true);
+    }
+  }
+
+  .wpl-fanc-full-row{
+    width: 100%;
+  }
+}
+
+

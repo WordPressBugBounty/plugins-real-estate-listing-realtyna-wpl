@@ -1,0 +1,408 @@
+.pwizard-wp {
+
+  #icon-pwizard {
+    @include backend-sprite(icon-64-pwizard);
+  }
+
+  .seperator {
+    display: none;
+  }
+
+  .finilize-message {
+    @include clearfix_s2;
+    @include border-radius(4px);
+    @include animate(background 0.2s linear);
+    border: 1px solid #ffcc00;
+    background: rgba(#FFCC00, 0.2);
+    padding: 5px 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    &:hover {
+      background: rgba(#FFCC00, 0.35);
+    }
+    & > i, span {
+      vertical-align: middle;
+    }
+    span {
+      font: rem(13px) $font-lato;
+      color: scale-lightness(#ffcc00, -30%);
+    }
+    .icon-warning {
+      @include backend-sprite(icon-24-warning);
+      display: inline-block;
+      margin-right: 5px;
+    }
+  }
+
+  .after-finilize-wp {
+    @include border-radius(3px);
+    @include gradient-vertical(#30ace1, #14729a);
+    color: #fff;
+    padding: 15px;
+    .finilize-icon {
+      background: transparent url(../img/backend/icon-finilize.png) center center no-repeat;
+      height: 176px;
+      width: 158px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .message-wp {
+      @if $text-direction == ltr
+      {
+        padding-left: 40px;
+      } @else
+      {
+        padding-right: 40px;
+      }
+      display: inline-block;
+      vertical-align: middle;
+      width: 40%;
+    }
+    .finilize-btn-wp {
+      margin-top: 10px;
+      display: block;
+      vertical-align: middle;
+    }
+  }
+
+  // Gallary design
+
+  #progress_img {
+    width: 100%;
+    margin-top: 10px
+  }
+
+  .gallary-images-wp, .video-list-wp, .attachment-wp {
+    width: 100%;
+    & > ul {
+      margin-left: -20px;
+      margin-right: -20px;
+      & > li {
+        padding: 20px;
+        margin-top: 15px;
+        border: 0;
+        background: $color-background;
+        border-top: 1px solid #ddd;
+
+        &.wpl-sortable-placeholder {
+          height: 143px !important;
+        }
+      }
+    }
+
+    .image-box-wp {
+      position: relative;
+
+      & > div {
+        display: inline-block;
+        vertical-align: middle;
+      }
+      .image-wp {
+        border: 1px solid #dfdfdf;
+        img {
+          @include border-radius(3px);
+          max-width: 150px;
+          border: 5px solid #fff;
+        }
+      }
+      .info-wp {
+        .row {
+          padding-bottom: 10px;
+          &:last-child {
+            padding-bottom: 0;
+          }
+        }
+
+      }
+      .actions-wp {
+        position: absolute;
+        @if $text-direction == ltr
+        {
+          right: 0;
+        } @else
+        {
+          left: 0;
+        }
+        top: 0;
+        width: 40px;
+        .action-gal-btn {
+          @include gradient-vertical(#fff, #fafafa);
+          @include border-radius(3px 0 0 3px);
+          border: 1px solid #dfdfdf;
+          cursor: pointer;
+          text-align: center;
+          margin-bottom: 3px;
+          height: 30px;
+          i.icon-move {
+            margin-top: 5px;
+          }
+          i.icon-recycle {
+            margin-top: 2px;
+          }
+          i.icon-enabled {
+            margin-top: 7px;
+          }
+          i.icon-disabled {
+            margin-top: 7px;
+          }
+        }
+      }
+
+    }
+  }
+
+  .video-tabs-wp {
+    border-bottom: 1px solid #ddd;
+    margin: -10px -21px 15px -20px;
+    height: 38px;
+    ul {
+      li {
+        position: relative;
+        display: inline-block;
+        margin-bottom: 0;
+        @if $text-direction == ltr
+        {
+          border-right: 1px solid #ddd;
+        } @else
+        {
+          border-left: 1px solid #ddd;
+        }
+        a {
+          @include animate(all linear 0.2s);
+          background-color: rgb(252, 252, 252);
+          @include filter-gradient(#fcfcfc, #f9f9f9, vertical);
+          @include background-image(linear-gradient(top, rgba(252, 252, 252, 1) 0%, rgba(249, 249, 249, 1) 99%));
+          padding: 9px 30px;
+          position: relative;
+          display: block;
+          color: #999;
+          background: #eee;
+          &:hover {
+            background: #f1f1f1;
+          }
+          @include for-phone{
+            padding: 10px 5px;
+            font-size: 13px;
+          }
+        }
+
+        & + li {
+          @if $text-direction == ltr
+          {
+            left: -4px;
+          } @else
+          {
+            right: -4px;
+          }
+        }
+
+        &.active {
+          a, a:hover {
+            text-shadow: 1px 1px 1px #fff;
+            background: #fafafa;
+            color: #888;
+            padding: 9px 30px 10px;
+            @include for-phone{
+              padding: 10px 5px;
+            }
+          }
+
+        }
+      }
+    }
+
+  }
+
+  .wpl-pwizard-editor {
+    @include calc(width, "100% - 220px");
+    display: inline-block;
+    @include for-tablet{
+      width: 100%;
+    }
+  }
+
+  .wpl-save-btn {
+    width: 200px;
+    margin-top: 10px;
+    margin-left: 153px;
+    display: block;
+  }
+}
+
+.upload-preview-wp {
+  margin-top: 15px;
+  @if $text-direction == ltr
+  {
+    margin-left: 155px;
+  } @else
+  {
+    margin-right: 155px;
+  }
+  .upload-preview {
+    @include box-shadow(0 1px 3px rgba(#000, 0.2));
+    @include border-radius(3px);
+    position: relative;
+    border: 5px solid #fff;
+    display: inline-block;
+    img {
+      margin: 0;
+      max-width: 150px;
+      max-height: 150px;
+    }
+
+    .preview-remove-button {
+      @include border-radius(0 3px 3px 0);
+      @include box-shadow(1px 1px 2px rgba(#000, 0.1));
+      padding: 1px;
+      position: absolute;
+      top: -5px;
+      background: #fff;
+      @if $text-direction == ltr
+      {
+        right: -30px;
+      } @else
+      {
+        left: -30px;
+      }
+    }
+  }
+
+}
+
+.upload-btn-wp {
+  padding: 10px 0;
+}
+
+.video-content-wp {
+  .content-wp {
+
+  }
+}
+
+.video-embed-wp {
+  border-top: 1px solid #e9e9e9;
+  position: relative;
+  padding-top: 22px;
+  margin: 20px -21px;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .row {
+    margin-bottom: 10px;
+
+  }
+  label {
+    min-width: 190px;
+  }
+  .actions-wp {
+    @include border-radius(0 0 0 3px);
+    @include gradient-directional(#e9e9e9, #fff);
+    border-right: 1px solid #e9e9e9;
+    border-bottom: 1px solid scale-lightness(#e9e9e9, -10%);
+    position: absolute;
+    left: 1px;
+    top: 1px;
+    padding: 5px;
+  }
+}
+
+.attachment-wp {
+  .icon-wp {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    @if $text-direction == ltr
+    {
+      margin-right: 15px;
+    } @else
+    {
+      margin-left: 15px;
+    }
+    .wpl-attach-icon {
+      &.wpl-att-zip {
+        @include icon-placer(zip2, $is-before: false, $do-more: true);
+      }
+      &.wpl-att-rar {
+        @include icon-placer(rar2, $is-before: false, $do-more: true);
+      }
+      &.wpl-att-pdf {
+        @include icon-placer(pdf2, $is-before: false, $do-more: true);
+      }
+      &.wpl-att-mp3 {
+        @include icon-placer(mp32, $is-before: false, $do-more: true);
+      }
+      &.wpl-att-doc, &.wpl-att-docx {
+        @include icon-placer(doc2, $is-before: false, $do-more: true);
+      }
+      &.wpl-att-txt {
+        @include icon-placer(txt2, $is-before: false, $do-more: true);
+      }
+    }
+  }
+
+}
+
+.gallary-btn-wp, .attach-btn-wp {
+  & > div {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+.wpl_gallery_method_container {
+  & > div {
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+
+#progress_att, #progress_vid, #progress_img {
+  margin-top: 15px;
+}
+
+//..Specific Style for Titles fields
+.wpl_c_field_313, .wpl_c_field_312 {
+  width: 60%;
+}
+
+//.. Exclusive TextArea Style in row
+.prow-meta_desc, .prow-meta_key, .prow-textarea, .prow-array {
+  & > * {
+    vertical-align: top !important;
+  }
+}
+
+//..Meta Fields
+.wpl-meta-wp {
+  display: inline-block;
+  .wpl-top-row-wp {
+    background: scale-lightness(#fff, -15%);
+    display: block;
+    width: 100%;
+    padding: 2px 10px 4px;
+
+    & > * {
+      display: inline-block !important;
+      vertical-align: middle;
+    }
+
+    label {
+      width: auto !important;
+      text-align: left !important;
+    }
+
+    input[type=checkbox] {
+      margin: 0;
+    }
+  }
+}
+
+//..Array Fields
+.prow-array {
+  .fanc-row {
+    padding-bottom: 10px;
+    input[type="text"] {
+      margin-right: 10px;
+    }
+  }
+}

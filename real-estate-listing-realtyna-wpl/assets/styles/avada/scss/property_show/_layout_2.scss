@@ -1,0 +1,124 @@
+.wpl_property_show_layout2 {
+  .wpl_prp_show_detail_boxes {
+    .wpl_prp_show_detail_boxes_title {
+      font-family: inherit;
+      font-weight: normal;
+      margin-bottom: 15px;
+      font-size: 20px;
+      text-transform: uppercase;
+
+      span {
+        background: $co-11;
+        padding: 10px 10px 10px 0;
+        z-index: 1;
+        position: relative;
+      }
+
+      &:before {
+        content: '';
+        height: 1px;
+        background: $co-6;
+        position: absolute;
+        bottom: 22px;
+        width: 100%;
+      }
+      &:after {
+        content: '';
+        display: block;
+        height: 1px;
+        background: $co-6 !important;
+        position: absolute;
+        bottom: 17px;
+        width: 100%;
+      }
+    }
+  }
+
+
+  .wpl_prp_right_boxes,
+  .wpl_prp_position3_boxes {
+    border: 0;
+
+    .wpl_prp_show_title,
+    .wpl_prp_right_boxes_title,
+    .wpl_prp_show_detail_boxes_title,
+    .wpl_prp_position3_boxes_title {
+      position: relative;
+      font-weight: normal;
+      color: $co-38 !important;
+      font-size: 20px;
+      margin-bottom: 25px;
+      padding-bottom: 12px;
+      font-family: inherit;
+
+      span {
+        color: $co-38 !important;
+        font-family: inherit;
+      }
+      &:before {
+        content: '';
+        width: 100%;
+        height: 1px;
+        background: $co-6;
+        position: absolute;
+        bottom: 2px;
+      }
+      &:after {
+        content: '';
+        display: block;
+        width: 100%;
+        height: 1px;
+        background: $co-6 !important;
+        position: absolute;
+        bottom: -4px;
+      }
+    }
+    &.details {
+      .wpl_prp_show_title {
+        h1 {
+          font-size: 19px;
+          margin-bottom: 0;
+          text-transform: capitalize;
+        }
+        .location_build_up {
+          margin-top: 0;
+        }
+      }
+      .wpl_prp_listing_icon_box {
+        margin-top: 15px;
+        > div {
+          margin: 0;
+          width: 50%;
+          font-size: 14px;
+          padding-top: 3px;
+          padding-left: 42px;
+          text-align: left;
+          span {
+            display: inline-block;
+          }
+          &:after {
+            font-size: 22px;
+            color: $co-27;
+          }
+        }
+      }
+    }
+    &.listing_contact {
+      input[type="text"],
+      input[type="password"],
+      input[type="email"],
+      input[type="url"],
+      input[type="search"],
+      textarea {
+        @include input-placeholder {
+          color: $co-16;
+        }
+        padding: 15px;
+        height: 38px;
+      }
+      textarea {
+        height: 140px;
+      }
+    }
+  }
+}

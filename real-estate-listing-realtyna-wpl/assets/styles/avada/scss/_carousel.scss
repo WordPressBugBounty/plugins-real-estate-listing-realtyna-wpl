@@ -1,0 +1,41 @@
+.wpl-plugin-owl.wpl-carousel-multi-images .wpl-carousel-item {
+  border: 0;
+}
+.wpl-plugin-owl.wpl-carousel-multi-images .wpl-carousel-item .title h3 {
+  background: rgba(0,0,0,0.3);
+  padding: 10px;
+}
+.wpl-plugin-owl.wpl-carousel-multi-images .owl-item {
+  padding: 0;
+}
+.wpl-plugin-owl.wpl-carousel-multi-images .owl-controls .owl-nav .owl-prev,
+.wpl-plugin-owl.wpl-carousel-multi-images .owl-controls .owl-nav .owl-next {
+  background: rgba(0,0,0,0.8);
+  /* font-size: 69px; */
+  width: 50px;
+  height: 70px;
+  line-height: 70px;
+}
+.wpl-plugin-owl.wpl-carousel-multi-images .owl-controls .owl-nav .owl-prev{
+  left: 0;
+}
+.wpl-plugin-owl.wpl-carousel-multi-images .owl-controls .owl-nav .owl-next {
+  right: 0;
+}
+
+.details_view.wpl-plugin-owl.owl-carousel{
+  padding-left: 0;
+}
+
+.fusion-content-widget-area .widget.widget_wpl_carousel_widget .ei-slider-thumbs li a {
+  display: block;
+}
+.responsive-slider .slides ul li .slide-body .caption.header h2,
+.wpl_carousel_container .ei-title h2,
+.wpl_carousel_container .ei-title h3,
+.wpl_carousel_container .ei-title a.more_info {
+  color: #fff !important;
+}
+.wpl_carousel_container .responsive-slider .pages a.page {
+  color: transparent !important;
+}

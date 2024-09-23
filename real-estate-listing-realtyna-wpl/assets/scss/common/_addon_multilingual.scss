@@ -1,0 +1,1099 @@
+$image-path-flag: "../img/flags";
+
+$si-multiling-field-height: 26px;
+
+.wpl-multiling-field {
+
+  display: inline-block;
+  position: relative;
+  height: $si-multiling-field-height;
+
+  .wpl-multiling-edit-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: transparent url("../img/backend/icon-24-edit.png") 0 0 no-repeat;
+    height: 16px;
+    width: 16px;
+    cursor: pointer;
+    opacity: 1;
+    visibility: visible;
+
+    &:hover {
+      background-image: url("../img/backend/icon-24-edit_hover.png");
+    }
+  }
+
+  .wpl-multilang-field-cnt {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 340px;
+    padding: 10px 0 10px 5px;
+  }
+
+  .wpl-lang-cnt {
+    margin-bottom: 5px;
+    @include clearfix_s1;
+    label {
+      max-width: 60px;
+      float: left;
+      line-height: 26px !important;
+    }
+    input[type=text], textarea {
+      // Ajax Loader size 25px
+      @include calc(width, '100% - 85px');
+      float: left;
+    }
+
+    .wpl_listing_saved_span {
+      display: inline-block;
+      float: left;
+      margin-left: 5px;
+      padding-top: 4px;
+    }
+  }
+
+  &.wpl-multiling-text{
+    .wpl-multiling-opened {
+      @include box-shadow(none);
+      .wpl-multilang-field-cnt::before {
+        top: 50%;
+        position: absolute;
+        left: -8px;
+        margin-top: -8px;
+        border-width: 8px 8px 8px 0;
+        border-color: transparent scale-lightness($co-8, -15%) transparent transparent;
+        border-style: solid;
+        content: " ";
+        display: inline-block;
+      }
+    }
+  }
+
+  &.wpl-multiling-textarea {
+    height: auto;
+
+    .wpl-multiling-flags-wp{
+      padding-right: 4px;
+      height: auto;
+
+      &.wpl-multiling-opened{
+        .wpl-multilang-field-cnt {
+          @include box-shadow(inset 0 11px 3px -12px rgba($co-0,0.45));
+          border-top: 1px solid scale-lightness($co-6,-10%);
+          background-color: rgba($co-6,0.2);
+          margin-right: -4px;
+          margin-left: -4px;
+          padding: 5px;
+          min-width: 700px;
+        }
+      }
+    }
+
+    .wpl-multiling-editor {
+      width: 100%;
+    }
+
+    .wpl-multiling-flag-cnt{
+      @include clearfix_s2;
+
+      .wpl-multiling-flag{
+        background-size: contain;
+        background-position: center center;
+        width: 25px;
+        margin-top: 0;
+        margin-bottom: 0;
+
+        &.wpl-multiling-active{
+          background-color: scale-lightness($co-6,-10%);
+        }
+      }
+    }
+
+    .wpl-multilang-field-cnt {
+      position: relative;
+      display: block;
+      min-width: inherit;
+      padding: 0;
+      margin: 0;
+
+
+      .wpl-lang-cnt{
+        position: relative;
+        display: none;
+        margin: 0;
+        padding: 4px 2px 2px 2px;
+
+        textarea{
+          width: 100%;
+          min-height: 100px;
+        }
+
+        .wpl_listing_saved_span{
+          position: absolute;
+          bottom: 1px;
+          right: 1px;
+        }
+
+      }
+    }
+
+    .wpl-multiling-save-pro {
+      margin-top: 10px;
+      width: 100px;
+    }
+  }
+
+  .wpl-multiling-flags-wp {
+    @include box-shadow(inset 0 1px 2px rgba($co-0, 0.07));
+    border: 1px solid $co-8;
+    background-color: $co-1;
+    display: inline-block;
+    height: $si-multiling-field-height;
+    padding-right: 26px;
+    padding-left: 4px;
+    position: relative;
+
+
+
+    .wpl-multiling-flag-cnt {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .wpl-multiling-flag {
+      @include transition(box-shadow 0.15s ease, filter 0.15s linear);
+      @include border-radius(1px);
+      display: inline-block;
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+
+      background-position: 0 0;
+      background-repeat: no-repeat;
+      background-color: transparent;
+      background-size: cover;
+      background-image: url("#{$image-path-flag}/unknown.png");;
+      height: 21px;
+      width: 21px;
+      margin: 1px 3px;
+      cursor: pointer;
+
+      &.wpl-multiling-empty {
+        @include grayScale();
+
+        &:hover {
+          @include filter(none);
+        }
+      }
+
+      &:hover {
+        @include box-shadow(0 0 3px rgba($co-1, 0.5));
+      }
+
+      //@start Country Flags
+
+      &.wpl-multiling-flag-ad {
+        background-image: url("#{$image-path-flag}/ad.png");
+      }
+
+      &.wpl-multiling-flag-ae {
+        background-image: url("#{$image-path-flag}/ae.png");
+      }
+
+      &.wpl-multiling-flag-af {
+        background-image: url("#{$image-path-flag}/af.png");
+      }
+
+      &.wpl-multiling-flag-ag {
+        background-image: url("#{$image-path-flag}/ag.png");
+      }
+
+      &.wpl-multiling-flag-ai {
+        background-image: url("#{$image-path-flag}/ai.png");
+      }
+
+      &.wpl-multiling-flag-al {
+        background-image: url("#{$image-path-flag}/al.png");
+      }
+
+      &.wpl-multiling-flag-am {
+        background-image: url("#{$image-path-flag}/am.png");
+      }
+
+      &.wpl-multiling-flag-an {
+        background-image: url("#{$image-path-flag}/an.png");
+      }
+
+      &.wpl-multiling-flag-ao {
+        background-image: url("#{$image-path-flag}/ao.png");
+      }
+
+      &.wpl-multiling-flag-aq {
+        background-image: url("#{$image-path-flag}/aq.png");
+      }
+
+      &.wpl-multiling-flag-ar {
+        background-image: url("#{$image-path-flag}/ar.png");
+      }
+
+      &.wpl-multiling-flag-as {
+        background-image: url("#{$image-path-flag}/as.png");
+      }
+
+      &.wpl-multiling-flag-at {
+        background-image: url("#{$image-path-flag}/at.png");
+      }
+
+      &.wpl-multiling-flag-au {
+        background-image: url("#{$image-path-flag}/au.png");
+      }
+
+      &.wpl-multiling-flag-aw {
+        background-image: url("#{$image-path-flag}/aw.png");
+      }
+
+      &.wpl-multiling-flag-az {
+        background-image: url("#{$image-path-flag}/az.png");
+      }
+
+      &.wpl-multiling-flag-ba {
+        background-image: url("#{$image-path-flag}/ba.png");
+      }
+
+      &.wpl-multiling-flag-bb {
+        background-image: url("#{$image-path-flag}/bb.png");
+      }
+
+      &.wpl-multiling-flag-ba {
+        background-image: url("#{$image-path-flag}/ba.png");
+      }
+
+      &.wpl-multiling-flag-bd {
+        background-image: url("#{$image-path-flag}/bd.png");
+      }
+
+      &.wpl-multiling-flag-be {
+        background-image: url("#{$image-path-flag}/be.png");
+      }
+
+      &.wpl-multiling-flag-bf {
+        background-image: url("#{$image-path-flag}/bf.png");
+      }
+
+      &.wpl-multiling-flag-bg {
+        background-image: url("#{$image-path-flag}/bg.png");
+      }
+
+      &.wpl-multiling-flag-bh {
+        background-image: url("#{$image-path-flag}/bh.png");
+      }
+
+      &.wpl-multiling-flag-bi {
+        background-image: url("#{$image-path-flag}/bi.png");
+      }
+
+      &.wpl-multiling-flag-bj {
+        background-image: url("#{$image-path-flag}/bj.png");
+      }
+
+      &.wpl-multiling-flag-bm {
+        background-image: url("#{$image-path-flag}/bm.png");
+      }
+
+      &.wpl-multiling-flag-bn {
+        background-image: url("#{$image-path-flag}/bn.png");
+      }
+
+      &.wpl-multiling-flag-bo {
+        background-image: url("#{$image-path-flag}/bo.png");
+      }
+
+      &.wpl-multiling-flag-br {
+        background-image: url("#{$image-path-flag}/br.png");
+      }
+
+      &.wpl-multiling-flag-bs {
+        background-image: url("#{$image-path-flag}/bs.png");
+      }
+
+      &.wpl-multiling-flag-bt {
+        background-image: url("#{$image-path-flag}/bt.png");
+      }
+
+      &.wpl-multiling-flag-bw {
+        background-image: url("#{$image-path-flag}/bw.png");
+      }
+
+      &.wpl-multiling-flag-by {
+        background-image: url("#{$image-path-flag}/by.png");
+      }
+
+      &.wpl-multiling-flag-bz {
+        background-image: url("#{$image-path-flag}/bz.png");
+      }
+
+      &.wpl-multiling-flag-ca {
+        background-image: url("#{$image-path-flag}/ca.png");
+      }
+
+      &.wpl-multiling-flag-cd {
+        background-image: url("#{$image-path-flag}/cd.png");
+      }
+
+      &.wpl-multiling-flag-cf {
+        background-image: url("#{$image-path-flag}/cf.png");
+      }
+
+      &.wpl-multiling-flag-cg {
+        background-image: url("#{$image-path-flag}/cg.png");
+      }
+
+      &.wpl-multiling-flag-ch {
+        background-image: url("#{$image-path-flag}/ch.png");
+      }
+
+      &.wpl-multiling-flag-ci {
+        background-image: url("#{$image-path-flag}/ci.png");
+      }
+
+      &.wpl-multiling-flag-ck {
+        background-image: url("#{$image-path-flag}/ck.png");
+      }
+
+      &.wpl-multiling-flag-cl {
+        background-image: url("#{$image-path-flag}/cl.png");
+      }
+
+      &.wpl-multiling-flag-cm {
+        background-image: url("#{$image-path-flag}/cm.png");
+      }
+
+      &.wpl-multiling-flag-cn {
+        background-image: url("#{$image-path-flag}/cn.png");
+      }
+
+      &.wpl-multiling-flag-co {
+        background-image: url("#{$image-path-flag}/co.png");
+      }
+
+      &.wpl-multiling-flag-cr {
+        background-image: url("#{$image-path-flag}/cr.png");
+      }
+
+      &.wpl-multiling-flag-cu {
+        background-image: url("#{$image-path-flag}/cu.png");
+      }
+
+      &.wpl-multiling-flag-cv {
+        background-image: url("#{$image-path-flag}/cv.png");
+      }
+
+      &.wpl-multiling-flag-cy {
+        background-image: url("#{$image-path-flag}/cy.png");
+      }
+
+      &.wpl-multiling-flag-cz {
+        background-image: url("#{$image-path-flag}/cz.png");
+      }
+
+      &.wpl-multiling-flag-de {
+        background-image: url("#{$image-path-flag}/de.png");
+      }
+
+      &.wpl-multiling-flag-dj {
+        background-image: url("#{$image-path-flag}/dj.png");
+      }
+
+      &.wpl-multiling-flag-dk {
+        background-image: url("#{$image-path-flag}/dk.png");
+      }
+
+      &.wpl-multiling-flag-dm {
+        background-image: url("#{$image-path-flag}/dm.png");
+      }
+
+      &.wpl-multiling-flag-do {
+        background-image: url("#{$image-path-flag}/do.png");
+      }
+
+      &.wpl-multiling-flag-dz {
+        background-image: url("#{$image-path-flag}/dz.png");
+      }
+
+      &.wpl-multiling-flag-ec {
+        background-image: url("#{$image-path-flag}/ec.png");
+      }
+
+      &.wpl-multiling-flag-ee {
+        background-image: url("#{$image-path-flag}/ee.png");
+      }
+
+      &.wpl-multiling-flag-eg {
+        background-image: url("#{$image-path-flag}/eg.png");
+      }
+
+      &.wpl-multiling-flag-eh {
+        background-image: url("#{$image-path-flag}/eh.png");
+      }
+
+      &.wpl-multiling-flag-er {
+        background-image: url("#{$image-path-flag}/er.png");
+      }
+
+      &.wpl-multiling-flag-es {
+        background-image: url("#{$image-path-flag}/es.png");
+      }
+
+      &.wpl-multiling-flag-et {
+        background-image: url("#{$image-path-flag}/et.png");
+      }
+
+      &.wpl-multiling-flag-fi {
+        background-image: url("#{$image-path-flag}/fi.png");
+      }
+
+      &.wpl-multiling-flag-fj {
+        background-image: url("#{$image-path-flag}/fj.png");
+      }
+
+      &.wpl-multiling-flag-fm {
+        background-image: url("#{$image-path-flag}/fm.png");
+      }
+
+      &.wpl-multiling-flag-fo {
+        background-image: url("#{$image-path-flag}/fo.png");
+      }
+
+      &.wpl-multiling-flag-fr {
+        background-image: url("#{$image-path-flag}/fr.png");
+      }
+
+      &.wpl-multiling-flag-ga {
+        background-image: url("#{$image-path-flag}/ga.png");
+      }
+
+      &.wpl-multiling-flag-gb {
+        background-image: url("#{$image-path-flag}/gb.png");
+      }
+
+      &.wpl-multiling-flag-gd {
+        background-image: url("#{$image-path-flag}/gd.png");
+      }
+
+      &.wpl-multiling-flag-ge {
+        background-image: url("#{$image-path-flag}/ge.png");
+      }
+
+      &.wpl-multiling-flag-gg {
+        background-image: url("#{$image-path-flag}/gg.png");
+      }
+
+      &.wpl-multiling-flag-gh {
+        background-image: url("#{$image-path-flag}/gh.png");
+      }
+
+      &.wpl-multiling-flag-gj {
+        background-image: url("#{$image-path-flag}/gj.png");
+      }
+
+      &.wpl-multiling-flag-gl {
+        background-image: url("#{$image-path-flag}/gl.png");
+      }
+
+      &.wpl-multiling-flag-gm {
+        background-image: url("#{$image-path-flag}/gm.png");
+      }
+
+      &.wpl-multiling-flag-gn {
+        background-image: url("#{$image-path-flag}/gn.png");
+      }
+
+      &.wpl-multiling-flag-gp {
+        background-image: url("#{$image-path-flag}/gp.png");
+      }
+
+      &.wpl-multiling-flag-gq {
+        background-image: url("#{$image-path-flag}/gq.png");
+      }
+
+      &.wpl-multiling-flag-gr {
+        background-image: url("#{$image-path-flag}/gr.png");
+      }
+
+      &.wpl-multiling-flag-gt {
+        background-image: url("#{$image-path-flag}/gt.png");
+      }
+
+      &.wpl-multiling-flag-gu {
+        background-image: url("#{$image-path-flag}/gu.png");
+      }
+
+      &.wpl-multiling-flag-gw {
+        background-image: url("#{$image-path-flag}/gw.png");
+      }
+
+      &.wpl-multiling-flag-gy {
+        background-image: url("#{$image-path-flag}/gy.png");
+      }
+
+      &.wpl-multiling-flag-hk {
+        background-image: url("#{$image-path-flag}/hk.png");
+      }
+
+      &.wpl-multiling-flag-hn {
+        background-image: url("#{$image-path-flag}/hn.png");
+      }
+
+      &.wpl-multiling-flag-hr {
+        background-image: url("#{$image-path-flag}/hr.png");
+      }
+
+      &.wpl-multiling-flag-ht {
+        background-image: url("#{$image-path-flag}/ht.png");
+      }
+
+      &.wpl-multiling-flag-hu {
+        background-image: url("#{$image-path-flag}/hu.png");
+      }
+
+      &.wpl-multiling-flag-id {
+        background-image: url("#{$image-path-flag}/id.png");
+      }
+
+      &.wpl-multiling-flag-ie {
+        background-image: url("#{$image-path-flag}/ie.png");
+      }
+
+      &.wpl-multiling-flag-il {
+        background-image: url("#{$image-path-flag}/il.png");
+      }
+
+      &.wpl-multiling-flag-im {
+        background-image: url("#{$image-path-flag}/im.png");
+      }
+
+      &.wpl-multiling-flag-in {
+        background-image: url("#{$image-path-flag}/in.png");
+      }
+
+      &.wpl-multiling-flag-iq {
+        background-image: url("#{$image-path-flag}/iq.png");
+      }
+
+      &.wpl-multiling-flag-ir {
+        background-image: url("#{$image-path-flag}/ir.png");
+      }
+
+      &.wpl-multiling-flag-is {
+        background-image: url("#{$image-path-flag}/is.png");
+      }
+
+      &.wpl-multiling-flag-it {
+        background-image: url("#{$image-path-flag}/it.png");
+      }
+
+      &.wpl-multiling-flag-je {
+        background-image: url("#{$image-path-flag}/je.png");
+      }
+
+      &.wpl-multiling-flag-jm {
+        background-image: url("#{$image-path-flag}/jm.png");
+      }
+
+      &.wpl-multiling-flag-jo {
+        background-image: url("#{$image-path-flag}/jo.png");
+      }
+
+      &.wpl-multiling-flag-jp {
+        background-image: url("#{$image-path-flag}/jp.png");
+      }
+
+      &.wpl-multiling-flag-ke {
+        background-image: url("#{$image-path-flag}/ke.png");
+      }
+
+      &.wpl-multiling-flag-kg {
+        background-image: url("#{$image-path-flag}/kg.png");
+      }
+
+      &.wpl-multiling-flag-kh {
+        background-image: url("#{$image-path-flag}/kh.png");
+      }
+
+      &.wpl-multiling-flag-ki {
+        background-image: url("#{$image-path-flag}/ki.png");
+      }
+
+      &.wpl-multiling-flag-km {
+        background-image: url("#{$image-path-flag}/km.png");
+      }
+
+      &.wpl-multiling-flag-kn {
+        background-image: url("#{$image-path-flag}/kn.png");
+      }
+
+      &.wpl-multiling-flag-kp {
+        background-image: url("#{$image-path-flag}/kp.png");
+      }
+
+      &.wpl-multiling-flag-kr {
+        background-image: url("#{$image-path-flag}/kr.png");
+      }
+
+      &.wpl-multiling-flag-kw {
+        background-image: url("#{$image-path-flag}/kw.png");
+      }
+
+      &.wpl-multiling-flag-ky {
+        background-image: url("#{$image-path-flag}/ky.png");
+      }
+
+      &.wpl-multiling-flag-kz {
+        background-image: url("#{$image-path-flag}/kz.png");
+      }
+
+      &.wpl-multiling-flag-la {
+        background-image: url("#{$image-path-flag}/la.png");
+      }
+
+      &.wpl-multiling-flag-lb {
+        background-image: url("#{$image-path-flag}/lb.png");
+      }
+
+      &.wpl-multiling-flag-lc {
+        background-image: url("#{$image-path-flag}/lc.png");
+      }
+
+      &.wpl-multiling-flag-li {
+        background-image: url("#{$image-path-flag}/li.png");
+      }
+
+      &.wpl-multiling-flag-lk {
+        background-image: url("#{$image-path-flag}/lk.png");
+      }
+
+      &.wpl-multiling-flag-lr {
+        background-image: url("#{$image-path-flag}/lr.png");
+      }
+
+      &.wpl-multiling-flag-lt {
+        background-image: url("#{$image-path-flag}/lt.png");
+      }
+
+      &.wpl-multiling-flag-lu {
+        background-image: url("#{$image-path-flag}/lu.png");
+      }
+
+      &.wpl-multiling-flag-lv {
+        background-image: url("#{$image-path-flag}/lv.png");
+      }
+
+      &.wpl-multiling-flag-ly {
+        background-image: url("#{$image-path-flag}/ly.png");
+      }
+
+      &.wpl-multiling-flag-ma {
+        background-image: url("#{$image-path-flag}/ma.png");
+      }
+
+      &.wpl-multiling-flag-mc {
+        background-image: url("#{$image-path-flag}/mc.png");
+      }
+
+      &.wpl-multiling-flag-md {
+        background-image: url("#{$image-path-flag}/md.png");
+      }
+
+      &.wpl-multiling-flag-me {
+        background-image: url("#{$image-path-flag}/me.png");
+      }
+
+      &.wpl-multiling-flag-mg {
+        background-image: url("#{$image-path-flag}/mg.png");
+      }
+
+      &.wpl-multiling-flag-mh {
+        background-image: url("#{$image-path-flag}/mh.png");
+      }
+
+      &.wpl-multiling-flag-mk {
+        background-image: url("#{$image-path-flag}/mk.png");
+      }
+
+      &.wpl-multiling-flag-ml {
+        background-image: url("#{$image-path-flag}/ml.png");
+      }
+
+      &.wpl-multiling-flag-mm {
+        background-image: url("#{$image-path-flag}/mm.png");
+      }
+
+      &.wpl-multiling-flag-mn {
+        background-image: url("#{$image-path-flag}/mn.png");
+      }
+
+      &.wpl-multiling-flag-mo {
+        background-image: url("#{$image-path-flag}/mo.png");
+      }
+
+      &.wpl-multiling-flag-mq {
+        background-image: url("#{$image-path-flag}/mq.png");
+      }
+
+      &.wpl-multiling-flag-mr {
+        background-image: url("#{$image-path-flag}/mr.png");
+      }
+
+      &.wpl-multiling-flag-ms {
+        background-image: url("#{$image-path-flag}/ms.png");
+      }
+
+      &.wpl-multiling-flag-mt {
+        background-image: url("#{$image-path-flag}/mt.png");
+      }
+
+      &.wpl-multiling-flag-mu {
+        background-image: url("#{$image-path-flag}/mu.png");
+      }
+
+      &.wpl-multiling-flag-mv {
+        background-image: url("#{$image-path-flag}/mv.png");
+      }
+
+      &.wpl-multiling-flag-mw {
+        background-image: url("#{$image-path-flag}/mw.png");
+      }
+
+      &.wpl-multiling-flag-mx {
+        background-image: url("#{$image-path-flag}/mx.png");
+      }
+
+      &.wpl-multiling-flag-my {
+        background-image: url("#{$image-path-flag}/my.png");
+      }
+
+      &.wpl-multiling-flag-mz {
+        background-image: url("#{$image-path-flag}/mz.png");
+      }
+
+      &.wpl-multiling-flag-na {
+        background-image: url("#{$image-path-flag}/na.png");
+      }
+
+      &.wpl-multiling-flag-nc {
+        background-image: url("#{$image-path-flag}/nc.png");
+      }
+
+      &.wpl-multiling-flag-ne {
+        background-image: url("#{$image-path-flag}/ne.png");
+      }
+
+      &.wpl-multiling-flag-ng {
+        background-image: url("#{$image-path-flag}/ng.png");
+      }
+
+      &.wpl-multiling-flag-ni {
+        background-image: url("#{$image-path-flag}/ni.png");
+      }
+
+      &.wpl-multiling-flag-nl {
+        background-image: url("#{$image-path-flag}/nl.png");
+      }
+
+      &.wpl-multiling-flag-no {
+        background-image: url("#{$image-path-flag}/no.png");
+      }
+
+      &.wpl-multiling-flag-np {
+        background-image: url("#{$image-path-flag}/np.png");
+      }
+
+      &.wpl-multiling-flag-nr {
+        background-image: url("#{$image-path-flag}/nr.png");
+      }
+
+      &.wpl-multiling-flag-nz {
+        background-image: url("#{$image-path-flag}/nz.png");
+      }
+
+      &.wpl-multiling-flag-om {
+        background-image: url("#{$image-path-flag}/om.png");
+      }
+
+      &.wpl-multiling-flag-pa {
+        background-image: url("#{$image-path-flag}/pa.png");
+      }
+
+      &.wpl-multiling-flag-pe {
+        background-image: url("#{$image-path-flag}/pe.png");
+      }
+
+      &.wpl-multiling-flag-pf {
+        background-image: url("#{$image-path-flag}/pf.png");
+      }
+
+      &.wpl-multiling-flag-pg {
+        background-image: url("#{$image-path-flag}/pg.png");
+      }
+
+      &.wpl-multiling-flag-ph {
+        background-image: url("#{$image-path-flag}/ph.png");
+      }
+
+      &.wpl-multiling-flag-pk {
+        background-image: url("#{$image-path-flag}/pk.png");
+      }
+
+      &.wpl-multiling-flag-pl {
+        background-image: url("#{$image-path-flag}/pl.png");
+      }
+
+      &.wpl-multiling-flag-pr {
+        background-image: url("#{$image-path-flag}/pr.png");
+      }
+
+      &.wpl-multiling-flag-ps {
+        background-image: url("#{$image-path-flag}/ps.png");
+      }
+
+      &.wpl-multiling-flag-pt {
+        background-image: url("#{$image-path-flag}/pt.png");
+      }
+
+      &.wpl-multiling-flag-pw {
+        background-image: url("#{$image-path-flag}/pw.png");
+      }
+
+      &.wpl-multiling-flag-py {
+        background-image: url("#{$image-path-flag}/py.png");
+      }
+
+      &.wpl-multiling-flag-qa {
+        background-image: url("#{$image-path-flag}/qa.png");
+      }
+
+      &.wpl-multiling-flag-re {
+        background-image: url("#{$image-path-flag}/re.png");
+      }
+
+      &.wpl-multiling-flag-ro {
+        background-image: url("#{$image-path-flag}/ro.png");
+      }
+
+      &.wpl-multiling-flag-rs {
+        background-image: url("#{$image-path-flag}/rs.png");
+      }
+
+      &.wpl-multiling-flag-ru {
+        background-image: url("#{$image-path-flag}/ru.png");
+      }
+
+      &.wpl-multiling-flag-rw {
+        background-image: url("#{$image-path-flag}/rw.png");
+      }
+
+      &.wpl-multiling-flag-sa {
+        background-image: url("#{$image-path-flag}/sa.png");
+      }
+
+      &.wpl-multiling-flag-sb {
+        background-image: url("#{$image-path-flag}/sb.png");
+      }
+
+      &.wpl-multiling-flag-sc {
+        background-image: url("#{$image-path-flag}/sc.png");
+      }
+
+      &.wpl-multiling-flag-sd {
+        background-image: url("#{$image-path-flag}/sd.png");
+      }
+
+      &.wpl-multiling-flag-se {
+        background-image: url("#{$image-path-flag}/se.png");
+      }
+
+      &.wpl-multiling-flag-sg {
+        background-image: url("#{$image-path-flag}/sg.png");
+      }
+
+      &.wpl-multiling-flag-si {
+        background-image: url("#{$image-path-flag}/si.png");
+      }
+
+      &.wpl-multiling-flag-sk {
+        background-image: url("#{$image-path-flag}/sk.png");
+      }
+
+      &.wpl-multiling-flag-sl {
+        background-image: url("#{$image-path-flag}/sl.png");
+      }
+
+      &.wpl-multiling-flag-sm {
+        background-image: url("#{$image-path-flag}/sm.png");
+      }
+
+      &.wpl-multiling-flag-sn {
+        background-image: url("#{$image-path-flag}/sn.png");
+      }
+
+      &.wpl-multiling-flag-so {
+        background-image: url("#{$image-path-flag}/so.png");
+      }
+
+      &.wpl-multiling-flag-sr {
+        background-image: url("#{$image-path-flag}/sr.png");
+      }
+
+      &.wpl-multiling-flag-st {
+        background-image: url("#{$image-path-flag}/st.png");
+      }
+
+      &.wpl-multiling-flag-sv {
+        background-image: url("#{$image-path-flag}/sv.png");
+      }
+
+      &.wpl-multiling-flag-sy {
+        background-image: url("#{$image-path-flag}/sy.png");
+      }
+
+      &.wpl-multiling-flag-sz {
+        background-image: url("#{$image-path-flag}/sz.png");
+      }
+
+      &.wpl-multiling-flag-tc {
+        background-image: url("#{$image-path-flag}/tc.png");
+      }
+
+      &.wpl-multiling-flag-td {
+        background-image: url("#{$image-path-flag}/td.png");
+      }
+
+      &.wpl-multiling-flag-tg {
+        background-image: url("#{$image-path-flag}/tg.png");
+      }
+
+      &.wpl-multiling-flag-th {
+        background-image: url("#{$image-path-flag}/th.png");
+      }
+
+      &.wpl-multiling-flag-tj {
+        background-image: url("#{$image-path-flag}/tj.png");
+      }
+
+      &.wpl-multiling-flag-tl {
+        background-image: url("#{$image-path-flag}/tl.png");
+      }
+
+      &.wpl-multiling-flag-tm {
+        background-image: url("#{$image-path-flag}/tm.png");
+      }
+
+      &.wpl-multiling-flag-tn {
+        background-image: url("#{$image-path-flag}/tn.png");
+      }
+
+      &.wpl-multiling-flag-to {
+        background-image: url("#{$image-path-flag}/to.png");
+      }
+
+      &.wpl-multiling-flag-tr {
+        background-image: url("#{$image-path-flag}/tr.png");
+      }
+
+      &.wpl-multiling-flag-tt {
+        background-image: url("#{$image-path-flag}/tt.png");
+      }
+
+      &.wpl-multiling-flag-tv {
+        background-image: url("#{$image-path-flag}/tv.png");
+      }
+
+      &.wpl-multiling-flag-tw {
+        background-image: url("#{$image-path-flag}/tw.png");
+      }
+
+      &.wpl-multiling-flag-tz {
+        background-image: url("#{$image-path-flag}/tz.png");
+      }
+
+      &.wpl-multiling-flag-ua {
+        background-image: url("#{$image-path-flag}/ua.png");
+      }
+
+      &.wpl-multiling-flag-ug {
+        background-image: url("#{$image-path-flag}/ug.png");
+      }
+
+      &.wpl-multiling-flag-us {
+        background-image: url("#{$image-path-flag}/us.png");
+      }
+
+      &.wpl-multiling-flag-uy {
+        background-image: url("#{$image-path-flag}/uy.png");
+      }
+
+      &.wpl-multiling-flag-uz {
+        background-image: url("#{$image-path-flag}/uz.png");
+      }
+
+      &.wpl-multiling-flag-va {
+        background-image: url("#{$image-path-flag}/va.png");
+      }
+
+      &.wpl-multiling-flag-vc {
+        background-image: url("#{$image-path-flag}/vc.png");
+      }
+
+      &.wpl-multiling-flag-ve {
+        background-image: url("#{$image-path-flag}/ve.png");
+      }
+
+      &.wpl-multiling-flag-vg {
+        background-image: url("#{$image-path-flag}/vg.png");
+      }
+
+      &.wpl-multiling-flag-vi {
+        background-image: url("#{$image-path-flag}/vi.png");
+      }
+
+      &.wpl-multiling-flag-vn {
+        background-image: url("#{$image-path-flag}/vn.png");
+      }
+
+      &.wpl-multiling-flag-vu {
+        background-image: url("#{$image-path-flag}/vu.png");
+      }
+
+      &.wpl-multiling-flag-ws {
+        background-image: url("#{$image-path-flag}/ws.png");
+      }
+
+      &.wpl-multiling-flag-ye {
+        background-image: url("#{$image-path-flag}/ye.png");
+      }
+
+      &.wpl-multiling-flag-za {
+        background-image: url("#{$image-path-flag}/za.png");
+      }
+
+      &.wpl-multiling-flag-zm {
+        background-image: url("#{$image-path-flag}/zm.png");
+      }
+
+      &.wpl-multiling-flag-zw {
+        background-image: url("#{$image-path-flag}/zw.png");
+      }
+
+      //@end
+
+    }
+  }
+
+}

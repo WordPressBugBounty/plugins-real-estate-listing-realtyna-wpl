@@ -1,0 +1,151 @@
+// Foundation for Sites by ZURB
+// foundation.zurb.com
+// Licensed under MIT Open Source
+
+////
+/// @group grid
+////
+
+/// Outputs CSS classes for the grid.
+/// @access private
+@mixin foundation-grid(
+  $row: 'row',
+  $column: 'column',
+  $column-row: 'column-row',
+  $push: 'push',
+  $pull: 'pull',
+  $center: 'centered',
+  $uncenter: 'uncentered',
+  $collapse: 'collapse',
+  $uncollapse: 'uncollapse',
+  $offset: 'offset',
+  $end: 'end',
+  $expanded: 'expanded'
+) {
+  // Row
+  .wpl-#{$row} {
+    @include grid-row;
+
+    // Collapsing
+    &.wpl-#{$collapse} {
+      > .wpl-#{$column} {
+        @include grid-col-collapse;
+      }
+    }
+
+    // Nesting
+    & & {
+      @include grid-row-nest($grid-column-gutter);
+
+      &.wpl-#{$collapse} {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    // Expanded (full-width) row
+    &.wpl-#{$expanded} {
+      max-width: none;
+
+      /*.wpl-#{$row} {
+        margin-left: auto;
+        margin-right: auto;
+      }*/
+    }
+  }
+
+  // Column
+  .wpl-#{$column} {
+    @include grid-col;
+
+    @if $grid-column-align-edge {
+      &.wpl-#{$end} {
+        @include grid-col-end;
+      }
+    }
+  }
+
+  // Column row
+  // The double .row class is needed to bump up the specificity
+  .wpl-#{$column}.wpl-#{$row}.wpl-#{$row} {
+    float: none;
+
+    // To properly nest a column row, padding and margin is removed
+    .wpl-#{$row} & {
+      padding-left: 0;
+      padding-right: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  @include -zf-each-breakpoint {
+    @for $i from 1 through $grid-column-count {
+      // Column width
+      .wpl-#{$-zf-size}-#{$i} {
+        @include grid-col-size($i);
+      }
+
+      // Source ordering
+      @if $i < $grid-column-count {
+        .wpl-#{$-zf-size}-#{$push}-#{$i} {
+          @include grid-col-pos($i);
+        }
+
+        .wpl-#{$-zf-size}-#{$pull}-#{$i} {
+          @include grid-col-pos(-$i);
+        }
+      }
+
+      // Offsets
+      $o: $i - 1;
+
+      .wpl-#{$-zf-size}-#{$offset}-#{$o} {
+        @include grid-col-off($o);
+      }
+    }
+
+    // Block grid
+    @for $i from 1 through $block-grid-max {
+      .wpl-#{$-zf-size}-up-#{$i} {
+        @include grid-layout($i, ".wpl-#{$column}");
+      }
+    }
+
+    // Responsive collapsing
+    .wpl-#{$-zf-size}-#{$collapse} {
+      > .wpl-#{$column} { @include grid-col-collapse; }
+
+      .wpl-#{$row},
+      .wpl-#{$expanded}.wpl-#{$row} &.wpl-#{$row} {
+        margin-left: 0;
+        margin-right: 0;
+      }
+    }
+
+    .wpl-#{$-zf-size}-#{$uncollapse} {
+      $gutter: -zf-get-bp-val($grid-column-gutter, $-zf-size);
+
+      > .wpl-#{$column} { @include grid-col-uncollapse($gutter); }
+    }
+
+    // Positioning
+    .wpl-#{$-zf-size}-#{$center} {
+      @include grid-col-pos(center);
+    }
+
+    // Gutter adjustment
+    .wpl-#{$-zf-size}-#{$uncenter},
+    .wpl-#{$-zf-size}-#{$push}-0,
+    .wpl-#{$-zf-size}-#{$pull}-0 {
+      @include grid-col-unpos;
+    }
+  }
+
+  @if $column == 'column' {
+    .wpl-columns {
+      // scss-lint:disable PlaceholderInExtend
+      @extend .wpl-column;
+    }
+  }
+}

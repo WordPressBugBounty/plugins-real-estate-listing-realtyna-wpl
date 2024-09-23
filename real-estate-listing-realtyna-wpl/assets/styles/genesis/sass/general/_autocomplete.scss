@@ -1,0 +1,13 @@
+.ui-autocomplete {
+  border: 1px solid $co-5;
+  li {
+    font: {
+      size: 13px;
+    }
+    cursor: pointer;
+  }
+  li.ui-autocomplete-category {
+    pointer-events: initial;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,156 @@
+.wpl_carousel_container .responsive-slider
+{
+  &.loading
+  {
+    width: 100%;
+    text-align: center;
+    display: block;
+    background: $co-38;
+    position: relative;
+    min-height: 200px;
+    &:after
+    {
+      content:'Loading ...';
+      font-size: 20px;
+      position: absolute;
+      top:50%;
+      left: 0;
+      width: 100%;
+    }
+  }
+  .slides
+  {
+    background: $co-38;
+    ul li
+    {
+      width: 100%;
+      vertical-align:top;
+      .slide-body
+      {
+        width: 100%;
+        & > img
+        {
+          display: block;
+          margin: auto;
+        }
+        .caption
+        {
+          @include text-shadow(1px 1px 2px #000);
+          font-family: "Droid Serif", Arial, Helvetica, sans-serif;
+          font-style: italic;
+          &.header {
+            @include for-phone {
+              top: 10% !important;
+            }
+          }
+          &.sub {
+            right: auto !important;
+            &.sub1 {
+              font-weight: normal !important;
+              bottom: -40px;
+              @include for-tablet {
+                bottom: -20px;
+              }
+            }
+            &.sub2 {
+              bottom: -75px;
+              @include for-tablet {
+                bottom: -40px;
+              }
+              @include for-phone {
+                bottom: -30px;
+              }
+            }
+            &.more_info {
+              @include border-radius(5px);
+              text-shadow: none;
+              background: $co-35;
+              padding: 5px 20px;
+              font-weight: normal;
+              @include for-tablet {
+                padding: 5px 10px;
+              }
+              @include for-phone {
+                padding: 0 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .pages-cnt
+  {
+    background: $co-1;
+  }
+  .pages
+  {
+    padding: 0;
+    position: static;
+    background: $co-1;
+    max-width: 600px;
+    margin: auto;
+    height: 13px;
+    .page
+    {
+      @include border-radius(0);
+      background: $co-16;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      border: 0;
+      border-right: 1px solid lighten($co-16,30%);
+      opacity: 1;
+      &.active
+      {
+        background: $co-36;
+      }
+    }
+  }
+  .slider-control
+  {
+    @include border-radius(50% !important);
+    height: 45px;
+    width: 45px;
+    background: transparent;
+    line-height: 45px;
+    text-align: center;
+    padding: 0;
+    border: 2px solid $co-1;
+    &:hover
+    {
+      background: $co-1;
+      padding: 0 !important;
+      &:after
+      {
+        color:$co-34;
+      }
+    }
+    &:after
+    {
+      font-family: "wpl-front";
+      color:$co-1;
+    }
+    &.left
+    {
+      left:30px;
+      &:after
+      {
+        content:"\e656";
+      }
+    }
+    &.right
+    {
+      right:30px;
+      &:after
+      {
+        content:"\e657";
+      }
+    }
+  }
+  .wpl-listing-tags-wp{
+    bottom: auto;
+    top: 0;
+    right: 3px;
+  }
+}

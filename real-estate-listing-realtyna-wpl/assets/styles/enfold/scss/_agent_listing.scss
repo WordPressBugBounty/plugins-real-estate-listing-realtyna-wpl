@@ -1,0 +1,276 @@
+.wpl_profile_listing {
+  .wpl_profile_container {
+    .wpl_profile_picture {
+      height: 350px;
+      .back {
+        a {
+          padding-top: 48px !important;
+        }
+      }
+    }
+  }
+
+  //Grid
+  @include for-phone {
+    .wpl_profile_container.grid_box {
+      .wpl_profile_container_title {
+        a {
+          left: 0;
+        }
+      }
+    }
+  }
+
+  .wpl_sort_options_container {
+    border-bottom: none;
+  }
+  .wpl_profile_container.grid_box {
+    margin-bottom: 80px;
+    min-height: 338px;
+    .wpl_profile_picture {
+      width: 100%;
+      @include agent-image;
+    }
+    .wpl_profile_container_title {
+      margin: 10px 0;
+      .title {
+        font: {
+          family: $fo-6;
+          size: 20px;
+          weight: bold;
+        }
+        a {
+          transition: all 0.2s linear;
+          &:hover,
+          &:focus,
+          &:active {
+            transition: all 0.2s linear;
+            opacity: 0.7;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+    ul {
+      li {
+        color: transparent;
+        a {
+          color: transparent;
+        }
+        &:after {
+          background: #29a9df !important;
+          color: $co-2;
+        }
+      }
+    }
+  }
+
+  //List
+  @include for-desktop {
+    .wpl_profile_container.row_box {
+      .wpl_profile_picture {
+        width: 30%;
+      }
+      .wpl_profile_container_title {
+        width: 70%;
+        .title {
+          position: relative;
+          padding: 10px 10px 0 0;
+          a {
+            display: inline-block;
+            width: 50%;
+          }
+          a.view_properties {
+            text-align: right;
+          }
+        }
+        > a {
+          img {
+            max-width: initial !important;
+          }
+        }
+      }
+      ul {
+        width: 70%;
+      }
+    }
+  }
+  @include for-tablet-land {
+    .wpl_profile_container.row_box {
+      .wpl_profile_picture {
+        width: 30%;
+      }
+      .wpl_profile_container_title {
+        width: 70%;
+        .title {
+          position: relative;
+          padding: 10px 10px 0 0;
+          a {
+            display: inline-block;
+            width: 50%;
+          }
+          a.view_properties {
+            text-align: right;
+          }
+        }
+        > a {
+          img {
+            max-width: initial !important;
+          }
+        }
+      }
+      ul {
+        width: 70%;
+        li {
+          width: 47%;
+        }
+      }
+    }
+  }
+  @include for-tablet-landscape {
+    .wpl_profile_container.row_box {
+      .wpl_profile_picture {
+        width: 40%;
+      }
+      .wpl_profile_container_title {
+        width: 60%;
+        .title {
+          position: relative;
+          padding: 10px 10px 0 0;
+          a {
+            display: inline-block;
+            width: 50%;
+          }
+          a.view_properties {
+            text-align: right;
+          }
+        }
+        > a {
+          img {
+            max-width: initial !important;
+          }
+        }
+      }
+      ul {
+        width: 60%;
+        li {
+          width: 46%;
+        }
+      }
+    }
+  }
+  @include for-phone-2 {
+    .wpl_profile_container.row_box {
+      .wpl_profile_picture {
+        width: 100%;
+      }
+      .wpl_profile_container_title {
+        width: 100%;
+        .title {
+          position: relative;
+          padding: 10px 10px 0 0;
+          a {
+            display: inline-block;
+            width: 50%;
+          }
+          a.view_properties {
+            text-align: right;
+          }
+        }
+        > a {
+          img {
+            max-width: initial !important;
+          }
+        }
+      }
+      ul {
+        width: 100%;
+        li {
+          width: 100%;
+        }
+      }
+    }
+  }
+  @include for-phone {
+    .wpl_profile_listing_container.wpl_profile_listing_list_view_container {
+      .wpl_profile_container.row_box {
+        .wpl_profile_picture {
+          width: 100%;
+        }
+        .wpl_profile_container_title {
+          width: 100%;
+          .title {
+            position: relative;
+            padding: 10px 10px 0 0;
+            a {
+              display: inline-block;
+              width: 100%;
+              line-height: 1;
+            }
+            a.view_properties {
+              text-align: center;
+            }
+          }
+          > a {
+            left: 0;
+            img {
+              max-width: initial !important;
+            }
+          }
+        }
+        ul {
+          width: 100%;
+          li {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+
+  .wpl_profile_container.row_box {
+    padding: 0;
+    &:hover {
+      border-bottom: 1px solid $co-9;
+    }
+    .wpl_profile_picture {
+      @include agent-image;
+    }
+    .wpl_profile_container_title {
+      text-align: left;
+      padding-left: 10px;
+      padding-right: 10px;
+      .title {
+        font: {
+          family: $fo-6;
+          size: 20px;
+          weight: bold;
+        }
+        a {
+          transition: all 0.2s linear;
+          &:hover,
+          &:focus,
+          &:active {
+            transition: all 0.2s linear;
+            opacity: 0.7;
+            text-decoration: none;
+          }
+        }
+      }
+      .about {
+        text-align: justify;
+      }
+    }
+    ul {
+      margin: 0;
+      display: flex;
+      flex-wrap: wrap;
+      li {
+        &:after {
+          background: transparent !important;
+          color: $co-26;
+        }
+      }
+    }
+  }
+}

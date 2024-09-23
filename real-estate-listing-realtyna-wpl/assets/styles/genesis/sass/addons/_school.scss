@@ -1,0 +1,30 @@
+.wpl-school-info-activity-wp {
+  .wpl-crm-grid-tab {
+    ul {
+      margin: 0;
+      li {
+        list-style: none;
+      }
+    }
+  }
+  .wpl-gen-tab-contents-wp {
+    background: $co-14;
+    @include clearfix;
+    .tab-content {
+      padding-top: 10px;
+      @include clearfix;
+    }
+  }
+  > div {
+    border: 0 !important;
+    position: relative;
+    .wpl-school-info-content {
+      div {
+        font: {
+          style: normal;
+          weight: 300;
+        }
+      }
+    }
+  }
+}

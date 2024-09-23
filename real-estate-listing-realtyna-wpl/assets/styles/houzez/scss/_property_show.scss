@@ -1,0 +1,601 @@
+.wpl_prp_show_container {
+  margin-top: 20px;
+  .wpl_prp_show_title{
+    h1{
+      margin:48px 0 0;
+      font-size:30px;
+      text-align: left;
+      color: $co-0;
+      span{
+        background-color: $co-3;
+        font-size: 12px;
+        line-height: 12px;
+        text-transform: uppercase;
+        color: $co-1;
+        padding: 5px 10px 5px;
+        border-radius: 2px;
+        margin-left: 5px;
+        position: relative;
+        vertical-align: middle;
+      }
+    }
+    .location_build_up{
+      margin-top: 10px;
+      color: $co-2;
+      font-weight: normal;
+      text-align: left;
+      span{
+        color: $co-2;
+        font-family: inherit !important;
+      }
+    }
+  }
+  .wpl_prp_container_content_left{
+    margin-top: 0;
+    @include for-tablet{
+      width: 100% !important;
+    }
+  }
+  .wpl_prp_container_content_right {
+    padding-top: 0;
+    position: sticky;
+    top: 50px;
+    @include for-tablet{
+      position: static;
+    }
+  }
+  .wpl_prp_right_boxe_details_top .wpl_prp_listing_icon_box{
+    &>div{
+      font-size: 18px;
+      &:after{
+        top: 3px;
+      }
+    }
+  }
+  .listing_result{
+    padding: 0 !important;
+  }
+
+  .wpl_prp_show_position2 .wpl_prp_right_boxes {
+    background: $co-1;
+    padding:20px !important;
+    margin-top:20px;
+    &:first-child{
+      margin-top: 0;
+    }
+    &.agent_info {
+      padding-bottom: 0 !important;
+    }
+    &.listing_contact{
+      margin-top: 0;
+    }
+    .wpl_qrcode_container{
+      float: none;
+    }
+  }
+
+  .wpl_agent_info_activity {
+
+    .wpl_agent_info {
+
+      .image_container {
+        margin-top: 0;
+        text-align: left;
+        padding-right: 10px;
+      }
+      .profile_image {
+        border: none;
+      }
+      .company_details {
+        display: none;
+      }
+      .wpl_agent_info_r {
+        padding-left: 0;
+        ul {
+          margin-top: 0;
+          padding-left: 0;
+        }
+      }
+
+      li, li:before {
+        font-size: 14px;
+        font-weight: 300;
+      }
+      .name {
+        color: $co-8;
+        padding-left: 25px;
+        font-style: normal;
+        margin-bottom: 0;
+        line-height: 24px;
+        &:before {
+          content: '\e003';
+          font: {
+            family: 'wpl-front';
+          }
+        }
+        a {
+          color: black;
+          font: {
+            size: 14px;
+            style: normal;
+            family: "Roboto", sans-serif;
+          }
+        }
+      }
+      .email {
+        //display: none;
+      }
+      .tel:before {
+        content: '\e00f';
+      }
+    }
+    .wpl_multi_agent_info {
+      .wpl_agent_info_l {
+        width: 29%;
+      }
+      .wpl_agent_info_r {
+        width: 62%;
+      }
+    }
+  }
+  .wpl_prp_show_position3{
+    .agent_info{
+      margin-bottom: 0;
+    }
+    .wpl_agent_info_l{
+      width: auto;
+    }
+    .listing_contact{
+      margin-top: 0;
+    }
+  }
+
+  .wpl_prp_right_boxes.html{
+    margin-top: 20px;
+    background: $co-1;
+    padding: 20px !important;
+
+    .wpl_html_activity{
+    }
+  }
+  .wpl_prp_show_detail_boxes_cont .rows {
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 35px;
+    label{
+      font-weight: 700;
+      font-size: 15px;
+    }
+    span{
+      color: $co-0 !important;
+      float: none;
+      font-weight: 300;
+      padding-left: 5px;
+      display: inline-block;
+    }
+    &.feature {
+      label {
+
+      }
+      span {
+        padding-right: 5px;
+        //font-weight: bold;
+        background: transparent;
+      }
+      &.single {
+        padding-left: 25px;
+        label {
+          //padding-left: 20px;
+          font-weight: normal;
+        }
+        &:after {
+          content: "\e02a";
+          font-size: 16px;
+          padding: 3px 2px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: $co-0 !important;
+          line-height: 27px;
+          background: transparent;
+        }
+      }
+    }
+    &.neighborhood>span:after{
+      top: 0;
+      line-height: 35px;
+    }
+  }
+
+  .wpl_prp_show_detail_boxes_title,.wpl_prp_position3_boxes_title{
+    padding-bottom: 40px;
+    margin-bottom:25px !important;
+    border-bottom:1px solid $co-9 !important;
+    line-height: 18px;
+    color: $co-0;
+    font:{
+      size: 18px;
+      family: inherit !important;
+      weight: 500;
+      style: normal;
+    }
+    @include for-tablet{
+      padding-bottom: 20px;
+      margin-bottom: 15px !important;
+    }
+    &:after {
+      display: none;
+    }
+  }
+  .wpl_prp_right_boxes_title{
+    line-height: 24px;
+    color: $co-0 !important;
+    font:{
+      size: 16px;
+      family: inherit !important;
+      weight: 500;
+      style: normal;
+    }
+  }
+  .wpl_category_1>.wpl_prp_show_detail_boxes_cont{
+    padding: 15px 25px !important;
+    margin:20px 0;
+    background:rgba($co-10,.1);
+    border:1px solid $co-10;
+  }
+
+  .wpl_prp_show_detail_boxes{
+    background: $co-1;
+    padding: 40px;
+    @include for-tablet{
+      padding: 20px;
+    }
+  }
+
+  .wpl_prp_container_content_right,.wpl_prp_right_boxe_details_top>div{
+    @include for-tablet {
+      width: 100% !important;
+    }
+  }
+
+  .wpl_property_stats_container{
+    display: block;
+    background: transparent;
+    border: none;
+  }
+
+  .wpl_prp_position3_boxes{
+    background: $co-1;
+    padding:30px;
+    margin-top:30px;
+  }
+
+  .text-box{
+    border:1px solid $co-6;
+    border-radius:4px;
+    padding:6px 15px;
+  }
+
+  .wpl-gallery-pshow-wp{
+    .wpl-gallery-pshow{
+      margin-bottom: 0;
+      margin-top: 0;
+    }
+    .lSSlideOuter{
+      .lSAction a{
+        border-radius: 0;
+        border: none;
+        opacity: .8;
+        &:before{
+          font-size: 18px;
+        }
+        &:hover{
+          opacity: 1;
+        }
+      }
+      .wpl-lSSlider-thumbnails{
+        position: static;
+        background: transparent;
+        padding: 0;
+        .lSAction{
+          display: none;
+        }
+        ul{
+          margin-top: 0 !important;
+          padding: 0 !important;
+          z-index: 10;
+        }
+        li{
+          margin-right: 0 !important;
+        }
+        .lSGallery {
+          & > li.active img, & > li img{
+            border-width: 0;
+            opacity: 1;
+          }
+          &>li {
+            &:hover{
+              border-radius: 0;
+              img{
+                opacity: 1;
+              }
+            }
+            a {
+              background: $co-0;
+              margin: 1px 1px 0 0;
+              img {
+                opacity: .6;
+              }
+            }
+          }
+        }
+      }
+      .lslide span{
+        &:before,&:after{
+          display: none;
+        }
+      }
+    }
+
+    .wpl-listing-tags-wp{
+      top: 100px;
+      right: 50px;
+      left: auto;
+    }
+
+  }
+  .tabs_container{
+    border-bottom: none;
+  }
+  .wpl_prp_show_tabs{
+    position: relative;
+    background: $co-1;
+    min-height: 550px;
+    @include for-tablet{
+      min-height: unset;
+    }
+    .tabs_box{
+      position: absolute;
+      top: 50px;
+      right: 45px;
+      z-index: 51;
+      padding: 0;
+      @include for-tablet-sm{
+        position: static;
+        margin: 15px 0;
+      }
+      .tabs{
+        border-bottom: none;
+        li{
+          margin: 0 5px;
+          a{
+            width: 48px;
+            height: 48px;
+            text-align: center;
+            display: block;
+            background-color: rgba($co-0, .6);
+            color: $co-1;
+            font-size: 18px;
+            line-height: 48px;
+            border-radius: 4px;
+            text-indent: -9999px;
+            position: relative;
+            padding: 0;
+            &:after{
+              text-indent: 0;
+              display: block;
+              width: 100%;
+              position: absolute;
+              top: 0;
+              font: {
+                family: $fo-wpl;
+              }
+            }
+            &[data-for="tabs-1"]:after{
+              content: '\e935';
+            }
+            &[data-for="tabs-2"]:after{
+              content: '\e60f';
+            }
+            &[data-for="tabs-3"]:after{
+              content: '\e908';
+            }
+          }
+          &.active,&:hover{
+            a{
+              background: transparent;
+            }
+          }
+
+          &:before{
+            height: 48px;
+            border-radius: 4px;
+            opacity: 0.8;
+          }
+          &:after{
+            display: none;
+          }
+        }
+      }
+    }
+
+    .tabs_contact{
+      display: inline-block;
+      position: absolute;
+      top: 50px;
+      left: 50px;
+      z-index: 10;
+      width: 370px;
+      @include for-tablet{
+        display: none;
+      }
+      .wpl_agent_info_activity,.wpl-contact-listing-wp{
+        background: rgba($co-1,.95);
+        padding: 30px;
+      }
+      .wpl_agent_info_activity{
+        max-height: 190px;
+        overflow-y: auto;
+      }
+      .wpl_contact_container {
+        input[type="text"], input[type="email"], input[type="url"], textarea{
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  .wpl_prp_listing_icon_box{
+    margin:10px 0;
+    &>div{
+      float: right !important;
+      margin: 0 20px 0 0;
+      font-size: 15px;
+      padding-left: 30px;
+      position: relative;
+      color: $co-2 !important;
+      @include for-tablet{
+        float: left !important;
+      }
+      &:after {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 18px;
+      }
+      &:first-child{
+        margin-right: 0;
+      }
+    }
+  }
+
+  .wpl_prp_right_boxe_details_bot>.price_box{
+    font:{
+      size: 30px !important;
+      family: inherit !important;
+      weight: 500;
+    }
+    margin-top: 10px;
+    color: $co-0;
+    text-align: right !important;
+    @include for-tablet{
+      text-align: left !important;
+    }
+  }
+
+  .wpl-top-links{
+    display: inline-block;
+    float: right;
+    clear: both;
+    width: 100%;
+    @include for-tablet-sm{
+      float: none;
+    }
+  }
+  .listing_links{
+    position: relative;
+    text-align: right;
+    ul{
+      display: inline-block;
+      &:last-child{
+        padding-left: 20px;
+      }
+    }
+    li{
+      width: 28px;
+      height: 28px;
+      line-height: 28px;
+      border-radius: 4px;
+      background-color: rgba($co-0,.6);
+      border: none;
+      margin: 2px;
+      @include for-tablet-sm{
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+      }
+      &:before{
+        font-size: 16px !important;
+        color: $co-1;
+        line-height: 28px;
+        @include for-tablet-sm{
+          font-size: 20px !important;
+          line-height: 36px;
+        }
+      }
+    }
+    .wpl_links_share{
+      position: absolute;
+      border-radius: 4px;
+      z-index: 11;
+      display: none;
+      background-color: rgba($co-0,.6);
+      @include for-tablet-sm{
+        bottom: -35px;
+        left: 0 !important;
+      }
+      &:after{
+        content: '\e67c';
+        //display: inline-block;
+        position: absolute;
+        right: -9px;
+        top: 3px;
+        transform: rotateZ(-90deg);
+        font: {
+          family: $fo-wpl;
+        }
+        @include for-tablet-sm{
+          right: auto;
+          top: -12px;
+          transform: rotateX(-186deg);
+          left: 10px;
+        }
+      }
+      li{
+        background: transparent;
+        &:before{
+          color: $co-1 !important;
+        }
+      }
+    }
+    .share_toggle {
+      //display: none;
+      &:before {
+        content: '\e015';
+        cursor: pointer;
+      }
+    }
+  }
+  .wpl_prp_show_detail_boxes_cont>p{
+    font-size: 16px;
+    color: $co-0;
+  }
+  .wpl-plugin-owl.wpl-carousel-multi-images .owl-item{
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /*Layout2*/
+  &.wpl_prp_show_layout2_container {
+
+    .wpl_prp_right_boxe_details_top{
+      border-bottom: 0 !important;
+      margin: 0 !important;
+    }
+    .wpl_prp_show_position2 .listing_result .wpl-listing-results-links-cnt{
+      border-top: none;
+    }
+
+    .wpl_prp_mls_id_box{
+      display: none;
+    }
+
+  }/*End Layout2*/
+
+  .wpl_prp_right_boxes,&.wpl_prp_show_layout2_container .wpl_prp_container_content_right .wpl_mcalc_container,
+  &.wpl_prp_show_layout2_container .wpl_prp_show_position2 .wpl_prp_right_boxes{border:0}
+
+
+}
+
+

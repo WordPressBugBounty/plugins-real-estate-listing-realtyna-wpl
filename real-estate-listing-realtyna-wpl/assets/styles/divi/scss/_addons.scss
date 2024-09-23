@@ -1,0 +1,772 @@
+/*Mortgage Calculator*/
+.wpl_prp_show_layout2_container .wpl_prp_position3_boxes.mortgage_calculator {
+  border: none;
+  .wpl_prp_position3_boxes_title {
+    padding: 0;
+    line-height: 40px;
+  }
+}
+
+.wpl_prp_position3_boxes {
+  &.mortgage_calculator {
+    @include for-phone {
+      padding: 10px 5px !important;
+    }
+  }
+  .wpl_mcalc_container {
+    .form-field {
+      width: 50%;
+      float: left;
+      flex-flow: row nowrap;
+      @include for-tablet-land {
+        width: 100%;
+      }
+      @include for-tablet {
+        width: 100%;
+        float: none;
+      }
+      label {
+        margin-left: 16px;
+        width: 126px;
+        @include for-phone {
+          margin-left: 0;
+          width: 110px;
+        }
+      }
+      & > span {
+        position: relative;
+        & > span {
+          position: relative;
+          display: block;
+        }
+        input + span {
+          position: absolute;
+          top: 8px;
+          right: 10px !important;
+          font-size: 14px;
+        }
+      }
+      input + .wpl-mortgage-symbol {
+        top: 8px;
+        right: 20px;
+        font-size: 14px;
+        i {
+          display: inline-block;
+        }
+      }
+    }
+    .text-box,
+    .text-box.wpl_percent {
+      width: 185px;
+      @include for-tablet-sm {
+        width: 165px;
+      }
+      @include for-phone {
+        width: 154px;
+      }
+    }
+    .wpl-mortgage-percent {
+      width: auto;
+    }
+  }
+}
+.wpl_mcalc_container {
+  .text-box {
+    @include border-radius(20px);
+    height: 35px;
+    color: lighten($co-2, 10%);
+    border-color: lighten($co-9, 5%);
+    padding: 2px 10px;
+    font: {
+      size: 15px;
+    }
+    &.wpl_percent {
+      width: 110px;
+    }
+  }
+  .wpl-mortgage-symbol {
+    color: lighten($co-2, 10%);
+    font-weight: normal;
+  }
+  .form-field {
+    label {
+      line-height: 40px;
+      font-size: 14px;
+      font-weight: bold;
+      color: $co-8;
+      text-transform: uppercase;
+    }
+  }
+  .form-result {
+    float: left;
+    width: 100% !important;
+    padding: 20px 0;
+    border-bottom: 1px dashed $co-9;
+    border-top: 1px dashed $co-9;
+    margin-top: 20px;
+    @include for-phone {
+      display: block;
+    }
+    hr {
+      display: none;
+    }
+    label {
+      font-size: 14px;
+      color: $co-8;
+      text-transform: uppercase;
+      float: none;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .text-box {
+      box-shadow: none;
+      height: 35px;
+      background: darken($co-1, 6%);
+      color: $co-2;
+      display: inline-block;
+      border: none;
+      vertical-align: middle;
+      padding-left: 17px;
+      font: {
+        size: 15px;
+        weight: 400;
+      }
+    }
+    span {
+      font-size: 14px;
+      color: $co-2;
+      display: inline-block;
+      float: none;
+      margin-right: -17px;
+      position: relative;
+    }
+  }
+}
+.wpl_prp_show_position2 {
+  .wpl_mcalc_container .form-field label {
+    width: 126px;
+  }
+}
+
+/*Booking*/
+.wpl-booking-addon.container {
+  margin: 20px auto;
+  width: 100%;
+  & > div {
+    @include for-tablet-sm {
+      float: none;
+      width: 100%;
+      padding: 15px !important;
+    }
+  }
+  h3 {
+    padding-top: 10px;
+    font-style: normal;
+    text-transform: uppercase;
+    span::after {
+      display: none;
+    }
+  }
+  label {
+    display: inline-block;
+    padding-right: 5px;
+  }
+  .wpl-booking-step-1 {
+    & > div {
+      margin-bottom: 20px;
+    }
+  }
+}
+.wpl-booking-inquire-wp {
+  a {
+    border-radius: 20px;
+    color: $co-1 !important;
+    padding: 3px 50px;
+    &:hover {
+      color: $co-1;
+    }
+  }
+}
+.wpl-booking-checks-wp {
+  input {
+    height: 40px;
+    border-radius: 20px;
+    padding: 2px 5px !important;
+  }
+}
+.wpl-booking-button-date {
+  .btn {
+    border-radius: 20px;
+    color: $co-1;
+    font-size: 16px;
+    border: none;
+    height: 40px;
+    padding: 6px 12px;
+  }
+  a {
+    font-size: 16px;
+  }
+}
+.wpl-booking-buttons-wp {
+  .btn {
+    border-radius: 4px;
+    color: $co-1;
+    padding: 7px 30px;
+  }
+}
+.ui-state-disabled,
+.ui-widget-content .ui-state-disabled,
+.ui-datepicker-unselectable.ui-state-disabled.undefined {
+  opacity: 1 !important;
+  span {
+    color: rgba($co-7, 0.5);
+  }
+}
+.wpl-booking-payment-forms-wp {
+  .wpl-util-form-row > label,
+  .wpl-util-form-row > .wpl-gen-form-label {
+    box-sizing: border-box;
+  }
+  .chosen-container {
+    width: calc(100% - 100px);
+    float: left;
+  }
+}
+
+/*Calendar*/
+.wpl-calendar-table td {
+  padding: 0 !important;
+}
+.wpl-calendar-seasons-opt,
+.wpl-calendar-bookings-opt {
+  li {
+    list-style: none;
+  }
+}
+/*CRM*/
+.wpl-crm-grid-tab {
+  ul li {
+    list-style: none;
+  }
+}
+//CRM Form
+.wpl-crm-form.wpl-crm-form-frontend {
+  .wpl-crm-grid-header {
+    font: {
+      family: inherit;
+      size: 24px;
+    }
+  }
+  .wpl-crm-grid-tab {
+    ul {
+      li {
+        @include border-radius(3px 3px 0 0);
+        border: 1px solid $co-11;
+        margin: 0 1px;
+        a {
+          color: $co-2;
+          text-align: center;
+          padding: 3px 15px;
+          line-height: 28px;
+          font: {
+            size: 14px;
+            weight: 400;
+            style: normal;
+          }
+          span {
+            float: none;
+          }
+        }
+        &.wpl-gen-tab-active-parent {
+          a {
+            color: inherit;
+            position: relative;
+            &:after {
+              content: "";
+              display: block;
+              height: 2px;
+              width: 100%;
+              position: absolute;
+              left: 0;
+              bottom: -2px;
+              z-index: 1;
+              background: $co-1;
+            }
+          }
+        }
+      }
+    }
+  }
+  .chosen-single,
+  select,
+  input {
+    @include border-radius(20px !important);
+    padding: 0 10px !important;
+    height: 40px !important;
+  }
+  .chosen-single span {
+    line-height: 40px;
+  }
+  .chosen-container-single .chosen-single div b{
+    background-position: 0 8px;
+  }
+  .wpl-crm-btn{
+    font-size: 14px;
+    .wpl-crm-icon{
+      font-size: 12px;
+      right: 12px;
+      top: calc(50% - 6px);
+    }
+  }
+}
+
+/*Get direction*/
+.wpl_googlemap_pshow {
+  .wpl-map-get-direction {
+    background: transparent;
+    border: none;
+    padding: 15px 0 !important;
+    bottom: 15px;
+    @include for-tablet-sm {
+      right: auto;
+      bottom: auto;
+      width: 100% !important;
+    }
+    .wpl-map-get-direction-address-cnt {
+      @include calc(width, "100% - 151px");
+      input {
+        @include placeholder($co-3, 15px, inherit, normal);
+        border: 1px solid $co-9;
+        border-radius: 20px;
+        height: 40px;
+      }
+    }
+    .wpl-map-get-direction-btn-cnt {
+      border-radius: 20px;
+      margin-left: 10px;
+      padding: 6px 12px;
+      text-align: center;
+      height: 40px;
+      border: none;
+      @include for-phone {
+        width: 140px;
+      }
+      span {
+        line-height: 29px;
+        font: {
+          size: 16px;
+          weight: 400;
+        }
+        @include for-phone {
+          display: block;
+        }
+      }
+      &:after {
+        display: none;
+      }
+    }
+    .wpl_map_direction_text {
+      background: $co-11;
+    }
+  }
+}
+.wpl_property_show_default {
+  .wpl_googlemap_pshow {
+    .wpl-map-get-direction {
+      width: 435px;
+    }
+  }
+}
+
+/*Review*/
+.br-wrapper .br-widget .br-current-rating {
+  padding: 0 0 0 8px;
+  white-space: nowrap;
+}
+.wpl-rate-info {
+  top: 10px;
+}
+.wpl-review-submit {
+  button {
+    height: 40px;
+    border-radius: 20px !important;
+    color: $co-1;
+    border: none;
+  }
+}
+.wpl-review-review-content-wp .wpl-review-review-reply-btn {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 3px 15px;
+  border: none;
+}
+
+/*Complex*/
+.wpl-complex-tabs-wp {
+  border-width: 1px;
+  ul {
+    margin: 0 -1px;
+    li {
+      width: 25%;
+      margin: 0;
+      list-style: none;
+      @include for-tablet-sm {
+        float: none;
+        width: 100%;
+      }
+      a {
+        margin: 0 1px;
+        color: $co-2;
+        text-align: center;
+        border: 1px solid $co-11;
+        padding: 3px 15px;
+        border-radius: 3px 3px 0 0;
+        font: {
+          size: 14px;
+          weight: 400;
+          style: normal;
+        }
+      }
+      &.wpl-gen-tab-active-parent {
+        a {
+          color: inherit;
+          background-color: transparent !important;
+          position: relative;
+          &:after {
+            content: "";
+            display: block;
+            height: 2px;
+            width: 100%;
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            z-index: 1;
+            background: $co-1;
+          }
+        }
+      }
+    }
+  }
+}
+.wpl-complex-unit {
+  padding-top: 20px;
+  .wpl_list_grid_switcher {
+    top: -20px;
+    position: relative !important;
+    .list_view {
+      border-right: 2px solid darken($co-4, 7%);
+    }
+  }
+}
+.wpl-complex-unit-cnt.row_box {
+  float: none;
+  width: 100%;
+}
+.wpl-complex-unit-view-detail {
+  top: -3px;
+  right: 4px;
+  &:hover {
+    text-decoration: none;
+  }
+}
+.wpl-complex-unit-wp {
+  background: $co-1;
+}
+.wpl_prp_container_content_right {
+  padding: 0;
+}
+.wpl_property_listing_complexes_container {
+  padding: 15px;
+}
+.wpl-complex-unit-details {
+  height: auto !important;
+  .wpl-row {
+    margin-left: 0;
+    margin-right: 0;
+    li {
+      padding: 0 15px 0 0;
+      list-style: none !important;
+    }
+  }
+  .wpl-complex-unit-price-box{
+    right: 25px;
+  }
+}
+
+/*Neighborhood*/
+.wpl_property_listing_container.wpl-neighborhood-addon {
+  .wpl_list_grid_switcher .list_view {
+    border-right: 2px solid darken($co-4, 7%);
+  }
+  .wpl_sort_options_container h3 {
+    font-size: 24px;
+  }
+  .wpl_prp_cont.row_box {
+    .wpl_prp_desc {
+      display: block;
+      order: 3;
+      padding-left: 15px;
+      height: 26px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .wpl_prp_listing_icon_box {
+      order: 4;
+    }
+    .wpl_gallery_container img {
+      min-height: 125px;
+    }
+    .wpl_prp_listing_icon_box {
+      text-align: left !important;
+    }
+  }
+}
+.wpl_prp_show_layout2_container.wpl_prp_show_container .wpl_property_listing_container .wpl_prp_listing_icon_box {
+  text-align: left !important;
+  & > div {
+    margin: 0 8px;
+    &.built_up_area {
+      //padding-left: 0;
+      &:after {
+        padding-left: 0 !important;
+        //padding-right: 0;
+        //width: 20px;
+        left: 0;
+        right: auto;
+      }
+    }
+    &:after {
+      margin: 0 6px 0 0;
+      padding: 0 5px 0 0;
+    }
+    .value {
+      text-align: left;
+    }
+  }
+}
+
+/*Compare*/
+.wpl-compare-table {
+  thead tr th {
+    padding: 6px 24px;
+    border-top: 1px solid transparent;
+  }
+  .wpl-compare-property-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+.wpl-page #lg-outer {
+  z-index: 500002 !important;
+}
+
+/*APS*/
+.wpl_aps_container label {
+  cursor: pointer;
+}
+
+/*Membership*/
+#wpl_register_info {
+  margin-bottom: 20px;
+}
+.wpl_subscription_form_account_info_container {
+  legend {
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+}
+.wpl_membership_field_row {
+  margin-bottom: 10px;
+  input:not([type="checkbox"]),
+  textarea {
+    border-radius: 20px;
+    border: 1px solid #d9d9d9;
+    padding: 0 10px !important;
+    line-height: 40px;
+    margin: 5px 0;
+    height: 40px;
+    min-width: 150px;
+  }
+  textarea {
+    height: auto;
+  }
+  label {
+    display: inline-block;
+    width: 100px;
+  }
+}
+.wpl-membership-tab {
+  li.wpl-gen-tab-active-parent {
+    line-height: 2.8em;
+  }
+}
+#wpl_login_form_container #wpl_login_submit,
+#wpl_login_form_container #wpl_logout_submit,
+.wpl-logout-form #wpl_logout_submit,
+#wpl_membership_register_button,
+#wpl_lostpassword_form_container button{
+  font-weight: normal;
+  padding: 3px 30px;
+  border-radius: 20px !important;
+  font-size: 17px;
+  border: none;
+  color: #fff;
+  height: 40px;
+  cursor: pointer;
+}
+#wpl_login_form_container #wpl_login_submit{
+  padding: 3px 33px 3px 20px;
+}
+#wpl_login_form_container #wpl_login_submit:after,
+#wpl_login_form_container #wpl_logout_submit:after {
+  top: 13px;
+  right: 13px;
+}
+.wpl-login-form-row,.wpl-forgot-password-form {
+  input[type="text"],
+  input[type="password"] {
+    border-radius: 20px;
+    border: 1px solid #d9d9d9;
+    padding: 0 10px !important;
+    line-height: 40px;
+    margin: 5px 0;
+    height: 40px;
+  }
+}
+.wpl-forgot-password-form label{
+  line-height: 47px;
+}
+.wpl-membership-activity-wpluser-wp .wpl_activity_title{
+  border: none;
+  background: #fafafa !important;
+}
+.wpl-membership-activity-wpluser-wp .tab-content,
+#wpl_dashboard_bottom_container .tab-content{
+  background: #fafafa;
+  border: none;
+}
+.wpl-ewallet-wp input[type="number"]{
+  border-radius: 20px;
+  padding-left: 10px;
+}
+.wpl-membership-wpluser li,
+.wpl-ewallet-balance{
+  background: rgba(103, 103, 103, .05);
+  padding: 9px 10px;
+  border-radius: 0;
+}
+.wpl-membership-wpluser .membership-label,
+.wpl-ewallet-balance{
+  font-weight: 600;
+}
+.wpl-membership-wpluser li.wpl-expiry-date{
+  padding-top: 10px;
+}
+.wpl-membership-wpluser li.wpl-expiry-date .membership-value{
+  padding-right: 5px;
+}
+.wpl-payment-cnt{
+  margin-top: 20px;
+}
+.wpl_gateway_payment_container{
+  input[type=text],select,.chosen-container-single .chosen-single{
+    height: 35px;
+    border-radius: 20px;
+    line-height: 34px;
+    padding-left: 10px;
+    border-color: #e6e6e6;
+  }
+  #wpl_paypal_direct_expiration_date_month_chosen .chosen-single{
+    border-radius: 20px 0 0 20px;
+  }
+  #wpl_paypal_direct_expiration_date_year_chosen
+  {
+    width: calc(100% - 164px) !important;
+    min-width: calc(100% - 164px) !important;
+    .chosen-single
+    {
+      border-radius: 0 20px 20px 0;
+    }
+  }
+  .wpl-payment-paypal-icon{
+    width: 100%;
+    background-size: 70% auto;
+  }
+}
+  /*Forms*/
+.wpl-gen-form-wp
+{
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="tel"],
+  textarea
+  {
+    border-radius: 20px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  textarea
+  {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+.wpl-gen-btn-1, .wpl-gen-form-wp .wpl-gen-form-row>.wpl-gen-btn-1{
+  border-radius: 20px;
+  height: 35px;
+  font-size: 14px;
+}
+
+/*Landing Page Generator*/
+.wpl-aps-addon-landing-page-generator-form .wpl-gen-form-row input{
+  font-size: 14px;
+  margin-right: 5px;
+}
+
+/*Save Search*/
+.wpl-gen-grid-wp th{
+  background: #e6e8eb;
+  font-weight: 400 !important;
+  border-right: 2px solid #fff;
+  border-top: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+}
+.wpl-addon-save-search-grid{
+  background-image: linear-gradient(180deg, #fbfcfd 0%,#f4f4f4 100%);
+  border: none !important;
+  tr
+  {
+    line-height: 18px;
+    td
+    {
+      border-top: 2px solid #fff !important;
+      padding: 6px !important;
+      border-right: 2px solid #fff;
+      border-bottom: none;
+    }
+  }
+  input[type=text]{
+    border-radius: 20px;
+    height: 35px;
+    padding: 2px 10px;
+  }
+}
+.wpl-addon-save-search-notify-mode>label{
+  display: inline;
+}
+.wpl-addon-save-search-list-wp .wpl-save-search-msg{
+  padding: 0;
+}
+.wpl-addon-save-search-list-wp .wpl-save-search-msg .wpl-addon-save-search-msg-btns{
+  margin-bottom: 10px;
+}
+
+.realtyna-lightbox-wp, .wpl-frontend-lightbox-wp{
+  border: none;
+  box-shadow: 0 2px 6px 1px rgba(0,0,0,0.3);
+  h2{
+    border-radius: 2px 2px 0 0;
+  }
+}

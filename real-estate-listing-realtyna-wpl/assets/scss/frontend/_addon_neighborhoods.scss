@@ -1,0 +1,418 @@
+/*
+  Neighborhood Add-on styles
+  PListing + PShow + Activity
+  @Author UI department of Realtyna
+  @Copyright Realtyna Inc.
+*/
+
+
+
+.wpl-neighborhood-addon {
+
+  //region + Neighborhood PListing
+
+  .wpl_sort_options_container {
+    position: relative;
+    text-align: center;
+
+    h3 {
+      display: inline-block;
+      padding: 0;
+      border-bottom: 1px solid $co-36;
+      position: relative;
+      bottom: -1px;
+      margin: 0;
+
+      @include for-phone{
+        bottom: -1px;
+      }
+    }
+  }
+  .wpl_list_grid_switcher
+  {
+    margin-bottom: 6px;
+  }
+
+  .grid_box {
+    padding-bottom: 10px;
+  }
+
+  .wpl_prp_listing_icon_box {
+    text-align: right !important;
+  }
+
+  .total_listings{
+
+    &::before{
+      margin-left: 15px !important;
+    }
+
+    &::after {
+      content: '\e65c';
+      font: 1.4em $font-frontend;
+      display: inline-block;
+      position: relative;
+      top: 2px;
+      @if $text-direction == ltr
+      {
+        padding-left: 5px;
+      } @else
+      {
+        padding-right: 5px;
+      }
+    }
+
+  }
+
+  .pic_count::after {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    @if $text-direction == ltr
+    {
+      padding-left: 5px;
+    } @else
+    {
+      padding-right: 5px;
+    }
+  }
+  //endregion
+
+  //region + Neighborhood PShow
+  .wpl_prp_container_content_title{
+    text-align: center;
+    font-style: normal;
+    margin-top: 30px;
+    color: $co-0;
+    border-bottom: none;
+
+    .title_text{
+      font-size: 30px;
+      font-weight: 600;
+
+      &:after{
+        content: '';
+        width: 70%;
+        height: 1px;
+        display: block;
+        background: $co-10;
+        margin: 10px auto;
+      }
+    }
+
+    .location_build_up{
+      font-size: 16px;
+      font-weight: 400;
+    }
+
+    .wpl_qrcode_container{
+      float: none;
+    }
+
+  }
+
+  .wpl-pshow-nh-parent {
+    margin-bottom: 10px;
+
+    &::before{
+      font: 30px $font-frontend;
+      content: '\e66c';
+      margin-right: 10px;
+      margin-left: 3px;
+      position: relative;
+      top: 6px;
+      color: $co-36;
+    }
+
+    b {
+      display: inline-block;
+      vertical-align: middle;
+
+      &::after {
+        content: '\e657';
+        font: italic 16px $font-frontend;
+        display: inline-block;
+        vertical-align: middle;
+        padding: 0 5px;
+        color: $co-36;
+      }
+
+      &:last-child::after {
+        display: none;
+      }
+    }
+  }
+
+  .wpl-gallery-pshow-wp .lSSlideOuter .lslide span
+  {
+    &:before,&:after{
+      display: none;
+    }
+  }
+  .tabs_container{
+    border-bottom: none;
+  }
+
+  .googlemap {
+    @include border-radius(0);
+    padding: 0;
+    border: none;
+    margin-bottom: 1em;
+  }
+
+  //endregion
+
+  //region + Neighborhood Section in PShow
+  .wpl-nh-item{
+
+    &::before{
+      font: 18px $font-frontend;
+      content: '\e66d';
+      margin-right: 10px;
+      position: relative;
+      top: 2px;
+    }
+  }
+
+  .wpl-nh-shopping-center::before{
+    content: '\e669';
+  }
+
+  .wpl-nh-hospital::before{
+    content: '\e664';
+  }
+
+  .wpl-nh-cinema::before{
+    content: '\e661';
+  }
+
+  .wpl-nh-park::before{
+    content: '\e666';
+  }
+
+  .wpl-nh-beach::before{
+    content: '\e65f';
+  }
+
+  .wpl-nh-coffee-shop::before{
+    content: '\e662';
+  }
+
+  .wpl-nh-airport::before{
+    content: '\e65d';
+  }
+
+  .wpl-nh-bus-station::before{
+    content: '\e660';
+  }
+
+  .wpl-nh-train-station::before{
+    content: '\e66a';
+  }
+
+  .wpl-nh-school::before{
+    content: '\e668';
+  }
+
+  .wpl-nh-university::before{
+    content: '\e66b';
+  }
+
+  .wpl-nh-police-station::before{
+    content: '\e667';
+  }
+
+  .wpl-nh-town-center::before{
+
+  }
+
+  .wpl-nh-exhibition::before{
+    content: '\e66e';
+  }
+
+  .wpl-nh-tourist-site::before{
+    content: '\e65e';
+  }
+  //endregion
+
+  //region + Activity::Sub Neighborhood
+
+  .wpl-sub-nh-has-image {
+
+    a {
+      display: inline-block;
+      overflow: hidden;
+      position: relative;
+
+      &::before {
+        @include border-radius(100%);
+        display: none;
+        background: rgba($co-1, 0.5);
+        content: '';
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -30px;
+        margin-top: -30px;
+        z-index: 999;
+      }
+
+      &::after {
+        display: none;
+        content: '\e65b';
+        font: 32px $font-frontend;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-left: -16px;
+        margin-top: -16px;
+        color: $co-1;
+        z-index: 1000;
+      }
+
+      .neighborhood_name {
+        display: none;
+        position: absolute;
+        top: 50%;
+        left: 0;
+        margin-top: 35px;
+        text-align: center;
+        width: 100%;
+        color: $co-1;
+        font: 18px $font-lato;
+      }
+
+      img{
+        @include transition(all 0.1s linear);
+      }
+
+      &:hover {
+        &::before, &::after, .neighborhood_name {
+          display: inline-block;
+        }
+
+        img {
+          @extend .wpl-blur-on-normal;
+        }
+      }
+
+    }
+
+  }
+
+  .wpl-sub-nh-no-image {
+    border-bottom: 1px solid $co-6;
+
+    &:last-child{
+      border-bottom: none;
+    }
+
+    a {
+      @include transition(color 0.1s linear);
+      text-align: center;
+      font: italic 14px $font-lato;
+      display: block;
+      padding: 4px 15px;
+      margin: 3px 10px;
+      color: $co-35;
+
+      &:hover{
+        color: darken($co-35, 15%);
+      }
+    }
+
+  }
+
+  //endregion
+
+  //region + Pshow Default Layout
+
+  &.wpl_prp_show_default_container{
+
+    .wpl_prp_show_detail_boxes_title,
+    .wpl_prp_position3_boxes_title
+    {
+      border-bottom: none;
+      color: $co-0;
+      font:{
+        style: normal;
+        size: 16px;
+        weight: bold;
+      }
+
+      &:after
+      {
+        display: none;
+      }
+    }
+
+    .wpl_category_206{
+      text-align: center;
+      .wpl_prp_show_detail_boxes_title{
+        display: none;
+      }
+    }
+
+    .wpl-nh-item{
+      width: auto;
+      float: none !important;
+      display: inline-block;
+      text-align: center;
+      clear: none !important;
+      font-weight: normal;
+      padding-left: 10px;
+      padding-right: 10px;
+      margin-bottom: 10px;
+
+      &:before{
+        display: block;
+        margin-right: 0;
+        margin-bottom: 10px;
+        font-size: 28px;
+      }
+      &>span{
+        float: none;
+        display: block;
+      }
+    }
+
+    .wpl_prp_show_position3
+    {
+      .wpl_sub_neighborhoods_container.wpl-neighborhood-addon{
+        width: 100% !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: -10px !important;
+        margin-right: -10px !important;
+      }
+
+      .wpl-sub-nh-has-image
+      {
+        display: inline-block;
+        width: 33.3%;
+        padding: 10px;
+        @include for-tablet
+        {
+          width: 50%;
+        }
+        @include for-phone
+        {
+          width: 100%;
+          a
+          {
+            display: block;
+            img
+            {
+              width: 100%;
+              height: auto;
+            }
+          }
+        }
+      }
+    }
+  }
+  //endregion
+
+}

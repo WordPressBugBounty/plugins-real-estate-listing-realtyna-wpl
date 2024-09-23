@@ -1,0 +1,273 @@
+#wpl_prp_show_container.wpl_prp_show_container_preview {
+    //display: table;
+    margin: 0;
+    padding: 0;
+	max-width: 900px;
+    min-width: 900px;
+
+    @media(max-width:660px){
+    	min-width:350px;
+		max-width: 350px;
+    }
+    .wpl_prp_container{
+    	//display: table;
+    	//width: 100%;
+    	background: #fff;
+    }
+    .show_header_preview {
+	    background: #808080 none repeat scroll 0 0;
+	    color: #bbb;
+	    height: 50px;
+	    line-height: 50px;
+	    width: 100%;
+	    overflow: hidden;
+	    .show_header_preview_left {
+			@include calc(width,'100% - 110px');
+			@if $text-direction == ltr
+			{
+				float: left;
+				margin-left: 10px;
+			} @else
+			{
+				float: right;
+				margin-right: 10px;
+			}
+		}
+		.show_header_preview_expand {
+			@if $text-direction == ltr
+			{
+				float: right;
+				margin-right: 50px;
+			} @else
+			{
+				float: left;
+				margin-left: 50px;
+			}
+		    text-align: center;
+		    width: 50px;
+		    > a {
+			    border-left: 1px solid #666666;
+			    border-right: 1px solid #666666;
+			    color: #fff;
+			    display: block;
+			    font: 25px/50px "wpl-front";
+			    overflow: hidden;
+			    position: relative;
+			    text-indent: -900px;
+			    transition: color 0.2s linear 0s, transform 0.3s cubic-bezier(0.4, 0.01, 0.165, 0.99) 0s;
+			    &::before {
+				    content: "\e910";
+				    display: block;
+				    height: 50px;
+				    left: 0;
+				    position: absolute;
+				    text-align: center;
+				    text-indent: 0;
+				    width: 100%;
+				}
+				&:hover{
+					color: #2c2c2c;
+				}
+			}
+		}
+	    .show_header_preview_box {
+			@if $text-direction == ltr
+			{
+				float: left;
+				padding: 0 5px 0 0;
+			} @else
+			{
+				float: right;
+				padding: 0 0 0 5px;
+			}
+			max-width: 50%;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+			&.c1 {
+			    color: #fff;
+			    font-size: 1.2em;
+			    font-weight: bold;
+			}
+		    @media(max-width:660px){
+		    	&.c2{
+		    		display: none;
+		    	}
+		    }
+		}
+	}
+	.popup_preview_gallery {
+		.wpl_gallery_container{
+			max-width: 90vw; 
+		}
+	}
+	.wpl_prp_container_content {
+	    padding: 0 20px;
+	    width: 100%;
+	    float: left;
+	    .wpl_prp_show_detail_boxes_title {
+		    border: medium none;
+		    color: #29a9df;
+		    font: italic bold 17px/25px Droid Serif;
+		    margin: 0;
+		    cursor: pointer;
+		    > span {
+			    color: #000;
+			}
+		    &::after {
+			    display: none;
+			}
+		}
+		.wpl_prp_show_detail_boxes_cont{
+			line-height: 21px;
+			.rows {
+			    margin: 0 8% 0 0;
+			    padding-right: 0;
+			    width: 46%;
+			    @media(max-width:660px){
+			    	margin: 0;
+				    width: 100%;
+			    }
+			    &:nth-child(3n) {
+				    margin: 0;
+				    padding: 0;
+				}
+				&.feature.single::after{
+					font-size: 13pt;
+				}
+			}
+		}
+		.wpl_prp_container_content_left{
+			padding-top: 40px;
+		}
+	}
+	.wpl_prp_container_title {
+	    border-bottom: 1px solid #e6e6e6; 
+	    box-sizing: border-box;
+		@if $text-direction == ltr
+		{
+			float: left;
+		} @else
+		{
+			float: right;
+		}
+	    margin: 0 1.5%;
+	    padding: 15px 5px;
+	    width: 97%;
+	    .r1 {
+		    color: #666666;
+		    font: italic 26px/40px "Droid Serif";
+		    text-transform: capitalize;
+		}
+		.r2 {
+		    color: #666;
+		    font: italic 20px "Droid Serif";
+		}
+	}
+	.wpl_prp_container_title_right {
+	    color: #666;
+	    font: italic 30px/40px "Droid Serif";
+	    text-align: right;
+	    > span {
+		    font-size: 20px;
+		}
+	}
+	.wpl_prp_container_title_left {
+		@if $text-direction == ltr
+		{
+			float: left;
+		} @else
+		{
+			float: right;
+		}
+	} 
+	.wpl_prp_show_detail_boxes{
+		margin-bottom: 20px;
+	}
+	.wpl_prp_right_boxes{
+		&.details{
+			display: table;
+    		width: 100%;
+
+    		> div {
+			    padding: 0;
+			}
+		}
+	}
+	.wpl_prp_right_boxes_title{
+		font: italic bold 17px/25px "Droid Serif";
+	}
+	.wpl_prp_boxe_details_extra
+	{
+		width: 100% !important;
+		li
+		{
+			display: block;
+			float: left;
+			width: 100%;
+			span:first-child
+			{
+				color: #000;
+				display: block;
+				@if $text-direction == ltr
+				{
+					float: left;
+				} @else
+				{
+					float: right;
+				}
+				font: bold 13px $font-lato;
+				width: 90px;
+			}
+		}
+	}
+	.wpl_prp_boxe_details_price {
+	    color: #29a9df;
+	    font: 25px $font-lato;
+	    text-align: right;
+	}
+	.wpl_prp_show_tabs{
+		margin: 0;
+		.tabs_box{
+			float: left;
+		    width: 100%;
+		}
+	}
+	.lSSlideOuter{
+		position: relative;
+    	width: 100%;
+    	.lslide span{
+    		position: static;
+    		&::before,&::after{
+    			background:none;
+    		}
+    	}
+	}
+}
+.realtyna-lightbox-overlay .wpl-property-preview-close-btn{
+	height: 50px;
+    padding: 0;
+	@if $text-direction == ltr
+	{
+		right: 0;
+	} @else
+	{
+		left: 0;
+		right: auto;
+	}
+    text-align: center;
+    top: 0;
+    width: 50px;
+    &::before {
+	    content: "\e6ad";
+	    font: 25px/50px "wpl-front";
+	    width: 50px;
+	}
+}
+.wpl-util-hidden-internal-preview
+{
+  display:none;
+}
+.wpl-page #lg-outer{
+	z-index: 500002 !important;
+}

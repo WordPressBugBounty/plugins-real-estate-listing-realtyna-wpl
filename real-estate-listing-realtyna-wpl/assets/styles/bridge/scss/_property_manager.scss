@@ -1,0 +1,45 @@
+.properties-wp .propery-wp {
+  width: calc(50% - 22px);
+  background: $co-11;
+  .property-detailes {
+    .detail .title {
+      width: auto;
+      height: auto;
+      display: inline-block;
+    }
+  }
+}
+.properties-wp .propery-wp .property-actions {
+  @include box-sizing(border-box);
+}
+
+.pmanager-cnt {
+  .pagination {
+    li {
+      a, span {
+        @include box-sizing(border-box);
+        display: block;
+        min-width: 42px;
+        height: 42px;
+        vertical-align: middle;
+        text-align: center;
+        background: $co-11;
+        border-radius: 3px;
+        border-width: 2px;
+        font-family: lato;
+        font-weight: 600;
+        font-size: 14px;
+        border-color: $co-17;
+        color: lighten($co-17, 5%) !important;
+      }
+      &.disabled a {
+        background: $co-6;
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+
+.lm-search-form-wp, .mass-panel-wp {
+  background: $co-11;
+}

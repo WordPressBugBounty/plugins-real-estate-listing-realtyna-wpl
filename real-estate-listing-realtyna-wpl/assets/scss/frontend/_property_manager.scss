@@ -1,0 +1,800 @@
+/**
+ * WPL
+ * Author Steve.M | UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-wp.pmanager-wp {
+  *
+  {
+    @include box-sizing(border-box);
+  }
+
+  header {
+    position: relative;
+
+    h2 {
+      border-bottom: 2px solid $co-36;
+      margin: 0;
+      padding: 10px 0;
+      font-family: $font-lato;
+    }
+
+    .wpl-button {
+      background-color: $co-47;
+      margin-top: 8px;
+      padding-left: 30px;
+      position: absolute;
+      top: 10px;
+      @if $text-direction == ltr
+      {
+        right: 0;
+      } @else
+      {
+        left: 0;
+      }
+      @include for-phone{
+        position: relative;
+        top: auto;
+        margin-bottom: 8px;
+      }
+
+      &:hover{
+        background-color: darken($co-47,20%);
+      }
+
+      &::before{
+        position: absolute;
+        top: 7px;
+        left: 8px;
+        content: '\e67e';
+        font: 1em $font-frontend;
+      }
+    }
+
+  }
+
+  .chosen-single{
+    min-width: 85px;
+  }
+
+  .chosen-drop{
+    width: 100%;
+  }
+
+}
+
+#wpl_listings_top_tabs_container {
+  position: relative;
+  width: 100%;
+  margin-bottom: 20px;
+
+  .wpl-tabs {
+    @include clearfix_s2;
+
+    li {
+      @if $text-direction == ltr
+      {
+        float: left;
+        margin-right: 5px;
+      } @else
+      {
+        float: right;
+        margin-left: 5px;
+      }
+      list-style: none;
+
+      &.wpl-selected-tab a {
+        background-color: $co-36;
+        color: $co-1;
+      }
+    }
+
+    a {
+      display: block;
+      font-size: 1.2em;
+      font-weight: bold;
+      padding: 5px 35px;
+      background-color: $co-10;
+      color: $co-1;
+
+      &:active{
+        text-decoration: none;
+      }
+    }
+
+  }
+}
+
+.lm-search-form-wp {
+  border: 1px solid lighten($color_3, 40%);
+  border-top: 1px solid $co-7;
+  border-left: 1px solid darken($co-7, 15%);
+  border-right: 1px solid $co-7;
+  border-bottom: 1px solid $co-7;
+  margin-bottom: 10px;
+
+  h3 {
+    font-size: 1.5em;
+    margin: 0;
+    font-family: $font-lato;
+    padding: 10px 15px;
+  }
+
+  .panel-body {
+    padding: 5px;
+  }
+
+  .pwizard-section {
+    .prow {
+      @include pie-clearfix;
+      margin: 5px 0;
+      .wpl_listing_manager_search_form_element_cnt {
+        @if $text-direction == ltr
+        {
+          float: left;
+          margin-left: 10px;
+        } @else
+        {
+          float: right;
+          margin-right: 10px;
+        }
+        width: calc(20% - 10px);
+        @include for-tablet{
+          width: calc(50% - 10px);
+        }
+        @include for-phone{
+          width: 100%;
+          margin: 0;
+          margin-bottom: 5px;
+        }
+        .chosen-container, input[type="text"], select {
+          width: 100% !important;
+          height: 30px;
+          @include placeholder(lighten($color_3, 40%));
+        }
+      }
+    }
+  }
+
+  .wpl-btn-wp {
+    padding: 10px 15px;
+    button {
+      padding: 0 70px;
+    }
+  }
+
+  .wpl_reset_button{
+    @if $text-direction == ltr
+    {
+      float: right;
+    } @else
+    {
+      float: left;
+    }
+
+    &:hover{
+      color: $co-36;
+    }
+  }
+
+}
+
+.mass-panel-wp {
+  @include pie-clearfix;
+  border: 1px solid $co-7;
+  border-left-color: darken($co-7, 15%);
+  margin: 0;
+  padding: 15px 0;
+  margin-bottom: 30px;
+
+  h3 {
+    @if $text-direction == ltr{
+      float: left;
+      padding-left: 15px;
+    } @else
+    {
+      float: right;
+      padding-right: 15px;
+    }
+    font-size: 1.5em;
+    margin: 0;
+    font-family: $font-lato;
+    width: 140px;
+  }
+
+  .mass-actions-wp {
+    @if $text-direction == ltr{
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+    @include for-phone{
+      float: none;
+    }
+
+    .group-btn {
+      @include transition(background .1s linear);
+      @if $text-direction == ltr{
+        float: left;
+        margin-left: 5px;
+      } @else
+      {
+        float: right;
+        margin-right: 5px;
+      }
+      @include for-phone{
+        float: none;
+        width: 100%;
+        overflow: hidden;
+        padding: 0 5px;
+        margin: 0;
+      }
+
+      &:hover{
+        @include transition(background .1s linear);
+      }
+    }
+
+    .mass-btn {
+      float: left;
+      border: 1px solid lighten($color_3, 40%);
+      height: 23px;
+      display: inline-block;
+      margin: 0 3px;
+      cursor: pointer;
+      font-size: 13px;
+      @include for-phone{
+        width: calc(33.3% - 4px);
+        margin: 2px;
+      }
+      span {
+        display: inline-block;
+        padding: 0 7px;
+        height: 100%;
+        font-family: $font-lato;
+        line-height: 20px;
+        vertical-align: top;
+      }
+      i {
+        @include size(25px, 100%);
+        display: inline-block;
+        position: relative;
+        @include for-phone{
+          width: auto;
+          @if $text-direction == ltr
+          {
+            float: right;
+          } @else
+          {
+            float: left;
+          }
+        }
+        &:after {
+          display: block;
+          font-family: $font-frontend;
+          position: absolute;
+          top: 2px;
+          right: 3px;
+          font-size: 1.4em;
+          color: lighten($black, 70%);
+          line-height: 100%;
+        }
+        &.icon-select:after {
+          content: "\e931";
+        }
+        &.icon-unselect:after {
+          content: "\e930";
+        }
+        &.icon-toggle:after {
+          content: "\e01e";
+        }
+        &.icon-confirm:after {
+          content: "\e92f";
+        }
+        &.icon-unconfirm:after {
+          content: "\e92e";
+        }
+        &.icon-trash:after {
+          content: "\e653";
+          font-size: 1.2em;
+          top: 3px;
+        }
+        &.icon-restore:after {
+          content: "\e92d";
+        }
+        &.icon-delete:after {
+          content: "\e6b0";
+          //font-size: 13px;
+        }
+      }
+      &:hover {
+        background: $color_1;
+        border-color: $color_1;
+        span, i:after {
+          color: $white;
+        }
+      }
+    }
+
+  }
+
+  .change-user-cnt-wp,.change-multi-agent-cnt-wp{
+    width: 100%;
+    border-top: 1px solid $co-7;
+    float: left;
+    margin-top: 15px;
+    padding-top: 10px;
+
+    label{
+      width: 140px;
+      padding-left: 15px;
+      text-align: right;
+      margin-right: 5px;
+      display: inline-block;
+    }
+
+  }
+
+}
+
+.properties-wp {
+  @include pie-clearfix;
+
+  @include for-tablet {
+    .propery-wp {
+      width: calc(100% - 20px);
+    }
+  }
+  @include for-tablet-land {
+    .propery-wp {
+      width: calc(100% - 20px);
+    }
+  }
+  @include for-tablet-landscape-big {
+    .propery-wp {
+      width: calc(100% - 20px);
+    }
+  }
+  @include for-desktop {
+    .propery-wp {
+      width: calc(50% - 20px);
+    }
+  }
+
+  .propery-wp {
+    @include box-sizing(border-box);
+    @include pie-clearfix;
+    border: 1px solid lighten($color_3, 50%);
+    float: left;
+    margin: 20px 10px 30px 10px;
+    min-height: 165px;
+    padding-bottom: 85px;
+    position: relative;
+    box-sizing: border-box;
+
+    .checkbox-wp {
+      position: absolute;
+      top: 0;
+      @if $text-direction == ltr
+      {
+        left: 0;
+      } @else
+      {
+        right: 0;
+      }
+      z-index: 1;
+      padding: 5px;
+
+      input {
+        position: relative;
+        z-index: 10;
+      }
+
+      &:before {
+        @if $text-direction == ltr
+        {
+          border-color: #dfdfdf transparent transparent transparent;
+          border-width: 42px 42px 0 0;
+          left: 0;
+        } @else
+        {
+          border-color: transparent #dfdfdf transparent transparent;
+          border-width: 0 42px 42px 0;
+          right: 0;
+        }
+        border-style: solid;
+        content: '';
+        height: 0;
+        line-height: 0;
+        position: absolute;
+        top: 0;
+        width: 0;
+        _border-color: #dfdfdf #000000 #000000 #000000;
+        _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+      }
+    }
+
+    .property-image {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      width: 45%;
+
+      .no_image_box {
+        background: lighten($color_3, 50%);
+        text-align: center;
+        max-width: 100%;
+        height: 160px !important;
+
+        i {
+          font-size: 8.5em;
+          line-height: 160px;
+          &:before{
+            content: '\e028';
+            font:{
+              family: $font-frontend;
+            }
+          }
+        }
+
+        span {
+          display: none;
+        }
+      }
+
+      img {
+        height: 160px !important;
+      }
+
+      .p-links {
+        display: block;
+        background: $color_1;
+        border: 1px solid $color_1;
+        color: $white;
+        margin: 0;
+        line-height: 25px;
+        text-align: center;
+        &:hover {
+          color: $color_1;
+          background: $white;
+        }
+      }
+    }
+
+    .info-action-wp {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      width: 55%;
+    }
+
+    .property-detailes {
+      line-height: 25px;
+      padding: 10px;
+
+      & > span {
+        display: block;
+      }
+
+      .finilize-msg {
+        @include border-radius(0 0 3px 3px);
+        background: #FBE4E4;
+        //bottom: -25px;
+        color: $co-56;
+        display: inline-block;
+        font: 1em $font-lato;
+        //left: -1px;
+        margin-bottom: 3px;
+        padding: 2px 10px 3px 10px;
+        //position: absolute;
+
+        &:after {
+          display: block;
+          content: "\e659";
+          font: 1em $font-frontend;
+          position: absolute;
+          left: 8px;
+          top: 5px;
+        }
+      }
+
+      .detail {
+        .value {
+          color: $color_1;
+        }
+
+        .plist_price {
+          color: $color_1;
+        }
+      }
+    }
+
+    .p-title {
+      font-family: $font-benchnine;
+      font-size: 1.6em;
+      margin-bottom: 10px;
+    }
+
+    .p-location {
+      font-size: .9em;
+    }
+
+    .p-add-date {
+      border-top: 1px solid lighten($color_3, 50%);
+      font-size: .9em;
+    }
+
+    .property-actions {
+      @include clearfix_s2;
+      border-top: 1px solid darken($co-1, 7%);
+      bottom: 0;
+      height: 85px;
+      left: 0;
+      padding: 6px 15px;
+      position: absolute;
+      width: 100%;
+    }
+
+    .pmanager_actions {
+      width: 100%;
+    }
+
+    .p-action-btn {
+      @if $text-direction == ltr
+      {
+        float: right;
+      } @else
+      {
+        float: left;
+      }
+      margin: 5px 5px 0;
+      cursor: pointer;
+
+      &:hover {
+        color: $color_1;
+      }
+
+      span {
+        display: none;
+      }
+
+      i {
+        //@extend .fa;
+        font-family: $font-frontend;
+        font-size: 18px;
+        &.icon-confirm:after {
+          content: "\e92f";
+        }
+        &.icon-unconfirm:after {
+          content: "\e92e";
+        }
+        &.icon-edit:before {
+          content: "\e903";
+        }
+        &.icon-trash:after {
+          content: "\e653";
+        }
+        &.icon-delete:after {
+          content: "\e6b0";
+        }
+        &.icon-restore:before {
+          content: "\e92d";
+        }
+        &.icon-clone:after {
+          content: "\e928";
+        }
+      }
+    }
+
+    .change-user-cnt-wp {
+      display: inline-block;
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      label, select, .chosen-container
+      {
+        display: inline-block;
+      }
+    }
+    &.propery-wp-multi-agent
+    {
+      padding-bottom: 115px;
+      .property-actions
+      {
+        height: 115px;
+      }
+    }
+  }
+  .pmanager-multi-agent
+  {
+    @if $text-direction == ltr
+    {
+      text-align: left;
+    } @else
+    {
+      text-align: right;
+    }
+    padding-top: 10px;
+    display: flex;
+    width: 100%;
+    & > label
+    {
+      white-space: nowrap;
+      @if $text-direction == ltr
+      {
+        padding-right: 10px;
+      } @else
+      {
+        padding-left: 10px;
+      }
+      line-height: 30px;
+      display: block;
+    }
+    select, .chosen-container
+    {
+      width: 100%;
+      min-width: inherit !important;
+    }
+    .chosen-container-multi .chosen-choices
+    {
+      background: none;
+      border-color:#ddd;
+      li.search-field input[type="text"]
+      {
+        height:28px;
+      }
+    }
+  }
+}
+.pagination-wp {
+  @include pie-clearfix;
+  padding: 0 10px;
+  clear: both;
+
+  .pagination {
+    @include pie-clearfix;
+    float: right;
+    margin: 10px 0 10px;
+
+    li {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      list-style: none;
+
+      a, span {
+        margin: 0 1px;
+        border: 1px solid lighten($color_3, 50%);
+        border-radius: 0;
+        padding: 4px 10px;
+        &:hover {
+          background: lighten($color_3, 50%);
+        }
+      }
+
+      &.active {
+        a {
+          background: $white;
+          border-color: $color_1;
+          color: $color_1;
+        }
+      }
+
+    }
+
+  }
+}
+
+@include for-tablet {
+  .wpl_property_stats_container {
+    @include flex-direction(column);
+    .wpl_property_stats_title {
+      display: none;
+    }
+    .wpl_property_stats_inner {
+      padding: 0 10px;
+      @include justify-content(center);
+    }
+    .property_stats_contacts {
+      padding-right: 10px;
+      @include justify-content(center);
+    }
+  }
+}
+@include for-tablet-land {
+  .wpl_property_stats_container {
+    @include flex-direction(column);
+    .wpl_property_stats_title {
+      display: none;
+    }
+    .wpl_property_stats_inner {
+      @include justify-content(center);
+    }
+    .property_stats_contacts {
+      padding: 0 10px;
+      &:not(:last-child) {
+        border-right: 1px solid $co-6;
+      }
+    }
+  }
+}
+@include for-tablet-landscape-big {
+  .wpl_property_stats_container {
+    .wpl_property_stats_inner {}
+    .property_stats_contacts {
+      padding: 0 5px;
+      @include display-flex;
+      &:not(:last-child) {
+        border-right: 1px solid $co-6;
+      }
+    }
+  }
+}
+@include for-desktop {
+  .wpl_property_stats_container {
+    .wpl_property_stats_inner {}
+    .property_stats_contacts {
+      padding: 0 5px;
+      @include display-flex;
+      &:not(:last-child) {
+        border-right: 1px solid $co-6;
+      }
+    }
+  }
+}
+
+.wpl_property_stats_container {
+  border: 1px solid $co-6;
+  border-top: none;
+  border-radius: 3px;
+  background: $co-83;
+  font: {
+    family: $font-lato;
+    size: 13px;
+  }
+  @include display-flex();
+  @include justify-content(space-between);
+  .wpl_property_stats_title {
+    font: {
+      weight: bold;
+    }
+    padding: 0;
+    text-align: left;
+    span {
+      display: block;
+      padding: 3px 10px;
+    }
+  }
+  .wpl_property_stats_inner {
+    @include display-flex();
+  }
+  .property_stats_contacts {
+    > div {
+      margin: auto;
+      span {
+        color: $co-16;
+      }
+      b {
+        color: $co-0;
+      }
+    }
+  }
+}

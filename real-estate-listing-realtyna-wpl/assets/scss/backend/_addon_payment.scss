@@ -1,0 +1,156 @@
+.wpl-payment-checkout-wp {
+
+  &.size-width-2 {
+    width: 700px;
+  }
+
+  & > h3 {
+    background: $color-fancy-gcolor-top;
+    font: 1rem $font-archivo-narrow;
+    color: $color-fancy-header-color;
+    margin: 0;
+    padding: 10px 15px;
+    min-height: 36px;
+  }
+}
+
+.wpl-payment-invoice {
+  background: $co-1;
+  color: $co-0;
+  padding: 10px;
+}
+
+.wpl-payment-invoice-amount {
+  font: 1.3rem $font-archivo-narrow;
+
+  span{
+    color: darken($co-12,15%);
+  }
+}
+
+.wpl-payment-tabs-wp // Tab Styles
+{
+
+  ul {
+    @include box-shadow(0 2px 2px rgba($co-0, 0.18));
+    @include clearfix_s3;
+    @include gradient-vertical($co-1, $co-9);
+    margin: 0;
+    border-top: 1px solid $co-10;
+  }
+
+  li {
+    float: left;
+    margin-bottom: 0;
+
+    & + li{
+      border-left: 1px solid $co-10;
+    }
+
+    &:last-child{
+      border-right: 1px solid $co-10;
+    }
+
+    a{
+      outline: none;
+      padding: 10px 15px;
+      color: $co-0;
+      text-decoration: none;
+      display: inline-block;
+
+      &:hover {
+        background: $co-1;
+      }
+
+      &.wpl-gen-tab-active{
+        background: $co-1;
+      }
+
+    }
+
+  }
+}
+
+.wpl-ewallet-balance{
+  font: 1rem $font-archivo-narrow;
+  margin-bottom: 14px;
+
+  span{
+    color: darken($co-12,15%);
+  }
+}
+
+.wpl-payment-contents-wp // Tab Contents
+{
+
+}
+
+.wpl-payment-content {
+  display: none;
+
+  &.wpl-payment-content-active {
+    display: block;
+  }
+}
+
+
+.wpl-payments-wp // Backend::Payment.default
+{
+
+  .wpl_slide_label::before{
+    content: "";
+    display: inline-block;
+    height: 48px;
+    width: 48px;
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    margin-left: -24px;
+    background-size: contain !important;
+  }
+
+  #wpl_slide_label_id3 // eWallet
+  {
+    &::before{
+      background: transparent url("#{$image-path-backend}/icon-sidebar-wallet.svg") center center no-repeat !important;
+    }
+  }
+
+  #wpl_slide_label_id1 // Paypal
+  {
+    &::before{
+      background: transparent url("#{$image-path-backend}/icon-sidebar-paypel.svg") center center no-repeat !important;
+    }
+  }
+
+  #wpl_slide_label_id2 // Bank
+  {
+    &::before{
+      background-size: contain !important;
+      background: transparent url("#{$image-path-backend}/icon-sidebar-bank.svg") center center no-repeat !important;
+      width: 30px;
+      height: 30px;
+      margin-left: -15px;
+    }
+  }
+  #wpl_slide_label_id4 // Bank
+  {
+    &::before{
+      background-size: contain !important;
+      background: transparent url("#{$image-path-backend}/icon-sidebar-multisafepay.svg") center center no-repeat !important;
+      width:70px;
+      height: 40px;
+      margin-left:-35px;
+    }
+  }
+  #wpl_slide_label_id5 // PayFast
+  {
+    &::before{
+      background-size: contain !important;
+      background: transparent url("#{$image-path-backend}/icon-sidebar-payfast.svg") center center no-repeat !important;
+      width:36px;
+      height: 38px;
+      margin-left:-18px;
+    }
+  }
+}

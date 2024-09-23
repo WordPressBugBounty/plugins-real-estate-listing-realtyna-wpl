@@ -1,0 +1,166 @@
+/*Addon APS*/
+.wpl_property_listing_container {
+  &.wpl-property-listing-mapview {
+    width: 100vw;
+    left: calc(-49.3vw + 50%);
+    .wpl_googlemap_container {
+      padding: 0;
+      border: 0;
+      margin-bottom: 0;
+    }
+  }
+}
+/*Addon Booking*/
+.wpl_property_listing_container {
+  .wpl-rss-wp {
+    .wpl-rss-link {
+      font-size: 13px !important;
+      font-style: normal !important;
+      font-family: Lato !important;
+      padding: 4px 15px;
+      background: $co-101;
+      color: $co-11;
+
+      &:hover {
+        background: darken($co-101, 20%) !important;
+      }
+    }
+  }
+  .wpl-save-search-wp {
+    .wpl-save-search-link {
+      @include transition(0.2s);
+      font-size: 13px !important;
+      font-style: normal !important;
+      font-family: Lato !important;
+      padding: 4px 15px;
+      &:after {
+        font-family:'wpl-front';
+      }
+    }
+  }
+  &.wpl-property-listing-mapview {
+    .wpl-rss-wp {
+      top: 41px !important;
+      right: 4px;
+      .wpl-rss-link {
+        @include border-radius(4px);
+        width: 100px;
+      }
+    }
+    .wpl-save-search-wp {
+      top: 41px !important;
+      left: 4px !important;
+      .wpl-save-search-link {
+        @include border-radius(4px);
+      }
+    }
+    .wpl-landing-page-generator-wp{
+      top: 41px;
+      bottom: auto;
+    }
+  }
+}
+
+/*Addon Mortgage*/
+.wpl_mcalc_container
+{
+  .wpl-mortgage-percent
+  {
+    display: inline-block;
+    padding: 0;
+  }
+  .text-box{
+    box-sizing: border-box;
+  }
+}
+
+//zillow
+.wpl_prp_right_boxes {
+  .wpl-zillow-info,.wpl-zillow-list-reviews-container,.wpl-zillow-pagination {
+    margin: 0 !important;
+  }
+  .wpl-zillow-info {
+    margin-bottom: 5px !important;
+  }
+}
+
+
+.wpl-booking-comment-txt {
+  resize: vertical;
+}
+.wpl-booking-addon h3 {
+  font-style: normal;
+}
+
+.btn-primary {
+  @include transition(color .1s linear,background-color .1s linear,border-color .1s linear);
+  @include box-sizing(initial!important);
+
+  line-height: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  font-style: normal;
+  color: $co-11;
+  //border: 2px solid transparent;
+  //background-color: $co-4;
+  padding: 0 17px;
+  min-width: auto;
+  width: auto;
+  height: 30px;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: 0;
+  text-transform: uppercase;
+  @include border-radius(4px);
+  text-shadow: none;
+
+  &:hover {
+    //border: 2px solid $co-4 !important;
+    //color: $co-4;
+    //background-color: $co-11 !important;
+  }
+}
+
+.wpl-booking-buttons-wp .btn {
+  padding: 0 17px;
+}
+
+.wpl-booking-right-side {
+  background: $co-11;
+  margin-bottom: 10px;
+}
+
+.wpl-booking-login-register,
+.wplbooking-booking-details {
+  margin-bottom: 20px;
+}
+
+.wpl-property-listing-mapview .wpl-plisting-link-btn>a>span {
+  //display: inline-block;
+}
+.wpl_view_container footer {
+  display: none;
+}
+
+/*Compare properties*/
+
+.wpl-compare-property-title {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.wpl-compare-table {
+  td, th {
+    padding: 0;
+    vertical-align: bottom;
+  }
+  .wpl_gallery_image{
+    float: left;
+  }
+}
+

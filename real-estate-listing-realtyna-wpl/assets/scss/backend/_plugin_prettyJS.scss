@@ -1,0 +1,353 @@
+$pretty-image-url: "../img/prettyPhoto";
+
+.pp-sample{
+  text-align: center;
+  font: 16px $font-archivo-narrow;
+  padding: 7px 20px 20px;
+
+  & > div, & > span{
+    display: inline-block;
+    vertical-align: middle;
+  }
+}
+.pp-ajax-loading{
+  background: transparent url(../img/backend/loading-LiBo.gif) center center no-repeat;
+  height: 32px;
+  width: 32px;
+  margin-right: 20px;
+}
+
+
+div {
+  &.pp_default {
+
+    .fancybox-wrap{
+	  & *{
+		@include box-sizing(border-box); /* Active border-box for plugins elements */
+	  }
+      position: static;
+    }
+
+    .pp_top {
+      height: 13px;
+      .pp_middle, .pp_left, .pp_right {
+        height: 13px;
+      }
+    }
+    .pp_bottom {
+      height: 13px;
+      .pp_left, .pp_middle, .pp_right {
+        height: 13px;
+      }
+    }
+    .pp_top {
+      .pp_left {
+        background: url(#{$pretty-image-url}/default/sprite.png) -78px -93px no-repeat;
+      }
+      .pp_middle {
+        background: url(#{$pretty-image-url}/default/sprite_x.png) top left repeat-x;
+      }
+      .pp_right {
+        background: url(#{$pretty-image-url}/default/sprite.png) -112px -93px no-repeat;
+      }
+    }
+    .pp_content .ppt {
+      color: #f8f8f8;
+    }
+    .pp_content_container {
+      .pp_left {
+        background: url(#{$pretty-image-url}/default/sprite_y.png) -7px 0 repeat-y;
+        padding-left: 13px;
+      }
+      .pp_right {
+        background: url(#{$pretty-image-url}/default/sprite_y.png) top right repeat-y;
+        padding-right: 13px;
+      }
+    }
+    .pp_next:hover {
+      background: url(#{$pretty-image-url}/default/sprite_next.png) center right no-repeat;
+      cursor: pointer;
+    }
+    .pp_previous:hover {
+      background: url(#{$pretty-image-url}/default/sprite_prev.png) center left no-repeat;
+      cursor: pointer;
+    }
+    .pp_expand {
+      background: url(#{$pretty-image-url}/default/sprite.png) 0 -29px no-repeat;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      &:hover {
+        background: url(#{$pretty-image-url}/default/sprite.png) 0 -56px no-repeat;
+        cursor: pointer;
+      }
+    }
+    .pp_contract {
+      background: url(#{$pretty-image-url}/default/sprite.png) 0 -84px no-repeat;
+      cursor: pointer;
+      width: 28px;
+      height: 28px;
+      &:hover {
+        background: url(#{$pretty-image-url}/default/sprite.png) 0 -113px no-repeat;
+        cursor: pointer;
+      }
+    }
+    .pp_close {
+      width: 30px;
+      height: 30px;
+      background: url(#{$pretty-image-url}/default/sprite.png) 2px 1px no-repeat;
+      cursor: pointer;
+    }
+    .pp_gallery ul li a {
+      background: url(#{$pretty-image-url}/default/default_thumb.png) center center #f8f8f8;
+      border: 1px solid #aaa;
+    }
+    .pp_social {
+      margin-top: 7px;
+    }
+    .pp_gallery a {
+      &.pp_arrow_previous, &.pp_arrow_next {
+        position: static;
+        left: auto;
+      }
+    }
+    .pp_nav {
+      .pp_play {
+        background: url(#{$pretty-image-url}/default/sprite.png) -51px 1px no-repeat;
+        height: 30px;
+        width: 30px;
+      }
+      .pp_pause {
+        background: url(#{$pretty-image-url}/default/sprite.png) -51px 1px no-repeat;
+        height: 30px;
+        width: 30px;
+        background-position: -51px -29px;
+      }
+    }
+    a {
+      &.pp_arrow_previous {
+        background: url(#{$pretty-image-url}/default/sprite.png) -31px -3px no-repeat;
+        height: 20px;
+        width: 20px;
+        margin: 4px 0 0;
+      }
+      &.pp_arrow_next {
+        background: url(#{$pretty-image-url}/default/sprite.png) -31px -3px no-repeat;
+        height: 20px;
+        width: 20px;
+        margin: 4px 0 0;
+        left: 52px;
+        background-position: -82px -3px;
+      }
+    }
+    .pp_content_container .pp_details {
+      margin-top: 5px;
+    }
+    .pp_nav {
+      clear: none;
+      height: 30px;
+      width: 110px;
+      position: relative;
+      .currentTextHolder {
+        font-family: Georgia;
+        font-style: italic;
+        color: #999;
+        font-size: 11px;
+        left: 75px;
+        line-height: 25px;
+        position: absolute;
+        top: 2px;
+        margin: 0;
+        padding: 0 0 0 10px;
+      }
+    }
+    .pp_close:hover {
+      opacity: 0.7;
+    }
+    .pp_nav {
+      .pp_play:hover, .pp_pause:hover {
+        opacity: 0.7;
+      }
+    }
+    .pp_arrow_next:hover, .pp_arrow_previous:hover {
+      opacity: 0.7;
+    }
+    .pp_description {
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 14px;
+      margin: 5px 50px 5px 0;
+    }
+    .pp_bottom {
+      .pp_left {
+        background: url(#{$pretty-image-url}/default/sprite.png) -78px -127px no-repeat;
+      }
+      .pp_middle {
+        background: url(#{$pretty-image-url}/default/sprite_x.png) bottom left repeat-x;
+      }
+      .pp_right {
+        background: url(#{$pretty-image-url}/default/sprite.png) -112px -127px no-repeat;
+      }
+    }
+    .pp_loaderIcon {
+      background: url(#{$pretty-image-url}/default/loader.gif) center center no-repeat;
+    }
+  }
+  &.facebook {
+    .pp_top {
+      .pp_left {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) -88px -53px no-repeat;
+      }
+      .pp_middle {
+        background: url(#{$pretty-image-url}/facebook/contentPatternTop.png) top left repeat-x;
+      }
+      .pp_right {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) -110px -53px no-repeat;
+      }
+    }
+    .pp_content_container {
+      .pp_left {
+        background: url(#{$pretty-image-url}/facebook/contentPatternLeft.png) top left repeat-y;
+      }
+      .pp_right {
+        background: url(#{$pretty-image-url}/facebook/contentPatternRight.png) top right repeat-y;
+      }
+    }
+    .pp_expand {
+      background: url(#{$pretty-image-url}/facebook/sprite.png) -31px -26px no-repeat;
+      cursor: pointer;
+      &:hover {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) -31px -47px no-repeat;
+        cursor: pointer;
+      }
+    }
+    .pp_contract {
+      background: url(#{$pretty-image-url}/facebook/sprite.png) 0 -26px no-repeat;
+      cursor: pointer;
+      &:hover {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) 0 -47px no-repeat;
+        cursor: pointer;
+      }
+    }
+    .pp_close {
+      width: 22px;
+      height: 22px;
+      background: url(#{$pretty-image-url}/facebook/sprite.png) -1px -1px no-repeat;
+      cursor: pointer;
+    }
+    .pp_description {
+      margin: 0 37px 0 0;
+    }
+    .pp_loaderIcon {
+      background: url(#{$pretty-image-url}/facebook/loader.gif) center center no-repeat;
+    }
+    .pp_arrow_previous {
+      background: url(#{$pretty-image-url}/facebook/sprite.png) 0 -71px no-repeat;
+      height: 22px;
+      margin-top: 0;
+      width: 22px;
+      &.disabled {
+        background-position: 0 -96px;
+        cursor: default;
+      }
+    }
+    .pp_arrow_next {
+      background: url(#{$pretty-image-url}/facebook/sprite.png) -32px -71px no-repeat;
+      height: 22px;
+      margin-top: 0;
+      width: 22px;
+      &.disabled {
+        background-position: -32px -96px;
+        cursor: default;
+      }
+    }
+    .pp_nav {
+      margin-top: 0;
+      p {
+        font-size: 15px;
+        padding: 0 3px 0 4px;
+      }
+      .pp_play {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) -1px -123px no-repeat;
+        height: 22px;
+        width: 22px;
+      }
+      .pp_pause {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) -32px -123px no-repeat;
+        height: 22px;
+        width: 22px;
+      }
+    }
+    .pp_next:hover {
+      background: url(#{$pretty-image-url}/facebook/btnNext.png) center right no-repeat;
+      cursor: pointer;
+    }
+    .pp_previous:hover {
+      background: url(#{$pretty-image-url}/facebook/btnPrevious.png) center left no-repeat;
+      cursor: pointer;
+    }
+    .pp_bottom {
+      .pp_left {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) -88px -80px no-repeat;
+      }
+      .pp_middle {
+        background: url(#{$pretty-image-url}/facebook/contentPatternBottom.png) top left repeat-x;
+      }
+      .pp_right {
+        background: url(#{$pretty-image-url}/facebook/sprite.png) -110px -80px no-repeat;
+      }
+    }
+  }
+  &.pp_pic_holder a:focus {
+    outline: none;
+  }
+  &.pp_overlay {
+    background: #000;
+    display: none;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 99999;
+  }
+  &.pp_pic_holder {
+    display: none;
+    position: absolute;
+    //width: 100px;
+    z-index: 100000;
+  }
+}
+
+.pp_loaderIcon {
+  display: block;
+  height: 24px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  width: 24px;
+  margin: -12px 0 0 -12px;
+}
+
+#pp_full_res {
+  line-height: 1!important;
+  .pp_inline {
+    text-align: left;
+
+    p {
+      margin: 0 0 15px;
+    }
+  }
+
+  .fancybox-inner{
+    overflow: visible;
+  }
+}
+/** Fancy Mixture */
+.pp_loaderIcon{
+  background-color: #fff;
+  height: 40px;
+  width: 40px;
+  background-position: center center;
+}
+
+/** END */

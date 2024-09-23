@@ -1,0 +1,1475 @@
+/**
+ * WPL
+ * WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+/////************************************** membership ****************************************/////
+
+.wpl_addon_membership_container {
+  padding: 0 !important;
+  //  background: darken($white,5%);
+  @include pie-clearfix;
+  &.wpl_membership_wrap {
+    border: 1px solid darken($white, 21%);
+    margin-bottom: 15px;
+  }
+  .wpl_red_msg,
+  .wpl_green_msg {
+    margin: 10px auto;
+  }
+  #wpl_login_form_show_messages {
+    margin: 10px;
+  }
+  .wpl_memberships_label,
+  .wpl_membership_addon_label {
+    background: darken($white, 2%);
+    border-bottom: 1px solid darken($white, 10%);
+    padding: 10px;
+    @include for-phone {
+      padding-bottom: 45px;
+    }
+    &:before {
+      content: "\e648";
+      display: inline-block;
+      font: 11pt/1 $font-frontend;
+      @if $text-direction == ltr {
+        margin-right: 7px;
+        padding-right: 7px;
+        border-right: 1px solid rgba($black, 0.12);
+      } @else {
+        margin-left: 7px;
+        padding-left: 7px;
+        border-left: 1px solid rgba($black, 0.12);
+      }
+    }
+  }
+  button,
+  input[type="button"],
+  input[type="submit"],
+  input[type="reset"],
+  .btn-primary {
+    background: $color_1;
+    border: 0;
+    border-bottom: 2px solid darken($color_1, 10%);
+    color: $white;
+    font-size: 13pt;
+    @include border-radius(3px);
+    font-weight: bolder;
+    padding: 3px 10px;
+    &:after {
+      content: "";
+      display: block;
+      float: right;
+    }
+  }
+  .wpl_dashboard_links {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    li {
+      line-height: 40px;
+      padding: 0 10px;
+      &:before {
+        font: 1.2em/37px $font-frontend;
+        @if $text-direction == ltr {
+          padding-right: 5px;
+          float: left;
+        } @else {
+          padding-left: 5px;
+          float: right;
+        }
+      }
+      a {
+        display: block;
+      }
+      /*  &.active {
+          color: $color_1;
+          a{
+            color: $color_1;
+          }
+        }*/
+      ul {
+        background: rgba($black, 0.05);
+        border-bottom: 1px solid darken($white, 21%);
+        border-top: 1px solid darken($white, 21%);
+        display: none;
+      }
+      &.dashboard_link:before {
+        content: "\e644";
+      }
+      &.profile_link:before {
+        content: "\e651";
+      }
+      &.changepassword_link:before {
+        content: "\e650";
+      }
+      &.logout_link:before {
+        content: "\e648";
+      }
+      &.add_prp_link:before {
+        content: "\e63b";
+      }
+
+      &.manage_prp_link:before {
+        content: "\e640";
+      }
+      &.wpl-addon-crm-link:before {
+        content: "\e67d";
+      }
+      &.wpl-addon-brokerage-link:before {
+        content: "\e945";
+      }
+      &.properties_link {
+        cursor: pointer;
+        padding: 0;
+        position: relative;
+        text-indent: 10px;
+        h4 {
+          display: inline-block;
+        }
+        &:before {
+          content: "\e64a";
+        }
+        &:after {
+          content: "\e929";
+          font: 12pt/44px $font-frontend;
+          position: absolute;
+          @if $text-direction == ltr {
+            right: 10px;
+          } @else {
+            left: 10px;
+          }
+          top: 0;
+        }
+        &.open:after {
+          content: "\e92a";
+        }
+
+        &:hover {
+          background: $white;
+          color: $color_3;
+          a {
+            color: $color_3;
+          }
+          li:hover {
+            a {
+              color: $white;
+            }
+          }
+        }
+      }
+
+      &.wpl-addon-save-searches-link::before {
+        content: "\e6ae";
+      }
+      &.wpl-addon-favorites-link:before {
+        content: "\e92c";
+        line-height: 40px;
+      }
+
+      &:hover,
+      &.active {
+        background: $color_1;
+        color: $white;
+        a {
+          color: $white;
+        }
+      }
+    }
+  }
+  .wpl_dashboard_header {
+    background: darken($white, 11%);
+    font: bold 16pt/2em $font-lato;
+    padding: 0 10px;
+    @include pie-clearfix();
+    .administrator_link {
+      @if $text-direction == ltr {
+        float: right;
+      } @else {
+        float: left;
+      }
+      font-size: 11pt;
+      &:before {
+        content: "\e63c";
+        display: inline-block;
+        font: 12pt/1 $font-frontend;
+        @if $text-direction == ltr {
+          padding-right: 10px;
+        } @else {
+          padding-left: 10px;
+        }
+      }
+    }
+  }
+  .wpl_dashboard_side2,
+  .wpl_dashboard_side1 {
+    float: left;
+    @include for-tablet {
+      width: 100% !important;
+    }
+  }
+  .wpl_dashboard_side2 {
+    background: $white;
+    border-bottom: 1px solid darken($white, 21%);
+    border-right: 1px solid darken($white, 21%);
+    width: 20%;
+    @include for-phone {
+      border-right: none;
+    }
+  }
+  .wpl_dashboard_side1 {
+    padding: 15px;
+    width: 80%;
+  }
+  .wpl-row {
+    @include for-phone {
+      margin: 0 auto;
+      & > div {
+        padding: 0;
+      }
+    }
+  }
+}
+
+/* Profile */
+#wpl_dashboard_main_content {
+  .profile-wp {
+    header {
+      display: none;
+    }
+    .required-star {
+      font-size: rem(15px);
+      color: #ff0000;
+      padding: 2px;
+    }
+    .panel-wp {
+      background: $white;
+      @include border-radius(0);
+      h3 {
+        background: darken($white, 2%);
+        border-bottom: 1px solid darken($white, 10%);
+        font: 11pt $font-lato;
+        margin-bottom: 0;
+        padding: 10px;
+        &:before {
+          content: "\e648";
+          display: inline-block;
+          font: 11pt/1 $font-frontend;
+          @if $text-direction == ltr {
+            margin-right: 7px;
+            padding-right: 7px;
+            border-right: 1px solid rgba($black, 0.12);
+          } @else {
+            margin-left: 7px;
+            padding-left: 7px;
+            border-left: 1px solid rgba($black, 0.12);
+          }
+        }
+      }
+      label {
+        @if $text-direction == ltr {
+          padding-right: 10px;
+          text-align: right;
+        } @else {
+          padding-left: 10px;
+          text-align: left;
+        }
+        @include for-phone {
+          @if $text-direction == ltr {
+            text-align: left;
+          } @else {
+            text-align: right;
+          }
+          width: 100%;
+        }
+      }
+      .wpl_listing_field_container {
+        max-width: 500px;
+        input[type="text"],
+        input[type="password"] {
+          @include calc("width", "100% - 155px");
+          @include for-phone {
+            width: 100% !important;
+          }
+        }
+      }
+      .finilize-btn {
+        @if $text-direction == ltr {
+          margin-right: 50px;
+          text-align: right;
+        } @else {
+          margin-left: 50px;
+          text-align: left;
+        }
+      }
+      .prow-upload label {
+        padding: 0;
+        text-align: center;
+        @include for-tablet {
+          @if $text-direction == ltr {
+            float: left;
+            text-align: left;
+          } @else {
+            float: right;
+            text-align: right;
+          }
+        }
+      }
+      .file-upload-wp {
+        text-align: center;
+        @include for-tablet {
+          @if $text-direction == ltr {
+            float: left;
+            text-align: left;
+          } @else {
+            float: right;
+            text-align: right;
+          }
+        }
+      }
+      .upload-preview {
+        .preview-remove-button {
+          background: rgba($black, 0.6);
+          color: $white;
+          display: none;
+          right: 0;
+          @include square(100%);
+          top: 0;
+          @include border-radius(0);
+          > span {
+            display: table;
+            &:after {
+              color: $white;
+              display: table-cell;
+              vertical-align: middle;
+            }
+          }
+        }
+        &:hover {
+          .preview-remove-button {
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* User type */
+.wpl_usertypes_container {
+  @include pie-clearfix;
+  .usertype_name {
+    font: 13pt/1.5 $font-open-sans;
+    &:before {
+      border: 1px solid rgba($black, 0.3);
+      color: $black;
+      content: "\e63c";
+      display: block;
+      font: 3em/1 $font-frontend;
+      margin: 0 auto;
+      @include border-radius(10px);
+      max-width: 120px;
+      padding: 20px;
+      @include for-phone {
+        font-size: 2em;
+      }
+    }
+  }
+  li {
+    display: block;
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    padding: 10px;
+    text-align: center;
+    width: 25%;
+    @include for-tablet {
+      width: 50%;
+    }
+    @include for-phone {
+      width: 100%;
+    }
+    &.guests {
+      .usertype_name:before {
+        content: "\e643";
+      }
+    }
+    &.agents {
+      .usertype_name:before {
+        content: "\e63c";
+      }
+    }
+    &.owners {
+      .usertype_name:before {
+        content: "\e64f";
+      }
+    }
+  }
+  .usertype_register_link {
+    background: $color_1;
+    border: 0;
+    border-bottom: 2px solid darken($color_1, 10%);
+    color: $white;
+    font-size: 13pt;
+    @include border-radius(3px);
+    font-weight: bolder;
+    padding: 3px 10px;
+  }
+}
+.wpl-membership-agreement {
+  textarea {
+    width: 100%;
+    height: 150px;
+    margin-top: 10px;
+  }
+}
+.wpl-membership-agreement-checkbox {
+  label {
+    float: none !important;
+  }
+}
+/* Change Password */
+#wpl_dashboard_change_password_form,
+#wpl_lostpassword_form_container,
+#wpl_resetpass_form {
+  //  max-width: 500px;
+  padding: 10px 15px;
+  .wpl-form-row,
+  .wpl-forgot-password-form-row,
+  .wpl-resetpass-form-row {
+    margin-bottom: 10px;
+    @include pie-clearfix;
+  }
+  label {
+    box-sizing: border-box;
+    width: 130px;
+    display: inline-block;
+    @if $text-direction == ltr {
+      float: left;
+      text-align: right;
+      padding-right: 5px;
+    } @else {
+      float: right;
+      text-align: left;
+      padding-left: 5px;
+    }
+    @include for-phone {
+      width: 100%;
+      @if $text-direction == ltr {
+        text-align: left;
+      } @else {
+        text-align: right;
+      }
+    }
+  }
+  input[type="text"],
+  input[type="password"] {
+    @include calc("width", "100% - 130px");
+    box-sizing: border-box;
+    display: inline-block;
+    @include for-phone {
+      width: 100%;
+    }
+  }
+  input[type="submit"],
+  button {
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+  }
+}
+
+.wpl_dashboard_registeration {
+  padding: 15px;
+}
+
+/* Memeberships */
+.wpl_memberships_container {
+  background: $white;
+  padding: 10px 0;
+  @include pie-clearfix;
+  > li {
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    padding: 2px 10px;
+    width: 25%;
+    @include for-tablet-land {
+      width: 33%;
+    }
+    @include for-tablet {
+      width: 50%;
+      margin-bottom: 15px;
+    }
+    @include for-phone {
+      width: 100%;
+      height: auto !important;
+    }
+    .membership_headline,
+    .membership_upgrade,
+    .membership_upgrade_link,
+    .membership_register_link {
+      background: #d9d9d9;
+    }
+    &:first-child {
+      .membership_headline,
+      .membership_upgrade,
+      .membership_upgrade_link,
+      .membership_register_link {
+        background: #9ae7f2;
+      }
+    }
+    &:nth-child(2) {
+      .membership_headline,
+      .membership_upgrade,
+      .membership_upgrade_link,
+      .membership_register_link {
+        background: #fae093;
+      }
+    }
+    &:nth-child(3) {
+      .membership_headline,
+      .membership_upgrade,
+      .membership_upgrade_link,
+      .membership_register_link {
+        background: #f3a87d;
+      }
+    }
+  }
+  .membership_details {
+    font: 9pt $font-open-sans;
+    margin: 5px 0;
+    padding: 0 7px;
+    @include for-phone {
+      font-size: 11pt;
+    }
+    li {
+      background: rgba($black, 0.03);
+      margin-bottom: 2px;
+      padding: 1px 4px;
+      @include border-radius(2px);
+      @include pie-clearfix;
+    }
+  }
+  .membership-label {
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+  }
+  .membership-value {
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+  }
+  .membership_short_description,
+  .membership_long_description {
+    font: 9pt $font-open-sans;
+    padding: 5px 10px;
+    @include for-phone {
+      font-size: 11pt;
+    }
+  }
+  .wpl_memberships_wrap {
+    background: $white;
+    border: 1px solid darken($white, 12%);
+    padding: 2px;
+    @include border-radius(5px);
+    @include calc("height", "100% - 23px");
+  }
+  .membership_headline {
+    margin: 0;
+    padding: 0 6px;
+    @include pie-clearfix;
+  }
+  .membership_name {
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    font: 14pt/2 $font-open-sans;
+  }
+  .membership_price {
+    color: $black;
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+    font: 24pt/1.1 $font-open-sans;
+  }
+  .membership_upgrade,
+  .membership_upgrade_link,
+  .membership_register_link {
+    color: $white;
+    cursor: pointer;
+    display: block;
+    font: bold 10pt/1.5 $font-open-sans;
+    position: relative;
+    text-align: center;
+    text-shadow: 0 1px 0 rgba($black, 0.75);
+    text-transform: uppercase;
+    @include border-radius(0 0 4px 4px);
+    @include for-tablet {
+      line-height: 2.5;
+    }
+    &:before {
+      background: $white;
+      border: 1px solid darken($white, 45%);
+      border-top: 0;
+      content: "";
+      display: block;
+      @include size(100%, 5px);
+      margin-top: -2px;
+      @include border-radius(0 0 4px 4px);
+      position: absolute;
+    }
+  }
+}
+
+.wpl-membership-activity-wp {
+  .wpl-payment-tabs-wp {
+    margin-bottom: 0;
+  }
+  .wpl-payment-contents-wp {
+    background: $white;
+    border: 1px solid rgba($black, 0.1);
+    margin-bottom: 15px;
+    padding: 10px;
+  }
+}
+
+/* Dashboard*/
+.wpl_dashboard {
+  background: darken($white, 5%);
+  border: 1px solid darken($white, 21%);
+  margin-bottom: 15px;
+  .wpl_memberships_container > li {
+    width: 33.33%;
+    @include for-tablet {
+      width: 100%;
+    }
+    @include for-phone {
+      width: 100%;
+    }
+  }
+}
+
+#wpl_dashboard_bottom_container {
+  > div {
+    background: $white;
+    border: 1px solid rgba($black, 0.1);
+    float: none;
+    margin-bottom: 15px;
+    width: 100%;
+  }
+}
+
+.wpl_membership_activity_container {
+  background: $white;
+  border: 1px solid rgba($black, 0.1);
+  margin-bottom: 15px;
+  .wpl_activity_title {
+    background: darken($white, 1%);
+    border-bottom: 1px solid rgba($black, 0.1);
+    font: 10pt/3em $font-open-sans;
+    margin: 0;
+    padding: 0 10px;
+  }
+}
+
+.wpl-membership-activity-wpluser-wp,
+#wpl_dashboard_bottom_container {
+  .wpl_activity_title {
+    background: darken($white, 1%);
+    border-bottom: 1px solid rgba($black, 0.1);
+    font: 10pt/3em $font-open-sans;
+    margin: 0;
+    padding: 0 10px;
+  }
+  .wpl_activity_content {
+    padding: 10px 20px;
+  }
+  .tab-content {
+    background: $white;
+    border: 1px solid rgba($black, 0.1);
+    border-bottom: 0;
+    display: none;
+    margin-bottom: 0;
+    padding: 10px 15px;
+    &.active {
+      display: block;
+    }
+  }
+  .wpl-upgrade-membership {
+    .wpl-button {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+.wpl-ewallet-wp {
+  padding: 10px 15px;
+  input[type="number"] {
+    background: none repeat scroll 0 0 #fff;
+    border: 1px solid #e6e6e6;
+    border-radius: 0;
+    color: #666;
+    height: 35px;
+    padding: 0 5px;
+    vertical-align: top;
+    @include for-phone {
+      width: 100%;
+    }
+  }
+}
+
+.wpl-ewallet-balance {
+  background: rgba($black, 0.05);
+  font: bold 10pt/2em $font-open-sans;
+  margin-bottom: 5px;
+  @include border-radius(5px);
+  @include pie-clearfix;
+  padding: 4px 10px;
+  > span {
+    display: block;
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+    font: 15pt $font-open-sans;
+  }
+}
+
+.wpl-ewallet-charge {
+  input[type="submit"] {
+    background: $color_1;
+    border: 0;
+    color: $white;
+    padding: 5px 10px;
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+    @include for-phone {
+      float: none;
+      margin-top: 5px;
+    }
+  }
+}
+
+.wpl-payment-invoice {
+  //background: url('../img/dashboard/info.png') 98% center no-repeat darken($white, 2%);
+  @include border-radius(4px);
+  border: 2px solid darken($white, 8%);
+}
+
+.wpl-membership-activity-wpluser-wp {
+  .wpl_activity_title {
+    border: 1px solid rgba($black, 0.1);
+    border-bottom: 0;
+  }
+}
+
+.wpl-membership-wpluser-head {
+  position: relative;
+  .wpl_activity_title {
+    &:before {
+      content: "\e64b";
+      display: inline-block;
+      font: 11pt/1 $font-frontend;
+      @if $text-direction == ltr {
+        margin-right: 7px;
+        padding-right: 7px;
+        border-right: 1px solid rgba($black, 0.12);
+      } @else {
+        margin-left: 7px;
+        padding-left: 7px;
+        border-left: 1px solid rgba($black, 0.12);
+      }
+    }
+  }
+}
+
+.wpl-membership-tab {
+  position: absolute;
+  @if $text-direction == ltr {
+    right: 0;
+  } @else {
+    left: 0;
+  }
+  top: 0;
+  @include for-phone {
+    position: static;
+  }
+  li {
+    line-height: 3.2em;
+    @if $text-direction == ltr {
+      border-left: 1px solid rgba($black, 0.1);
+      float: left;
+    } @else {
+      border-right: 1px solid rgba($black, 0.1);
+      float: right;
+    }
+    @include for-phone {
+      float: none;
+      border-bottom: 1px solid rgba($black, 0.1);
+      border-left: 0;
+    }
+    a {
+      display: block;
+      padding: 0 18px;
+      text-decoration: none;
+    }
+    &.wpl-gen-tab-active-parent {
+      background: $white;
+      line-height: 3.3em;
+      position: relative;
+      &:before {
+        background: $color_5;
+        content: "";
+        @include size(100%, 3px);
+        display: block;
+        left: 0;
+        position: absolute;
+        top: 0;
+      }
+    }
+  }
+}
+
+.wpl-membership-wpluser {
+  li {
+    background: rgba($black, 0.05);
+    font: 10pt $font-open-sans;
+    margin-bottom: 5px;
+    @include border-radius(5px);
+    @include pie-clearfix;
+    padding: 4px 10px;
+    &.wpl-expiry-date {
+      background: darken($white, 1%);
+      border-top: 1px solid rgba($black, 0.1);
+      margin: 15px -15px 0 -15px;
+      @include border-radius(0);
+      padding: 5px 10px 0 10px;
+      text-align: right;
+      .membership-label,
+      .membership-value {
+        display: inline-block;
+        float: none;
+      }
+    }
+  }
+  .membership-label {
+    display: block;
+    font-weight: bold;
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+  }
+  .membership-value {
+    display: block;
+    @if $text-direction == ltr {
+      float: right;
+    } @else {
+      float: left;
+    }
+  }
+}
+
+/* Login */
+#wpl_login_form_container {
+  margin: 0 auto;
+  max-width: 800px;
+  min-height: 280px;
+  padding-top: 20px;
+  .wpl_login_form_label {
+    background: darken($white, 2%);
+    border-bottom: 1px solid darken($white, 10%);
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  .wpl-login-form-row {
+    margin-bottom: 8px;
+    padding: 0 15px;
+    @include pie-clearfix;
+  }
+  input[type="text"],
+  input[type="password"] {
+    width: 100%;
+  }
+  button {
+    @if $text-direction == ltr {
+      padding: 2px 35px 2px 10px;
+      float: right;
+    } @else {
+      padding: 2px 10px 2px 35px;
+      float: left;
+    }
+    @include border-radius(3px);
+  }
+  input[type="checkbox"] {
+    margin-right: 10px;
+    @if $text-direction == ltr {
+      order: 0;
+    } @else {
+      order: 1;
+    }
+  }
+  .wpl-login-form-remember-wp {
+    display: flex;
+    align-items: center;
+    @if $text-direction == ltr {
+      justify-content: flex-end;
+    } @else {
+      justify-content: flex-start;
+    }
+  }
+  a {
+    text-decoration: unset;
+  }
+  #wpl_login_submit,
+  #wpl_logout_submit {
+    position: relative;
+    &:after {
+      content: "\e647";
+      display: inline-block;
+      font: 11pt/1 $font-frontend;
+      position: absolute;
+      top: 8px;
+      @if $text-direction == ltr {
+        right: 6px;
+      } @else {
+        left: 6px;
+      }
+    }
+  }
+}
+
+#wpl-login-form-ajax-loader {
+  position: absolute;
+}
+
+.wpl-login-form {
+  background: rgba($white, 0.9);
+  border: 1px solid darken($white, 10%);
+  margin-left: 140px;
+  max-width: 600px;
+  position: relative;
+  @include for-tablet {
+    margin: 0;
+  }
+}
+
+.wpl-logout-form-row {
+  padding: 10px;
+}
+
+.wpl_membership_addon_label {
+  margin-bottom: 15px;
+  &:before {
+    content: "\e648";
+    display: inline-block;
+    font: 11pt/1 $font-frontend;
+    @if $text-direction == ltr {
+      border-right: 1px solid rgba($black, 0.12);
+      margin-right: 7px;
+      padding-right: 7px;
+    } @else {
+      border-left: 1px solid rgba($black, 0.12);
+      margin-left: 7px;
+      padding-left: 7px;
+    }
+  }
+}
+
+.wpl_facebook_sign_in {
+  text-align: center;
+}
+
+.wpl-login-separator {
+  text-align: center;
+}
+
+.wpl-login-form-row-wrap {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: center;
+  justify-content: center;
+  .wpl-default-login {
+    flex: auto;
+  }
+}
+
+.wpl-user-login-register {
+  .wpl-social-login-container,
+  .wpl-login-register-form-wp {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .wpl-login-register-form-wp {
+    width: 100%;
+  }
+  .wpl-social-login-container {
+    width: 100%;
+  }
+}
+
+.wpl-social-login-container {
+  padding: 18px 0 10px;
+  .wpl-login-form-row {
+    @include pie-clearfix;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 10px;
+    padding: 0 20px !important;
+    text-align: center;
+    @include for-phone {
+      grid-template-columns: 1fr;
+    }
+  }
+  .wpl_soc_button_sign_in {
+    border-radius: 3px;
+    color: $co-1;
+    padding: 10px;
+    display: inline-block;
+    min-width: 172px;
+    position: relative;
+  }
+  .wpl_soc_button_sign_in:before {
+    display: block;
+    position: absolute;
+    top: 6px;
+    left: 10px;
+    font-family: $font-frontend;
+    font-size: 20px;
+  }
+  .wpl_twitter_sign_in_btn {
+    @extend .wpl_soc_button_sign_in;
+    @include background-image(linear-gradient(top, $co-91, $co-92));
+    &:before {
+      @extend .wpl_soc_button_sign_in:before;
+      content: "\e00b";
+    }
+    span {
+      padding-left: 30px;
+    }
+    &:hover {
+      background: $co-91;
+    }
+  }
+  .g-signin2 {
+    .abcRioButtonLightBlue {
+      border-radius: 3px;
+      width: 100% !important;
+      text-align: left;
+      height: 38px !important;
+      line-height: 38px;
+    }
+    .abcRioButtonIcon{
+      padding: 10px !important;
+    }
+    .abcRioButtonContents{
+      line-height: 38px !important;
+    }
+  }
+  .wpl_linkedin_button {
+    @extend .wpl_soc_button_sign_in;
+    background: $co-90;
+    padding-left: 35px;
+    &:before {
+      display: block;
+      position: absolute;
+      top: 3px;
+      left: 10px;
+      content: "in";
+      font-size: 22px;
+      font-family: sans-serif;
+      font-weight: bold;
+    }
+  }
+  .wpl_instagram_sign_in_btn {
+    @extend .wpl_soc_button_sign_in;
+    @include background-image(linear-gradient(top, $co-26, $co-31));
+    padding-left: 35px;
+    &:before {
+      @extend .wpl_soc_button_sign_in:before;
+      content: "\e941";
+    }
+    &:hover {
+      background: $co-26;
+    }
+  }
+  .wpl_google_sign_in_btn
+  {
+    background: rgb(242, 242, 242);
+    border: 1px solid rgb(242, 242, 242);
+    border-radius: 3px;
+    display: block;
+    position: relative;
+    padding: 10px 20px 10px 10px;
+    line-height: 2;
+    &:before
+    {
+      display: inline-block;
+      vertical-align: middle;
+      content: "";
+      width: 40px;
+      height: 40px;
+      background: url(../img/social/google_login.svg) no-repeat;
+      background-size: contain;
+    }
+    span{
+      vertical-align: middle;
+    }
+  }
+}
+
+/* Register */
+
+#wpl_register_info {
+  font-size: rem(13pt);
+}
+
+.wpl_dashboard_registeration {
+  position: relative;
+}
+
+#wpl_membership_agreement + label {
+  padding: 12px 0;
+  width: auto;
+}
+
+.wpl-subscription-steps {
+  margin: 35px !important;
+  position: absolute;
+  @if $text-direction == ltr {
+    right: 0;
+  } @else {
+    left: 0;
+  }
+  top: -58px;
+  li {
+    background: $color_1;
+    display: inline-block;
+    height: 5px;
+    margin: 15px 0 0 0;
+    min-width: 130px;
+    position: relative;
+    @include for-phone {
+      min-width: 106px;
+    }
+    span {
+      display: block;
+      margin-top: -20px;
+      text-align: center;
+    }
+    &:before,
+    &:after {
+      background: $white;
+      border: 1px solid $color_1;
+      color: $white;
+      content: "";
+      display: block;
+      font-size: 15pt;
+      font-weight: bold;
+      position: absolute;
+      text-align: center;
+      top: -16px;
+      @include square(35px);
+      @include border-radius(50%);
+    }
+    &:before {
+      @if $text-direction == ltr {
+        left: 0;
+        margin-left: -12%;
+      } @else {
+        right: 0;
+        margin-right: -12%;
+      }
+    }
+    &:first-child {
+      &:after {
+        display: none;
+      }
+      &:before {
+        background: $color_1;
+        content: "\2713";
+        @if $text-direction == ltr {
+          margin-left: -26%;
+        } @else {
+          margin-right: -26%;
+        }
+      }
+    }
+    &:last-child {
+      &:after {
+        @if $text-direction == ltr {
+          margin-right: -26%;
+          right: 0;
+        } @else {
+          margin-left: -26%;
+          left: 0;
+        }
+      }
+    }
+    &.active {
+      &:before {
+        background: $color_1;
+        content: "\2713";
+      }
+    }
+  }
+}
+
+.wpl_membership_field_row,
+.wpl_add_agent_field_row {
+  margin: 3px auto;
+  label {
+    width: 120px;
+    @include for-phone {
+      margin: 10px 0;
+    }
+    &[for="wpl_membership_agreement_textarea"] {
+      vertical-align: top;
+    }
+  }
+  input,
+  textarea,
+  select {
+    @include for-phone {
+      width: 100%;
+    }
+  }
+  input[name="agreement"] {
+    @include for-phone {
+      width: auto;
+    }
+  }
+}
+
+.wpl-payment-tabs-wp {
+  border-bottom: 4px solid $color_1;
+  margin: 15px auto;
+  ul {
+    li {
+      background: $color_1;
+      display: inline-block;
+      line-height: 35px;
+      padding: 0 15px;
+      a {
+        color: $white;
+        &:hover {
+          color: $white;
+        }
+      }
+      &.wpl-membership-tab-title {
+        background: $co-50;
+        a {
+          color: $color_1;
+        }
+      }
+      &.wpl-gen-tab-active-parent {
+        background: $color_1;
+        a {
+          color: $white;
+        }
+      }
+    }
+  }
+}
+
+.wpl-membership-wpluser-tab-container {
+  .wpl-payment-tabs-wp {
+    border-bottom: 1px solid darken($white, 8%);
+    ul {
+      padding: 0 20px;
+      li {
+        background: darken($white, 5%);
+        border: 1px solid darken($white, 8%);
+        border-bottom: 0;
+        margin: 0 3px;
+        a {
+          color: #b2b2b2;
+          &:hover {
+            color: #b2b2b2;
+          }
+        }
+      }
+    }
+    .wpl-gen-tab-active-parent {
+      background: $white;
+      color: #333;
+      position: relative;
+      &:after {
+        background: $white;
+        bottom: -2px;
+        content: "";
+        display: block;
+        height: 2px;
+        left: 0;
+        position: absolute;
+        width: 100%;
+      }
+    }
+  }
+  .wpl-payment-contents-wp {
+    //background: url("../img/dashboard/balance.png") no-repeat right bottom;
+    min-height: 160px;
+  }
+  .wpl-ewallet-pay {
+    color: $color-5;
+    font: 18pt/1.5 $font-open-sans;
+    text-align: center;
+  }
+}
+
+/*Login + Register FB button*/
+.wpl_facebook_sign_up,
+.wpl_facebook_sign_in {
+  h2 {
+    display: block;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 20px;
+    font-size: 21px;
+    line-height: inherit;
+    color: #333;
+    border: 0;
+    border-bottom: 1px solid $co-86;
+  }
+  a {
+    display: block;
+    position: relative;
+    border: 1px solid #344768;
+    border-radius: 3px;
+    color: #fff;
+    padding: 10px;
+    @include background-image(linear-gradient(top, $co-87, $co-88));
+    &:before {
+      display: block;
+      position: absolute;
+      content: "\e00c";
+      top: 6px;
+      left: 10px;
+      font: {
+        family: $font-frontend;
+        size: 20px;
+      }
+    }
+    &:hover {
+      color: $co-89;
+    }
+    span {
+      padding: 0 0 0 30px;
+    }
+  }
+}
+
+//region = Save Search Button
+
+.wpl-plisting-link-btn,
+.wpl-save-search-wp {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  @include for-tablet {
+    & > a {
+      & > span {
+        display: none;
+      }
+    }
+  }
+  & > a {
+    @include transition(background 0.1s linear);
+    @include border-radius(0 0 1px 1px);
+    display: inline-block;
+    background: rgba($co-8, 0.3);
+    color: $co-29;
+    padding: 5px 15px;
+    height: 28px;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 18px;
+    border-bottom: 1px solid lighten($co-25, 2%);
+    cursor: pointer;
+
+    &:hover {
+      background: rgba($co-29, 0.9);
+      border-bottom-color: lighten($co-29, 10%);
+      color: $co-1;
+    }
+    &::after {
+      font: 13px $font-frontend;
+      display: inline-block;
+      vertical-align: baseline;
+    }
+    & > span {
+      margin-right: 10px;
+    }
+  }
+}
+.wpl-save-search-wp {
+  & > a {
+    &::after {
+      content: "\e014";
+    }
+  }
+}
+.wpl-landing-page-generator-wp {
+  left: 125px;
+  @include for-tablet {
+    left: 45px;
+    & > a {
+      padding-right: 15px !important;
+      &:after {
+        position: static !important;
+      }
+    }
+  }
+  & > a {
+    padding-right: 30px;
+    &::after {
+      content: "\e918";
+      font-size: 16px;
+      position: absolute;
+      right: 10px;
+      top: 6px;
+    }
+  }
+}
+.wpl-property-listing-mapview {
+  .wpl-plisting-link-btn {
+    bottom: 5px;
+    & > a {
+      & > span {
+        display: none;
+      }
+    }
+  }
+  .wpl-landing-page-generator-wp {
+    left: 45px;
+    & > a {
+      padding-right: 15px !important;
+      &:after {
+        position: static !important;
+      }
+    }
+  }
+}
+//endregion

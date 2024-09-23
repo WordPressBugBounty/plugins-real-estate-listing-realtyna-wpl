@@ -1,0 +1,32 @@
+.wpl-mobile-app-btn
+{
+  padding: 0 10px 0 0;
+  float: left;
+  & > a
+  {
+    display: block;
+  }
+  img
+  {
+    height:30px;
+    width: auto;
+  }
+}
+.wpl-mobile-app-on-header
+{
+  margin: 0 !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #ddd;
+  background: #fafafa;
+  h1,h2,h3,h4,h5,h6
+  {
+    line-height: 25px;
+    font-size: 12px;
+    margin: 0 0 5px 0;
+  }
+  .wpl-mobile_app-widget
+  {
+    padding: 10px !important;
+  }
+}
+

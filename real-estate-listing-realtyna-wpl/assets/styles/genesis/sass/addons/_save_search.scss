@@ -1,0 +1,24 @@
+.wpl-save-search-addon {
+  .wpl-gen-form-row {
+    label {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font: {
+        family: $fo-2;
+        size: 18px;
+        weight: bold;
+      }
+
+    }
+    input[type="text"] {
+      @include wpl-input(block, 100%, 20px, $co-6);
+    }
+    input[type="email"] {
+      @include wpl-input(block, 100%, 20px, $co-6);
+    }
+    button[type="submit"] {
+      @include wpl-button(100%);
+    }
+  }
+}

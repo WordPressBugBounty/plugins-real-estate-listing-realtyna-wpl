@@ -1,0 +1,295 @@
+.form-field>.btn-primary{;
+  border-radius:5px !important;
+  width:100%;
+}
+.wpl-review-submit .btn-primary{
+  border-radius:5px;
+}
+
+/*Mortgage Calculator*/
+.wpl_mcalc_container {
+  color: $co-4;
+  .form-field {
+    display: block;
+    & > label {
+      display: block;
+      text-align: left;
+    }
+    .wpl_mcalc_field{
+      border: 1px solid $co-6;
+      border-radius: 5px;
+      display: flex;
+      margin-bottom: 15px;
+    }
+    & > span {
+      width: 100%;
+
+      .wpl-mortgage-symbol {
+        width: 70px;
+        text-align: center;
+        padding: 3px 0;
+        order: 1;
+        line-height: 36px;
+        i{
+          display: inline-block;
+        }
+      }
+      input {
+        width: calc(100% - 75px);
+        margin: 0;
+        border: 0;
+        border-left: 1px solid $co-6;
+        border-radius: 0;
+        height: 42px;
+        order: 2;
+        font-size: 15px;
+      }
+      & > .wpl-mortgage-percent {
+        display: flex;
+        width: auto;
+        border-radius: 5px;
+        padding: 0;
+        flex:1;
+      }
+    }
+  }
+  .form-result {
+    color: $co-0;
+    label {
+      font-size: 18px;
+      font-weight: normal;
+      float: none;
+      vertical-align: middle;
+      display: inline-block;
+    }
+    .text-box{
+      border: none;
+      font-size: 18px;
+      font-weight: 500;
+      padding-left: 0;
+    }
+    .wpl-mortgage-symbol{
+      font-size: 18px;
+      font-weight: 500;
+      float: none;
+    }
+  }
+}
+.wpl_prp_show_layout2_container .wpl_prp_position3_boxes.mortgage_calculator{
+  border: none !important;
+}
+
+/*Review Addon*/
+.wpl-rate-title{
+  color: $co-5;
+  font: {
+    family: inherit;
+    size: 15px;
+    weight: 500;
+  }
+}
+.br-wrapper a{
+  background: $co-1;
+  border-bottom: 1px solid $co-6;
+  border-top: 1px solid $co-6;
+  box-shadow: none;
+  width: 17%;
+  &:first-child{
+    border-left: 1px solid $co-6;
+  }
+  &:nth-child(5){
+    border-right: 1px solid $co-6;
+  }
+}
+.br-wrapper .br-widget .br-current-rating{
+  padding: 0 5px;
+  width: 15%;
+  font: {
+    family: inherit;
+    size: 15px;
+    weight: bold;
+    style: normal;
+  }
+}
+.wpl-rate-info{
+  top: 8px;
+  right: 3%;
+  color: $co-4;
+  font:{
+    family: inherit;
+    size: 12px;
+  }
+}
+.wpl-review-submit .btn-primary{
+  width: 100%;
+  font-size: 14px;
+  font-family: inherit;
+  padding: 10px;
+}
+.wpl-review-review-form-container {
+  .wpl-review-review-txt,
+  .wpl-review-review-txt-content {
+    box-shadow: none;
+    border-color: $co-6;
+  }
+}
+
+/*Booking Add-on*/
+
+.wpl-booking-check-row input[type=text]{
+  height: 42px;
+  border: 1px solid $co-6;
+  border-radius: 4px;
+  padding: 6px 15px;
+  font-size: 15px;
+}
+.ui-datepicker td a, .ui-datepicker td span{
+  text-align: center !important;
+}
+.ui-datepicker .ui-datepicker-next, .ui-datepicker .ui-datepicker-prev{
+  max-height: 100%;
+}
+
+/*Google Map*/
+
+.wpl_aps_container{
+  label{
+    font-size: 11px;
+    margin-bottom: 0;
+  }
+}
+.wpl_map_canvas .gm-bundled-control-on-bottom {
+  & > div > div > button:after, & > div > div > div:after {
+    line-height: 35px;
+  }
+}
+
+/*Complex Add-on*/
+
+.wpl-complex-tabs-wp{
+  border-bottom: none;
+  margin-bottom: 0;
+  &>ul {
+    &>li {
+      margin: 0;
+      border-right: 1px solid $co-15;
+      &> a {
+        color: $co-0;
+        text-transform: uppercase;
+        border-radius: 0;
+        padding: 13px 15px;
+        font:{
+          style: normal;
+          weight: 500;
+          size: 14px;
+        }
+        &.wpl-gen-tab-active {
+          background: $co-1 !important;
+          color: $co-0;
+        }
+      }
+    }
+  }
+}
+.wpl-complex-unit{
+  padding: 40px;
+  background: $co-1;
+}
+.wpl-complex-unit-cnt .wpl-complex-unit-bot{
+  padding-bottom: 30px;
+}
+
+/*Neighborhood Add-on*/
+.wpl-neighborhood-addon{
+  &>.wpl_property_listing_list_view_container {
+    & > .wpl_sort_options_container {
+      width: 100%;
+    }
+    .wpl_prp_listing_icon_box {
+      text-align: left !important;
+    }
+  }
+  &.wpl_property_listing_container .wpl_prp_listing_icon_box {
+    & > div {
+      display: inline-block;
+      .label {
+        display: inline-block;
+        color: $co-0;
+        font:{
+          size: 13px;
+          weight: 500;
+        }
+      }
+    }
+  }
+  .wpl_prp_container{
+    .wpl_prp_container_content_right{
+      position: static;
+    }
+  }
+  &.wpl_prp_show_container{
+    .wpl_property_listing_container{
+      .wpl_prp_listing_icon_box {
+        text-align: left !important;
+        margin-left: -5px;
+        & > div {
+          color: $co-0 !important;
+          margin: 0 5px;
+          font-size: 13px;
+          font-weight: 500;
+          padding: 0;
+          float: none !important;
+          text-align: center;
+          &>span{
+            display: inline-block;
+          }
+        }
+      }
+    }
+  }
+}
+
+/*Property preview*/
+#wpl_prp_show_container.wpl_prp_show_container_preview{
+  .wpl_prp_show_tabs {
+    .tabs_box {
+      width: auto;
+      float: none;
+      right: 0;
+    }
+    .tabs {
+      li a {
+        &[href="#tabs-1"]:after {
+          content: '\e935';
+        }
+        &[href="#tabs-2"]:after {
+          content: '\e60f';
+        }
+        &[href="#tabs-3"]:after {
+          content: '\e908';
+        }
+      }
+    }
+  }
+  .wpl_prp_container_content .wpl_prp_show_detail_boxes_cont .rows{
+    width: 100%;
+    margin: 0;
+    &.feature.single {
+      padding-right: 20px;
+      &:after {
+        right: 0;
+        left: auto;
+      }
+    }
+  }
+  .wpl_prp_container_title_right{
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+}
+
+/*Booking Add-on*/
+.wpl-booking-button-date .btn{
+  border-radius: 4px;
+}

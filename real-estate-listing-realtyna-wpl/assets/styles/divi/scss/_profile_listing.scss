@@ -1,0 +1,255 @@
+.wpl_profile_listing_container{
+
+  .wpl_list_grid_switcher .list_view{
+    border-right: 2px solid darken($co-4,7%);
+    border-radius: 0 20px 20px 0;
+  }
+  .wpl-column {
+    .wpl_profile_container {
+      border-bottom: none;
+
+      .wpl_profile_picture{
+        height: 300px;
+        padding: 0;
+        @include for-phone{
+          height: auto;
+          line-height: normal;
+        }
+        .back {
+          @include transform(none);
+          font-family: inherit;
+          background: transparent !important;
+          z-index: 4;
+          line-height: normal;
+          opacity: 0;
+          .view_properties {
+            background: rgba($co-0, .8) !important;
+            text-indent: -9999px;
+            &:after {
+              @include calc(left,'50% - 20px');
+              @include calc(top,'50% - 20px');
+              content: '\30';
+              text-indent: 0;
+              display: inline-block;
+              position: absolute;
+              border: 3px solid;
+              border-radius: 7px;
+              padding: 1px;
+              font: {
+                family: $fo-modules;
+              }
+            }
+          }
+
+        }
+        &:hover {
+            .front {
+              transform: none;
+            }
+            .back {
+              transform: none;
+              opacity: 1;
+            }
+        }
+      }
+
+      .wpl_profile_container_title {
+        padding: 5px 0;
+        min-height: 68px;
+        .title {
+          text-transform: uppercase;
+          color: $co-7;
+          font: {
+            size: 22px;
+            family: inherit;
+            weight: bold;
+          }
+        }
+        a {
+          color: $co-6 !important;
+        }
+      }
+      ul {
+        margin: 0 auto;
+        padding: 10px 0 !important;
+        min-height: 51px;
+        width: 100%;
+        text-align: center;
+        background-color: $co-1;
+        li {
+          display: inline-block;
+          float: none;
+          margin-bottom: 0;
+
+          a {
+            display: block;
+            color: rgba($co-2,.5) !important;
+          }
+          a:after {
+            text-indent: 0;
+            width: 30px;
+            height: 30px;
+            display: block;
+            font: 22px/30px $fo-wpl;
+            top: 0;
+            position: absolute;
+          }
+          &.website {
+            a:after {
+              content: '\e010';
+            }
+          }
+          .phone-link:after {
+            content: '\e00f';
+          }
+          .mobile-link:after {
+            content: '\e008';
+          }
+          &.fax {
+            vertical-align: bottom;
+            a {
+              display: block;
+              &:after {
+                content: "\e924";
+                font: 24px/30px $fo-wpl;
+              }
+            }
+          }
+
+          &:after {
+            display: none;
+          }
+        }
+      }
+      &.grid_box {
+        &:hover {
+          border: none;
+        }
+      }
+      &.row_box {
+        min-height: 203px;
+        border: none;
+        .wpl_profile_picture {
+          margin: 0;
+          height: 100%;
+          line-height: 11px;
+          width: 38%;
+          @include for-phone {
+            float: none;
+            width: 100%;
+          }
+          .front {
+            background: transparent;
+            .no_image:before {
+              font-size: 14.5em;
+            }
+          }
+        }
+        .wpl_profile_container_title {
+          padding: 0 0 0 10px;
+          width: 62%;
+          @include for-phone {
+            width: 100%;
+            text-align: center;
+          }
+          .title {
+            @include for-phone {
+              text-align: center;
+            }
+            a:first-child {
+              position: relative;
+              @include for-phone {
+                left: 0;
+                right: 0;
+                display: inline-block;
+              }
+            }
+          }
+          & > a {
+            @include for-phone {
+              display: inline-block;
+            }
+          }
+          .view_properties {
+            display: none;
+          }
+        }
+        ul {
+          width: 62%;
+          text-align: left;
+          background-color: transparent;
+          padding: 0 10px !important;
+          display: block;
+          @include for-phone {
+            width: 100%;
+            text-align: center;
+          }
+          li {
+            text-align: left;
+            width: 100%;
+            font-size: 15px;
+            color: rgba($co-2,.5);
+            font-weight: 400;
+            height: 25px;
+            line-height: 25px;
+            @include for-tablet-sm {
+              float: none;
+            }
+            &[itemprop="telephone"] {
+              a {
+                color: transparent !important;
+                &:after {
+                  color: rgba($co-2, .5);
+                }
+              }
+            }
+            a {
+              color: rgba($co-0, .5);
+            }
+            a:after {
+              left: -30px;
+              font-size: 16px;
+              line-height: 25px;
+              height: 25px;
+            }
+            &.website {
+              @include for-phone {
+                width: 100%;
+                box-sizing: border-box;
+              }
+              a:after {
+                top: 0;
+              }
+            }
+          }
+        }
+        .about {
+          display: none;
+        }
+      }
+    }
+  }
+
+  .wpl-row:not(.wpl-small-up-1){
+    .wpl-column{
+      width: 50%;
+      @include for-tablet-sm{
+        width: 100%;
+      }
+    }
+  }
+  .wpl_list_grid_switcher:before{
+    display: none;
+  }
+  .wpl-large-up-6 .wpl-column {
+    .wpl_profile_container .wpl_profile_picture {
+      height: 155px;
+      .no_image:before{
+        font-size: 11em;
+      }
+    }
+  }
+  .wpl-large-up-4  .wpl-column .wpl_profile_container .wpl_profile_picture{
+    height: 247px;
+  }
+}

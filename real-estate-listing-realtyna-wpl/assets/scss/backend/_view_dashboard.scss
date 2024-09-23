@@ -1,0 +1,689 @@
+.wpl-dashboard-wp {
+
+  .wpl-dashboard-ver {
+    color: $co-12;
+    font-size: pem(14px);
+  }
+
+  .side-changes {
+    //margin-left: 15px;
+    &.side-3 {
+      @include for-tablet {
+        width: 100%;
+      }
+    }
+
+    .panel-body {
+      max-height: 120px;
+      margin-bottom: 15px;
+      &::-webkit-scrollbar-thumb {
+        background-color: rgba(#000, 0.2);
+        background-clip: padding-box;
+        border: solid transparent;
+        border-width: 1px 0 1px;
+        min-height: 28px;
+        padding: 100px 0 0;
+        box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .07);
+      }
+      &::-webkit-scrollbar {
+        height: 16px;
+        overflow: visible;
+        width: 6px;
+      }
+    }
+  }
+
+  .banner-side {
+    //margin-top: 15px;
+  }
+
+  #dashboard-links-wp {
+    margin-top: 15px;
+    margin-bottom: 45px;
+    ul {
+      text-align: center;
+      li {
+        display: inline-block;
+        margin-left: 10px;
+        margin-top: 30px;
+        &:first-child {
+          margin-left: 0;
+        }
+
+        a {
+          display:inline-block;
+
+          span {
+            display: block;
+          }
+
+          span.box {
+            @include gradient-directional(lighter($co-16, 60%) 0, $co-1 50%,125deg);
+            @include box-shadow(inset 0 0 1px 1px $co-1, 1px 1px 2px rgba($co-0, 0.3));
+            border: 1px solid $co-16;
+            position: relative;
+            display: block;
+            height: 110px;
+            width: 110px;
+            overflow: hidden;
+            i {
+              @include transition(box-shadow 0.2s ease, background 0.1s linear);
+              display: block;
+            }
+          }
+
+          span.title {
+            @include transition(color 0.2s ease);
+            text-align: center;
+            color: $co-4;
+            font: bold rem(14px) $font-lato;
+            margin-top: 8px;
+          }
+
+          &:hover {
+
+            span.box {
+              i {
+                @include box-shadow(0 0 70px 45px $co-1);
+                background-color: $co-1;
+              }
+            }
+
+            span.title {
+              color: $co-0;
+            }
+
+          }
+
+        }
+
+        i {
+          @include wpl-set-svg("icon-default-dash");
+          width: 60%;
+          height: 60%;
+          top: 20%;
+          left: 20%;
+          position: absolute;
+        }
+
+        // Data structure
+        &.link-2 i {
+          @include wpl-set-svg("icon-data-structure-dash");
+        }
+
+        // Flex
+        &.link-11 i {
+          @include wpl-set-svg("icon-flex-dash");
+        }
+
+        // Location
+        &.link-8 i {
+          @include wpl-set-svg("icon-locations-dash");
+        }
+
+        // Settings
+        &.link-3 i {
+          @include wpl-set-svg("icon-settings-dash");
+        }
+
+        // Membership
+        &.link-9 i {
+          @include wpl-set-svg("icon-membership-dash");
+        }
+
+        // User
+        &.link-4 i{
+          @include wpl-set-svg("icon-user-dash");
+        }
+
+        // My Profile
+        &.link-5 i{
+          @include wpl-set-svg("icon-profile-dash");
+        }
+
+        // Add Listing
+        &.link-6 i{
+          @include wpl-set-svg("icon-listing-dash");
+        }
+
+        // Listing Manager
+        &.link-7 i{
+          @include wpl-set-svg("icon-listing-manager-dash");
+        }
+
+        // Submit Ticket
+        &.link-99 i{
+          @include wpl-set-svg("icon-ticket-dash");
+        }
+
+        // MLS Addon
+        &.link-101 i{
+          @include wpl-set-svg("icon-mls-dash");
+        }
+
+        // Importer Addon
+        &.link-151 i{
+          @include wpl-set-svg("icon-importer-dash");
+        }
+
+        // Complex Addon
+        &.link-171 i{
+          @include wpl-set-svg("icon-complex-dash");
+        }
+
+        // Demographics Addon
+        &.link-211 i{
+          @include wpl-set-svg("icon-demographic-dash");
+        }
+
+        // Payment Addon
+        &.link-121 i{
+          @include wpl-set-svg("icon-payment-dash");
+        }
+
+        // Membership Addon
+        &.link-191 i{
+          @include wpl-set-svg("icon-membership-dash");
+        }
+
+        &.link-221 i{
+          @include wpl-set-svg("icon-calendar-dash");
+        }
+
+        &.link-271 i{
+          @include wpl-set-svg("icon-booking-header");
+        }
+
+        &.link-231 i{
+          @include wpl-set-svg("icon-crm-dash");
+        }
+        &.link-291 i{
+          @include wpl-set-svg("icon-franchise");
+        }
+        &.link-341 i{
+          @include wpl-set-svg("icon-idx");
+        }
+      }
+    }
+  }
+
+  .side-ni-addons,.side-ni-addons.side-5 {
+    @include for-tablet {
+      width: 100%;
+    }
+  }
+  .sidebar-wp .side-addons {
+    @include for-tablet{
+      width: 100%;
+    }
+    .panel-body {
+      padding: 0;
+      .wpl-addons-install-wp {
+        padding: 15px 0;
+        border-bottom: 1px solid $color-panel-border;
+
+        & > label, & > .file-upload-wp {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+      }
+
+      .wpl-addons-wp {
+        .wpl-addon-row {
+          @include calc(width, '100% - 40px');
+          border-bottom: 1px solid $co-25;
+          margin: 0 20px;
+          min-height: 40px;
+          padding: 10px 0;
+          label, input, span {
+            display: inline-block;
+            vertical-align: middle;
+          }
+          &:last-child{
+            border: none;
+          }
+        }
+        .wpl_addon_info{
+          color: $co-44;
+          font-family: $font-open-sans;
+          position: relative;
+          @if $text-direction == ltr
+          {
+            float: right;
+          } @else
+          {
+            float: left;
+          }
+        }
+        .wpl_addon_message {
+          border: 1px solid $co-36;
+          border-radius: 3px;
+          color: $co-65 !important;
+          font: 11px/13px $font-open-sans;
+          min-height: 32px;
+          left: -320px;
+          margin-top: -4px;
+          padding: 3px;
+          position: absolute;
+          width: 305px;
+        }
+        .wpl_addon_name {
+          width: auto;
+          @if $text-direction == ltr
+          {
+            text-align: left;
+          } @else
+          {
+            text-align: right;
+          }
+        }
+        .wpl_addon_log_btn{
+          background: $co-44 none repeat scroll 0 0;
+          border-radius: 3px;
+          color: $white;
+          cursor: pointer;
+          font: bold 9px/13px $font-archivo-narrow;
+          padding: 0 4px;
+          height: 13px;
+          margin: 0;
+          &:hover{
+            background-color: $color_1;
+          }
+        }
+        .wpl_addon_log_info{
+          color: $co-66;
+          font: 13px/20px $font-open-sans;
+          margin-top: 15px;
+          max-height: 160px;
+          overflow: auto;
+          width: 100%;
+        }
+        .wpl-log-active .wpl_addon_log_btn{
+          background-color: $color_1;
+          &::after{
+            content: "\e629";
+            font: bold 8px $font-wpl-backend;
+            margin: 0 0 0 2px;
+          }
+        }
+        .wpl-addon-changelog
+        {
+          max-height: 160px;
+          display: none;
+          margin-top: 15px;
+          width: 100%;
+          h4
+          {
+            margin: 10px 0;
+          }
+        }
+        .wpl-changelog-link
+        {
+          margin: 0 10px;
+          font-size: 12px;
+          &:focus
+          {
+            @include box-shadow(none);
+          }
+        }
+      }
+      label {
+        display: inline-block;
+        width: 150px;
+        text-align: right;
+        @if $text-direction == ltr
+        {
+          padding-right: 5px;
+        } @else
+        {
+          padding-left: 5px;
+        }
+      }
+    }
+  }
+  #wpl_dashboard_ni_addons .panel-body{padding: 0}
+  .wpl-ni-addons-no-optional {
+    padding: 10px 15px;
+  }
+  .wpl_ni_addons_container{
+    padding: 0;
+    .wpl-ni-addon-row {
+      border-bottom: 1px dashed $co-33;
+      margin: 0 20px;
+      padding: 10px 0;
+      position: relative;
+      &.wpl_ni_addons_custom,&#wpl_ni_addons_container1,&#wpl_ni_addons_container4,&#wpl_ni_addons_container5,&#wpl_ni_addons_container7{
+        background: $white none repeat scroll 0 0;
+        margin: 0 ;
+        padding: 10px 20px;
+        border: none;
+        .readmore_link{
+          @if $text-direction == ltr
+          {
+            right: 20px;
+          } @else
+          {
+            left: 20px;
+          }
+        }
+        &::after {
+          border-bottom: 1px dashed #ccc;
+          content: "";
+          display: block;
+          height: 10px;
+          margin: 0 auto -10px;
+          position: relative;
+          width: 100%;
+        }
+      }
+      &#wpl_ni_addons_container7::after{
+        border: none;
+      }
+      &#wpl_ni_addons_container3{
+        background: $co-69 none repeat scroll 0 0;
+        border-top: 1px solid $co-70;
+        border-right: 1px solid $co-70;
+        border-bottom: 1px solid $co-70;
+        border-left: 5px solid $co-70;
+        margin: 0 -1px;
+        padding: 10px 20px;
+        @include box-shadow(0 6px 15px -15px);
+        .wpl_ni_addons_addon_name{
+          color: $co-70;
+        }
+        .readmore_link{
+          background-color: $co-70;
+          @if $text-direction == ltr
+          {
+            right: 20px;
+          } @else
+          {
+            left: 20px;
+          }
+          &:hover{
+            background-color: darken($co-70,10);
+          }
+        }
+      }
+      span{font-family: $font-open-sans}
+      &:last-child{
+        border: none;
+      }
+    }
+    .wpl_ni_addons_addon_name{
+      font: 600 14px $font-open-sans;
+      &::before {
+        content: "\e601";
+        font: 8px/20px $font-wpl-backend;
+        margin-right: 2px;
+        vertical-align: text-top;
+        color: $color_1;
+      }
+    }
+    .wpl_ni_addon_tag {
+      background: $co-67 none repeat scroll 0 0;
+      border-radius: 3px;
+      color: $white;
+      display: inline-block;
+      font: bold 9px/12px $font-arial !important;
+      height: 15px;
+      padding: 2px 4px;
+      text-transform: uppercase;
+      vertical-align: middle;
+    }
+    .wpl_ni_addon_description {
+      color: $co-66;
+      font: 13px $font-open-sans;
+      margin-top: 2px;
+      @if $text-direction == ltr
+      {
+        padding-right: 60px;
+      } @else
+      {
+        padding-left: 60px;
+      }
+    }
+    .readmore_link{
+      background: $co-68 none repeat scroll 0 0;
+      border-radius: 3px;
+      color: $white;
+      font: bold 10px $font-arial;
+      letter-spacing: -1px;
+      padding: 2px 4px;
+      position: absolute;
+      @if $text-direction == ltr
+      {
+        right: 0;
+      } @else
+      {
+        left: 0;
+      }
+      text-transform: uppercase;
+      top: 20px;
+      &:hover{
+        background-color: darken($co-68,10);
+      }
+    }
+  }
+  .panel-wp{
+    overflow: hidden;
+    &.wpl-panel-active{
+      height: auto !important;
+    }
+  }
+/*Share box*/
+  .side-share{
+    &.side-3 {
+      @include for-tablet {
+        width: 100%;
+      }
+    }
+    .panel-wp{
+      @include gradient-horizontal(#26f2ff, #fdffb9, 0%, 100%);
+      overflow: hidden;
+    }
+    .panel-body{
+      background: transparent;
+      overflow: hidden;
+      padding: 25px 15px;
+    }
+    .share-box-container{
+      text-align: center;
+    }
+    .wpl_review_wp,.wpl-dashboard-social-icons{
+      margin: 0 auto;
+      display: inline-block;
+      padding: 10px 15px;
+      text-align: center;
+      vertical-align: middle;
+    }
+    .wpl_review_wp{
+      background: $co-1;
+      transition: .3s;
+      border-radius: 4px;
+      color: $co-12;
+      width: 350px;
+      max-width: 100%;
+      font: {
+        size: 20px;
+      }
+      @include for-tablet{
+        min-width: unset;
+      }
+      &:hover{
+        background: $co-35;
+        color: $co-1;
+        .wpl_sharebox_icon-wp:before{
+          color: $co-1;
+        }
+      }
+      .wpl_sharebox_icon-wp{
+        padding: 0 5px;
+        line-height: 50px;
+        display: inline-block;
+        max-width: 100%;
+        &:before {
+          content: '\e922';
+          display: inline-block;
+          color: $co-95;
+          vertical-align: top;
+          line-height: 45px;
+          font: {
+            size: 47px;
+            family: $font-wpl-backend;
+          }
+          @include for-tablet-landscape-big{
+            font-size: 30px;
+          }
+          @include for-tablet-land{
+            font-size: 28px;
+          }
+        }
+      }
+    }
+    .wpl-dashboard-social-icons{
+      p{
+        text-transform: capitalize;
+        color: $co-95;
+        font-size: 15px;
+      }
+      ul li{
+        display: inline-block;
+        margin: 5px 8px;
+        a{
+          text-indent: -9999px;
+          width: 50px;
+          height: 50px;
+          display: inline-block;
+          position: relative;
+          transition: .3s;
+          &:after{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            display: block;
+            text-indent: 0;
+            color: $co-1;
+            line-height: 50px;
+            border-radius: 4px;
+            font: {
+              family: $font-wpl-backend;
+              size: 25px;
+            }
+          }
+          &.wpl_dashboard_fb:after{
+            content: '\e00c';
+            background: $co-87;
+          }
+          &.wpl_dashboard_google:after{
+            content: '\ea8b';
+            background: $co-96;
+          }
+          &.wpl_dashboard_twit:after{
+            content: '\e00b';
+            background: $co-26;
+          }
+          &.wpl_dashboard_in:after{
+            content: '\e6c5';
+            background: $co-92;
+          }
+          &:hover:after{
+            background: $co-97;
+          }
+        }
+      }
+    }
+  }
+}
+/*Special discount*/
+.wpl-dashboard-wp .sidebar-wp .side-discount{
+  font-family: $font-open-sans;
+  @include for-tablet {
+    width: 100%;
+  }
+
+  .panel-wp
+  {
+    position: relative;
+  }
+
+  .panel-body
+  {
+    color: $co-5;
+    font-size: 20px;
+    text-align: center;
+    &>div,&:before{
+      display: inline-block;
+      vertical-align: middle;
+      padding: 5px 0;
+    }
+    span{
+      color: $co-98;
+      font-size: 20px !important;
+    }
+    &:before{
+      content: url("../img/backend-svg/icon-gift-discount.svg");
+      max-width: 100%;
+      width: 200px;
+    }
+  }
+
+  .panel-footer{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-transform: uppercase;
+    background: $co-98;
+    color: $co-1;
+    text-align: center;
+    padding: 25px 0;
+    font:{
+      size: 25px;
+    }
+  }
+
+  .wpl_shop_discount
+  {
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.wpl-wp .sidebar-wp .side-support{
+  @include for-tablet{
+    width: 100%;
+  }
+}
+
+/*Envato*/
+.wpl_realtyna_envato_container_drop,
+.wpl_realtyna_envato_resend{
+  display: block;
+  margin: 5px 0;
+  cursor: pointer;
+}
+
+.wpl_realtyna_envato_container
+{
+  display: none;
+  input
+  {
+    margin: 10px 0;
+  }
+}
+.wpl_realtyna_envato_container_drop i{
+  font-style: normal;
+  color: $co-79;
+}
+
+.wpl_realtyna_envato_container,
+.wpl_realtyna_envato_resend,
+.wpl_realtyna_envato_container_drop{
+  padding: 0 0 20px 45px;
+}

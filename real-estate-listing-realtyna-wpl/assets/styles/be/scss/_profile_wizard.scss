@@ -1,0 +1,15 @@
+#wpl_dashboard_main_content{
+  .panel-body{
+    @include for-phone{
+      padding: 15px;
+    }
+  }
+  .pwizard-panel{
+    input,textarea{
+      display: inline-block;
+    }
+    .prow-textarea label{
+      vertical-align: top;
+    }
+  }
+}

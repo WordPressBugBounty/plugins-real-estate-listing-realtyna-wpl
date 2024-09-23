@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'wpl-backend';
+  src:  url('../fonts/wpl-backend.eot?mechqd');
+  src:  url('../fonts/wpl-backend.eot?mechqd#iefix') format('embedded-opentype'),
+  url('../fonts/wpl-backend.woff2?mechqd') format('woff2'),
+  url('../fonts/wpl-backend.ttf?mechqd') format('truetype'),
+  url('../fonts/wpl-backend.woff?mechqd') format('woff'),
+  url('../fonts/wpl-backend.svg?mechqd#wpl-backend') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+
+$icon-arrow-left: "\e600";
+$icon-arrow-right: "\e601";
+$icon-arrow-left2: "\e602";
+$icon-arrow-right2: "\e603";

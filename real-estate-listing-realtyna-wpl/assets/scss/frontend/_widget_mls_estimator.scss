@@ -1,0 +1,82 @@
+.mls-price-estimator_cnt,
+.mls-price-estimator-result_cnt{
+  padding: 30px 20px;
+  border: 1px solid $co-7;
+  margin: 10px 0;
+}
+
+.mls-price-estimator_cnt {
+  overflow: hidden;
+  .form-field {
+    width: 46%;
+    margin: 10px 2%;
+    display: block;
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+  }
+  select, input[type="text"], input[type="button"] {
+    height: 35px;
+    border: 1px solid $co-25;
+    display: block;
+    width: 100%;
+    margin-top: 5px;
+    box-sizing: border-box;
+    color: $co-16;
+    font:{
+      family: inherit !important;
+      size: 14px;
+    }
+  }
+  input[type="text"]{
+    padding: 0 5px;
+  }
+  input[type="button"] {
+    width: auto;
+    color: $co-1;
+    @if $text-direction == ltr
+    {
+      margin-left: 2%;
+    } @else
+    {
+      margin-right: 2%;
+      float: right;
+    }
+  }
+
+  .mls_price_estimator_location input {
+    @include placeholder($co-16 !important);
+    width: 96%;
+    margin: 0 auto;
+    padding-left: 5px;
+  }
+}
+.mls-price-estimator-result{
+  table{
+    border: 1px solid $co-25;
+    width: 100%;
+  }
+  tr{
+    height: 35px;
+    background: $co-1;
+    &:nth-child(odd){
+      background: $co-50;
+    }
+    td, th{
+      border-bottom: 1px solid $co-25;
+      padding: 5px;
+      @if $text-direction == rtl{
+        text-align: right;
+      }
+    }
+    &:last-child{
+      tr{
+        border-bottom: none;
+      }
+    }
+  }
+}

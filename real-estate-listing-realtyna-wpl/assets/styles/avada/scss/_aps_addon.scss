@@ -1,0 +1,55 @@
+/*Addon APS*/
+.wpl_property_listing_container {
+  &.wpl-property-listing-mapview {
+    width: 100vw;
+    left: calc(-49.3vw + 50%);
+    overflow: hidden;
+    .wpl_googlemap_container {
+      padding: 0;
+      border-width: 1px 0;
+      height: 90vh !important;
+      margin-bottom: 0;
+    }
+  }
+}
+.wpl_aps_container {
+  .wpl-aps-remove-shapes-btn {
+    button {
+      @include border-radius(4px);
+      @include transition(color .1s linear,background-color .1s linear,border-color .1s linear);
+      @include box-sizing(border-box!important);
+      font-size: 12px;
+      font-weight: 700;
+      font-family: inherit;
+      font-style: normal;
+      color: $co-11;
+      border: 2px solid transparent;
+      //background-color: $co-4;
+      padding: 0 17px !important;
+      min-width: auto;
+      width: 100%;
+      height: 22px;
+      position: relative;
+      display: inline-block;
+      margin: 0;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      outline: 0;
+      text-transform: uppercase;
+      text-shadow: none;
+
+      &:hover {
+        //border: 2px solid $co-4;
+        //color: $co-4;
+        //background-color: $co-11 !important;
+      }
+    }
+  }
+}
+.wpl-advanced-search-popup .wpl_search_from_box.wpl-search-float {
+  margin-top: 40px;
+  &.advanced {
+    position: relative;
+  }
+}

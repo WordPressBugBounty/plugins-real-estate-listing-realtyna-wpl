@@ -1,0 +1,29 @@
+.wpl-addon-market-reports-search-form-wp{
+  form{
+    .wpl-addon-market-reports-sf-col-dates{
+      label:after{
+        content: '\e917';
+        font-family: $font-wpl-backend;
+      }
+    }
+    select, .chosen-container-single .chosen-single, input{
+      background: $co-89;
+    }
+    .chosen-container-single .chosen-single
+    {
+      span{
+        font-size: 16px !important;
+      }
+    }
+    .chosen-container.chosen-with-drop
+    {
+      .chosen-drop
+      {
+        background: $co-89;
+      }
+    }
+    .wpl-button{
+      font-size: 16px;
+    }
+  }
+}

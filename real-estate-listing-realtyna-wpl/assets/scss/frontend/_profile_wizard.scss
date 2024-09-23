@@ -1,0 +1,193 @@
+.wpl-wp{
+	.wpl-button {
+	 	@include animate(all 0.2s linear);
+	  	@include text-shadow(none);
+		position: relative;
+		text-decoration: none;
+		font: bold 13px $font-lato;
+		height: 26px;
+		padding: 4px 16px;
+		display: inline-block;
+		cursor: pointer;
+
+		&.button-1 {
+			background: $color_1;
+			color: $white;
+			border: 0 none;
+			&:hover {
+				background: scale-lightness($color_1,20%);
+			}
+		}
+
+		&.button-upload {
+			overflow: hidden;
+			input[type=file] {
+				cursor: pointer;
+				position: absolute;
+				top: 0;
+				right: 0;
+				height: 26px;
+				width: 350px;
+				padding: 0;
+				border: 0;
+				outline: none;
+				opacity: 0;
+			}
+		}
+
+	}
+
+	&.profile-wp{
+		header{
+			margin-bottom: 20px;
+			h2{
+				border-bottom: 1px solid lighten($color_3,40%);
+				margin: 0;
+				padding: 10px 0;
+                font-family: $font-lato;
+			}
+		}
+		.panel-wp{
+			background: lighten($color_3,58%);
+			border: 1px solid lighten($color_3,40%);
+			@include border-radius(5px);
+			input[type="text"]{
+				height: 30px;
+			}		
+			h3{
+				@include background-image(linear-gradient(top , white 10%, darken(white,5%) 60%));
+				@include border-radius(5px 5px 0 0);
+				font: italic 1.5em/55px $font-droid;
+				border-bottom: 1px solid lighten($color_3,40%);
+				padding: 0 20px;
+				color: $color_3;
+				margin: 0 0 10px;
+			}
+			.panel-body{
+				position: relative;
+				.wpl_listing_field_container{
+                    @include pie-clearfix;
+					margin: 2px 0;
+					> input[type="text"], .location-part .value-wp > input[type="text"], .chosen-container,textarea{
+						width: 230px !important;
+					  @include for-phone
+					  {
+						width: 100% !important;
+					  }
+					}
+					label{
+						display: inline-block;
+						width: 150px;
+						line-height: 30px;
+					}
+					&.prow-locations{
+						.location-part{
+                            @include pie-clearfix;
+							margin: 2px 0;
+							label{
+								@if $text-direction == ltr
+								{
+									float: left;
+								} @else
+								{
+									float: right;
+								}
+								width: 153px;
+							}
+							.value-wp{
+								@if $text-direction == ltr
+								{
+									float: left;
+								} @else
+								{
+									float: right;
+								}
+							}
+						}
+					}
+					&.prow-upload{
+						position: absolute;
+						top: 0;
+						@if $text-direction == ltr
+						{
+							right: 60px;
+						} @else
+						{
+							left: 60px;
+						}
+					    @include for-tablet
+						{
+						  position: static;
+						}
+					}
+					&.prow-upload{
+						.upload-preview{
+							img{
+								max-width: 150px;
+								max-height: 150px;
+							}	
+						}
+						&#wpl_listing_field_container913{
+							top: 250px;
+						}
+					}
+					
+					.upload-preview-wp {
+						margin-top: 5px;
+						.upload-preview {
+							@include box-shadow(0 1px 3px rgba(#000, 0.2));
+							@include border-radius(3px);
+							position: relative;
+							border: 5px solid #fff;
+							display: inline-block;
+							img {
+								margin: 0;
+								max-width: 150px;
+								max-height: 150px;
+							}
+							.preview-remove-button {
+								@include border-radius(0 3px 3px 0);
+								@include box-shadow(1px 1px 2px rgba(#000, 0.1));
+								@include size(30px,30px);
+								padding: 1px;
+								position: absolute;
+								top: -5px;
+								right: -35px;
+								background: #fff;
+								.icon-recycle{
+									display: block;
+									@include size(100%,100%);
+									cursor: pointer;
+									position: relative;
+									text-align: center;
+									line-height: 30px;
+									&:after{
+										font-family: $font-frontend;
+										display: block;
+										content: "\e653";
+										font-size: 1.5em;
+									}
+									&:hover:after{
+										color: $color_1;
+									}
+								}
+							}
+						}
+					}
+				}
+				.finilize-btn{
+					clear: both;
+					text-align: center;
+					button.wpl-button{
+						border: 0;
+						color: $white;
+						padding: 5px 20px;
+						font-size: 1.2em;
+                        height: auto;
+                        font-weight: normal;
+					}
+				}
+			}	
+		}
+	}
+}

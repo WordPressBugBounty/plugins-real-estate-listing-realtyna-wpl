@@ -1,0 +1,2 @@
+INSERT INTO `#__wpl_settings` (`id`, `setting_name`, `setting_value`, `showable`, `category`, `type`, `title`, `params`, `options`, `index`) VALUES
+(331, 'profile_email_type', '0', 1, 1, 'select', 'Profile email type', '', '{"values":[{"key":"0","value":"Image"},{"key":"1","value":"Text"}]} ', 111.00);

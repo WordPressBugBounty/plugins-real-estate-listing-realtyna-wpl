@@ -1,0 +1,189 @@
+.pwizard-wp {
+    .prow-property_types > div:first-child {
+        margin-bottom: 20px;
+    }
+    .prow-addon_video .video-tabs-wp ul,
+    .prow-gallery .video-tabs-wp ul {
+        li {
+            margin: 0;
+            a {
+                padding: 6px 15px !important;
+            }
+        }
+    }
+    .prow-attachments .attach-btn-wp {
+        border-bottom: 1px solid;
+    }
+    .side-content-wp {
+        .new-rooms-wp input[type="text"] {
+            width: 15%;
+        }
+        .new-rooms-wp button {
+            height: 30px;
+        }
+        input[type="text"] {
+            width: 60%;
+        }
+        .chosen-container {
+            min-width: unset;
+        }
+    }
+    input[type="text"],
+    input[type="number"] {
+        @include border-radius(0);
+        @include box-shadow(unset);
+        height: 30.4px !important;
+        margin-bottom: 0;
+    }
+    select {
+        @include border-radius(0);
+    }
+    .side-tabs-wp li.active a {
+        border-top: 1px solid;
+        border-bottom: 2px solid;
+    }
+    .wpl-pwizard-editor .wp-media-buttons button {
+        @include box-shadow(unset);
+        padding: 5px 10px;
+        font-size: 13px;
+        margin-bottom: 10px;
+    }
+    &.wpl-pwizard-horizontal {
+        .wpl-pwizard-btns {
+            list-style: none;
+            li {
+                margin-left: 0;
+                &.wpl-listing-discard-btn > a {
+                    padding: 0 15px;
+                }
+                span.wpl-pwizard-prev,
+                span.wpl-pwizard-next {
+                    padding: 0 15px;
+                }
+            }
+        }
+    }
+    @include for-phone {
+        .attach-btn-wp .field-desc,
+        .wpl_gallery_method_container > div.field-desc {
+            margin: 15px 0 0 0 !important;
+        }
+        #wpl_listing_location1_select {
+            width: 200% !important;
+        }
+        .side-content-wp .prow {
+            input[type="text"] {
+                width: 80% !important;
+            }
+            select {
+                width: 60% !important;
+            }
+            .wpl-meta-wp {
+                width: 100% !important;
+            }
+            &.prow-price,
+            &.prow-area {
+                input {
+                    width: 60% !important;
+                }
+                select {
+                    width: 30% !important;
+                    display: inline-block !important;
+                    margin: 0 !important;
+                    height: 30px !important;
+                    padding: 3px 8px !important;
+                }
+            }
+            .new-rooms-wp {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: space-between;
+                select {
+                    width: 100% !important;
+                }
+                input {
+                    width: 31% !important;
+                }
+            }
+        }
+        &.wpl-pwizard-horizontal {
+            .wpl-pwizard-btns li span.wpl-pwizard-next,
+            .wpl-pwizard-btns li span.wpl-pwizard-prev {
+                text-align: center;
+            }
+            #wpl_listing_discard span {
+                display: block;
+                text-align: center;
+                font-weight: 600;
+            }
+            .wpl-pwizard-btns .finilized > a {
+                padding: 0;
+                text-align: center;
+                font-weight: 600;
+                &:before {
+                    font-weight: normal;
+                }
+            }
+        }
+        &.wpl-pwizard-vertical {
+            .sidebar-wp {
+                display: flex;
+                flex-direction: column;
+            }
+            .side-2 {
+                width: 100% !important;
+                ul {
+                    display: flex;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    li {
+                        margin-left: 0;
+                        flex-basis: 30%;
+                        margin-bottom: 10px;
+                        &.finilized a span,
+                        &.wpl-listing-discard-btn a span {
+                            text-align: center;
+                        }
+                        &.active a {
+                            border-bottom: 1px solid;
+                        }
+                        &:nth-child(1),
+                        &:nth-child(2) {
+                            flex-basis: 48%;
+                            a {
+                                height: 35px;
+                            }
+                        }
+                        &:nth-child(1) {
+                            a {
+                                span {
+                                    display: block !important;
+                                }
+                            }
+                        }
+                        &:nth-child(2) {
+                            a {
+                                box-shadow: unset;
+                            }
+                        }
+                        a {
+                            @include box-shadow(unset);
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            height: 70px;
+                            border-top: 1px solid;
+                            &:before {
+                                font-size: 25px !important;
+                                margin-bottom: 5px;
+                            }
+                        }
+                    }
+                }
+            }
+            .side-12 {
+                width: 100% !important;
+            }
+        }
+    }
+}

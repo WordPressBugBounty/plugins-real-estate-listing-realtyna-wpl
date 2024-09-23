@@ -1,0 +1,40 @@
+.wpl-crm-form-frontend {
+  .wpl_listing_field_container ,
+  .prow-locations .location-part
+  {
+    height: 60px;
+  }
+  label.title {
+    height: auto;
+  }
+}
+.wpl-crm-btn .wpl-crm-icon {
+  top: 10px;
+}
+.wpl-crm-grid {
+  background: transparent;
+}
+.wpl-crm-form-frontend .wpl-crm-grid-tab>ul>li {
+  margin: 0;
+}
+.wpl-crm-form-frontend .wpl-crm-grid-tab>ul>li>a {
+  padding: 5px 10px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.wpl-crm-form .prow-separator .seperator-wp {
+  background: transparent;
+  border-bottom: 2px solid;
+  font-weight: normal;
+  font-size: 15px;
+
+}
+.wpl-crm-form input[type="text"], .wpl-crm-form input[type="number"], .wpl-crm-form textarea, .wpl-crm-form .chosen-container-single .chosen-single, .wpl-crm-form .chosen-container-multi .chosen-choices {
+  @include border-radius(0 !important);
+}
+.wpl-crm-form .prow-separator::before, .wpl-crm-form-frontend .wpl-crm-btn-cnt::before {
+  display: none;
+}

@@ -1,0 +1,73 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl-pwizard-horizontal .wpl-pwizard-prow-more_details {
+  float: left;
+  width: 100%;
+}
+.wpl-pwizard-prow-more_details{
+  margin-top: 20px;
+
+  & > label{
+    color: $co-3;
+    display: block;
+    font: 1.2em $font-open-sans;
+    padding: 10px 60px 25px;
+    position: relative;
+    text-align: center;
+    cursor: pointer;
+
+    &:hover{
+      color: darken($co-3, 10%);
+
+    }
+
+    &::before{
+      @include transition(transform .2s ease);
+      @include transform(rotateZ(180deg));
+      content: '\e699';
+      display: inline-block;
+      font: 12px $font-frontend;
+      position: absolute;
+      vertical-align: middle;
+      bottom: 10px;
+      left: 50%;
+      margin-left: -9px;
+      display: inline-block;
+    }
+
+    &.wpl-pwizard-more-details-opened::before{
+      @include transform(rotateZ(0));
+    }
+
+    span{
+      display: inline-block;
+      position: relative;
+
+      &::before, &::after{
+        position: absolute;
+        background-color: $co-3;
+        top: 9px;
+        width:150px;
+        height: 2px;
+        content: '';
+        display: inline-block;
+      }
+
+      &::before{
+        left: -150px;
+        margin-left: -15px;
+      }
+
+      &::after{
+        right: -150px;
+        margin-right: -15px;
+      }
+    }
+
+  }
+
+}

@@ -1,0 +1,1 @@
+UPDATE `#__wpl_menus` SET `page_title`='Organic IDX', `menu_title`='Organic IDX' WHERE `id`='341';

@@ -1,0 +1,1314 @@
+.wpl_property_listing_container {
+  @include clearfix_s2;
+  margin: 1em auto 2em;
+  font-size: 13px;
+  color: $co-59;
+  padding: 0 5px;
+
+  .wpl_sort_options_container {
+    @include clearfix_s2;
+    border-bottom: 1px solid lighten($color_3, 50%);
+    margin: 45px auto 30px;
+    position: relative;
+
+    @include for-phone {
+      margin-bottom: rem(45px);
+    }
+
+    & + .wpl_prp_cont.row_box {
+      margin-top: 3.5em;
+    }
+
+    ul {
+      @if $text-direction == ltr {
+        float: left;
+      } @else {
+        float: right;
+      }
+      margin-bottom: 10px;
+      display: block;
+      padding: 0;
+    }
+
+    li {
+      @if $text-direction == ltr {
+        float: left;
+      } @else {
+        float: right;
+      }
+      padding: 0 17px;
+      line-height: 30px;
+      position: relative;
+      list-style: none !important;
+      cursor: pointer;
+      margin: 0;
+      &:after {
+        @include size(1px, 60%);
+        @include rotate(17deg);
+        display: block;
+        content: "";
+        background: lighten($color_3, 20%);
+        position: absolute;
+        top: 7px;
+        @if $text-direction == ltr {
+          right: 0;
+        } @else {
+          left: 0;
+        }
+      }
+
+      &:last-child {
+        border: 0;
+      }
+    }
+
+    .wpl_plist_sort_active {
+      color: $color_1;
+      @if $text-direction {
+        padding-right: 15px;
+      } @else {
+        padding-left: 15px;
+      }
+      position: relative;
+
+      &:before {
+        font-family: $font-frontend;
+        display: block;
+        position: absolute;
+        background: $color_1;
+        height: 1.4em;
+        @if $text-direction == ltr {
+          right: -21px;
+        } @else {
+          left: -21px;
+        }
+        top: 6px;
+        line-height: 1em;
+        font-style: normal;
+        padding: 0 3px;
+        color: $white;
+        @include transform(skew(-17deg, 2deg));
+        z-index: 100;
+      }
+
+      &.sort_down {
+        &:before {
+          content: "\e929";
+        }
+      }
+
+      &.sort_up {
+        &:before {
+          content: "\e92a";
+          line-height: 1.9em;
+        }
+      }
+    }
+  }
+
+  .wpl-sort-options-list {
+    @include for-tablet {
+      display: none;
+    }
+  }
+
+  .wpl-sort-options-selectbox {
+    display: none;
+    &.active {
+      display: inline-block;
+    }
+
+    @include for-tablet {
+      text-align: center;
+      padding-left: 35px;
+    }
+
+    @include for-tablet {
+      display: inline-block;
+      margin-bottom: 20px;
+      width: auto;
+      padding-left: 35px;
+    }
+    @include for-phone {
+      width: 100%;
+      margin: 0;
+      padding-left: 0;
+      margin-top: 10px;
+      padding: 2px 5px;
+    }
+    select {
+      min-width: 100px;
+    }
+    .chosen-container {
+      min-width: 100px;
+      .chosen-results > li {
+        padding: 0;
+        width: 100%;
+        &:after {
+          display: none;
+        }
+      }
+    }
+  }
+  .map_view_handler {
+    left: -50px;
+    position: absolute;
+    top: 10px;
+    z-index: 999;
+    background: $co-1;
+    border-radius: 3px;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    box-shadow: 0 0 3px rgba($black, 0.5);
+
+    &::before {
+      background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+      color: rgba($co-0, 0.5);
+      content: "\e692";
+      cursor: pointer;
+      display: inline-block;
+      font: 22px $font-frontend;
+      line-height: 35px;
+      z-index: 999;
+      position: absolute;
+      left: 0;
+      width: 100%;
+      border-radius: 3px;
+    }
+    &.op {
+      left: 5px;
+      background: $co-16;
+      &::before {
+        content: "\e917";
+        color: $co-1;
+      }
+      &:hover::before {
+        color: $co-1;
+      }
+    }
+    &:hover::before {
+      color: $black;
+    }
+  }
+  .wpl_property_listing_list_view_container {
+    &.open {
+      .map_view_handler {
+        left: 5px;
+        top: 5px;
+        @include for-tablet {
+          top: 10px;
+        }
+      }
+    }
+    &.close {
+      font-size: inherit;
+      opacity: 1;
+    }
+  }
+
+  .wpl_googlemap_container {
+    border: 1px solid lighten($color_3, 50%);
+    margin-bottom: 2.5em;
+    padding: 0.2em;
+    position: relative;
+  }
+
+  .wpl_sort_options_container_title {
+    color: $color_3;
+    font: 18px $font-lato;
+    @if $text-direction == ltr {
+      float: left;
+      margin-right: 20px;
+      padding: 0 20px 0 10px;
+    } @else {
+      float: right;
+      margin-left: 20px;
+      padding: 0 10px 0 20px;
+    }
+
+    @include for-phone {
+      float: none;
+      width: 100%;
+      margin-right: 0;
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+
+  .pagination {
+    @include clearfix_s2;
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+    margin: 10px 0;
+    list-style: none;
+    width: auto;
+    display: inline-block;
+    li {
+      @if $text-direction == ltr {
+        float: left;
+      } @else {
+        float: right;
+      }
+      list-style: none;
+
+      a,
+      span {
+        margin: 0 1px;
+        border: 1px solid lighten($color_3, 50%);
+        border-radius: 0;
+        padding: 6px 12px;
+        &:hover {
+          background: lighten($color_3, 50%);
+        }
+      }
+
+      &.active a {
+        background: $white;
+        border-color: $color_1;
+        color: $color_1;
+      }
+    }
+  }
+}
+
+.wpl_prp_top {
+  //@include size(310px,220px);
+  //width: 100% !important;
+  margin: 3px auto 0;
+  position: relative;
+  max-width: 100%;
+  overflow: hidden;
+
+  @include for-small-phone {
+    max-width: 100%;
+  }
+  &:hover {
+    .wpl_prp_top_boxes {
+      &.front {
+        @include transform(rotateY(180deg));
+      }
+
+      &.back {
+        @include transform(rotateY(0deg));
+      }
+    }
+  }
+}
+.wpl-prp-disable-image-hover {
+  .wpl_prp_top:hover {
+    .wpl_prp_top_boxes {
+      &.front {
+        @include transform(rotateY(0deg));
+      }
+      &.back {
+        display: none;
+      }
+    }
+  }
+}
+.wpl_prp_top_boxes {
+  /*position: absolute;
+  left: 0;
+  top: 0;*/
+  @include size(310px, 220px);
+  @include transition(all 0.4s ease-in-out);
+  @include backface-visibility(hidden);
+  @include transform-style(preserve-3d);
+  &.front {
+    @include size(100%, 100%);
+    @include transform(rotateY(0deg));
+    z-index: 2;
+  }
+  &.back {
+    @include size(100%, 100%);
+    @include transform(rotateY(-180deg));
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: $color_1;
+    color: $white;
+    font: 3em/1 $font-benchnine;
+    text-align: center;
+    z-index: 1;
+
+    a.view_detail {
+      @include display-flex;
+      @include align-items(center);
+      @include justify-content(center);
+      color: $white;
+      width: 100%;
+      height: 100%;
+      text-decoration: none;
+    }
+  }
+
+  .no_image_box {
+    display: table;
+    background: $color_2;
+    text-align: center;
+    font-size: 1.6em;
+    height: 220px;
+    max-width: 100%;
+    width: 100% !important;
+    text-decoration: none !important;
+    &::before {
+      display: table-cell;
+      vertical-align: middle;
+      font: 6em $font-frontend;
+      content: "\e029";
+      color: $co-59;
+    }
+  }
+}
+.wpl_gallery_container {
+  position: relative;
+  max-height: 100%;
+  max-width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+.wpl_prp_cont .wpl_gallery_image {
+  @include for-all-non-desktop-devices {
+    width: 100% !important;
+  }
+  @include for-tablet {
+    width: 100% !important;
+  }
+}
+.wpl_gallery_image {
+  cursor: pointer;
+  display: none;
+  margin: 0 auto;
+  max-height: 100%;
+  max-width: 100%;
+  @include for-all-non-desktop-devices {
+    //width: 100% !important;
+    max-width: 100%;
+    //height: auto !important;
+  }
+  @include for-tablet {
+    //width: 100% !important;
+    max-width: 100%;
+    height: auto !important;
+  }
+  &:first-child {
+    display: block;
+  }
+}
+
+.wpl-listing-tags-wp {
+  position: absolute;
+  bottom: 0;
+  @if $text-direction == ltr {
+    right: -3px;
+  } @else {
+    left: -3px;
+  }
+}
+
+.wpl-listing-tags-cnt {
+  display: table-cell;
+  padding: 10px 0;
+  vertical-align: bottom;
+
+  & > div {
+    color: $white;
+    font-family: $font-lato;
+    line-height: 2em;
+    margin: 5px 0;
+    padding: 0 5px;
+    position: relative;
+    text-align: center;
+    z-index: 2;
+
+    &::after {
+      border-style: solid;
+      border-width: 2px;
+      bottom: -4px;
+      content: "";
+      position: absolute;
+      right: 0;
+    }
+  }
+
+  .wpl-listing-tag-feature {
+    @include box-shadow(1px 2px 0 -1px rgba(darken($co-36, 15%), 0.8));
+    background: $co-36;
+
+    &::after {
+      border-color: darken($co-36, 15%) transparent transparent darken($co-36, 15%);
+    }
+  }
+
+  .wpl-listing-tag-hot-offer {
+    @include box-shadow(1px 2px 0 -1px rgba(darken($co-39, 15%), 0.8));
+    background: $co-39;
+
+    &::after {
+      border-color: darken($co-39, 15%) transparent transparent darken($co-39, 15%);
+    }
+  }
+
+  .wpl-listing-tag-open-house {
+    @include box-shadow(1px 2px 0 -1px rgba(darken($co-22, 15%), 0.8));
+    background: $co-22;
+
+    &::after {
+      border-color: darken($co-22, 15%) transparent transparent darken($co-22, 15%);
+    }
+  }
+
+  .wpl-listing-tag-forclosure {
+    @include box-shadow(1px 2px 0 -1px rgba(darken($color_3, 15%), 0.8));
+    background: $color_3;
+
+    &::after {
+      border-color: darken($color_3, 15%) transparent transparent darken($color_3, 15%);
+    }
+  }
+}
+
+.wpl_prp_title {
+  font: 3em/1.5em $font-benchnine;
+  color: $color_1;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+
+  &:hover {
+    @include animation(marquee 15s linear 2s infinite alternate);
+  }
+}
+
+.wpl_prp_listing_icon_box {
+  @include pie-clearfix;
+  text-align: center;
+
+  div {
+    text-align: center;
+    display: inline-block;
+    margin: 0 8px;
+    span.label,
+    span.name {
+      display: none;
+    }
+    &:hover {
+      color: $color_1;
+    }
+
+    &:after {
+      display: block;
+      font: 1.4em $font-frontend;
+    }
+
+    &.bedroom:after {
+      content: "\e01d";
+    }
+
+    &.room:after {
+      content: "\e635";
+    }
+
+    &.bathroom:after {
+      content: "\e01a";
+    }
+
+    &.parking:after {
+      content: "\e020";
+    }
+
+    &.pic_count:after {
+      content: "\e001";
+    }
+    &.built_up_area::after {
+      content: "\e912";
+    }
+    &.visits_box:after {
+      content: "\e908";
+    }
+  }
+}
+.wpl_property_listing_listings_container {
+  margin: 0 -1%;
+}
+.wpl_prp_cont {
+  @include for-tablet-land {
+    width: 48%;
+  }
+  float: left;
+  width: 31.333333%;
+  padding: 0 0 20px;
+  margin: 2em 1% 3em;
+  position: relative;
+  border-bottom: 1px solid lighten($color_3, 50%);
+
+  //must be for foundation
+  &.wpl-callout {
+    width: 100%;
+    border: 0;
+    border-bottom: 1px solid lighten($color_3, 50%);
+    background: inherit;
+    color: inherit;
+    padding: 0;
+  }
+
+  &:hover {
+    border-bottom: 1px solid $color_1;
+  }
+
+  .price_box {
+    @include size(100%, 13px);
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    @include for-tablet {
+      position: static;
+    }
+
+    span {
+      display: inline-block;
+      background: $white;
+      color: $color_1;
+      font-size: 1.3em;
+      padding: 0 10px;
+      text-align: center;
+    }
+  }
+
+  .wpl_prp_listing_like {
+    position: absolute;
+    bottom: 5px;
+    padding: 0 10px;
+    ul {
+      margin: 0;
+      list-style: none;
+    }
+    li {
+      cursor: pointer;
+      position: relative;
+      list-style: none;
+      margin: 0;
+      &:before {
+        content: "\e92c";
+        font-family: $font-frontend;
+        font-size: 23px;
+        color: $co-86;
+        transition-delay: 80ms;
+        position: relative;
+        z-index: 9;
+      }
+      &:hover,
+      &.added {
+        &:before {
+          color: $co-19;
+        }
+      }
+      a {
+        @include box-shadow(unset);
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 100;
+      }
+    }
+  }
+
+  .wpl_prp_desc {
+    display: none;
+  }
+
+  &.wpl_prp_cont_old .wpl_prp_bot {
+    padding: 10px;
+    a {
+      text-decoration: none;
+    }
+  }
+
+  &.row_box {
+    @include pie-clearfix;
+    float: none;
+    width: 100%;
+    margin: 1em 0;
+    padding: 4px;
+    border: 1px solid lighten($color_3, 50%);
+    .wpl_gallery_container {
+      img {
+        //height: auto !important;
+        width: 100% !important;
+      }
+    }
+    .wpl_prp_desc {
+      display: block;
+    }
+
+    .price_box {
+      bottom: auto;
+      @if $text-direction == ltr {
+        left: auto;
+        right: 0;
+      } @else {
+        left: 0;
+      }
+      top: 10px;
+      font-size: pem(22pt);
+      width: auto;
+      @include size(auto, auto);
+    }
+    .wpl_prp_listing_like {
+      bottom: 10px;
+      @if $text-direction == ltr {
+        right: 5px;
+      } @else {
+        left: 5px;
+      }
+    }
+
+    .wpl_prp_top {
+      width: 30%;
+      @if $text-direction == ltr {
+        float: left;
+        text-align: left;
+      } @else {
+        float: right;
+        text-align: right;
+      }
+      margin: 0 auto;
+      max-width: 100%;
+      @include for-tablet {
+        //margin: 1% 4% 0 1%;
+        width: 100%;
+        float: none;
+      }
+    }
+    .wpl_prp_bot {
+      width: 65%;
+      @if $text-direction == ltr {
+        float: left;
+        padding-left: 10px;
+      } @else {
+        float: right;
+        padding-right: 10px;
+      }
+      @include for-tablet {
+        float: inherit;
+        width: 100%;
+      }
+
+      .wpl_prp_title,
+      .wpl_prp_listing_icon_box {
+        margin-top: 0;
+        @if $text-direction == ltr {
+          text-align: left;
+        } @else {
+          text-align: right;
+        }
+      }
+
+      .wpl_prp_listing_icon_box {
+        margin: 10px 0 15px;
+
+        div {
+          &:first-child {
+            @if $text-direction == ltr {
+              margin-left: 0;
+            } @else {
+              margin-right: 0;
+            }
+          }
+
+          &:after {
+            display: inline-block;
+            @if $text-direction == ltr {
+              margin-left: 6px;
+            } @else {
+              margin-right: 6px;
+            }
+          }
+
+          &:before {
+            display: block;
+            content: "";
+            @if $text-direction == ltr {
+              float: right;
+              margin: 4px 0 0 10px;
+            } @else {
+              float: left;
+              margin: 4px 10px 0 0;
+            }
+            background: lighten($color_3, 20%);
+            @include size(1px, 16px);
+            @include skew(-17deg, 0deg);
+          }
+
+          &:last-child:before {
+            display: none;
+          }
+        }
+      }
+    }
+    .wpl_prp_listing_location {
+      @if $text-direction == ltr {
+        text-align: left;
+      } @else {
+        text-align: right;
+      }
+    }
+  }
+
+  .wpl_prp_listing_location {
+    //height: 45px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font: 18px $font-lato;
+    font-weight: 500;
+    letter-spacing: inherit;
+    text-transform: inherit;
+  }
+}
+
+.wpl_list_grid_switcher {
+  margin: 6px 0;
+  @if $text-direction == ltr {
+    float: right;
+  } @else {
+    float: left;
+  }
+
+  & > div,
+  & > a {
+    @include size(22px, 22px);
+    cursor: pointer;
+    @if $text-direction == ltr {
+      float: left;
+    } @else {
+      float: right;
+    }
+
+    &.map_view,
+    &.list_view {
+      @if $text-direction == ltr {
+        margin-left: 5px;
+      } @else {
+        margin-right: 5px;
+      }
+    }
+
+    &:before {
+      display: block;
+      color: $color_3;
+      font: 16pt $font-frontend;
+    }
+
+    &.active:before {
+      color: $color_1;
+    }
+  }
+
+  .list_view::before {
+    content: "\e646";
+  }
+
+  .grid_view::before {
+    content: "\e642";
+  }
+
+  .map_view::before {
+    content: "\e6cd";
+  }
+  &.wpl-list-grid-switcher-icon-text {
+    margin-bottom: 6px;
+    & > div,
+    & > a {
+      @include border-radius(2px);
+      height: auto;
+      width: auto;
+      border: 2px solid $co-81;
+      padding: 3px;
+      color: darken($co-10, 10%);
+      line-height: 16px;
+      &:before {
+        @if $text-direction == ltr {
+          float: left;
+        } @else {
+          float: right;
+        }
+        font-size: 16px;
+        color: darken($co-10, 10%);
+      }
+      & > span {
+        @if $text-direction == ltr {
+          margin-left: 4px;
+        } @else {
+          margin-right: 4px;
+        }
+      }
+      &.active {
+        color: $co-1;
+        border-color: $color_1;
+        background-color: $color-1;
+        position: relative;
+        &:after {
+          top: 100%;
+          left: 50%;
+          border: solid transparent;
+          content: " ";
+          height: 0;
+          width: 0;
+          position: absolute;
+          pointer-events: none;
+          border-color: transparent;
+          border-top-color: $color-1;
+          border-width: 6px;
+          margin-left: -6px;
+        }
+        &:before {
+          color: $co-1;
+        }
+      }
+    }
+    .list_view::before {
+      content: "\e916";
+    }
+
+    .grid_view::before {
+      content: "\e915";
+    }
+
+    .map_view::before {
+      content: "\e917";
+    }
+  }
+}
+
+.wpl_pagination_container {
+  @include clearfix_s2;
+  border-top: 1px solid lighten($color_3, 50%);
+  padding: 0 10px;
+  clear: both;
+  .wpl_page_size_options {
+    width: 50px;
+  }
+}
+
+.wpl_total_result {
+  @if $text-direction == ltr {
+    float: left;
+    margin: 8px 0 10px 10px;
+  } @else {
+    float: right;
+    margin: 8px 10px 10px 0;
+  }
+  line-height: 35px;
+}
+
+.wpl_page_size {
+  margin: 10px;
+  @if $text-direction == ltr {
+    float: right;
+  } @else {
+    float: left;
+  }
+
+  .chosen-container {
+    min-width: 55px;
+  }
+}
+
+.wpl_page_size_title {
+  @if $text-direction == ltr {
+    margin-right: 10px;
+  } @else {
+    margin-left: 10px;
+  }
+}
+
+#scroll_pagination_loader {
+  .bokeh {
+    @include size(1em, 1em);
+    font-size: 100px;
+    position: relative;
+    margin: 100px auto;
+    border-radius: 50%;
+    border: 0.01em solid rgba($color_3, 0.3);
+    list-style: none;
+  }
+
+  li {
+    @include size(0.2em, 0.2em);
+    position: absolute;
+    border-radius: 50%;
+    list-style: none;
+
+    &:nth-child(1) {
+      -webkit-animation: rota 1.13s linear infinite, opa 3.67s ease-in-out infinite alternate;
+      animation: rota 1.13s linear infinite, opa 3.67s ease-in-out infinite alternate;
+      background: $color_1;
+      left: 50%;
+      margin: 0 0 0 -0.1em;
+      top: 0;
+      -webkit-transform-origin: 50% 250%;
+      transform-origin: 50% 250%;
+    }
+
+    &:nth-child(2) {
+      background: darken($color_1, 12%);
+      top: 50%;
+      right: 0;
+      margin: -0.1em 0 0 0;
+      -webkit-transform-origin: -150% 50%;
+      transform-origin: -150% 50%;
+      -webkit-animation: rota 1.86s linear infinite, opa 4.29s ease-in-out infinite alternate;
+      animation: rota 1.86s linear infinite, opa 4.29s ease-in-out infinite alternate;
+    }
+
+    &:nth-child(3) {
+      left: 50%;
+      bottom: 0;
+      margin: 0 0 0 -0.1em;
+      background: darken($color_1, 24%);
+      -webkit-transform-origin: 50% -150%;
+      transform-origin: 50% -150%;
+      -webkit-animation: rota 1.45s linear infinite, opa 5.12s ease-in-out infinite alternate;
+      animation: rota 1.45s linear infinite, opa 5.12s ease-in-out infinite alternate;
+    }
+
+    &:nth-child(4) {
+      top: 50%;
+      left: 0;
+      margin: -0.1em 0 0 0;
+      background: darken($color_1, 36%);
+      -webkit-transform-origin: 250% 50%;
+      transform-origin: 250% 50%;
+      -webkit-animation: rota 1.72s linear infinite, opa 5.25s ease-in-out infinite alternate;
+      animation: rota 1.72s linear infinite, opa 5.25s ease-in-out infinite alternate;
+    }
+  }
+}
+.wpl-print-rp-wp {
+  @if $text-direction == ltr {
+    float: right;
+  } @else {
+    float: left;
+  }
+  margin: 4px 8px;
+  line-height: 28px;
+  .wpl-print-rp-link {
+    font-size: 20px;
+    vertical-align: middle;
+    i:after {
+      content: "\e6ba";
+      font-family: $font-frontend;
+    }
+    i:before {
+      content: "";
+    }
+  }
+}
+/* Google map loader*/
+.map_search_ajax_loader {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  z-index: 200;
+}
+/* Media Queries
+*********************************************/
+
+/* Landscape phones and down */
+@media (max-width: $width-phone-land) {
+  .wpl_property_listing_container {
+    .wpl_prp_cont {
+      width: 97%;
+      float: none;
+      margin-bottom: 1em;
+      .wpl_prp_bot a.view_detail {
+        left: 190px;
+      }
+    }
+  }
+
+  .wpl_prp_cont {
+    &.row_box {
+      .wpl_prp_top,
+      .wpl_prp_bot {
+        width: 100%;
+        float: none;
+
+        .wpl_prp_title,
+        .wpl_prp_listing_icon_box,
+        .wpl_prp_listing_location {
+          text-align: center;
+        }
+      }
+
+      .price_box {
+        top: auto;
+        position: relative;
+      }
+    }
+  }
+}
+
+/* Landscape phone to portrait tablet */
+@media (min-width: ($width-phone-land+1)) and (max-width: $width-tablet) {
+  .wpl_property_listing_container {
+    .wpl_prp_cont {
+      width: 48.3%;
+      //must be for foundation
+      &.wpl-callout {
+        width: 100%;
+      }
+      &.row_box {
+        width: 100%;
+      }
+      .wpl_property_listing_location {
+        width: 99.2%;
+        left: 2.1%;
+      }
+
+      .wpl_property_container_content {
+        .wpl_gallery_container {
+          width: 100% !important;
+
+          img {
+            width: 100% !important;
+          }
+        }
+      }
+    }
+  }
+}
+#ws-walkscore-tile {
+  max-width: 100%;
+  > iframe {
+    width: 100%;
+  }
+}
+/*Foundation*/
+.wpl-column {
+  .wpl_prp_cont,
+  .wpl_profile_container,
+  .wpl_dashboard_side1,
+  .wpl_dashboard_side2,
+  .wpl-widget-summary-list {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  &.wpl_column_row_box,
+  &.wpl_column_map_box {
+    width: 100% !important;
+  }
+}
+.wpl-property-listing-mapview {
+  .wpl-column {
+    padding: 0 !important;
+
+    .wpl_prp_listing_like {
+      @if $text-direction == ltr {
+        right: 5px;
+      } @else {
+        left: 5px;
+      }
+      bottom: 5px;
+      li {
+        &:before {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+  .wpl-row.wpl_property_listing_listings_container {
+    margin: 0 !important;
+  }
+  .wpl-list-grid-switcher-icon-text {
+    & > div,
+    & > a {
+      padding: 2px;
+      &:before {
+        font-size: 14px;
+      }
+      & > span {
+        display: none;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: $width-desktop) {
+  .wpl-large-up-4 .grid_box .wpl_prp_listing_icon_box > div span.name,
+  .wpl-large-up-6 .grid_box .wpl_prp_listing_icon_box > div span.name {
+    display: none !important;
+  }
+}
+
+@media print {
+  .wpl-print-container {
+    padding: 4px;
+  }
+  .wpl-column {
+    width: 33% !important;
+    padding: 10px 0 10px 10px !important;
+    float: left !important;
+    clear: inherit !important;
+
+    .wpl_prp_cont {
+      border: 0;
+      margin: 0 !important;
+      padding: 0;
+
+      .wpl_prp_top {
+        margin: 0 !important;
+      }
+      .wpl_prp_title {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      .wpl_prp_listing_location {
+        padding: 0 !important;
+        margin: 0 !important;
+      }
+      &.wpl_prp_cont_old .wpl_prp_bot {
+        padding: 0 !important;
+
+        .wpl_prp_title {
+          font-size: 20px;
+          text-align: left;
+        }
+
+        .wpl_prp_listing_location {
+          text-align: left;
+          white-space: normal;
+          overflow: auto;
+          font-size: 15px;
+        }
+
+        .wpl_prp_listing_icon_box {
+          width: 100% !important;
+
+          div {
+            float: left !important;
+            width: 100%;
+            text-align: left;
+            margin: 0;
+            padding: 0 10px !important;
+            margin-bottom: 10px;
+
+            span {
+              display: inline-block;
+            }
+
+            &:after {
+              width: 30px;
+              float: left;
+            }
+          }
+        }
+      }
+      .price_box {
+        text-align: right;
+        padding: 0;
+        margin: 0;
+        height: auto;
+
+        span {
+          background: transparent;
+
+          font-size: 20px !important;
+        }
+      }
+      .wpl_prp_desc {
+        display: none !important;
+      }
+    }
+
+    .wpl_prp_top_boxes.back {
+      display: none !important;
+    }
+
+    .wpl_gallery_image {
+      width: 100% !important;
+      height: 170px !important;
+    }
+  }
+}
+
+//region = PListing::RSS
+.wpl-rss-wp {
+  position: absolute;
+  bottom: -30px;
+  right: 0;
+
+  .wpl-rss-link {
+    @include transition(background 0.1s linear);
+    @include border-radius(0 0 1px 1px);
+    display: inline-block;
+    background: rgba($co-8, 0.3);
+    color: $co-12;
+    padding: 5px 15px;
+    height: 28px;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 18px;
+    border-bottom: 1px solid lighten($co-25, 2%);
+    cursor: pointer;
+
+    &:hover {
+      background: rgba($co-12, 0.7);
+      border-bottom-color: lighten($co-12, 10%);
+      color: $co-1;
+    }
+
+    &::after {
+      content: "\e624";
+      font: 13px $font-frontend;
+      display: inline-block;
+      vertical-align: baseline;
+      margin-left: 10px;
+    }
+
+    span {
+      @if $text-direction == rtl {
+        float: left;
+      }
+    }
+  }
+}
+.wpl-powered-by-realtyna {
+  border-top: 1px solid $co-25;
+  padding: 10px 0;
+  @if $text-direction == ltr {
+    text-align: right;
+  } @else {
+    text-align: left;
+  }
+  img {
+    width: 120px;
+  }
+}
+
+.wpl-mls-brokerage-info {
+  margin: 10px 0;
+  color: $co-16;
+  & > div {
+    margin-bottom: 5px;
+  }
+}
+.wpl_prp_cont.grid_box .wpl-mls-brokerage-info {
+  text-align: center;
+}
+
+//endregion

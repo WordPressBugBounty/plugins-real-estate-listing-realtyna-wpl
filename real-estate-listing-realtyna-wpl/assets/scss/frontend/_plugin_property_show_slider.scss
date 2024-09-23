@@ -1,0 +1,360 @@
+/**
+ * WPL
+ * Author Steve M. | WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+// Property Detail Only
+.wpl_prp_show_container{
+
+  // Light slider Only
+  .wpl-gallery-pshow-wp{
+    position: relative;
+
+    .lightSlider
+    {
+      transition: none !important;
+    }
+
+    .wpl-listing-tags-wp {
+      top: 0;
+      right: 10px;
+      bottom: auto;
+
+      .wpl-listing-tags-cnt>div::after {
+        display: none;
+      }
+    }
+
+    .lSSlideWrapper.usingCss .lSFade>.active
+    {
+      opacity: 1 !important;
+    }
+    .lSSlideOuter{
+      position: relative;
+      .lslide{
+        text-align: center;
+        cursor: pointer;
+        
+        &::before{
+          @include transition(all .6s ease);
+          background-color: rgba($co-1, .2);
+          content: '';
+          height: 100%;
+          left: 0;
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          width: 100%;
+          z-index: 999;
+        }
+
+        &::after{
+          @include border-radius(3px);
+          @include transition(all .3s ease);
+          background-color: rgba($co-36,0.7);
+          color: $co-1;
+          content: attr(data-hover-title);
+          font-size: 1.2em;
+          font-style: italic;
+          font-weight: 100;
+          height: 30px;
+          left: 50%;
+          line-height: 30px;
+          margin-left: -100px;
+          margin-top: -15px;
+          position: absolute;
+          text-transform: capitalize;
+          top: 50%;
+          opacity: 0;
+          width: 200px;
+          z-index: 9999;
+          transform: scale(.9);
+
+          @include for-phone{
+            display: none;
+          }
+        }
+        
+        &:hover{
+
+          &::before, &::after{
+            opacity: 1;
+          }
+
+          &::after{
+            transform: scale(1);
+          }
+
+        }
+
+        span{
+          position: relative;
+          display: block;
+          //width: 100%;
+
+          &::before{
+            @include background-image(linear-gradient(left,  $co-1 0%, rgba($co-1, .8) 30%, rgba($co-1,0) 100%));
+            content: '';
+            width: 80px;
+            left: 0;
+            top: 0;
+            position: absolute;
+            height: 100%;
+            z-index: 999;
+            //display: none;
+            @include for-phone{
+              display: none;
+            }
+          }
+
+          &::after{
+            @include background-image(linear-gradient(right,  $co-1 0%, rgba($co-1, .8) 30%, rgba($co-1,0) 100%));
+            content: '';
+            width: 80px;
+            right: 0;
+            top: 0;
+            position: absolute;
+            height: 100%;
+            z-index: 999;
+            //display: none;
+            @include for-phone{
+              display: none;
+            }
+          }
+        }
+
+        img{
+          transition: .4s ease;
+        }
+
+        &.gallery_no_image{
+
+          &::before{
+            content: "\e028";
+            text-align: center;
+            opacity: 1;
+            font-size: 17em;
+            height: 100%;
+            position: absolute;
+            vertical-align: middle;
+            padding: 2%;
+          }
+
+          &::after{
+            display: none;
+          }
+
+        }
+
+        &.active img{
+          opacity: 1 !important;
+        }
+      }
+
+      .lSPager{
+        @include background-image(linear-gradient(left, rgba($co-0,0) 10%, rgba($co-0,.35) 50%,rgba($co-0,0) 90%));
+        @include box-sizing(border-box);
+        position: absolute;
+        bottom: 0;
+        text-align: center;
+        width: 100%;
+        margin: 0;
+        padding: 7px 10px 0px;
+        z-index: 999;
+        @include for-phone{
+          bottom: 2px;
+        }
+
+        &.lSpg{
+
+          & > li{
+            padding: 0 3px;
+            height: 16px;
+            margin:0;
+            overflow: hidden;
+            & > a{
+              background: transparent;
+              height: 16px;
+              width: 16px;
+              text-indent: 0;
+              padding-top: 16px !important;
+
+              &::before{
+                top: 1px;
+                left: 1px;
+                position: absolute;
+                content: '\e678';
+                font: 14px $font-frontend;
+                color: $co-1;
+              }
+            }
+
+            &.active a::before{
+              content: '\e677';
+              color: $co-3;
+            }
+
+          }
+
+        }
+      }
+
+      .lSAction{
+
+        a{
+          @include border-radius(4px);
+          background: rgba($co-0, .5);
+          width: 3em;
+          height: 3em;
+          text-align: center;
+          line-height: 3em;
+          margin-top: -1.5em;
+          z-index: 99 !important;
+
+          @include for-phone{
+            width: 1.2em;
+            height: 1.2em;
+            margin-top: -.6em;
+            margin-left: -.6em;
+            line-height: 1.2em;
+          }
+
+          &::before{
+            font: 2em $font-frontend;
+            color: $co-1;
+            position: relative;
+            display: inline-block;
+            vertical-align: middle;
+
+            @include for-phone{
+              font-size: .8em;
+            }
+          }
+        }
+
+        .lSPrev::before{
+          content: '\e656';
+          left: -1px;
+        }
+
+        .lSNext::before{
+          content: '\e657';
+          right: -1px;
+        }
+
+      }
+      .wpl-lSSlider-thumbnails
+      {
+        background: rgba(0,0,0,0.5);
+        position: absolute;
+        width: 100%;
+        bottom: 0;
+        left:0;
+        z-index: 999;
+        .lSAction a
+        {
+          width:2em;
+          background: none;
+          z-index: 1000 !important;
+          &:after
+          {
+            font-size: 1.5em;
+          }
+        }
+      }
+      .wpl-lSSlider-thumbnails-inner
+      {
+        overflow: hidden;
+      }
+      .lSGallery
+      {
+        position: relative;
+        margin: auto;
+        padding: 3px 0;
+        background: none;
+        & > li
+        {
+          list-style: none;
+          &.active
+          {
+            border-radius: 0;
+            img
+            {
+              border:2px solid $co-36;
+            }
+          }
+          a
+          {
+            display: block;
+          }
+          img
+          {
+            display: block;
+            margin: auto;
+            border:2px solid transparent;
+          }
+        }
+      }
+    }
+  }
+}
+
+#lg-outer .lg-slide > div
+{
+  padding:20px 20px 60px 20px;
+  position: absolute;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  color: $co-1;
+  text-shadow: 0 0 5px $co-0;
+  h3,p
+  {
+    color: $co-1;
+    margin: 0;
+    padding: 0;
+  }
+  p
+  {
+    width: 500px;
+    margin: auto;
+    white-space: initial;
+    text-align: justify;
+    text-align-last: center;
+    max-height: 100px;
+    overflow: scroll;
+  }
+}
+.wpl-gallery-pshow-img-desc
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+  color: $co-1;
+  text-align: left;
+  text-shadow: 0 0 5px $co-0;
+  width: 100%;
+  h3,p
+  {
+    color: $co-1;
+    margin: 0;
+    padding: 0;
+  }
+  p
+  {
+    width: 100%;
+    margin: auto;
+    white-space: initial;
+    text-align: justify;
+    max-height: 100px;
+    overflow: auto;
+  }
+}
+
+
+
+
+
+

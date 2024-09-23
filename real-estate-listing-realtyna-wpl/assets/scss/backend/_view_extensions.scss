@@ -1,0 +1,34 @@
+.extensions-wp{
+    #icon-extensions{
+        @include backend-sprite(icon-64-extentions);
+    }
+    
+    .sidebar-wp .side-tabs-wp ul li a{
+        padding-top: 60px;
+        padding-bottom: 15px;
+        // action
+        &#wpl_slide_label_id1{
+            @include side-tab-icon(icon-48-action,13px);
+        }
+        // javascript
+        &#wpl_slide_label_id5{
+            @include side-tab-icon(icon-48-javascript,13px);
+        }
+        // service
+        &#wpl_slide_label_id11{
+            @include side-tab-icon(icon-48-library,13px);
+        }
+        // shortcode
+        &#wpl_slide_label_id2{
+            @include side-tab-icon(icon-48-shortcode,13px);
+        }
+        // style
+        &#wpl_slide_label_id3{
+            @include side-tab-icon(icon-48-style,13px);
+        }
+        // widget
+        &#wpl_slide_label_id9{
+            @include side-tab-icon(icon-48-widget,13px);
+        }
+    }
+}

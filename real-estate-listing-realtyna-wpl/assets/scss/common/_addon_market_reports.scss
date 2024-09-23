@@ -1,0 +1,222 @@
+
+.wpl-addon-market-reports-list-wp{
+  display: flex;
+  align-items: flex-end;
+  @include for-tablet{
+    display: block;
+  }
+}
+.wpl-addon-market-reports-search-form-wp{
+  padding: 50px 15px 100px;
+  @include for-tablet{
+    padding: 20px 15px 30px;
+  }
+  form{
+    text-align: center;
+    &>div{
+      display: inline-block;
+      text-align: left;
+      vertical-align: top;
+      @include for-phone{
+        display: block;
+        margin-bottom: 5px;
+      }
+    }
+    select, .chosen-container-single .chosen-single, input{
+      border: 1px solid $co-6;
+      height: 40px;
+    }
+    select{
+      @include for-phone{
+        width: 100%;
+      }
+    }
+    .chosen-container-single .chosen-single
+    {
+      box-shadow: none;
+      span
+      {
+        line-height: 38px !important;
+      }
+      div{
+        width: 15px;
+      }
+    }
+    .chosen-container.chosen-with-drop{
+      .chosen-drop{
+        margin-top: 5px;
+        border-color: $co-6;
+        border-top: 1px solid $co-6;
+        box-shadow: 0 4px 5px rgba($co-0,.15);
+      }
+      .chosen-results{
+        padding: 0;
+        margin: 0;
+        li{
+          padding: 8px;
+          border-bottom: 1px solid $co-6;
+          &:last-child{
+            border-bottom: 0;
+          }
+        }
+      }
+    }
+    .wpl-addon-market-reports-col-period{
+      .chosen-container,select
+      {
+        width: 210px !important;
+        @include for-phone{
+          width: 100% !important;
+        }
+      }
+    }
+    .wpl-addon-market-reports-sf-col-dates{
+      &>div{
+        margin-top: 10px;
+        text-align: right;
+        @include for-phone{
+          text-align: left;
+        }
+      }
+      input{
+        width: 150px;
+        height: 35px;
+        display: inline-block;
+        box-shadow: none;
+      }
+      label
+      {
+        width: 55px;
+        display: inline-block;
+        text-align: left;
+        position: relative;
+        &:after{
+          font-size: 18px;
+          position: absolute;
+          right: -145px;
+          display: block;
+          top: -2px;
+        }
+      }
+    }
+    .wpl-button{
+      height: 40px;
+      font-weight: normal;
+      padding: 10px 25px;
+      line-height: 16px;
+      @include for-phone{
+        width: 100%;
+      }
+    }
+  }
+}
+
+.wpl-addon-market-reports-col-list{
+  margin-bottom: 15px;
+
+  .wpl-addon-market-reports-index{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    color: $co-1;
+    background: $co-101;
+    vertical-align: middle;
+    text-shadow: 0 1px 2px rgba($co-0,.3);
+  }
+  .wpl-addon-market-reports-title{
+    width: calc(100% - 135px);
+    display: inline-block;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    vertical-align: middle;
+  }
+  .wpl-addon-market-reports-hits{
+    float: right;
+    width: 100px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: center;
+    line-height: 30px;
+    color: $co-1;
+    background: $co-101;
+    text-shadow: 0 1px 2px rgba($co-0,.3);
+  }
+
+  ul{
+    margin: 0 auto !important;
+    &>li{
+      list-style: none !important;
+    }
+  }
+
+  li{
+    background: $co-1;
+    margin-bottom: 6px;
+
+    &:nth-child(2){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 5%);
+      }
+    }
+    &:nth-child(3){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 10%);
+      }
+    }
+    &:nth-child(4){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 15%);
+      }
+    }
+    &:nth-child(5){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 20%);
+      }
+    }
+    &:nth-child(6){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 25%);
+      }
+    }
+    &:nth-child(7){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 27%);
+      }
+    }
+    &:nth-child(8){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 28%);
+      }
+    }
+    &:nth-child(9){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 29%);
+      }
+    }
+    &:nth-child(10){
+      .wpl-addon-market-reports-index,
+      .wpl-addon-market-reports-hits{
+        background: lighten($co-101, 30%);
+
+      }
+    }
+  }
+}
+
+.wpl-addon-market-reports-col-chart{
+  canvas{
+    max-width:100%;
+  }
+}

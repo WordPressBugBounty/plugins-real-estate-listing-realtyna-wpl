@@ -1,0 +1,167 @@
+/*
+#ui-datepicker-div {
+  @include border-radius(2px 2px 4px 4px);
+  @include box-shadow(0 2px 0 0 rgba($black,0.35));
+  border: 1px solid darken($white, 4%);
+  width: 265px;
+  overflow: hidden;
+  padding: 0;
+  display: none;
+  z-index: 999!important;
+
+  .ui-datepicker-header {
+    @include border-radius(2px 2px 0 0);
+    background: $color_1;
+    color: $white;
+    line-height: 35px;
+
+    .ui-datepicker-prev {
+      @include size(10px, 35px);
+      overflow: hidden;
+      position: absolute;
+      left: 10px;
+      top: 0;
+      float: left;
+      color: $white;
+      cursor: pointer;
+      text-shadow: 0 1px rgba(darken($color_1,0.4),0.4);
+
+      &::after {
+        display: block;
+        font-family: "Fontawesome";
+        content: "\f053";
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+
+      span {
+        display: none;
+      }
+
+    }
+
+    .ui-datepicker-next {
+      @extend .ui-datepicker-prev;
+      left: auto;
+      right: 10px;
+      text-shadow: 1px 0 rgba(darken($color_1,0.4),0.4);
+
+      &::after {
+        content: "\f054";
+      }
+
+    }
+    .ui-datepicker-title {
+      max-width: 125px;
+      margin: 0 auto;
+
+      select {
+        @include border-radius(2px);
+        @include box-shadow(none);
+        height: 23px;
+        background: darken($color_1, 5%);
+        color: $white;
+        border: 0 none;
+      }
+
+
+    }
+  }
+  .ui-datepicker-calendar {
+    @include border-radius(0 0 3px 3px);
+    width: 100%;
+    background: $white;
+
+    td, th {
+      border-right: 1px solid #ddd;
+      text-align: center;
+      height: 30px;
+      width: 30px;
+
+      &.ui-datepicker-today {
+        background: $color_7;
+        color: $white;
+
+        &:hover{
+          background: $color_7;
+        }
+      }
+
+      &.ui-datepicker-current-day {
+        background: $color_1 !important;
+        color: $white;
+
+        &:hover{
+          background: darken($color_1,5%) !important;
+          color: $white;
+        }
+
+        a {
+          color: $white;
+          color: $white;
+        }
+      }
+
+    }
+
+    th {
+      background: darken($white, 10%);
+      border-right: 1px solid darken($white, 16%);
+      border-left: 1px solid darken($white, 16%);
+      color: $black;
+    }
+
+    td{
+      @include transition(background 0.15s linear);
+
+      &:hover{
+        background: $white;
+      }
+    }
+
+    tr:nth-child(odd){
+      td{
+        background: darken($white, 2%);
+      }
+    }
+
+    th:first-child, td:first-child{
+      border-left: 0 none;
+    }
+
+    th:last-child, td:last-child{
+      border-right: 0 none;
+    }
+
+    tr:last-child {
+      @include border-radius(0 0 2px 2px);
+
+      td:first-child {
+        @include border-radius(0 0 0 2px);
+      }
+
+      td:last-child {
+        @include border-radius(0 0 2px 0);
+      }
+
+    }
+
+    span{
+      color: rgba($black, 0.45);
+    }
+
+    a{
+      display: block;
+      text-decoration: none;
+      color: $black;
+    }
+
+  }
+
+  .ui-state-default {
+    background: none;
+    border: 0;
+  }
+
+}*/

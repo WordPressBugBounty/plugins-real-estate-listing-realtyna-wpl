@@ -1,0 +1,40 @@
+.wpl-franchise-wp
+{
+  .wpl_slide_label
+  {
+    &:before
+    {
+      height: 40px !important;
+      width: 40px !important;
+      margin-left: -20px !important;
+    }
+  }
+  #wpl_slide_label_id2 // Listings Options
+  {
+    &::before
+    {
+      background: transparent url("#{$image-path-backend}/icon-sidebar-listing-option.svg") center center no-repeat !important;
+    }
+  }
+  #wpl_slide_label_id3 // Listings Options
+  {
+    &::before
+    {
+      background: transparent url("#{$image-path-backend}/icon-sidebar-user-option.svg") center center no-repeat !important;
+    }
+  }
+  #wpl_slide_label_id4 // Listings Options
+  {
+    &::before
+    {
+      background: transparent url("#{$image-path-backend}/icon-sidebar-backend-menu.svg") center center no-repeat !important;
+    }
+  }
+  #wpl_slide_label_id5 // Listings Options
+  {
+    &::before
+    {
+      background: transparent url("#{$image-path-backend}/icon-sidebar-universal-share.svg") center center no-repeat !important;
+    }
+  }
+}

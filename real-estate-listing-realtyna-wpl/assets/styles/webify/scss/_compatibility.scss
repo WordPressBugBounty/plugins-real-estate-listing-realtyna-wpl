@@ -1,0 +1,79 @@
+/*Elementor*/
+body.elementor-page:not(.home) {
+  .wpl_property_listing_container {
+    .wpl_prp_cont {
+      &.grid_box {
+        .wpl_prp_listing_icon_box {
+          padding: 15px 0;
+        }
+        .price_box {
+          margin-top: -26px;
+          @include for-tablet-sm {
+            margin-top: -24px;
+          }
+        }
+      }
+      &.row_box {
+        .wpl_prp_listing_location {
+          margin-bottom: 5px !important;
+        }
+      }
+      .wpl_prp_listing_icon_box {
+        div {
+          &.built_up_area {
+            &:after {
+              top: 0 !important;
+            }
+            span {
+              margin-top: 0;
+            }
+          }
+          &:after {
+            top: -7px !important;
+          }
+        }
+      }
+      .wpl_prp_title {
+        margin: 0;
+      }
+    }
+    &.wpl-property-listing-mapview {
+      .wpl_prp_cont {
+        .wpl_prp_listing_icon_box {
+          div {
+            &:after {
+              top: -2px !important;
+            }
+            &.built_up_area {
+              padding-top: 3px;
+              &:after {
+                top: 3px !important;
+              }
+              span {
+                margin-top: 0;
+              }
+            }
+          }
+        }
+        .price_box {
+          bottom: 45px;
+        }
+      }
+    }
+  }
+  .wpl-neighborhood-addon {
+    .wpl_prp_cont {
+      &.grid_box {
+        .price_box {
+          margin-top: -29px;
+        }
+      }
+    }
+  }
+  .wpl-calendar-months-wp > div {
+    margin-top: 0;
+  }
+  .wpl-compare-table > tbody td {
+    padding: 6px 24px;
+  }
+}

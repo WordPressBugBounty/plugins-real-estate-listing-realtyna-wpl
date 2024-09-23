@@ -1,0 +1,19 @@
+.wpl-mls_disclaimer-widget {
+  .mls-disclaimer-left{
+    @if $text-direction == ltr
+    {
+      float: left;
+      padding-right: 10px;
+    } @else
+    {
+      float: right;
+      padding-left: 10px;
+    }
+  }
+  .mls-disclaimer-right{
+    @if $text-direction == rtl
+    {
+      text-align: right;
+    }
+  }
+}

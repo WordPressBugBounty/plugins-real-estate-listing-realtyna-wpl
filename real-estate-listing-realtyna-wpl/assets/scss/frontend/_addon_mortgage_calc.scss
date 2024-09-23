@@ -1,0 +1,93 @@
+/**
+ * WPL
+ * WPL UI Department of Realtyna Inc.
+ * Copyright 2015 Realtyna Inc. | realtyna.com
+ **/
+
+.wpl_mcalc_container {
+
+  .form-field {
+    //white-space: nowrap;
+    //@include display-flex();
+    overflow: hidden;
+    &>span>span+span{
+      display: block;
+    }
+  }
+
+  input {
+    margin: 3px 0;
+  }
+
+  .text-box {
+    height: 30px;
+    margin: 3px 0;
+    width: 100px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .wpl_percent {
+    margin: 3px 0;
+    width: 40px;
+  }
+
+  label {
+    display: block;
+    padding-right: 5px;
+    text-align: right;
+    white-space: nowrap;
+    width: 100px;
+    float: left;
+    &+span{
+      float: left;
+    }
+  }
+
+  .form-result label {
+    font-weight: bold;
+  }
+
+  .form-result .text-box {
+    font-size: 1.2em;
+    font-weight: bold;
+    height: 30px;
+  }
+
+  hr {
+    margin: 10px 0;
+  }
+
+  .wpl-mortgage-symbol{
+    //width: calc(100% - 104px);
+    display: inline-block;
+    vertical-align: middle;
+  }
+
+  .wpl-mortgage-percent {
+    display: block;
+    @if $text-direction == ltr
+    {
+      text-align: left;
+    } @else
+    {
+      text-align: right;
+    }
+    width: 100%;
+
+    i {
+      display: block;
+      font-style: normal;
+      padding: 0 2px;
+    }
+  }
+
+  .form-result{
+    label{
+      width: auto;
+    }
+    .wpl-mortgage-symbol{
+      width: auto;
+    }
+  }
+}

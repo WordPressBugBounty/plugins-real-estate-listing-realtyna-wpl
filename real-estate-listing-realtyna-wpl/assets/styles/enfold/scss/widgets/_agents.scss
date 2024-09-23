@@ -1,0 +1,101 @@
+//Agents widget. Default layout
+.wpl_agents_widget_container {
+  .wpl_profile_container {
+    border-bottom: none;
+    display: flex;
+    flex-flow: column nowrap;
+    float: left;
+    margin: 0 1% 30px;
+    .wpl_profile_picture {
+      overflow: visible;
+      order: 1;
+      max-width: 100%;
+      @include agent-image;
+      div{
+        border-radius: 0;
+        border: none !important;
+        box-shadow: none;
+      }
+    }
+    .wpl_profile_container_title {
+      order: 3;
+      a {
+        &:hover,
+        &:focus,
+        &:active {
+          text-decoration: none;
+          h2 {
+            transition: all 0.2s linear;
+            opacity: 0.7;
+          }
+        }
+        .title {
+          transition: all 0.2s linear;
+          color: $co-1;
+          padding-top: 30px;
+          font:{
+            size: 18px;
+            family: inherit;
+            weight: bold;
+          }
+        }
+      }
+    }
+    ul {
+      order: 2;
+      float: none !important;
+      margin: -58px auto 0 !important;
+      width: 100% !important;
+      text-align: center;
+      background: rgba($co-1,.6);
+      z-index: 3;
+      padding: 10px 0 !important;
+      li{
+        float: none;
+        display: inline-block;
+        margin: 0 5px;
+        background: transparent !important;
+        &:after{
+          background: transparent !important;
+        }
+      }
+    }
+  }
+}
+
+//Agents widget. List layour
+.wpl_agents_widget_container.list {
+  .wpl_profile_box {
+    border-radius: 0 !important;
+    list-style: none;
+    .profile_left {
+      width: initial;
+      .more_info {
+        span {
+          border-radius: 0 !important;
+          &:before {
+            border-radius: 0 !important;
+          }
+          &:after {
+            top: 45%;
+            right: 0;
+            bottom: 0;
+            left: 0;
+          }
+        }
+        span.image-overlay.overlay-type-extern {
+          display: none !important;
+        }
+      }
+    }
+    .profile_right {
+      ul {
+        li {
+          list-style: none;
+          text-align: left !important;
+          padding-left: 30px !important;
+        }
+      }
+    }
+  }
+}

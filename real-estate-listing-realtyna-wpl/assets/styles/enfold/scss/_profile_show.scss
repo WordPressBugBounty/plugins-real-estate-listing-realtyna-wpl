@@ -1,0 +1,288 @@
+.wpl_profile_show_container {
+  .no_image {
+    min-height: 130px !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 210px !important;
+    background: $co-34;
+    display: table-cell;
+  }
+}
+
+//Profileshow Layout
+.wpl_profile_show_container {
+  //.wpl_profile_show_container_box {
+  .wpl_agent_info.clearfix {
+    @include for-phone {
+      .wpl_agent_info_c {
+        ul {
+          li {
+            a {
+              display: inline;
+              float: inherit;
+            }
+          }
+        }
+      }
+    }
+    .wpl_agent_details {
+      .wpl_agent_info_l {
+        img {
+          border: 2px solid $co-24;
+        }
+      }
+      .wpl_agent_info_c {
+        ul {
+          margin-left: 0;
+          li {
+            margin-left: 0;
+            list-style: none;
+            float: none;
+            width: 100% !important;
+            img {
+              position: relative;
+              top: 7px;
+            }
+            &:before {
+              border-radius: 0 !important;
+              transform: none !important;
+              width: 30px;
+              height: 30px;
+              display: inline;
+              font: {
+                family: inherit;
+                size: 14px;
+              }
+              left: 0 !important;
+              top: 0 !important;
+              position: relative;
+              background: transparent !important;
+              color: $co-1 !important;
+              text-align: center;
+              line-height: 30px;
+            }
+          }
+          li.website {
+            &:before {
+              content: 'Website: ';
+            }
+          }
+          li.tel {
+            &:before {
+              content: 'Phone: ';
+            }
+            a {
+              display: inline
+            }
+          }
+          li.mobile {
+            &:before {
+              content: 'Mobile: ';
+            }
+            a {
+              display: inline
+            }
+          }
+          li.fax {
+            &:before {
+              content: 'Fax: ';
+            }
+          }
+          li.email {
+            &:before {
+              content: 'Email: ';
+            }
+          }
+          li.second_email {
+            &:before {
+              content: 'Second email: ';
+            }
+          }
+        }
+      }
+    }
+    .wpl_agent_about {
+      padding-bottom: 30px;
+    }
+  }
+  //}
+}
+
+//Default layout
+.wpl_profile_show_container {
+  //.wpl_profile_show_container_box {
+  .wpl_agent_info {
+    @include for-tablet-land {
+      .wpl_agent_info_r {
+        width: 50% !important;
+      }
+    }
+    @include for-tablet-landscape {
+      .wpl_agent_info_r {
+        width: 52% !important;
+      }
+    }
+    @include for-phone-2 {
+      .wpl_agent_info_l {
+        .image_container {
+          .back {
+            img {
+              position: relative !important;
+              display: block !important;
+              height: auto !important;
+              width: 100% !important;
+              border: 2px solid $co-24 !important;
+            }
+          }
+        }
+      }
+      .wpl_agent_info_r {
+        width: 100% !important;
+        padding-left: 0 !important;
+      }
+    }
+    @include for-phone {
+      .wpl_agent_info_r {
+        ul {
+          li {
+            a {
+              display: inline;
+              float: inherit;
+            }
+          }
+        }
+      }
+    }
+    .wpl_agent_info_l {
+      display: inline-block;
+      text-align: center;
+      .image_container {
+        position: relative;
+        .front.has_logo,
+        .back {
+          transition: all 0.4s ease-in-out;
+          @include transform-style(preserve-3d);
+          @include backface-visibility(hidden);
+          img {
+            max-width: 100%;
+            height: auto;
+          }
+        }
+        .front.has_logo {
+          @include transform(rotateY(0deg));
+          z-index: 2;
+        }
+        .back {
+          @include transform(rotateY(-180deg));
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+        }
+        &:hover {
+          .front.has_logo,
+          .back {
+            transition: all 0.4s ease-in-out;
+            @include transform-style(preserve-3d);
+            @include backface-visibility(hidden);
+          }
+          .front.has_logo {
+            @include transform(rotateY(180deg));
+
+          }
+          .back {
+            @include transform(rotateY(0deg));
+          }
+        }
+      }
+      img {
+        border: 2px solid $co-24;
+      }
+    }
+    .wpl_agent_info_r {
+      display: inline-block;
+      width: 33%;
+      padding-left: 20px;
+      ul {
+        margin-left: 0;
+        li {
+          margin-left: 0;
+          list-style: none;
+          float: none;
+          width: 100% !important;
+          text-align: left;
+          img {
+            position: relative;
+            top: 7px;
+          }
+          &:before {
+            border-radius: 0 !important;
+            width: 30px;
+            height: 30px;
+            display: inline;
+            font: {
+              family: inherit;
+              size: 14px;
+            }
+            left: 0 !important;
+            top: 0 !important;
+            position: relative;
+            background: transparent !important;
+            color: $co-1 !important;
+            text-align: center;
+            line-height: 30px;
+            @include transform(none !important);
+          }
+        }
+        li.website {
+          &:before {
+            content: 'Website: ';
+          }
+        }
+        li.tel {
+          &:before {
+            content: 'Phone: ';
+          }
+        }
+        li.mobile {
+          &:before {
+            content: 'Mobile: ';
+          }
+        }
+        li.fax {
+          &:before {
+            content: 'Fax: ';
+          }
+        }
+        li.email {
+          &:before {
+            content: 'Email: ';
+          }
+        }
+        li.second_email {
+          &:before {
+            content: 'Second email: ';
+          }
+        }
+      }
+    }
+    .wpl_agent_about {
+      padding-bottom: 30px;
+    }
+  }
+  //}
+}
+
+.wpl_user_contact_container {
+  .form-field.button {
+    background-color: inherit;
+    padding: 0;
+    &:hover {
+      background-color: inherit;
+    }
+  }
+}
+
+.wpl_profile_show_container li {
+  width: 100%;
+}

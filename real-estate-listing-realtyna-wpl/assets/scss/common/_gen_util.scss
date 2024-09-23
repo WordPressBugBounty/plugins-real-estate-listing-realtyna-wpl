@@ -1,0 +1,294 @@
+
+// Helper Classes
+.wpl-util-margin-left-1{
+  margin-left: 10px !important;
+}
+
+.wpl-util-margin-left-2{
+  margin-left: 20px !important;
+}
+
+.wpl-util-margin-left-3{
+  margin-left: 30px !important;
+}
+
+.wpl-util-margin-left-4{
+  margin-left: 40px !important;
+}
+
+.wpl-util-no-margin{
+  margin: 0 !important;
+}
+
+.wpl-util-no-padding{
+  padding: 0 !important;
+}
+
+.wpl-util-clearfix // Clear floating
+ {
+  @include clearfix_s3;
+}
+
+.wpl-util-float-right // Float right
+ {
+  @if $text-direction == ltr
+  {
+    float: right;
+  } @else
+  {
+    float: left;
+  }
+}
+
+.wpl-util-float-left // Float left
+ {
+  @if $text-direction == ltr
+  {
+    float: left;
+  } @else
+  {
+    float: right;
+  }
+}
+
+.wpl-util-center // Text Align Center
+{
+  text-align: center !important;
+}
+
+.wpl-util-left // Text Align Left
+{
+  text-align: left !important;
+}
+
+.wpl-util-right // Text Align Right
+{
+  text-align: right !important;
+}
+
+.wpl-util-middle{
+  vertical-align: middle !important;
+}
+
+.wpl-util-center-child{
+  text-align: center;
+
+  & > *{
+    margin: auto;
+  }
+}
+
+.wpl-util-relative{
+  position: relative;
+}
+
+.wpl-util-inline{
+  display: inline-block;
+}
+
+.wpl-util-center-tb // Text Align Center for Table Only
+ {
+  text-align: center;
+
+  /*@include for-all-smart {
+    text-align: left;
+  }*/
+}
+
+
+@mixin wpl-blur($density: 3){
+  filter: url(../img/wpl_blur.svg#blur);
+  -webkit-filter: blur(unquote($density + 'px'));
+  filter: blur(unquote($density + 'px'));
+  filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='#{$density}');
+}
+
+.wpl-blur-on-normal{
+  filter: url(../img/wpl_blur.svg#blur);
+  -webkit-filter: blur(3px);
+  filter: blur(3px);
+  filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='3');
+}
+
+.wpl-blur-on-hover{
+
+  &:hover{
+    @extend .wpl-blur-on-normal;
+  }
+}
+
+.wpl-util-show{
+  display: block;
+}
+
+.wpl-util-hidden{
+  display: none;
+}
+
+// Table column size
+@for $i from 1 through 10 {
+  .wpl-util-table-#{$i} {
+    max-width: 10% * $i;
+
+    /*@include for-all-smart{
+      max-width: 100%;
+    }*/
+
+  }
+}
+
+@for $i from 1 through 10 {
+  .wpl-util-table-fix-#{$i} {
+    width: 20px * $i;
+  }
+}
+
+// RPL Responsive Grid System
+@for $i from 1 through 12 // Grid::Columns
+{
+
+  @for $j from 1 through ($i - 1){
+
+    .wpl-util-grid-#{$j}-#{$i}{
+      width: $j * (100% / $i);
+      padding: 10px;
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+
+      @include for-tablet{
+        width: 100%;
+      }
+    }
+
+    .wpl-util-grid-no-gutter{
+      .wpl-util-grid-#{$j}-#{$i}{
+        padding: 0;
+      }
+    }
+
+    .wpl-util-grid-no-rsp{
+
+      .wpl-util-grid-#{$j}-#{$i}{
+
+        /*@include for-all-smart{
+          width: $j * (100% / $i);
+        }*/
+
+      }
+
+    }
+
+  }
+}
+
+.wpl-util-scroll-auto{
+  overflow-y: auto;
+  max-height: 100%;
+}
+
+.wpl-util-form-row{
+  @include clearfix_s2;
+  padding-bottom: 8px;
+  @if $text-direction == ltr
+  {
+    padding-right: 10px;
+  } @else
+  {
+    padding-left: 10px;
+  }
+
+  $si-form-row-item: 26px;
+
+  &:last-child{
+    padding-bottom: 0;
+  }
+
+  & > label{
+    box-sizing: border-box;
+    width: 100px;
+    line-height: $si-form-row-item;
+    display: inline-block;
+    @if $text-direction == ltr
+    {
+      float: left;
+      padding-right: 8px;
+      text-align: right;
+    } @else
+    {
+      float: right;
+      padding-left: 8px;
+      text-align: left;
+    }
+  }
+
+  & > input[type=text]{
+    @include calc(width, '100% - 100px');
+    box-sizing: border-box;
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+  }
+
+  & > select{
+    @if $text-direction == ltr
+    {
+      float: left;
+    } @else
+    {
+      float: right;
+    }
+  }
+
+  .wpl-util-form-messages{
+    width: 100%;
+    display: inline-block;
+
+    &:empty {
+      display: none;
+    }
+  }
+}
+
+
+
+%wpl-util-icon{
+  padding-right: 10px;
+  display: inline-block;
+  position: relative;
+  vertical-align: sub;
+  font: 24px $font-frontend;
+}
+
+.wpl-util-icon-key{
+  @extend %wpl-util-icon;
+
+  &::before{
+    content: '\e650';
+  }
+}
+
+
+.wpl-util-icon-lock{
+  @extend %wpl-util-icon;
+
+  &::before{
+    content: '\e648';
+  }
+}
+
+.wpl-util-icon-login{
+  @extend %wpl-util-icon;
+
+  &::before{
+    content: '\e647';
+  }
+}

@@ -1,0 +1,128 @@
+%text-box-membership {
+  background: $co-9;
+  height: 30px;
+  @include border-radius(2px);
+  padding: 0 10px;
+  border: 2px solid transparent;
+  font-family: Raleway, sans-serif;
+  @include box-sizing(border-box);
+}
+%button-membership {
+  line-height: 30px;
+  font-size: 12px;
+  font-weight: 700;
+  font-family: inherit;
+  font-style: normal;
+  color: $co-11;
+  border: 2px solid transparent;
+  //background-color: $co-4;
+  padding: 0 17px;
+  min-width: auto;
+  width: auto;
+  height: 30px;
+  position: relative;
+  display: inline-block;
+  margin: 0;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  outline: 0;
+  text-transform: uppercase;
+  @include border-radius(4px);
+  text-shadow: none;
+  @include transition(color 0.1s linear, background-color 0.1s linear, border-color 0.1s linear);
+  @include box-sizing(initial!important);
+
+  &:hover {
+    //border: 2px solid $co-4;
+    //color: $co-4;
+    //background-color: $co-11 !important;
+  }
+}
+.wpl_addon_membership_container {
+  margin-bottom: 15px !important;
+  .wpl_membership_field_row {
+    label {
+      float: left;
+      width: 100px;
+    }
+    input[type="text"],
+    input[type="password"] {
+      @extend %text-box-membership;
+    }
+    .btn-primary,
+    .listing_contact input[type="submit"] {
+      @extend %button-membership;
+    }
+  }
+}
+#wpl_login_form_container {
+  label {
+    float: left;
+    width: 80px;
+  }
+  input[type="text"],
+  input[type="password"] {
+    @extend %text-box-membership;
+  }
+  button {
+    @extend %button-membership;
+    padding: 0 30px;
+  }
+}
+.wpl_addon_membership_container.wpl_membership_wrap {
+  background: $co-11;
+}
+.wpl_addon_membership_container .wpl_membership_field_row label[for="wpl_membership_agreement"] {
+  float: none;
+}
+#wpl_register_info {
+  font-size: 1.5rem;
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+.wpl-forgot-password-form-row input {
+  @extend %text-box-membership;
+}
+.wpl_addon_membership_container button {
+  @extend %button-membership;
+}
+.wpl_memberships_container .wpl_memberships_wrap {
+  @include border-radius(0);
+}
+.wpl_memberships_container .membership_headline {
+  .membership_price,
+  .membership_name {
+    @include text-shadow(1px 1px 1px $co-0);
+    color: $co-11;
+    width: 100%;
+  }
+  .membership_price {
+    text-align: right;
+  }
+}
+.wpl_memberships_container .membership_upgrade,
+.wpl_memberships_container .membership_upgrade_link,
+.wpl_memberships_container .membership_register_link {
+  @include box-sizing(border-box !important);
+  @extend %button-membership;
+  @include border-radius(0 0 4px 4px);
+  padding: 0;
+  margin-top: -1px;
+  width: 100%;
+
+  &:before {
+    display: none;
+  }
+}
+.wpl-wp.profile-wp .panel-wp .panel-body .wpl_listing_field_container .title {
+  height: auto;
+}
+#wpl_dashboard_main_content .profile-wp .panel-wp .finilize-btn {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+.wpl-membership-tab li.wpl-gen-tab-active-parent {
+  line-height: 2.8em;
+}

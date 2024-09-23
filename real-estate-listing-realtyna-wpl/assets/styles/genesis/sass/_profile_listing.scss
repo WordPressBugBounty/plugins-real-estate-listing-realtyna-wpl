@@ -1,0 +1,246 @@
+.wpl-profile-listing-wp {
+  .wpl_profile_container {
+    &.grid_box {
+      border: 2px solid $co-5;
+      background: $co-1;
+      padding-bottom: 50px;
+      position: relative;
+      .wpl_profile_picture {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+        @include property-image;
+        .front {
+          position: relative;
+          .no_image {
+            &:before {
+              margin: 0;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              height: initial;
+              font: {
+                family: $fo-4;
+                size: 10em;
+              }
+              @include transform(translate(-50%, -50%));
+            }
+          }
+        }
+      }
+      .wpl_profile_container_title {
+        padding: 20px 10px;
+        position: relative;
+        &:after {
+          display: block;
+          position: absolute;
+          content: "";
+          width: 22px;
+          height: 2px;
+          background: $co-10;
+          left: 0;
+          right: 0;
+          margin-left: auto;
+          margin-right: auto;
+        }
+        .title {
+          font: {
+            family: inherit;
+            size: 17px;
+          }
+          text-transform: uppercase;
+        }
+        > a {
+          padding-top: 10px;
+        }
+      }
+      ul {
+        position: absolute;
+        width: 100%;
+        height: 30px;
+        left: 0;
+        right: 0;
+        margin: 0 auto;
+        padding-top: 0;
+        li {
+          border-radius: 0 !important;
+          float: none;
+          line-height: 50px;
+          display: inline-block;
+          *display: inline;
+          *zoom: 1;
+          &:after {
+            border-radius: 0 !important;
+            background-color: transparent !important;
+            color: $co-12;
+          }
+          a {
+            border-radius: 0 !important;
+          }
+        }
+      }
+    }
+    &.row_box {
+      border: 2px solid $co-5;
+      @include for-phone {
+        .wpl_profile_picture {
+          width: 100%;
+          height: 300px;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          float: none;
+        }
+        .wpl_profile_container_title {
+          width: 100%;
+        }
+      }
+      @include for-phone-2 {
+        .wpl_profile_picture {
+          width: 200px;
+          height: 200px;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          float: none;
+        }
+        .wpl_profile_container_title {
+          width: 100%;
+        }
+      }
+      @include for-tablet-landscape {
+        .wpl_profile_picture {
+          width: 200px;
+          height: 200px;
+        }
+        .wpl_profile_container_title {
+          width: 70%;
+        }
+      }
+      @include for-tablet-land {
+        .wpl_profile_picture {
+          width: 200px;
+          height: 200px;
+        }
+        .wpl_profile_container_title {
+          width: 69%;
+        }
+      }
+      @include for-desktop {
+        .wpl_profile_picture {
+          width: 200px;
+          height: 200px;
+        }
+        .wpl_profile_container_title {
+          width: 59%;
+        }
+      }
+
+      .wpl_profile_picture {
+        @include property-image;
+        .front {
+          .no_image {
+            &:before {
+              margin: 0;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              height: initial;
+              font: {
+                family: $fo-4;
+                size: 10em;
+              }
+              @include transform(translate(-50%, -50%));
+            }
+          }
+        }
+      }
+      .wpl_profile_container_title {
+        position: relative;
+        padding-top: 10px;
+        padding-right: 10px;
+        padding-left: 10px;
+        .title {
+          font: {
+            size: 16px;
+            family: inherit;
+          }
+          line-height: 16px;
+          padding-bottom: 10px;
+          a {
+            display: inline-block;
+            width: 50%;
+            &:last-child {
+              text-align: right;
+            }
+          }
+        }
+        .about {
+          font: {
+            size: 14px;
+          }
+          line-height: 14px;
+          padding-bottom: 10px;
+        }
+      }
+      ul {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        @include for-tablet {
+          flex-direction: row;
+        }
+        @include for-phone {
+          flex-direction: column;
+        }
+        li {
+          width: 100%;
+          border-radius: 0 !important;
+          padding-left: 30px;
+          @include for-tablet {
+            width: 23%;
+          }
+          @include for-phone {
+            width: 100%;
+          }
+          &:after {
+            border-radius: 0 !important;
+            background-color: transparent !important;
+            color: $co-12;
+            font: {
+              size: 12px;
+            }
+          }
+          a {
+            border-radius: 0 !important;
+            font: {
+              size: 11px;
+            }
+            color: inherit;
+          }
+        }
+        li.phone,
+        li.mobile {
+          font: {
+            size: 0;
+          }
+          a.phone-link,
+          a.mobile-link {
+            display: block;
+          }
+        }
+        li.fax {
+          font: {
+            size: 11px;
+          }
+        }
+      }
+    }
+  }
+  .wpl-row:not(.wpl-small-up-1) {
+    .wpl-column {
+      width: 50%;
+      @include for-phone-2 {
+        width: 100%;
+      }
+    }
+  }
+}

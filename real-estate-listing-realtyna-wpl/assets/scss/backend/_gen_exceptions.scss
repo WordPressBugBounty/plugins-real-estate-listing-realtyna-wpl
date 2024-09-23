@@ -1,0 +1,13 @@
+
+
+.wp-picker-container // Fix Color picker issue
+{
+  *{
+    @include box-sizing('content-box !important');
+  }
+
+  .wp-color-result{
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+}

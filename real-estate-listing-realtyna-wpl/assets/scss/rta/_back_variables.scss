@@ -1,0 +1,78 @@
+
+@import "../common/variables";
+@import "../common/colors";
+
+// Paths
+$image-path-backend: "../img/backend-svg";
+
+/* font variables */
+$font-scada: 'Scada',Arial, Helvetica, sans-serif;
+$font-archivo-narrow: 'Archivo Narrow',Arial, Helvetica, sans-serif;
+$font-wpl-backend: 'wpl-backend';
+
+/* Device widths */
+$width-phone:               320px;
+$width-phone-land:          480px;
+$width-tablet:              767px;
+$width-desktop:             979px;
+$width-large-desktop:       1200px;
+
+/* Responsive Selector */
+$res-phone:                 phone;
+$res-phone-tablet:          phone-tablet;
+$res-tablet-desktop:        tablet-desktop;
+$res-desktop-large:         desktop-large;
+$res-large:                 large;
+$res-retina:                retina;
+
+$border-radius-fancy:       0;
+
+/* Settings */
+$color-shortcode-color:     #ff3333;
+$width-inputs:              200px;
+
+
+$size-side-tabs-wp: 135px;
+$size-side-flex-right: 220px;
+
+
+
+/* Widths and Heights */
+
+// Backend
+$wrap-width:        1200;
+$sidebar-col:       100;
+$sidebar-right:     900px;
+$size-height-ajaxu-box: 26px;
+
+// Frontend
+
+/* Fonts and Sizes */
+$html-font-size:            85%;
+$html-default-font-size:    16px;
+
+$default-font-size: 13px;
+
+
+/* Z-indexes */
+$z-footer-logo:  10;
+
+
+/* Sprite Configuration */
+$backend-layout:horizontal;
+$backend-spacing:10px;
+$backend-sprite-dimensions: true;
+$backend-clean-up: true;
+
+/* Google */
+
+$google-map-height:     300px;
+$google-map-width:      100%;
+
+$margin-base:           20px;
+$padding-base:          20px;
+
+$icon-arrow-left: "\e600";
+$icon-arrow-right: "\e601";
+$icon-arrow-left2: "\e602";
+$icon-arrow-right2: "\e603";

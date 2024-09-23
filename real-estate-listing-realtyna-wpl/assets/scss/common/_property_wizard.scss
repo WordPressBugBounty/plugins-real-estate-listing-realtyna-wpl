@@ -1,0 +1,422 @@
+.pwizard-wp
+{
+  &.wpl-pwizard-horizontal
+  {
+    .pwizard-section
+    {
+      @extend .clearfix;
+    }
+    .sidebar-wp {
+      .side-tabs-wp, .side-tabs-wp ul, .side-content-wp {
+        float: none !important;
+        width: 100% !important;
+        &:after, &:before {
+          display: table;
+          content: "";
+          clear: both;
+        }
+      }
+      .side-tabs-wp {
+        margin: 20px -2.5px 10px -2.5px;
+        padding: 0;
+        li {
+          @if $text-direction == ltr
+          {
+            float: left;
+          } @else
+          {
+            float: right;
+          }
+          width: calc(16.66666% - 5px);
+          margin: 2.5px;
+          border: 0;
+          @include for-tablet-land {
+            width: calc(25% - 5px);
+          }
+          @include for-tablet {
+            width: calc(50% - 5px);
+          }
+          @include for-phone {
+            width: calc(100% - 5px);
+          }
+          a {
+            @include box-shadow(none);
+            @if $text-direction == ltr
+            {
+              padding: 0 5px 0 30px;
+              text-align: left;
+            } @else
+            {
+              padding: 0 30px 0 5px;
+              text-align: right;
+            }
+            border: 1px solid $co-8;
+            background: $co-8;
+            color: $co-34 !important;
+            height: 35px;
+            line-height: 33px;
+            overflow: hidden;
+            width: 100%;
+            &:before {
+              padding: 0;
+              display: none;
+            }
+          }
+          &.active {
+            &:before
+            {
+              display: none;
+            }
+            a, a:visited, a:focus, a:hover {
+              @include box-shadow(none);
+              color: $co-1 !important;
+              background-color: $co-36;
+              border-color: $co-36;
+            }
+            .wpl-pwizard-tab-number {
+              color: $co-0;
+            }
+          }
+          .wpl-pwizard-tab-number {
+            @include border-radius(100%);
+            position: absolute;
+            @if $text-direction == ltr
+            {
+              left: 5px;
+            } @else
+            {
+              right: 5px;
+            }
+            background: $co-1;
+            display: block;
+            height: 20px;
+            width: 20px;
+            text-align: center;
+            top: 7px;
+            font-size: 13px;
+            color: $co-34;
+            line-height: 20px;
+          }
+        }
+      }
+      .side-content-wp {
+        padding: 0;
+        .prow, .prow-locations .location-part {
+          @if $text-direction == ltr
+          {
+            float: left;
+          } @else
+          {
+            float: right;
+          }
+          width: 50%;
+          &:nth-child(2n)
+          {
+            clear: both;
+          }
+          @include for-tablet {
+            width: 100%;
+          }
+        }
+
+        .wpl_c_field_313, .wpl_c_field_312 {
+          width: calc(100% - 160px);
+          box-sizing: border-box;
+        }
+        .prow-separator, .prow-textarea, .prow-meta_desc, .prow-rooms, .prow-googlemap, .prow-gallery, .prow-addon_video, .prow-attachments, .prow-meta_key, .prow-locations {
+          width: 100%;
+          float: none;
+          clear: both;
+        }
+      }
+    }
+
+  }
+  .wpl-pwizard-btns
+  {
+    margin-top: 20px;
+    & > li
+    {
+      @if $text-direction == ltr
+      {
+        float: right;
+      } @else
+      {
+        float: left;
+      }
+      padding: 0 5px;
+      @include for-phone
+      {
+        width: 50%;
+        margin-bottom: 10px;
+      }
+      & > a, & > span
+      {
+        @include border-radius(3px);
+        @if $text-direction == ltr
+        {
+          padding: 0 50px 0 10px;
+        } @else
+        {
+          padding: 0 10px 0 50px;
+        }
+        height: 35px;
+        line-height: 35px;
+        display: block;
+        color:$co-1;
+        position: relative;
+        margin: 0;
+      }
+      .fa
+      {
+        position: absolute;
+        top:0;
+        display: block;
+        height: 100%;
+        line-height: 35px;
+      }
+    }
+    .wpl-pwizard-prev
+    {
+      @if $text-direction == ltr
+      {
+        padding: 0 10px 0 50px;
+        text-align: right;
+      } @else
+      {
+        padding: 0 50px 0 10px;
+        text-align: left;
+      }
+      .fa
+      {
+        @if $text-direction == ltr
+        {
+          left: 10px;
+        } @else
+        {
+          transform: rotate(-180deg);
+          right: 10px;
+        }
+      }
+    }
+    .wpl-pwizard-next
+    {
+      .fa
+      {
+        @if $text-direction == ltr
+        {
+          right: 10px;
+        } @else
+        {
+          transform: rotate(180deg);
+          left: 10px;
+        }
+      }
+    }
+    .finilized,.wpl-listing-discard-btn
+    {
+      @if $text-direction == ltr
+      {
+        float: left;
+      } @else
+      {
+        float: right;
+      }
+      & > a
+      {
+        @if $text-direction == ltr
+        {
+          padding: 0 50px 0 10px;
+        } @else
+        {
+          padding: 0 10px 0 50px;
+        }
+      }
+    }
+    .wpl-listing-discard-btn > a
+    {
+      background-color: $co-0;
+      border-bottom:2px solid $co-39;
+      i
+      {
+        position: absolute;
+        @if $text-direction == ltr
+        {
+          right: 10px;
+        } @else
+        {
+          left: 10px;
+        }
+        top:0;
+        line-height: 35px;
+      }
+    }
+    .finilized > a
+    {
+      background: $co-36;
+      &:before
+      {
+        content: '\e610';
+        position: absolute;
+        top: 0;
+        @if $text-direction == ltr
+        {
+          right: 5px;
+        } @else
+        {
+          left: 5px;
+        }
+        font-family: 'wpl-front';
+        font-size: 30px;
+      }
+    }
+  }
+
+  /*file upload*/
+  .ng-cloak {
+    display: none;
+  }
+
+  .btn:first-child {
+  }
+  .btn-success {
+    background-color: #5BB75B;
+    background-image: linear-gradient(to bottom, #62C462, #51A351);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    color: #FFFFFF;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  }
+  .btn {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background-color: #F5F5F5;
+    background-image: linear-gradient(to bottom, #FFFFFF, #E6E6E6);
+    background-repeat: repeat-x;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) #B3B3B3;
+    border-image: none;
+    border-radius: 4px 4px 4px 4px;
+    border-style: solid;
+    border-width: 1px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2) inset, 0 1px 2px rgba(0, 0, 0, 0.05);
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 0;
+    padding: 4px 12px;
+    text-align: center;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+    vertical-align: middle;
+  }
+  .fileinput-button {
+    float: left;
+    margin-right: 5px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ui-state-default{
+    border: 1px solid rgb(211, 211, 211);
+    border-image-source: initial;
+    border-image-slice: initial;
+    border-image-width: initial;
+    border-image-outset: initial;
+    border-image-repeat: initial;
+    background:rgb(230, 230, 230);
+    font-weight: normal;
+    color: rgb(85, 85, 85);
+  }
+
+  .error_uploaded_message {
+    color: red;
+    padding: 15px;
+    display:none;
+  }
+
+  .progress {
+    background-color: #F7F7F7;
+    background-image: linear-gradient(to bottom, #F5F5F5, #F9F9F9);
+    background-repeat: repeat-x;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    height: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+
+  .progress-success.progress-striped .bar, .progress-striped .bar-success {
+    background-color: #62C462;
+    background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
+  }
+  .progress-success .bar, .progress .bar-success {
+    background-color: #5EB95E;
+    background-image: linear-gradient(to bottom, #62C462, #57A957);
+    background-repeat: repeat-x;
+  }
+
+  .progress .bar {
+    -moz-box-sizing: border-box;
+    background-color: #0E90D2;
+    background-image: linear-gradient(to bottom, #149BDF, #0480BE);
+    background-repeat: repeat-x;
+    box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15) inset;
+    color: #FFFFFF;
+    float: left;
+    font-size: 12px;
+    height: 100%;
+    text-align: center;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    transition: width 0.6s ease 0s;
+    width: 0;
+  }
+  .video_tabs{height:30px;}
+  .video_tabs .tab
+  {
+    border:2px solid #CCC;
+    border-radius:2px 2px 2px 2px;
+    padding: 5px;
+  }
+  .video-content-wp{
+    .video-embed-wp {
+        textarea {
+          @include placeholder($co-10);
+        }
+    }
+  }
+  .wpl_files_container
+  {
+    width:60%;
+  }
+  #progress_img, #progress_att, #progress_vid
+  {
+    display:none;width:100%;
+  }
+  .wpl_thumb_uploader
+  {
+    width:150px;
+    max-height:140px;
+  }
+  .button_help{
+    display: block;
+    font-size: 13px;
+    @if $text-direction == ltr
+    {
+      margin-left: 195px;
+    } @else
+    {
+      margin-right: 195px;
+    }
+  }
+}
+.pwizard-panel
+{
+  .chosen-container-multi
+  {
+    width: auto !important;
+  }
+}
+

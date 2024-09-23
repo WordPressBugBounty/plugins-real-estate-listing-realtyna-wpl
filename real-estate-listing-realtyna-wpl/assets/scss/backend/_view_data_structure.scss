@@ -1,0 +1,84 @@
+
+.data-structure-wp{
+    #icon-data-structure{
+        @include backend-sprite(icon-48-data-structure);
+    }
+
+    .sidebar-wp{
+        .side-tabs-wp{
+            a{
+                &#wpl_slide_label_id_property_types{
+                    @include side-tab-icon(icon-48-property-types,10px);
+                }
+                &#wpl_slide_label_id_listing_types{
+                    @include side-tab-icon(icon-48-listing-types,10px);
+                }
+                &#wpl_slide_label_id_unit_manager{
+                    @include side-tab-icon(icon-48-unit-manager,10px);
+                }
+                &#wpl_slide_label_id_sort_options{
+                    @include side-tab-icon(icon-48-sort-options,10px);
+                }
+                &#wpl_slide_label_id_room_types{
+                    @include side-tab-icon(icon-48-rooms-type,10px);
+                }
+            }
+        }
+    }
+
+    .gmarker-icon-wp{
+        @include floatChild;
+
+        .gmarker-icon{
+            @include box-shadow(0 1px 3px rgba(#000,0.2),0 0 1px 1px #fff inset);
+            @include transition(all 0.2s linear);
+            @include border-radius(2px);
+            @include gradient-radial(#fff,#eee);
+            margin: 10px 0 10px 10px;
+            width: 68px;
+            height: 68px;
+            text-align: center;
+            position: relative;
+            &:hover{
+                @include box-shadow(0 1px 3px rgba(#000,0.2),0 0 0 2px #777);
+                span.icon-recycle-3{
+                    background: #717171;
+                    &:before{
+                        @include backend-sprite(icon-24-recycle-3_hover);
+                    }
+                }
+            }
+            img{
+                position: absolute;
+                left: 0;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                margin: auto;
+                max-width: 100%;
+            }
+
+            .icon-recycle-3{
+                @include border-radius(0 0 0 2px);
+                @include transition(background 0.2s ease);
+                @include icon-placer(icon-24-recycle-3,$do-more:true);
+                position: absolute;
+                display: inline-block;
+                top: 0;
+                right: 0;
+                height:20px;
+                width: 20px;
+            }
+            .ajax-inline-save{
+                margin: 0;
+            }
+        }
+
+    }
+    [data-wpl-role="tosi-input"]
+    {
+        width: 60%;
+    }
+
+}
+

@@ -1,0 +1,185 @@
+.wpl_wrap {
+  background: #ffffff;
+  z-index: 900000 !important;
+  width: 100vw;
+  position: relative;
+  left: calc(-50vw + 50%);
+  padding-top: 100px;
+}
+
+.wpl_profile_show_container {
+  margin-bottom: 70px;
+  margin-top: 0;
+
+  .wpl_profile_show_container_box {
+    padding: 0;
+    background: transparent;
+    .wpl_agent_info {
+      float: left;
+      width: 60%;
+
+      @include for-tablet {
+        margin-right: 0;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      @include for-phone {
+        margin-right: 0;
+        margin: 0 auto;
+        width: 100%;
+      }
+      .wpl_agent_details {
+        float: left;
+        width: 100%;
+        margin-bottom: 10px;
+        .wpl_agent_info_l {
+          margin-right: 39px;
+          @include for-tablet {
+            margin-right: 10px;
+          }
+
+          @include for-phone {
+            margin-right: 0;
+            margin: 0 auto;
+          }
+          img {
+            border: none;
+            width: 250px;
+          }
+        }
+        .wpl_agent_info_c {
+          padding: 0;
+          float: left;
+          width: 55%;
+          position: relative;
+
+          @include for-phone {
+            width: 100% !important;
+          }
+
+          .wpl_profile_container_title {
+            font-family: inherit;
+            font-size: 25px;
+            font-weight: normal;
+            margin-top: 12px;
+
+            &:after {
+              display: block;
+              clear: both;
+              content: "";
+              position: relative;
+              left: 0;
+              bottom: 0;
+              max-width: 250px;
+              height: 1px;
+              width: 22px;
+              padding-top: 11px;
+
+              @include for-phone {
+                margin: 0 auto;
+              }
+            }
+          }
+          ul {
+            li {
+              padding-left: 0 !important;
+              float: none;
+              width: 100%;
+              color: $co-24;
+              line-height: 30px;
+              height: auto;
+              font-size: 14px;
+              font-family: lato;
+              overflow: hidden;
+
+              &:before {
+                display: none !important;
+              }
+
+              a {
+                color: $co-24;
+              }
+
+              img {
+                vertical-align: middle;
+              }
+
+              label {
+                display: block;
+                float: left;
+                padding-right: 5px;
+              }
+            }
+          }
+        }
+        .wpl_agent_info_r {
+          //display: none;
+          @include for-phone {
+            margin: 10px 0;
+            padding: 0;
+          }
+          span {
+            @include for-phone {
+              width: 100%;
+            }
+          }
+        }
+      }
+      .wpl_agent_about {
+        //display: none;
+        margin: 0 10px 10px 0;
+      }
+    }
+    .wpl_contact_container {
+      float: left;
+      width: 40%;
+      margin: 0;
+
+      @include for-tablet {
+        width: 100% !important;
+      }
+
+      @include for-phone {
+        width: 100%;
+      }
+
+      .form-field {
+        float: none;
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 16px;
+        min-height: auto;
+        .text-box {
+          width: 100%;
+          font-family: $ptsans;
+          border: 1px solid $co-5;
+          padding: 20px 10px;
+        }
+      }
+      .button {
+        position: relative;
+      }
+      .btn-primary {
+        float: right;
+        margin: 0;
+        margin-bottom: 10px;
+        @include border-radius(2px !important);
+        @include transition(all 0.3s);
+        text-transform: uppercase;
+        border: 0;
+        padding: 10px !important;
+        color: #fff;
+        cursor: pointer;
+        letter-spacing: 0;
+        min-width: 30px !important;
+        width: 140px;
+        height: 40px;
+      }
+    }
+  }
+}
+.wpl-zillow-container.profileshow {
+  float: left;
+  margin-top: 20px;
+}

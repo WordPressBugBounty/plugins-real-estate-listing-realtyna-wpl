@@ -1,0 +1,135 @@
+$fo-lato: "Lato",sans-serif;
+$fo-wpl: "wpl-front";
+$fo-titil: "Titillium Web";
+$fo-standard: "Old Standard TT";
+
+/* Device widths */
+$small-phone: '(max-width: 360px)';
+$phone: '(max-width: 480px)';
+$middle-phone: '(max-width: 652px)';
+$tablet-smart: '(max-width: 768px)';
+$tablet-portrait: '(max-width: 991px)';
+$tablet-landscape: '(min-width: 769px) and (max-width: 991px)';
+$tablet-landscape-desktop: '(min-width: 992px) and (max-width: 1199px)';
+$tablet-small-desktop:'(max-width: 1010px)';
+$large-desktop: '(min-width: 1200px)';
+$extra-large: '(min-width: 1400px)';
+
+
+
+// Media Generator
+@mixin respond-to($media){
+  @media #{$media}{
+    @content
+  }
+}
+
+// For Small Phone ( Portrait and Landscape )
+@mixin for-small-phone{
+  @include respond-to($small-phone){
+    @content;
+  }
+}
+
+@mixin for-middle-phone{
+  @include respond-to($middle-phone){
+    @content;
+  }
+}
+
+// For Phone ( Portrait and Landscape )
+@mixin for-phone{
+  @include respond-to($phone){
+    @content;
+  }
+}
+
+// For Tablet
+@mixin for-tablet-sm{
+  @include respond-to($tablet-smart){
+    @content;
+  }
+}
+
+
+// For Tablet( Portrait Only )
+@mixin for-tablet{
+  @include respond-to($tablet-portrait){
+    @content;
+  }
+}
+
+// For tablet ( Landscape )
+@mixin for-tablet-landscape{
+  @include respond-to($tablet-landscape){
+    @content;
+  }
+}
+// For Tablet ( Tablet and Portrait Desktop  )
+@mixin for-tablet-land{
+  @include respond-to($tablet-landscape-desktop){
+    @content;
+  }
+}
+@mixin for-tablet-sd{
+  @include respond-to($tablet-small-desktop){
+    @content;
+  }
+}
+
+// For Phone ( Large Desktop  )
+@mixin for-desktop{
+  @include respond-to($large-desktop){
+    @content;
+  }
+}
+@mixin for-ex-desktop{
+  @include respond-to($extra-large){
+    @content;
+  }
+}
+
+
+@mixin transform($rotate){
+  -webkit-transform: $rotate;
+  -moz-transform: $rotate;
+  -o-transform: $rotate;
+  -ms-transform: $rotate;
+  transform: $rotate;
+}
+@mixin transition-delay($time) {
+  -webkit-transition-delay: $time;
+  -moz-transition-delay: $time;
+  -o-transition-delay: $time;
+  transition-delay: $time;
+}
+@mixin transition($properties){
+  -webkit-transition: $properties;
+  -moz-transition: $properties;
+  -o-transition: $properties;
+  transition: $properties;
+}
+
+@mixin placeholder($color,$font){
+  &::-webkit-input-placeholder {
+    color: $color;
+    font-size: $font;
+  }
+  &::-moz-placeholder {
+    color: $color;
+    font-size: $font;
+  }
+  &:-ms-input-placeholder {
+    color: $color;
+    font-size: $font;
+  }
+  &:-moz-placeholder {
+    color: $color;
+    font-size: $font;
+  }
+}
+@mixin border-radius($radius){
+  -webkit-border-radius:$radius;
+  -moz-border-radius:$radius;
+  border-radius:$radius;
+}
