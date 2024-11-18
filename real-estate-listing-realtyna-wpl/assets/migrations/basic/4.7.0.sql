@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `#__wpl_properties2` (
   `visit_date` datetime DEFAULT NULL,
   `vids_numb` tinyint(3) UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 INSERT `#__wpl_properties2` (`id`, `att_numb`, `sent_numb`, `contact_numb`, `inc_in_listings_numb`, `visit_time`, `visit_date`, `vids_numb`) SELECT `id`, `att_numb`, `sent_numb`, `contact_numb`, `inc_in_listings_numb`, `visit_time`, `visit_date`, `vids_numb` FROM `#__wpl_properties`;
 

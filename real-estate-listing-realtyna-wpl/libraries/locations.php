@@ -25,6 +25,76 @@ class wpl_locations
      */
     public static $names_by_abbr = array();
 
+	public static $abbreviationList = [
+		'Alley' => 'Aly',
+		'Avenue' => 'Ave',
+		'Beach' => 'Bch',
+		'Boulevard' => 'Blvd',
+		'Branch' => 'Br',
+		'Bridge' => 'Brg',
+		'Center' => 'Ctr',
+		'Circle' => 'Cir',
+		'Cliff' => 'Clf',
+		'Club' => 'Clb',
+		'Common' => 'Cmn',
+		'Corner' => 'Cor',
+		'Court' => 'Cou',
+		'Crescent' => 'Cresc',
+		'Crossing' => 'Xing',
+		'Crossroad' => 'Xrd',
+		'Curve' => 'Curv',
+		'Dale' => 'Dl',
+		'Divide' => 'Dv',
+		'Drive' => 'Dr',
+		'Estate' => 'Est',
+		'Extension' => 'Ext',
+		'Field' => 'Fld',
+		'Freeway' => 'Fwy',
+		'Garden' => 'Gdn',
+		'Gate' => 'Gt',
+		'Gateway' => 'Gtwy',
+		'Grove' => 'Grv',
+		'Harbor' => 'Hbr',
+		'Haven' => 'Hvn',
+		'Highway' => 'Hwy',
+		'Hill' => 'Hl',
+		'Island' => 'Is',
+		'Junction' => 'Jct',
+		'Key' => 'Ky',
+		'Lake' => 'Lk',
+		'Lane' => 'Ln',
+		'Mill' => 'Ml',
+		'Mission' => 'Msn',
+		'Mountain' => 'Mt',
+		'Parkway' => 'Pkwy',
+		'Path' => 'Pa',
+		'Place' => 'Pl',
+		'Plaza' => 'Plz',
+		'Point' => 'Pt',
+		'Port' => 'Prt',
+		'River' => 'Riv',
+		'Road' => 'Rd',
+		'Route' => 'Rte',
+		'Shore' => 'Shr',
+		'Spring' => 'Spg',
+		'Square' => 'Sq',
+		'Station' => 'Sta',
+		'Street' => 'St',
+		'Summit' => 'Smt',
+		'Terrace' => 'Ter',
+		'Throughway' => 'Trwy',
+		'Track' => 'Trak',
+		'Trafficway' => 'Trfy',
+		'Trail' => 'Trl',
+		'Tunnel' => 'Tunl',
+		'Underpass' => 'Upas',
+		'Union' => 'Un',
+		'Valley' => 'Vly',
+		'View' => 'Vw',
+		'Village' => 'Vlg',
+		'Ville' => 'Vl',
+	];
+
     /**
      * For updating a locaton record using location id
      * @author Howard <howard@realtyna.com>
@@ -238,6 +308,15 @@ class wpl_locations
 		return $res;
 	}
 
+	public static function purge_cached_locations($truncate = false) {
+		if($truncate) {
+			wpl_db::q('DELETE FROM `#__wpl_location_tries`');
+			return;
+		}
+		$condition = "AND created_at < '" . date('Y-m-d H:i:s', strtotime('-15 days')) . "'";
+		wpl_db::delete('wpl_location_tries', '', $condition);
+	}
+
     /**
      * Returns latitude and longitude of an address
      * @author Howard <howard@realtyna.com>
@@ -259,7 +338,10 @@ class wpl_locations
 		if(!empty($point)) {
 			return $point;
 		}
-
+		$location_tried = wpl_db::get('*', 'wpl_location_tries', 'location', $address);
+		if(!empty($location_tried)) {
+			return [$location_tried->latitude, $location_tried->longitude];
+		}
 		$method = wpl_global::get_setting('geocoding_server');
 	    if($method == 'google_first')
         {
@@ -271,6 +353,15 @@ class wpl_locations
             $point = wpl_locations::get_LatLng_OSM($address);
             if(!$point) $point = wpl_locations::get_LatLng_google($address);
         }
+		if(!empty($point) && !empty($point[0])) {
+			wpl_db::insert('wpl_location_tries', [
+				'location' => $address,
+				'latitude' => $point[0],
+				'longitude' => $point[1],
+				'created_at' => date('Y-m-d H:i:s'),
+			]);
+		}
+
 
 		do_action('wpl_locations/get_LatLng/after_request', $address, $point);
 
@@ -289,6 +380,10 @@ class wpl_locations
      */
     public static function get_LatLng_google($address)
     {
+		$enable = apply_filters('wpl_locations/get_LatLng_google/enable', true);
+		if(!$enable) {
+			return false;
+		}
         // Encode URL
         $address = urlencode($address);
 
@@ -422,7 +517,7 @@ class wpl_locations
      */
     public static function update_LatLng($property_data, $property_id = NULL)
     {
-        // Fetch property data if property id is setted
+        // Fetch property data if property id is set
 		if($property_id) $property_data = wpl_property::get_property_raw_data($property_id);
         if(!$property_id) $property_id = $property_data['id'];
 
@@ -552,23 +647,6 @@ class wpl_locations
 		$text = strtolower(str_replace(',', '', $text));
 		$words = explode(' ', $text);
 
-		$abbreviationList = array(
-			'street' => 'st',
-			'avenue' => 'ave',
-			'boulevard' => 'blvd',
-			'highway' => 'hwy',
-			'lane' => 'ln',
-			'square' => 'sq',
-			'road' => 'rd',
-			'drive' => 'dr',
-			'place' => 'pl',
-			'crescent' => 'cresc',
-			'court' => 'cou',
-			'path' => 'pa',
-			'gate' => 'gt',
-			'terrace' => 'ter'
-		);
-
 		foreach($words as &$word) {
 			// Remove single character words.
 			$word = strlen($word) > 1 ? $word : '';
@@ -576,13 +654,37 @@ class wpl_locations
 			// Remove ordinals
 			$word = preg_replace('/\\b(\d+)(?:st|nd|rd|th)\\b/', '$1', $word);
 
-			// Convert to abbreviations
-			if (in_array($word, array_keys($abbreviationList))) {
-				$word = $abbreviationList[$word];
+			if(!empty(static::$abbreviationList[ucfirst($word)])) {
+				$word = strtolower(static::$abbreviationList[ucfirst($word)]);
 			}
 		}
 		unset($word);
 
 		return ' ' . implode(' ', array_filter($words)) . ' ';
+	}
+
+	public static function makeAbbreviation($text)
+	{
+		foreach(static::$abbreviationList as $full => $abbr) {
+			$text = preg_replace("/\b$abbr\b/i", $full, $text);
+		}
+		return $text;
+	}
+
+	public static function makeFull($text)
+	{
+		foreach(static::$abbreviationList as $full => $abbr) {
+			$text = preg_replace("/\b$full\b/i", $abbr, $text);
+		}
+		return $text;
+	}
+
+	public static function getAbbrAndFull($text)
+	{
+		return array_unique([
+			$text,
+			static::makeFull($text),
+			static::makeAbbreviation($text),
+		]);
 	}
 }

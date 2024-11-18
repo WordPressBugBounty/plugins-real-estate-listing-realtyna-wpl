@@ -36,10 +36,19 @@ class wpl_activity_main_listing_gallery extends wpl_activity
 			$tags = wpl_flex::get_tag_fields($kind);
 			$loaded_tags[$kind] = $tags;
 		}
-        
+
+		$cur_membership_id = wpl_users::get_user_membership();
         foreach($tags as $tag)
         {
             if(empty($this->current_property['raw'][$tag->table_column])) continue;
+
+			if(trim($tag->accesses ?? "") != '')
+			{
+				$accesses = explode(',', trim($tag->accesses, ', '));
+				if(!in_array($cur_membership_id, $accesses)) {
+					continue;
+				}
+			}
             
             $options = json_decode($tag->options ?? '', true);
             if(!$options['ribbon']) continue;

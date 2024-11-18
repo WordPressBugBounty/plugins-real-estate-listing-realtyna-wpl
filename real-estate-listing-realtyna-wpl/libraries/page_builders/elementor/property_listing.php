@@ -2,6 +2,8 @@
 /** no direct access **/
 defined('_WPLEXEC') or die('Restricted access');
 
+_wpl_import('libraries.sort_options');
+
 /**
  * Property Listing Shortcode for Elementor
  * @author Howard <howard@realtyna.com>

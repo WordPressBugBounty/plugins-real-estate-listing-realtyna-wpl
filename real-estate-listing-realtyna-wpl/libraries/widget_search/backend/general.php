@@ -2,6 +2,10 @@
 /** no direct access * */
 defined('_WPLEXEC') or die('Restricted access');
 
+$theme = wp_get_theme();
+$theme_name = $theme->name;
+$parent_theme_name = $theme->parent() ? $theme->parent()->name : '';
+
 if ($type == 'gallery' and !$done_this) {
 	?>
 	<div class="search-field-wp search-field-gallery <?php wpl_esc::attr($value['enable'] ?? ''); ?>"
@@ -21,6 +25,19 @@ if ($type == 'gallery' and !$done_this) {
 			<div class="erow">
 				<?php wpl_esc::html_t('No Option Available'); ?>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -47,6 +64,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="datepicker" <?php if (isset($value['type']) and $value['type'] == 'datepicker') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Datepicker'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<div class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>">
 				<input type="text"
 					   name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption]"
@@ -86,6 +116,19 @@ if ($type == 'gallery' and !$done_this) {
 					<?php endif; ?>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -114,6 +157,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="select" <?php if (isset($value['type']) and $value['type'] == "select") wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Select box'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -148,6 +204,20 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="select-predefined" <?php if (isset($value['type']) and $value['type'] == "select-predefined") wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Select Box from predefined items'); ?></option>
 				</select>
 			</div>
+
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<span class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>"
 				  id="wpl_extoptions_span_<?php wpl_esc::attr($field->id); ?>_1">
 			<select name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption][]"
@@ -196,6 +266,19 @@ if ($type == 'gallery' and !$done_this) {
 					<?php endif; ?>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<div class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>">
 				<input type="text"
 					   name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption]"
@@ -230,6 +313,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="select" <?php if (isset($value['type']) and $value['type'] == 'select') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Select box'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -263,6 +359,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="minmax_selectbox_range" <?php if (isset($value['type']) and $value['type'] == 'minmax_selectbox_range') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Range'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<div class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>">
 				<input type="text"
 					   name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption]"
@@ -298,6 +407,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="selectbox" <?php if (isset($value['type']) and $value['type'] == 'selectbox') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('SelectBox'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<div class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>">
 				<input type="text"
 					   name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption]"
@@ -339,6 +461,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="select-predefined" <?php if (isset($value['type']) and $value['type'] == "select-predefined") wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Select Box from predefined items'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<div class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>"
 				 id="wpl_extoptions_span_<?php wpl_esc::attr($field->id); ?>_1">
 				<select name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption][]"
@@ -378,6 +513,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="yesno" <?php if (isset($value['type']) and $value['type'] == "yesno") wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Any/Yes'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -411,6 +559,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="select-predefined" <?php if (isset($value['type']) and $value['type'] == "select-predefined") wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Select Box from predefined items'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<div class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>">
 				<select multiple="multiple"
 						name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption][]">
@@ -459,6 +620,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="checkboxes" <?php if (isset($value['type']) and $value['type'] == 'checkboxes') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Check boxes'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -483,6 +657,19 @@ if ($type == 'gallery' and !$done_this) {
 			<div class="erow">
 				<?php wpl_esc::html_t('No Option Available'); ?>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -515,6 +702,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="minmax_selectbox_range" <?php if (isset($value['type']) and $value['type'] == 'minmax_selectbox_range') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Range'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 			<div class="erow wpl_extoptions_span <?php wpl_esc::attr($value['type'] ?? ''); ?>">
 				<input type="text"
 					   name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][extoption]"
@@ -554,6 +754,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="textarea" <?php if (isset($value['type']) and $value['type'] == 'textarea') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Textarea'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -581,6 +794,19 @@ if ($type == 'gallery' and !$done_this) {
 			<div class="erow">
 				<?php wpl_esc::html_t('No Option Available'); ?>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -608,6 +834,19 @@ if ($type == 'gallery' and !$done_this) {
 					<option value="select" <?php if (isset($value['type']) and $value['type'] == "select") wpl_esc::e('selected="selected"'); ?> ><?php wpl_esc::html_t('Select box'); ?></option>
 				</select>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php
@@ -632,6 +871,19 @@ if ($type == 'gallery' and !$done_this) {
 			<div class="erow">
 				<?php wpl_esc::html_t('No Option Available'); ?>
 			</div>
+            <?php
+            if ($theme_name == 'Agate' || $parent_theme_name == 'Agate') {
+                ?>
+                <div class="erow">
+                    <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
+                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo $this->get_field_name('data'); ?>[<?php
+                    echo $field->id; ?>][grid_size]"/>
+                </div>
+
+                <?php
+            }
+            ?>
 		</div>
 	</div>
 	<?php

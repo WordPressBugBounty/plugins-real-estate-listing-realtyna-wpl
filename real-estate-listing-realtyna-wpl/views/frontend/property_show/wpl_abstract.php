@@ -96,6 +96,7 @@ abstract class wpl_property_show_controller_abstract extends wpl_controller
         }
 
         $property = $this->model->get_property_raw_data($this->pid);
+		$property = apply_filters('wpl_property_show_controller_abstract/display/property', $property);
 
         // Property show layout
         if($property['kind'] == 1) $tpl = wpl_global::get_setting('wpl_complex_propertyshow_layout');
@@ -134,7 +135,7 @@ abstract class wpl_property_show_controller_abstract extends wpl_controller
 		$wpl_properties = array();
 
 		/** Microdata **/
-		$this->microdata = isset($this->settings['microdata']) ? $this->settings['microdata'] : 0;
+		$this->microdata = $this->settings['microdata'] ?? 0;
 		$this->itemscope = ($this->microdata) ? 'itemscope' : '';
 
 		$this->itemprop_name = ($this->microdata) ? 'itemprop="name"' : '';
@@ -158,14 +159,14 @@ abstract class wpl_property_show_controller_abstract extends wpl_controller
 		$this->itemtype_QuantitativeValue = ($this->microdata) ? 'itemtype="http://schema.org/QuantitativeValue"' : '';
 
         /*Agent and office name for mls compliance*/
-        $this->show_agent_name = isset($this->settings['show_agent_name']) ? $this->settings['show_agent_name'] : 0;
-        $this->show_office_name = isset($this->settings['show_listing_brokerage']) ? $this->settings['show_listing_brokerage'] : 0;
+        $this->show_agent_name = $this->settings['show_agent_name'] ?? 0;
+        $this->show_office_name = $this->settings['show_listing_brokerage'] ?? 0;
 
-        $this->label_agent_name = isset($this->settings['label_agent_name']) ? $this->settings['label_agent_name'] : 0;
-        $this->label_office_name = isset($this->settings['label_listing_brokerage']) ? $this->settings['label_listing_brokerage'] : 0;
+        $this->label_agent_name = $this->settings['label_agent_name'] ?? 0;
+        $this->label_office_name = $this->settings['label_listing_brokerage'] ?? 0;
 
         // Realtyna Signature and Affiliate
-        $this->show_signature = isset($this->settings['realtyna_signature']) ? $this->settings['realtyna_signature'] : 1;
+        $this->show_signature = $this->settings['realtyna_signature'] ?? 1;
         $this->affiliate_id = (isset($this->settings['realtyna_affiliate_id']) and trim($this->settings['realtyna_affiliate_id'] ?? '')) ? $this->settings['realtyna_affiliate_id'] : 4;
 
 		/** define current index **/
@@ -223,7 +224,7 @@ abstract class wpl_property_show_controller_abstract extends wpl_controller
 		$this->kind = $property['kind'];
 		$this->property = $wpl_properties['current'];
 		
-		/** updating the visited times and etc **/
+		/** updating the visited times etc. **/
 		wpl_property::property_visited($this->pid);
 		
         // Location visibility

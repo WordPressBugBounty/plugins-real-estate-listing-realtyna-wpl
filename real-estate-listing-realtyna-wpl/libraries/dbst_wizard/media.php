@@ -12,6 +12,9 @@ if($type == 'gallery' and !$done_this)
     $ext_str = substr($ext_str, 0, -1);
     $ext_str = rtrim($ext_str, ';');
     $max_size = $options['file_size'];
+	if($max_size == '') {
+		$max_size = 2000;
+	}
 
     // Load Handlebars Templates
     wpl_esc::e(wpl_global::load_js_template('dbst-wizard-gallery'));
@@ -84,7 +87,7 @@ if($type == 'gallery' and !$done_this)
         $media_confirm = wpl_global::get_setting('listing_media_confirm');
     
         $image_folder = wpl_items::get_folder($item_id, $this->kind, $blog_id);
-        $image_path = wpl_items::get_path($item_id, $this->kind, $blog_id);
+        $image_path = wpl_items::get_path($item_id, $this->kind, $blog_id, false);
         $image_categories = wpl_items::get_item_categories('gallery', $this->kind);
         $max_img_index = 0;
 		
@@ -222,7 +225,7 @@ jQuery(document).ready(function()
                         index: img_counter,
                         name: file.name,
                         enabled_title: "<?php wpl_esc::attr_t('Enabled'); ?>",
-                        selectOptions: "<?php wpl_esc::attr($image_categories_html) ?>",
+                        selectOptions: "<?php wpl_esc::escapeQuote($image_categories_html) ?>",
                         imageFolder: "<?php wpl_esc::attr($image_folder); ?>",
                         lblImageTitle: "<?php wpl_esc::attr_t('Image Title'); ?>",
                         lblImageDesc: "<?php wpl_esc::attr_t('Image Description'); ?>",

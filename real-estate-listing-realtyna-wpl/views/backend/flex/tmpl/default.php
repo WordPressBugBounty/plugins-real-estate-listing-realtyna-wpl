@@ -5,6 +5,46 @@ defined('_WPLEXEC') or die('Restricted access');
 //$this->_wpl_import($this->tpl_path . '.scripts.css');
 $this->_wpl_import($this->tpl_path . '.scripts.js');
 ?>
+<script>
+	jQuery(document).ready(function()
+	{
+		wplj("#field_filter").keyup(function()
+		{
+			var term = wplj(this).val().toLowerCase();
+
+			if(term !== "")
+			{
+				wplj(".wpl_slide_container tbody tr").hide();
+				const elements = wplj(".wpl_slide_container tbody tr").filter(function()
+				{
+					const values = wplj(this)
+						.children('td:nth-child(1), td:nth-child(2)')
+						.text();
+
+					return values.toLowerCase().indexOf(term) > -1;
+				});
+				const tabs = [];
+				elements.each(function( index, element ) {
+					const id = wplj(element).parents('.wpl_slide_container').attr('id');
+					tabs.push('wpl_slide_label_id' + id.replace('wpl_slide_container_id', ''));
+				});
+				wplj('.wpl_slide_label').hide();
+				if(tabs.length > 0) {
+					wplj('#' + tabs[0]).trigger('click');
+					for (const tab of tabs) {
+						wplj('#' + tab).show();
+					}
+				}
+				elements.show();
+			}
+			else
+			{
+				wplj('.wpl_slide_label').show();
+				wplj(".wpl_slide_container tbody tr").show();
+			}
+		});
+	});
+</script>
 <div class="wrap wpl-wp flex-wp<?php wpl_esc::e($this->kind == 2 ? ' user-flex': ''); ?>">
     <header>
         <div id="icon-flex" class="icon48"></div>
@@ -15,6 +55,9 @@ $this->_wpl_import($this->tpl_path . '.scripts.js');
     <div class="wpl_flex_list">
         <div class="wpl_show_message"></div>
     </div>
+	<div class="clearfix">
+		<input type="text" name="field_filter" id="field_filter"  style="width: 500px" placeholder="<?php wpl_esc::attr_t('Filter'); ?>" autocomplete="off" />
+	</div>
     <div class="sidebar-wp">
         <!-- sidebar1 -->
         <div class="wpl-side-2 side-tabs-wp">

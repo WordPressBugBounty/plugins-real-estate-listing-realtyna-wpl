@@ -121,7 +121,7 @@ class wpl_io_format_xml extends wpl_io_format_base
 			else
 			{
 				// add single node.
-				$value = $this->xml_entities($value);
+			//	$value = $this->xml_entities($value);
 
 				// Developed by Steve, check if there is CDATA included, then add it as true CDATA
 				if(stristr($value, '&lt;![CDATA['))

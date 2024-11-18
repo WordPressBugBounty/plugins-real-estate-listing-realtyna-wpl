@@ -112,6 +112,13 @@ defined('_WPLEXEC') or die('Restricted access');
                 <option value="1" <?php if(isset($this->options->clustering) and $this->options->clustering == 1) wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Enabled'); ?></option>
             </select>
         </div>
+        <div class="wpl-gen-accordion-row fanc-row">
+            <label for="wpl_o_clustering_method"><?php wpl_esc::html_t('Method'); ?></label>
+            <select class="text_box" name="option[clustering_method]" id="wpl_o_clustering_method">
+                <option value="default" <?php if(isset($this->options->clustering_method) and $this->options->clustering_method == 'default') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Default'); ?></option>
+                <option value="super_cluster" <?php if(isset($this->options->clustering_method) and $this->options->clustering_method == 'super_cluster') wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Super Cluster'); ?></option>
+            </select>
+        </div>
     </div>
 </div>
 <?php endif; ?>

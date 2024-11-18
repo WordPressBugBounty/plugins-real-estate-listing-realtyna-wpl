@@ -26,7 +26,11 @@ class wpl_items
      */
 	public static function get_items($parent_id, $item_type = '', $parent_kind = 0, $category = '', $enabled = 1, $condition = '', $return_records = false)
 	{
-		if(wpl_settings::is_mls_on_the_fly() && $parent_kind == 0) {
+		$source = '';
+		if($parent_kind == 0) {
+			$source = wpl_db::get('source', 'wpl_properties', 'id', $parent_id);
+		}
+		if(wpl_settings::is_mls_on_the_fly() && $parent_kind == 0 && (empty($source) || $source == 'RF')) {
 			$property = wpl_rf_property::getInstance()->get_property_raw_data($parent_id);
 			if(empty($property['realty_feed_raw_data'])) {
 				return [];
@@ -243,7 +247,7 @@ class wpl_items
 		wpl_db::q(wpl_db::prepare("DELETE FROM `#__wpl_items` WHERE `parent_kind` = %d AND `parent_id` = %d AND `item_name` = %s", $kind, $parent_id, $file_name), 'delete');
 		
         if(is_null($blog_id)) $blog_id = wpl_property::get_blog_id($parent_id);
-		$folder = wpl_items::get_path($parent_id, $kind, $blog_id);
+		$folder = wpl_items::get_path($parent_id, $kind, $blog_id, false);
 		
 		if(wpl_file::exists($folder . $file_name))
 		{
@@ -277,7 +281,7 @@ class wpl_items
 		$q = trim($q ?? '', ", ");
 		$file_name = trim($file_name);
 		
-		$affected_rows = wpl_db::update(wpl_db::prepare("UPDATE `#__wpl_items` SET ".$q." WHERE `parent_id` = %d AND `item_name` = %s", $parent_id, $file_name), 'update');
+		$affected_rows = wpl_db::q(wpl_db::prepare("UPDATE `#__wpl_items` SET ".$q." WHERE `parent_id` = %d AND `item_name` = %s", $parent_id, $file_name), 'update');
 		
 		/** trigger event **/
 		wpl_global::event_handler('item_updated', array('file_name'=>$file_name,'parent_id'=>$parent_id));
@@ -361,7 +365,7 @@ class wpl_items
      * @param int $blog_id
      * @return string
      */
-	public static function get_path($parent_id, $kind = 0, $blog_id = NULL)
+	public static function get_path($parent_id, $kind = 0, $blog_id = NULL, $creatIfNotExists = true)
 	{
 		if($kind == 2)
         {
@@ -376,7 +380,7 @@ class wpl_items
 		else $path = wpl_global::get_upload_base_path($blog_id). $parent_id .DS;
 		
         // Create the path if it doesn't exist
-		if(!wpl_folder::exists($path)) wpl_folder::create($path);
+		if($creatIfNotExists && !wpl_folder::exists($path)) wpl_folder::create($path);
 		
 		return $path;
 	}
@@ -457,7 +461,7 @@ class wpl_items
             // Get blog ID of property
             if(is_null($blog_id)) $blog_id = wpl_property::get_blog_id($image['parent_id']);
             
-			$image_path = self::get_path($image['parent_id'], $image['parent_kind'], $blog_id) . $image['item_name'];
+			$image_path = self::get_path($image['parent_id'], $image['parent_kind'], $blog_id, false) . $image['item_name'];
 			$image_url = self::get_folder($image['parent_id'], $image['parent_kind'], $blog_id) . $image['item_name'];
             
             // External Images
@@ -521,7 +525,7 @@ class wpl_items
             // Get blog ID of property
             if(is_null($blog_id)) $blog_id = wpl_property::get_blog_id($attachment['parent_id']);
             
-			$att_path = self::get_path($attachment['parent_id'], $attachment['parent_kind'], $blog_id) . $attachment['item_name'];
+			$att_path = self::get_path($attachment['parent_id'], $attachment['parent_kind'], $blog_id, false) . $attachment['item_name'];
 			$att_url = self::get_folder($attachment['parent_id'], $attachment['parent_kind'], $blog_id) . $attachment['item_name'];
 			
 			// Existance Check
@@ -592,7 +596,7 @@ class wpl_items
                 // Get blog ID of property
                 if(is_null($blog_id)) $blog_id = wpl_property::get_blog_id($video['parent_id']);
             
-				$video_path = self::get_path($video['parent_id'], $video['parent_kind'], $blog_id) . $video['item_name'];
+				$video_path = self::get_path($video['parent_id'], $video['parent_kind'], $blog_id, false) . $video['item_name'];
 				$video_url = self::get_folder($video['parent_id'], $video['parent_kind'], $blog_id) . $video['item_name'];
 				
 				// Existance Check
@@ -666,7 +670,7 @@ class wpl_items
                 // Force to Array
 				$image = (array) $image;
 				
-				$source_path = self::get_path($image['parent_id'], $image['parent_kind'], $blog_id) . $image['item_name'];
+				$source_path = self::get_path($image['parent_id'], $image['parent_kind'], $blog_id, false) . $image['item_name'];
 				$params = array('image_name'=>$image['item_name'], 'image_source'=>$source_path, 'image_parentid'=>$image['parent_id'], 'image_parentkind'=>$image['parent_kind']);
                 
                 // Taking care for external images
@@ -674,7 +678,7 @@ class wpl_items
                 {
                     $dest_url = wpl_images::create_gallery_image($x, $y, $params, 0, 0);
                     $pathinfo = @pathinfo($dest_url);
-                    $dest_path = self::get_path($image['parent_id'], $image['parent_kind'], $blog_id) . $pathinfo['basename'];
+                    $dest_path = self::get_path($image['parent_id'], $image['parent_kind'], $blog_id, false) . $pathinfo['basename'];
                 }
                 else
                 {
@@ -794,7 +798,7 @@ class wpl_items
         // Remove Current Items
         wpl_items::delete_all_items($destination_id, $destination_kind);
 
-        $src = wpl_items::get_path($source_id, $source_kind, wpl_property::get_blog_id($source_id));
+        $src = wpl_items::get_path($source_id, $source_kind, wpl_property::get_blog_id($source_id), false);
         $dest = wpl_items::get_path($destination_id, $destination_kind, wpl_property::get_blog_id($destination_id));
 
         // Remove the directory

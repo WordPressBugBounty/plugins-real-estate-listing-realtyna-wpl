@@ -45,7 +45,7 @@
 /* Editor styling */
 
 .cm-s-neo pre {
-    padding: 0;
+    padding: 0 25px 0;
 }
 
 .cm-s-neo .CodeMirror-gutters {

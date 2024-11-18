@@ -2,20 +2,16 @@
 /** no direct access **/
 defined('_WPLEXEC') or die('Restricted access');
 
-$wpl_users = $this->get_users();
-
 $this->_wpl_import($this->tpl_path.'.scripts.css');
 $this->_wpl_import($this->tpl_path.'.scripts.js');
 ?>
 <div class="wrap wpl-wp pmanager-wp wpl_view_container">
     <header>
         <div id="icon-pmanager" class="icon48"></div>
-        <h2><?php wpl_esc::html_t(ucfirst($this->kind_label) . ' Manager') ?></h2>
-		<?php if(wpl_settings::is_mls_on_the_fly() === false || $this->kind != 0): ?>
+        <h2><?php wpl_esc::e(sprintf(wpl_esc::return_html_t('%s Manager'), wpl_esc::return_html_t(ucfirst($this->kind_label)))); ?></h2>
         <button class="wpl-button button-1" onclick="window.location.href = wplj(this).data('href');" data-href="<?php wpl_esc::url($this->add_link); ?>">
 			<?php wpl_esc::html_t('Add Listing'); ?>
 		</button>
-		<?php endif; ?>
     </header>
 
     <?php $this->include_tabs(); ?>
@@ -26,7 +22,6 @@ $this->_wpl_import($this->tpl_path.'.scripts.js');
         <!-- generate search form -->
         <?php $this->generate_search_form(); ?>
 
-		<?php if(wpl_settings::is_mls_on_the_fly() === false && $this->kind == 0): ?>
         <div class="mass-panel-wp">
             <h3><?php wpl_esc::html_t("Mass actions") ?>: </h3>
             <div class="mass-actions-wp p-actions-wp">
@@ -80,13 +75,10 @@ $this->_wpl_import($this->tpl_path.'.scripts.js');
                         <label id="pmanager_mass_change_user_label" for="pmanager_mass_change_user_select">
 							<?php wpl_esc::html_t('Change User to'); ?>
 						</label>
-                        <select id="pmanager_mass_change_user_select" data-has-chosen onchange="mass_change_user(this.value);">
-                            <?php foreach($wpl_users as $wpl_user): ?>
-                                <option value="<?php wpl_esc::attr($wpl_user->ID) ?>">
-									<?php wpl_esc::html($wpl_user->user_login); ?>
-								</option>
-                            <?php endforeach; ?>
-                        </select>
+						<?php wpl_users::autocomplete(null, [
+							'id' => 'pmanager_mass_change_user_select',
+							'onchange' => 'mass_change_user(this.value);',
+						], true); ?>
                     </div>
                 </div>
                 <?php if(wpl_users::check_access('multi_agents') and wpl_global::check_addon('multi_agents')): ?>
@@ -95,13 +87,11 @@ $this->_wpl_import($this->tpl_path.'.scripts.js');
                         <label id="pmanager_mass_additional_agents_label" for="pmanager_mass_additional_agents_select">
 							<?php wpl_esc::html_t('Additional Agents'); ?>
 						</label>
-                        <select id="pmanager_mass_additional_agents_select" data-has-chosen multiple="multiple" data-chosen-opt="width:40%">
-                            <?php foreach($wpl_users as $wpl_user): ?>
-                                <option value="<?php wpl_esc::attr($wpl_user->ID); ?>">
-									<?php wpl_esc::html($wpl_user->user_login) ?>
-								</option>
-                            <?php endforeach; ?>
-                        </select>
+						<?php wpl_users::autocomplete(null, [
+							'id' => 'pmanager_mass_additional_agents_select',
+							'multiple' => 'multiple',
+							'data-chosen-opt' => 'width:40%',
+						], true); ?>
                         <div class="wpl-button button-1 mass-btn icon-additional-agents p-action-btn" onclick="mass_additional_agents();">
                             <span><?php wpl_esc::html_t('Assign'); ?></span>
                             <i class="icon-agent"></i>
@@ -111,7 +101,6 @@ $this->_wpl_import($this->tpl_path.'.scripts.js');
                 <?php endif; ?>
             <?php endif; ?>
         </div>
-		<?php endif; ?>
         <?php if(isset($this->pagination->max_page) and $this->pagination->max_page > 1): ?>
         <div class="pagination-wp">
             <?php wpl_esc::e($this->pagination->show()); ?>
@@ -193,7 +182,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js');
 
                         </div>
                         <div class="property-actions">
-                            <?php /** load position2 **/ wpl_activity::load_position('pmanager_position2', array('property_data'=>$property, 'wpl_users'=>$wpl_users)); ?>
+                            <?php /** load position2 **/ wpl_activity::load_position('pmanager_position2', array('property_data'=>$property)); ?>
                         </div>
                     </div>
                 </div>

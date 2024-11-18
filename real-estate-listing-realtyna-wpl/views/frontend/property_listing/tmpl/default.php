@@ -16,7 +16,7 @@ if($this->wplraw == 2)
 }
 
 $plisting_googlemap_activities = wpl_activity::get_activities('plisting_position1', 1, '', 'loadObject', 'googlemap');
-$this->plisting_googlemap_activity_id = isset($plisting_googlemap_activities->id) ? $plisting_googlemap_activities->id : NULL;
+$this->plisting_googlemap_activity_id = $plisting_googlemap_activities->id ?? NULL;
 
 $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
 if($this->wplpagination == 'scroll' and $this->property_listview and wpl_global::check_addon('pro')) $this->_wpl_import($this->tpl_path.'.scripts.js_scroll', true, true);

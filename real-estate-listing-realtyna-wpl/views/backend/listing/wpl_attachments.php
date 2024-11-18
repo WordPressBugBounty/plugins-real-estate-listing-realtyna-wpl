@@ -41,20 +41,14 @@ class wpl_listing_controller extends wpl_controller
         
 		$params = array();
 		$params['accept_ext'] = wpl_flex::get_field_options(301);
-		
-		$extentions = explode(',', $params['accept_ext']['ext_file']);
-		$ext_str = '';
-		
-		foreach($extentions as $extention) $ext_str .= $extention .'|';
-		
-		// remove last |
-		$ext_str = substr($ext_str, 0, -1);
-		$ext_str = rtrim ($ext_str, ';');
+
+		$extensions = explode(',', $params['accept_ext']['ext_file']);
+		$extensionsStr = str_replace(';', '', implode('|', wpl_global::filter_extensions($extensions)));
 		
 		$custom_op = array(
             'upload_dir' => wpl_global::get_upload_base_path($blog_id),
             'upload_url' => wpl_global::get_upload_base_url($blog_id),
-            'accept_file_types' => '/\.('.$ext_str.')$/i',
+            'accept_file_types' => '/\.('.$extensionsStr.')$/i',
             'max_file_size' => $params['accept_ext']['file_size']*1000,
             'min_file_size' => 1,
             'max_number_of_files' => null

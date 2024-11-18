@@ -44,7 +44,7 @@ class wpl_listing_controller extends wpl_controller
 		$params['accept_ext'] = wpl_flex::get_field_options(300);
 
 		$extensions = explode(',',$params['accept_ext']['ext_file']);
-		$extensions = apply_filters('wpl_listing_controller/gallery/upload/accept_ext', $extensions);
+		$extensions = apply_filters('wpl_listing_controller/gallery/upload/accept_ext', wpl_global::filter_extensions($extensions));
 		$extensionsStr = str_replace(';', '', implode('|', $extensions));
 		
 		$upload_handler = new wpl_UploadHandler([

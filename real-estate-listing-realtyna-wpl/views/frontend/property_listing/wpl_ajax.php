@@ -22,7 +22,8 @@ class wpl_property_listing_controller extends wpl_controller
         elseif($function == 'locationtextsearch_autocomplete')
         {
             $term = wpl_request::getVar('term');
-            $this->locationtextsearch_autocomplete($term);
+			$kind = wpl_request::getVar('kind', 0);
+            $this->locationtextsearch_autocomplete($term, $kind);
         }
         elseif($function == 'advanced_locationtextsearch_autocomplete')
         {
@@ -86,18 +87,35 @@ class wpl_property_listing_controller extends wpl_controller
         $this->response($response);
     }
 
-    private function locationtextsearch_autocomplete($term)
+    private function locationtextsearch_autocomplete($term, $kind = 0)
     {
         $limit = 10;
+		if(wpl_settings::is_mls_on_the_fly() && $kind == 0) {
+			$property_object = new wpl_property();
+			$property_object->start(0, $limit, '', '', ["sf_text_location_text" => $term]);
+			$property_object->query();
+			$found = $property_object->search();
+			$counter = 0;
+			$output = [];
+			foreach ($found as $found_item) {
+				$counter++;
+				if($counter > $limit) {
+					break;
+				}
+				$output[] = ['title' => $found_item->location_text, 'label' => $found_item->location_text];
+			}
+			$this->response($output);
+		}
 
         if(wpl_global::check_multilingual_status())
         {
             $location_text = wpl_addon_pro::get_column_lang_name('location_text', wpl_global::get_current_language(), false);
-            $results = wpl_db::select(wpl_db::prepare('SELECT %i AS name, COUNT(1) AS `count` FROM `#__wpl_properties` WHERE %i LIKE %s GROUP BY %i ORDER BY `count` DESC LIMIT %d', $location_text, $location_text, wpl_db::esc_like($term, 'right'), $location_text, $limit), 'loadAssocList');
+            $results = wpl_db::select(wpl_db::prepare('SELECT %i AS name FROM `#__wpl_properties` WHERE %i LIKE %s LIMIT %d', $location_text, $location_text, wpl_db::esc_like($term, 'right'), $limit), 'loadAssocList');
         }
         else
         {
-            $results = wpl_db::select(wpl_db::prepare('SELECT `count`, `location_text` AS name FROM `#__wpl_locationtextsearch` WHERE `location_text` LIKE %s ORDER BY `count` DESC LIMIT %d', wpl_db::esc_like($term, 'right'), $limit), 'loadAssocList');
+			$location_text = 'location_text';
+			$results = wpl_db::select(wpl_db::prepare('SELECT DISTINCT %i AS name FROM `#__wpl_properties` WHERE %i LIKE %s LIMIT %d', $location_text, $location_text, wpl_db::esc_like($term, 'right'), $limit), 'loadAssocList');
         }
 
         $output = array();
@@ -112,37 +130,24 @@ class wpl_property_listing_controller extends wpl_controller
 
     private function advanced_locationtextsearch_autocomplete($term, $kind = 0)
     {
-        $settings = wpl_settings::get_settings(3);
-        $street = 'field_42';
-        $location2 = 'location2_name';
-        $location3 = 'location3_name';
-        $location4 = 'location4_name';
-        $location5 = 'location5_name';
-        $location6 = 'location6_name';
-
-        if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($street, 0)) $street = wpl_addon_pro::get_column_lang_name($street, wpl_global::get_current_language(), false);
-
+		$settings = wpl_settings::get_settings(3);
+		$queries = wpl_property::get_suggestion_fields($kind, $term);
         $limit = 5;
         $output = array();
         $condition = wpl_db::prepare("`finalized` = 1 AND `confirmed` = 1 AND `deleted` = 0 AND `expired` = 0 and kind = %d", $kind);
 		$condition = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/condition', $condition, $kind);
 
-        $queries = array(
-            $street => wpl_esc::return_html_t('Street'),
-            $location2 => wpl_esc::return_html_t($settings['location2_keyword']),
-            $location3 => wpl_esc::return_html_t($settings['location3_keyword']),
-            $location4 => wpl_esc::return_html_t($settings['location4_keyword']),
-            $location5 => wpl_esc::return_html_t($settings['location5_keyword']),
-            $location6 => wpl_esc::return_html_t($settings['location6_keyword']),
-            'location_text' => wpl_esc::return_html_t('Address'),
-            'zip_name' => wpl_esc::return_html_t($settings['locationzips_keyword']),
-            'mls_id' => wpl_esc::return_html_t('Listing ID')
-        );
-		if($kind == 1) {
-			$queries = array_merge(['field_313' => 'Complex'], $queries);
+		$selected_field = wpl_request::getVar('field');
+		if(!empty($selected_field)) {
+			$selected_field_array = explode(',', $selected_field);
+			$new_queries = [];
+			foreach ($selected_field_array as $selected_field_item) {
+				if(array_key_exists($selected_field_item, $queries)) {
+					$new_queries[$selected_field_item] = $queries[$selected_field_item];
+				}
+			}
+			$queries = $new_queries;
 		}
-		$queries = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/queries', $queries, $term, $kind);
-
 		if(wpl_settings::is_mls_on_the_fly() && $kind == 0) {
 			$output = [];
 			foreach($queries as $column => $title)
@@ -162,13 +167,7 @@ class wpl_property_listing_controller extends wpl_controller
 					}
 					continue;
 				}
-				$taxonomy_key = 'wpl_property_' . $column;
-				register_taxonomy($taxonomy_key, ['post'], [
-					'show_ui' => false,
-					'query_var' => true,
-					'rewrite' => ['slug' => $taxonomy_key],
-				]);
-				$found_terms = get_terms($taxonomy_key);
+				$found_terms = get_terms('wpl_property_' . $column);
 				$counter = 0;
 				foreach($found_terms as $found_term) {
 					if(strpos(strtolower($found_term->name), strtolower($term)) !== false) {
@@ -176,11 +175,12 @@ class wpl_property_listing_controller extends wpl_controller
 						if($counter > $limit) {
 							break;
 						}
-						$output_row = array('title' => $title, 'label' => $found_term->name . ' (' . $found_term->count . ')', 'column' => $column, 'value' => $found_term->name);
+						$output_row = array('title' => $title, 'label' => $found_term->name, 'column' => $column, 'value' => $found_term->name);
 	                    $output[] = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/rf/output_row', $output_row, $found_term);
 					}
 				}
 			}
+			$output[] = array('label' => $term, 'title' => wpl_esc::return_html_t('Keyword'), 'column' => '', 'value' => $term);
 			$output = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/output', $output, $term, $kind, $limit);
 			$this->response($output);
 		}
@@ -200,19 +200,25 @@ class wpl_property_listing_controller extends wpl_controller
 	    {
 	        foreach($queries as $column => $title)
 	        {
-	            $query = wpl_db::prepare("SELECT %i AS `name`, COUNT(%i) AS `count` FROM `#__wpl_properties` WHERE $condition AND (%i LIKE %s OR %i LIKE %s) GROUP BY %i ORDER BY %i LIMIT %d", $column, $column, $column, wpl_db::esc_like($term, 'right'), $column, wpl_db::esc_like($term), $column, $column, $limit);
+				if($column == 'mls_id' || $column == 'zip_name') {
+					$query = wpl_db::prepare("SELECT DISTINCT %i AS `name` FROM `#__wpl_properties` WHERE $condition AND %i LIKE %s ORDER BY %i LIMIT %d", $column, $column, wpl_db::esc_like($term, 'right'), $column, $limit);
+				} else {
+					$query = wpl_db::prepare("SELECT DISTINCT %i AS `name` FROM `#__wpl_properties` WHERE $condition AND (%i LIKE %s OR %i LIKE %s) ORDER BY %i LIMIT %d", $column, $column, wpl_db::esc_like($term, 'right'), $column, wpl_db::esc_like($term), $column, $limit);
+				}
 
 				$query = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/sql_query', $query, $column, $term, $condition, $limit);
 	            $results = wpl_db::select($query, 'loadAssocList');
 
 	            foreach($results as $result)
 	            {
-	                $output_row = array('label' => $result['name'].' ('.$result['count'].')', 'title' => $title, 'column' => $column, 'value' => $result['name']);
+	                $output_row = array('label' => $result['name'], 'title' => $title, 'column' => $column, 'value' => $result['name']);
 	                $output[] = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/db/output_row', $output_row, $result);
 	            }
 	        }
         }
-        $output[] = array('label' => $term, 'title' => wpl_esc::return_html_t('Keyword'), 'column' => '', 'value' => $term);
+		if(empty($selected_field)) {
+			$output[] = array('label' => $term, 'title' => wpl_esc::return_html_t('Keyword'), 'column' => '', 'value' => $term);
+		}
 
 		$output = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/output', $output, $term, $kind, $limit);
         $this->response($output);
@@ -229,9 +235,6 @@ class wpl_property_listing_controller extends wpl_controller
 
         // check recaptcha 
         $gre_response = wpl_global::verify_google_recaptcha($gre, 'gre_listing_contact_activity');
-
-        // For integrating third party plugins such as captcha plugins
-        apply_filters('preprocess_comment', array());
 
         $returnData = array();
         if(!filter_var($email, FILTER_VALIDATE_EMAIL))

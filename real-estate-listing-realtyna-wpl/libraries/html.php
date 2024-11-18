@@ -40,6 +40,7 @@ class wpl_html
             add_filter('wpseo_title', array($html, 'title'), 9999);
             add_filter('single_post_title', array($html, 'details_page_title'), 9999, 1);
             add_filter('aioseo_title', array($html, 'title'), 9999);
+			add_filter('rank_math/frontend/title', array($html, 'title'), 9999);
             
 			add_action('wp_head', array($html, 'generate_head'), 9999);
         

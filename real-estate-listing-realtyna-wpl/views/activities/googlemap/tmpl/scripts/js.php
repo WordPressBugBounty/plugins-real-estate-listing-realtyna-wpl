@@ -8,9 +8,11 @@ wpl_global::include_google_maps();
 // APS Marker Clustering
 if($this->clustering and wpl_global::check_addon('aps'))
 {
-    $scripts = array();
-    $scripts[] = (object) array('param1'=>'google-maps-wpl-clustering', 'param2'=>'packages/markerclusterer/js/markerclusterer.min.js');
-    foreach($scripts as $script) wpl_extensions::import_javascript($script);
+	if(empty($this->clustering_method) or $this->clustering_method == 'default' ) {
+		wpl_extensions::import_javascript((object) ['param1'=>'google-maps-wpl-clustering', 'param2'=>'packages/markerclusterer/js/markerclusterer.min.js']);
+	} else {
+		wpl_extensions::import_javascript((object) ['param1'=>'google-maps-wpl-clustering', 'param2'=>'js/supercluster.min.js']);
+	}
 }
 
 $wpl_map_current_limit = wpl_request::getVar('limit', $this->settings['default_page_size']);
@@ -39,6 +41,8 @@ var wpl_found_properties<?php wpl_esc::js($this->activity_id); ?> = <?php wpl_es
 var wpl_map_set_default_geo_point<?php wpl_esc::js($this->activity_id); ?> = true;
 var wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>;
 
+var wpl_enable_cluster<?php echo $this->activity_id; ?> = <?php echo ($this->clustering and wpl_global::check_addon('aps')) ? 'true' : 'false' ?>;
+var wpl_enable_cluster_method<?php echo $this->activity_id; ?> = '<?php echo ($this->clustering and wpl_global::check_addon('aps')) ? $this->clustering_method : '' ?>';
 if(typeof google_place_radius == 'undefined') var google_place_radius = 1100;
 
 function wpl_initialize<?php wpl_esc::js($this->activity_id); ?>()
@@ -208,6 +212,28 @@ function wpl_marker<?php wpl_esc::js($this->activity_id); ?>(dataMarker)
     var marker_content = `<img src="<?php wpl_esc::wpl_url(); ?>assets/img/listing_types/gicon/${dataMarker.gmap_icon}" alt="map marker" title="map marker">`;
     if(typeof dataMarker.advanced_marker != 'undefined' && dataMarker.advanced_marker != '') marker_content = dataMarker.advanced_marker;
 
+	if(dataMarker.count) {
+		let marker_width = 70;
+		if(dataMarker.count < 20000) {
+			marker_width = 65;
+		}
+		if(dataMarker.count < 10000) {
+			marker_width = 60;
+		}
+		if(dataMarker.count < 5000) {
+			marker_width = 55;
+		}
+		if(dataMarker.count < 1000) {
+			marker_width = 50;
+		}
+		if(dataMarker.count < 500) {
+			marker_width = 45;
+		}
+		marker_content = '<div style="height: ' + marker_width + 'px;line-height: 45px;width: ' + marker_width + 'px;text-align: center;cursor: pointer;color: white;font-size: 10px;background-color: #1f59b7;border: 2px solid #1448ad;border-radius: 100%;display: flex;justify-content: center;align-items: center;" >' + dataMarker.count + '</div>';
+		wpl_enable_cluster<?php echo $this->activity_id; ?> = false;
+	} else {
+		wpl_enable_cluster<?php echo $this->activity_id; ?> = <?php echo ($this->clustering and wpl_global::check_addon('aps')) ? 'true' : 'false' ?>;
+	}
   	marker = new RichMarker({
 		position: new google.maps.LatLng(dataMarker.googlemap_lt, dataMarker.googlemap_ln),
 		map: <?php wpl_esc::attr($this->show_marker ? 'wpl_map'.$this->activity_id : 'null'); ?>,
@@ -225,46 +251,126 @@ function wpl_marker<?php wpl_esc::js($this->activity_id); ?>(dataMarker)
 
 	loaded_markers<?php wpl_esc::js($this->activity_id); ?>.push(dataMarker.id);
   	markers_array<?php wpl_esc::js($this->activity_id); ?>.push(marker);
+	if(dataMarker.count) {
+		google.maps.event.addListener(marker, "<?php echo $this->infowindow_event; ?>", function (event) {
+			wpl_map<?php echo $this->activity_id; ?>.panTo(this.getPosition());
+			if(wpl_map<?php echo $this->activity_id; ?>.zoom < 20) {
+				wpl_map<?php echo $this->activity_id; ?>.setZoom(wpl_map<?php echo $this->activity_id; ?>.zoom + 2);
+			}
+		});
+	} else {
+		google.maps.event.addListener(marker, "<?php wpl_esc::attr($this->infowindow_event); ?>", function(event) {
+			/** Don't run APS AJAX search because of boundary change due to opening infowindow **/
+			if(typeof wpl_aps_freeze != 'undefined') wpl_aps_freeze = true;
 
-      google.maps.event.addListener(marker, "<?php wpl_esc::attr($this->infowindow_event); ?>", function(event)
-	{
-        /** Don't run APS AJAX search because of boundary change due to opening infowindow **/
-        if(typeof wpl_aps_freeze != 'undefined') wpl_aps_freeze = true;
+			if(this.html)
+			{
+				infowindow<?php wpl_esc::js($this->activity_id); ?>.close();
+				infowindow<?php wpl_esc::js($this->activity_id); ?>.setContent(this.html);
+				infowindow<?php wpl_esc::js($this->activity_id); ?>.open(wpl_map<?php wpl_esc::js($this->activity_id); ?>, this);
+			}
+			else
+			{
+				const loading_info_window = `<div><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader1.gif')); ?>" /></div>`;
+				/** AJAX loader **/
+				wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<div class="map_search_ajax_loader"><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')); ?>" /></div>`);
 
-		if(this.html)
-        {
-            infowindow<?php wpl_esc::js($this->activity_id); ?>.close();
-            infowindow<?php wpl_esc::js($this->activity_id); ?>.setContent(this.html);
-            infowindow<?php wpl_esc::js($this->activity_id); ?>.open(wpl_map<?php wpl_esc::js($this->activity_id); ?>, this);
-        }
-        else
-        {
-			const loading_info_window = `<div><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader1.gif')); ?>" /></div>`;
-            /** AJAX loader **/
-            wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<div class="map_search_ajax_loader"><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')); ?>" /></div>`);
+				infowindow<?php wpl_esc::js($this->activity_id); ?>.close();
+				infowindow<?php wpl_esc::js($this->activity_id); ?>.open(wpl_map<?php wpl_esc::js($this->activity_id); ?>, this);
+				this.html = loading_info_window;
+				infowindow<?php wpl_esc::js($this->activity_id); ?>.setContent(loading_info_window);
+				get_infowindow_html<?php wpl_esc::js($this->activity_id); ?>(this.property_ids, (infowindow_html) => {
+					this.html = infowindow_html;
+					infowindow<?php wpl_esc::js($this->activity_id); ?>.setContent(infowindow_html);
+					wplj(".map_search_ajax_loader").remove();
+				});
 
-			infowindow<?php wpl_esc::js($this->activity_id); ?>.close();
-			infowindow<?php wpl_esc::js($this->activity_id); ?>.open(wpl_map<?php wpl_esc::js($this->activity_id); ?>, this);
-			this.html = loading_info_window;
-			infowindow<?php wpl_esc::js($this->activity_id); ?>.setContent(loading_info_window);
-			get_infowindow_html<?php wpl_esc::js($this->activity_id); ?>(this.property_ids, (infowindow_html) => {
-				this.html = infowindow_html;
-				infowindow<?php wpl_esc::js($this->activity_id); ?>.setContent(infowindow_html);
-				wplj(".map_search_ajax_loader").remove();
-			});
-
-        }
-	});
+			}
+		});
+	}
 	<?php endif; ?>
 }
 
-function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, delete_markers)
+function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, delete_markers, total = null)
 {
 	if(delete_markers)
-    {
-        delete_markers<?php wpl_esc::js($this->activity_id); ?>();
-        bounds<?php wpl_esc::js($this->activity_id); ?> = new google.maps.LatLngBounds();
-    }
+	{
+		delete_markers<?php wpl_esc::js($this->activity_id); ?>();
+		bounds<?php wpl_esc::js($this->activity_id); ?> = new google.maps.LatLngBounds();
+	}
+	let zoom = wpl_map<?php wpl_esc::js($this->activity_id); ?>.zoom || 2;
+	if(wpl_enable_cluster_method<?php echo $this->activity_id; ?> === 'super_cluster' && zoom <= 16 && total > 0 && markers.length < total) {
+		if(markers.length === 0) {
+			return;
+		}
+		const index = new Supercluster({log:true, radius: 40, maxZoom: 16});
+		index.load(markers.map(marker => ({geometry: { coordinates: [marker.googlemap_ln, marker.googlemap_lt]}})));
+		<?php if(!empty($_GET['sf_tmin_googlemap_lt'])): ?>
+		if(wpl_map_bounds_extend<?php wpl_esc::js($this->activity_id); ?>) {
+			let WORLD_DIM = {height: 256, width: 256};
+			const $mapDiv = wplj('#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>');
+			let mapDim = { height: $mapDiv.height(), width: $mapDiv.width() };
+
+			function latRad(lat) {
+				let sin = Math.sin(lat * Math.PI / 180);
+				let radX2 = Math.log((1 + sin) / (1 - sin)) / 2;
+				return Math.max(Math.min(radX2, Math.PI), -Math.PI) / 2;
+			}
+
+			function getZoom(mapPx, worldPx, fraction) {
+				return Math.floor(Math.log(mapPx / worldPx / fraction) / Math.LN2);
+			}
+
+			const sw = new google.maps.LatLng(<?php wpl_esc::numeric($_GET['sf_tmin_googlemap_lt']); ?>, <?php wpl_esc::numeric($_GET['sf_tmin_googlemap_ln']); ?>);
+			const ne = new google.maps.LatLng(<?php wpl_esc::numeric($_GET['sf_tmax_googlemap_lt']); ?>, <?php wpl_esc::numeric($_GET['sf_tmax_googlemap_ln']); ?>);
+
+			let latFraction = (latRad(ne.lat()) - latRad(sw.lat())) / Math.PI;
+
+			let lngDiff = ne.lng() - sw.lng();
+			let lngFraction = ((lngDiff < 0) ? (lngDiff + 360) : lngDiff) / 360;
+
+			let latZoom = getZoom(mapDim.height, WORLD_DIM.height, latFraction);
+			let lngZoom = getZoom(mapDim.width, WORLD_DIM.width, lngFraction);
+
+			zoom = Math.max(latZoom, lngZoom);
+		}
+		<?php endif; ?>
+
+		const clusters = index.getClusters([-180, -85, 180, 85], zoom);
+		bounds<?php wpl_esc::js($this->activity_id); ?> = new google.maps.LatLngBounds();
+		let counter = 0;
+		for(const cluster of clusters) {
+			counter++;
+			let marker_count = 0;
+			let marker_title = '';
+			let pids = '';
+			let gmap_icon = markers[0].gmap_icon;
+			if(cluster.properties) {
+				marker_count = total ? Math.ceil(cluster.properties.point_count * total / wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?>) : cluster.properties.point_count;
+				marker_title = cluster.properties.point_count_abbreviated;
+			} else {
+				const marker = markers.filter(m => m.googlemap_lt === cluster.geometry.coordinates[1] && m.googlemap_ln === cluster.geometry.coordinates[0]).pop();
+				if(marker) {
+					pids = marker.pids;
+					gmap_icon = marker.gmap_icon;
+				}
+			}
+			wpl_marker<?php wpl_esc::js($this->activity_id); ?>({
+				id: cluster.id || counter,
+				count: marker_count,
+				googlemap_lt: cluster.geometry.coordinates[1],
+				googlemap_ln: cluster.geometry.coordinates[0],
+				pids: pids,
+				gmap_icon: gmap_icon,
+				title: marker_title,
+			});
+		}
+		if(wpl_map_bounds_extend<?php wpl_esc::js($this->activity_id); ?>) {
+			wpl_map<?php wpl_esc::js($this->activity_id); ?>.fitBounds(bounds<?php wpl_esc::js($this->activity_id); ?>);
+			wpl_map<?php wpl_esc::js($this->activity_id); ?>.setZoom(wpl_map<?php wpl_esc::js($this->activity_id); ?>.zoom + 1);
+		}
+		return;
+	}
 
 	for(var i = 0; i < markers.length; i++)
 	{
@@ -281,7 +387,7 @@ function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, dele
 		/** now fit the map to the newly inclusive bounds **/
 		if(wpl_map_bounds_extend<?php wpl_esc::js($this->activity_id); ?> && markers.length) wpl_map<?php wpl_esc::js($this->activity_id); ?>.fitBounds(bounds<?php wpl_esc::js($this->activity_id); ?>);
 
-        <?php if($this->clustering and wpl_global::check_addon('aps')): ?>
+        <?php if($this->clustering and wpl_global::check_addon('aps') && $this->clustering_method != 'super_cluster'): ?>
         if(typeof wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?> == 'undefined')
         {
             // Add a marker clusterer to manage the markers.
@@ -420,18 +526,19 @@ function wpl_gplace_marker<?php wpl_esc::js($this->activity_id);?>(place)
 	});
 }
 
-function wpl_load_map_markers(request_str, delete_markers)
+function wpl_load_map_markers(request_str, delete_markers, extend_bound = false)
 {
-    var url = '<?php wpl_esc::current_url(); ?>';
+	let url = '<?php wpl_esc::current_url(); ?>';
     if(wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?> > 0)
     {
-        var current_page = <?php wpl_esc::numeric($wpl_map_current_page); ?>;
-        var current_limit = <?php wpl_esc::numeric($wpl_map_current_limit); ?>;
+        let current_page = <?php wpl_esc::numeric($wpl_map_current_page); ?>;
+		let current_limit = <?php wpl_esc::numeric($wpl_map_current_limit); ?>;
         url = '<?php wpl_esc::url(wpl_global::remove_qs_var('wplpage', wpl_global::remove_qs_var('limit', wpl_global::get_full_url()))); ?>';
         request_str = wpl_update_qs('limit', wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?>, request_str);
-        var map_page = Math.ceil((current_page * current_limit ) / wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?>);
+		let map_page = Math.ceil((current_page * current_limit ) / wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?>);
         if(!map_page) map_page = 1;
         request_str = wpl_update_qs('wplpage', map_page, request_str);
+        request_str = wpl_update_qs('map_zoom', wpl_map<?php wpl_esc::js($this->activity_id); ?>.zoom, request_str);
     }
 
     if(typeof delete_markers == 'undefined') delete_markers = false;
@@ -440,7 +547,7 @@ function wpl_load_map_markers(request_str, delete_markers)
     wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<div class="map_search_ajax_loader"><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')); ?>" /></div>`);
 
     request_str = 'wpl_format=f:property_listing:raw&wplmethod=get_markers&'+request_str;
-    var markers;
+	let markers;
 
     wplj.ajax(
     {
@@ -462,7 +569,10 @@ function wpl_load_map_markers(request_str, delete_markers)
             markers = data.markers;
 
             <?php foreach($map_activities as $activity): ?>
-            wpl_load_markers<?php wpl_esc::js($activity->id); ?>(markers, delete_markers);
+			if(extend_bound) {
+				wpl_map_bounds_extend<?php wpl_esc::js($this->activity_id); ?> = true;
+			}
+            wpl_load_markers<?php wpl_esc::js($activity->id); ?>(markers, delete_markers, data.total);
             <?php endforeach; ?>
 
             /** Enabled Map Search Again **/

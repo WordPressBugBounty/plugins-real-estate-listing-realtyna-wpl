@@ -38,8 +38,9 @@ abstract class wpl_profile_show_controller_abstract extends wpl_controller
                 wpl_request::setVar('uid', $this->uid);
             }
 
+			$check_access = wpl_global::check_access('public_profile',$this->uid);
             /** check user id **/
-            if(!$this->uid)
+            if(!$this->uid or !$check_access)
             {
                 /** import message tpl **/
                 $this->message = wpl_esc::return_html_t("No profile found or it's not available now!");

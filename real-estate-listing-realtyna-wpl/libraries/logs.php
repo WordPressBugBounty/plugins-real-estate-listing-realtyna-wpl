@@ -211,6 +211,7 @@ class wpl_logs
 		$log_auto_purge_ttl = (int) wpl_global::get_setting('log_auto_purge_ttl');
 		if (!$log_auto_purge_ttl) return false;
 
-		return wpl_db::q(wpl_db::prepare("DELETE FROM `#__wpl_logs` WHERE section not in ('User Login', 'Property Viewed') and log_date < DATE_SUB(NOW(), INTERVAL %d DAY) LIMIT 1000", $log_auto_purge_ttl), 'delete');
+		wpl_db::q(wpl_db::prepare("DELETE FROM `#__wpl_logs` WHERE section in ('Backend Import', 'MLS Import Images', 'Property', 'MLS Purge', 'WebAPI Import Images', 'IDX Server') and log_date < DATE_SUB(NOW(), INTERVAL %d DAY)", $log_auto_purge_ttl), 'delete');
+		wpl_db::q("DELETE FROM `#__wpl_items` WHERE parent_kind = '-1' and item_type = 'security' and creation_date < DATE_SUB(NOW(), INTERVAL 2 DAY)", 'delete');
 	}
 }

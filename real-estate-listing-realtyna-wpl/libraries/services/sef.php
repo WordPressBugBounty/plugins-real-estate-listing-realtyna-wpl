@@ -149,8 +149,8 @@ class wpl_service_sef
 		$property_alias = $property_id.'-'.urldecode($alias);
 
 		$property_alias = apply_filters('wpl_service_sef/check_property_link/property_alias', $property_alias, $property_id, $called_alias);
-		
-		if(trim($alias ?? '') and $called_alias != $property_alias)
+
+		if(trim($alias ?? '') and strtolower($called_alias) != strtolower($property_alias))
 		{
             $url = rtrim(wpl_sef::get_wpl_permalink(true) ?? '', '/').'/'.urlencode($property_alias);
 			
@@ -220,6 +220,9 @@ class wpl_service_sef
         // Remove Page Title Filters
 		$this->remove_page_title_filters();
         
+        // Remove Page Title Filters
+		$this->remove_page_meta_tags_filters();
+
         // Remove Open Graph Filters
         $this->remove_open_graph_filters();
 
@@ -316,7 +319,10 @@ class wpl_service_sef
         
         // Remove Page Title Filters
 		$this->remove_page_title_filters();
-        
+
+        // Remove Page Title Filters
+		$this->remove_page_meta_tags_filters();
+
         // Remove Open Graph Filters
         $this->remove_open_graph_filters();
         
@@ -443,13 +449,22 @@ class wpl_service_sef
         if(function_exists('bridge_qode_wp_title')) {
             remove_filter('pre_get_document_title', 'bridge_qode_wp_title');
         }
-        // Remove Rank Math SEO page title filter
-        if(class_exists('RankMath')) {
-            add_filter('rank_math/frontend/title', '__return_false');
-        }
         if(class_exists('\AIOSEO\Plugin\AIOSEO')) {
             remove_filter('pre_get_document_title', array(aioseo()->head, 'getTitle'), 99999);
             remove_filter('wp_title', array(aioseo()->head, 'getTitle'), 99999);
+        }
+	}
+
+    /**
+     * For removing page meta tags filters of WPL pages that applied by some third party plugins
+     */
+    public function remove_page_meta_tags_filters()
+	{
+        if(class_exists('RankMath')) {
+            add_filter('rank_math/frontend/description', '__return_false');
+        }
+        if(function_exists( 'aioseo' )){
+            add_filter('aioseo_description', '__return_false');
         }
 	}
     

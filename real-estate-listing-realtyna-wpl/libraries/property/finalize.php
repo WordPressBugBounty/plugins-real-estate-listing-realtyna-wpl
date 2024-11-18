@@ -115,7 +115,7 @@ class wpl_property_finalize
         $this->data = $this->raw();
 
         // Property Kind
-        $this->kind = isset($this->data['kind']) ? $this->data['kind'] : 0;
+        $this->kind = $this->data['kind'] ?? 0;
 
         // Properties Columns
         $this->columns = wpl_db::columns('wpl_properties');
@@ -295,7 +295,7 @@ class wpl_property_finalize
         $this->q['finalized'] = '1';
 
         // Numeric MLS ID
-        $this->q['mls_id_num'] = 'cast(`mls_id` AS unsigned)';
+        $this->q['mls_id_num'] = floatval($this->data['mls_id']);
 
         // Finalize Timestamp
         $this->q['last_finalize_date'] = $this->now;
@@ -304,7 +304,7 @@ class wpl_property_finalize
         if($this->confirm) $this->q['confirmed'] = '1';
 
         // Listing Expiration
-        $listing_expiration_status = isset($this->settings['lisexpr_status']) ? $this->settings['lisexpr_status'] : 0;
+        $listing_expiration_status = $this->settings['lisexpr_status'] ?? 0;
 
         if($listing_expiration_status and !wpl_global::check_addon('membership')) $this->q['expired'] = '0';
         elseif($listing_expiration_status)
@@ -451,7 +451,7 @@ class wpl_property_finalize
 		    $text_search_data[] = $normalizedText;
 	    }
 
-        $this->q[$column] = implode(' ', $text_search_data);
+        $this->q[$column] = wpl_global::remove_emoji(implode(' ', $text_search_data));
     }
 
     private function q_alias()
@@ -466,43 +466,7 @@ class wpl_property_finalize
             $column = wpl_addon_pro::get_column_lang_name($column, wpl_global::get_current_language(), false);
         }
 
-        $alias = array();
-        $alias['id'] = $this->property_id;
-
-        if(trim($this->data['property_type'] ?? '')) $alias['property_type'] =wpl_esc::return_t(wpl_global::get_property_types($this->data['property_type'])->name);
-        if(trim($this->data['listing'] ?? '')) $alias['listing'] =wpl_esc::return_t(wpl_global::get_listings($this->data['listing'])->name);
-
-        if(trim($this->data['location1_name'] ?? '')) $alias['location1'] =wpl_esc::return_t($this->data['location1_name']);
-        if(trim($this->data['location2_name'] ?? '')) $alias['location2'] =wpl_esc::return_t($this->data['location2_name']);
-        if(trim($this->data['location3_name'] ?? '')) $alias['location3'] =wpl_esc::return_t($this->data['location3_name']);
-        if(trim($this->data['location4_name'] ?? '')) $alias['location4'] =wpl_esc::return_t($this->data['location4_name']);
-        if(trim($this->data['location5_name'] ?? '')) $alias['location5'] =wpl_esc::return_t($this->data['location5_name']);
-        if(trim($this->data['zip_name'] ?? '')) $alias['zipcode'] =wpl_esc::return_t($this->data['zip_name']);
-
-        // Location Abbr Names
-        if( trim($this->data['location1_name'] ?? '') ) $alias['location1_abbr'] =wpl_esc::return_t(wpl_locations::get_location_abbr_by_name($this->data['location1_name'], 1));
-        if( trim($this->data['location2_name'] ?? '') ) $alias['location2_abbr'] =wpl_esc::return_t(wpl_locations::get_location_abbr_by_name($this->data['location2_name'], 2));
-
-        $alias['location'] = wpl_property::generate_location_text($this->data, $this->property_id, '-', false, true);
-
-        if(trim($this->data['rooms'] ?? '') ) $alias['rooms'] = $this->data['rooms'].' '.($this->data['rooms'] > 1 ?wpl_esc::return_t('Rooms') :wpl_esc::return_t('Room'));
-        if(trim($this->data['bedrooms'] ?? '')) $alias['bedrooms'] = $this->data['bedrooms'].' '.($this->data['bedrooms'] > 1 ?wpl_esc::return_t('Bedrooms') :wpl_esc::return_t('Bedroom'));
-        if(trim($this->data['bathrooms'] ?? '')) $alias['bathrooms'] = $this->data['bathrooms'].' '.($this->data['bathrooms'] > 1 ?wpl_esc::return_t('Bathrooms') : wpl_esc::return_html_t('Bathroom'));
-        if(trim($this->data['mls_id'] ?? '')) $alias['listing_id'] = $this->data['mls_id'];
-
-        $unit_data = wpl_units::get_unit($this->data['price_unit']);
-        if(trim($this->data['price'] ?? '')) $alias['price'] = str_replace('.', '', wpl_render::render_price($this->data['price'], $unit_data['id'], $unit_data['extra']));
-
-        // Get the pattern
-        $default_pattern = '[property_type][glue][listing_type][glue][location][glue][rooms][glue][bedrooms][glue][bathrooms][glue][price]';
-        $alias_pattern = wpl_global::get_pattern('property_alias_pattern', $default_pattern, $this->kind, $this->data['property_type']);
-
-        $alias_str = wpl_global::render_pattern($alias_pattern, $this->property_id, $this->data, '-', $alias);
-
-        // Apply Filters
-        @extract(wpl_filters::apply('generate_property_alias', array('alias'=>$alias, 'alias_str'=>$alias_str)));
-
-        $alias_str = wpl_global::url_encode($alias_str);
+		$alias_str = wpl_property::update_alias($this->data, $this->property_id, '-', true);
 
         $this->q[$column] = $alias_str;
         if($base_column) $this->q[$base_column] = $alias_str;
@@ -661,13 +625,6 @@ class wpl_property_finalize
 
     private function clear_thumbnails()
     {
-        $ext_array = array('jpg', 'jpeg', 'gif', 'png');
-        $path = wpl_items::get_path($this->property_id, $this->kind, wpl_property::get_blog_id($this->property_id));
-
-        $thumbnails = wpl_folder::files($path, '^th.*\.('.implode('|', $ext_array).')$', 3, true);
-        foreach($thumbnails as $thumbnail) wpl_file::delete($thumbnail);
-
-        $watermarkeds = wpl_folder::files($path, '^wm.*\.('.implode('|', $ext_array).')$', 3, true);
-        foreach($watermarkeds as $watermarked) wpl_file::delete($watermarked);
+		wpl_property::remove_thumbnails($this->property_id, $this->kind);
     }
 }

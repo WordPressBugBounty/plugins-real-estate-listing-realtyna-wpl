@@ -314,7 +314,7 @@ class wpl_functions_controller extends wpl_controller
 
 		$returnData = array();
 		$parameters = wpl_request::getVar('wplfdata', array());
-		$property_id = isset($parameters['property_id']) ? $parameters['property_id'] : 0;
+		$property_id = $parameters['property_id'] ?? 0;
 
 		if (!$property_id) {
 			$returnData['success'] = 0;

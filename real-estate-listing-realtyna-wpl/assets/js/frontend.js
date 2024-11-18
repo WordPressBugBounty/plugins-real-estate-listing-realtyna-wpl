@@ -1681,7 +1681,7 @@ function wpl_update_qs(key, value, url) {
     }
 }
 
-function wpl_thousand_sep(field_id) {
+function wpl_thousand_sep(field_id,maxDigits = null) {
     var sep = ",";
     var inputElement = wplj("#" + field_id)[0];
 
@@ -1698,17 +1698,22 @@ function wpl_thousand_sep(field_id) {
     }
 
     var num2 = num.replace(/,/g, "");
+
+    // Limit the number of digits before the decimal point if maxDigits is provided
+    if (maxDigits !== null && num2.length > maxDigits) {
+        num2 = num2.substring(0, maxDigits);
+    }
+
     x = num2;
     z = "";
     for (i = x.length - 1; i >= 0; i--)
         z += x.charAt(i);
-    // add seperators. but undo the trailing one, if there
+    // add separators. but undo the trailing one, if there
     z = z.replace(/(\d{3})/g, "$1" + sep);
     if (z.slice(-sep.length) == sep)
         z = z.slice(0, -sep.length);
-    //z.concat(endString);
-    x = "";
     // reverse again to get back the number
+    x = "";
     for (i = z.length - 1; i >= 0; i--)
         x += z.charAt(i);
     x += endString;
@@ -1716,14 +1721,17 @@ function wpl_thousand_sep(field_id) {
     // Set the formatted value back to the input
     wplj("#" + field_id).val(x);
 
-    // Set the cursor position back to the original position
+    // Calculate the new cursor position
+    var newCursorPos = cursorPos + (x.length - num.length);
+    
+    // Set the cursor position back to the new position
     if (inputElement.setSelectionRange) {
-        inputElement.setSelectionRange(cursorPos, cursorPos);
+        inputElement.setSelectionRange(newCursorPos, newCursorPos);
     } else if (inputElement.createTextRange) {
         var range = inputElement.createTextRange();
         range.collapse(true);
-        range.moveEnd('character', cursorPos);
-        range.moveStart('character', cursorPos);
+        range.moveEnd('character', newCursorPos);
+        range.moveStart('character', newCursorPos);
         range.select();
     }
 }

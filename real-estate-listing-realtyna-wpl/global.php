@@ -76,6 +76,7 @@ class wpl_global
             {
                 $return_data[$key] = wpl_global::clean($value);
             }
+			return $return_data;
         }
         elseif(is_object($parameter))
         {
@@ -84,13 +85,9 @@ class wpl_global
             {
                 $return_data->{$key} = wpl_global::clean($value);
             }
+			return $return_data;
         }
-        else
-		{
-            $return_data = strip_tags($parameter);
-		}
-
-        return wpl_db::escape($return_data);
+        return wpl_db::escape(strip_tags($parameter));
     }
 
     /**
@@ -2306,10 +2303,10 @@ class wpl_global
     public static function render_pattern($the_pattern, $property_id, $property_data, $glue = ',', $data = NULL)
     {
         $listing_data = isset($property_data['listing']) ? wpl_global::get_listings($property_data['listing']) : new stdClass();
-		$listing = isset($listing_data->name) ? $listing_data->name : '';
+		$listing = $listing_data->name ?? '';
 
         $property_type_data = isset($property_data['property_type']) ? wpl_global::get_property_types($property_data['property_type']) : new stdClass();
-		$property_type = isset($property_type_data->name) ? $property_type_data->name : '';
+		$property_type = $property_type_data->name ?? '';
 
         if(is_null($data))
         {
@@ -2328,8 +2325,8 @@ class wpl_global
             if(trim($property_data['zip_name'] ?? "")) $data['zipcode'] = __($property_data['zip_name'], 'real-estate-listing-realtyna-wpl');
 
             // Location Abbr Names
-            if(isset($property_data['location1_name']) and trim($property_data['location1_name'] ?? '')) $data['location1_abbr'] = __(wpl_locations::get_location_abbr_by_name($property_data['location1_name'], 1), 'real-estate-listing-realtyna-wpl');
-            if(isset($property_data['location2_name']) and trim($property_data['location2_name'] ?? '')) $data['location2_abbr'] = __(wpl_locations::get_location_abbr_by_name($property_data['location2_name'], 2), 'real-estate-listing-realtyna-wpl');
+            if(trim($property_data['location1_name'] ?? '')) $data['location1_abbr'] = __(wpl_locations::get_location_abbr_by_name($property_data['location1_name'], 1), 'real-estate-listing-realtyna-wpl');
+            if(trim($property_data['location2_name'] ?? '')) $data['location2_abbr'] = __(wpl_locations::get_location_abbr_by_name($property_data['location2_name'], 2), 'real-estate-listing-realtyna-wpl');
 
             if(trim($property_data['rooms'] ?? "")) {
                 $data['rooms'] = $property_data['rooms'].' '.__('Room'.($property_data['rooms'] > 1 ? 's': ''), 'real-estate-listing-realtyna-wpl');
@@ -2353,7 +2350,7 @@ class wpl_global
             if(isset($property_data['parent']))
             {
                 $parent = wpl_property::get_property_raw_data($property_data['parent']);
-                $data['parent'] = isset($parent['field_313']) ? $parent['field_313'] : '';
+                $data['parent'] = $parent['field_313'] ?? '';
             }
         }
 
@@ -2368,14 +2365,20 @@ class wpl_global
                 $ex = explode(':', $pattern);
 
                 $text = $ex[1];
-                $condition = isset($ex[2]) ? $ex[2] : NULL;
+                $condition = $ex[2] ?? NULL;
 
                 // If condition is set and its value is correct on data
-                if($condition and ((isset($data[$condition]) and trim($data[$condition] ?? '')) or (isset($property_data[$condition]) and trim($property_data[$condition] ?? '')))) $rendered = str_replace('[' . $pattern . ']', __($text, 'real-estate-listing-realtyna-wpl'), $rendered);
+                if($condition and (trim($data[$condition] ?? '') or trim($property_data[$condition] ?? ''))) {
+					$rendered = str_replace('[' . $pattern . ']', wpl_esc::return_t($text), $rendered);
+				}
                 // If condition is set and its value is not correct
-                elseif($condition) $rendered = str_replace('[' . $pattern . ']', '', $rendered);
+                elseif($condition) {
+					$rendered = str_replace('[' . $pattern . ']', '', $rendered);
+				}
                 // If condition is not set
-                else $rendered = str_replace('[' . $pattern . ']', __($text, 'real-estate-listing-realtyna-wpl'), $rendered);
+                else {
+					$rendered = str_replace('[' . $pattern . ']', wpl_esc::return_t($text), $rendered);
+				}
             }
             // Abbreviation
             elseif(strpos($pattern, 'abbr:') !== false)
@@ -2390,26 +2393,26 @@ class wpl_global
             }
             elseif(isset($property_data[$pattern]))
             {
-                if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($pattern, (isset($property_data['kind']) ? $property_data['kind'] : 2))) $pattern_multilingual = wpl_addon_pro::get_column_lang_name($pattern, wpl_global::get_current_language(), false);
+                if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($pattern, ($property_data['kind'] ?? 2))) $pattern_multilingual = wpl_addon_pro::get_column_lang_name($pattern, wpl_global::get_current_language(), false);
 
-                $value = stripslashes( $property_data[ (isset($pattern_multilingual) ? $pattern_multilingual : $pattern) ] ?? '' );
-                if( !trim( $value ?? '' ) ) $value = '';
+                $value = stripslashes( $property_data[ ($pattern_multilingual ?? $pattern) ] ?? '' );
+				if( !trim( $value ?? '' ) ) $value = '';
 
-                $field = wpl_flex::get_field_by_column($pattern, (isset($property_data['kind']) ? $property_data['kind'] : 2));
-                $rendered_value = isset($field->id) ? wpl_property::render_field($value, $field->id, $property_id) : NULL;
+					$field = wpl_flex::get_field_by_column($pattern, ($property_data['kind'] ?? 2));
+				$rendered_value = isset($field->id) ? wpl_property::render_field($value, $field->id, $property_id) : NULL;
 
-                if($rendered_value)
-                {
-                    if(isset($rendered_value['values'])) $rendered = str_replace('[' . $pattern . ']', implode(' ', $rendered_value['values']), $rendered);
-                    else $rendered = str_replace('[' . $pattern . ']', $rendered_value['value'] ?? '', $rendered);
-                }
-                elseif(trim($value)) $rendered = str_replace('[' . $pattern . ']', $value, $rendered);
-                else
-                {
-                    $rendered = str_replace(' [' . $pattern . ']', '', $rendered);
-                    $rendered = str_replace('[' . $pattern . ']', '', $rendered);
-                }
-            }
+				if($rendered_value)
+				{
+					if(isset($rendered_value['values'])) $rendered = str_replace('[' . $pattern . ']', implode(' ', $rendered_value['values']), $rendered);
+					else $rendered = str_replace('[' . $pattern . ']', $rendered_value['value'] ?? '', $rendered);
+				}
+				elseif(trim($value)) $rendered = str_replace('[' . $pattern . ']', $value, $rendered);
+				else
+				{
+					$rendered = str_replace(' [' . $pattern . ']', '', $rendered);
+					$rendered = str_replace('[' . $pattern . ']', '', $rendered);
+				}
+			}
         }
 
         $rendered = str_replace('[glue]', $glue, $rendered);
@@ -3015,5 +3018,40 @@ class wpl_global
 		}
 
 		return !boolval(Flare\Rush\Config::get('DISABLED')) && wpl_request::getVar('query_to_mysql') === null;
+	}
+
+	public static function filter_extensions($extensions) {
+		$return = [];
+		foreach ($extensions as $extension) {
+			if(in_array(strtolower($extension), ['php', 'php5', 'exe', 'js', 'pl', 'py', 'sh', 'asp', 'aspx', 'mdb', 'dll'])) {
+				continue;
+			}
+			$return[] = $extension;
+		}
+		return $return;
+	}
+
+	public static function remove_emoji($string) {
+		// Match Emoticons
+		$regex_emoticons = '/[\x{1F600}-\x{1F64F}]/u';
+		$clear_string = preg_replace($regex_emoticons, '', $string);
+
+		// Match Miscellaneous Symbols and Pictographs
+		$regex_symbols = '/[\x{1F300}-\x{1F5FF}]/u';
+		$clear_string = preg_replace($regex_symbols, '', $clear_string);
+
+		// Match Transport And Map Symbols
+		$regex_transport = '/[\x{1F680}-\x{1F6FF}]/u';
+		$clear_string = preg_replace($regex_transport, '', $clear_string);
+
+		// Match Miscellaneous Symbols
+		$regex_misc = '/[\x{2600}-\x{26FF}]/u';
+		$clear_string = preg_replace($regex_misc, '', $clear_string);
+
+		// Match Dingbats
+		$regex_dingbats = '/[\x{2700}-\x{27BF}]/u';
+		$clear_string = preg_replace($regex_dingbats, '', $clear_string);
+
+		return $clear_string;
 	}
 }

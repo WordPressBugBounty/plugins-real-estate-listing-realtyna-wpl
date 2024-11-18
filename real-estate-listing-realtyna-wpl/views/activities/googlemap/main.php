@@ -17,7 +17,7 @@ class wpl_activity_main_googlemap extends wpl_activity
         $this->settings = wpl_global::get_settings();
 
         // Maximum Hits
-        $maximum_hits = isset($params['googlemap_hits']) ? $params['googlemap_hits'] : 1000000;
+        $maximum_hits = $params['googlemap_hits'] ?? 1000000;
 
         // Current Hits
         $today_hits = get_option('wpl_gmap_hits_'.$this->activity_id, 0);

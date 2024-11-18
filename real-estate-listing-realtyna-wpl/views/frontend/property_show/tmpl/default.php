@@ -116,7 +116,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                 <div class="wpl_prp_show_detail_boxes wpl_category_description">
                     <div class="wpl_prp_show_detail_boxes_title"><?php wpl_esc::html(wpl_flex::get_dbst_key('name', wpl_flex::get_dbst_id('field_308', $this->kind))) ?></div>
                     <div class="wpl_prp_show_detail_boxes_cont" <?php wpl_esc::item_prop($this->microdata, 'description'); ?>>
-                        <?php wpl_esc::kses(apply_filters('the_content', stripslashes($this->wpl_properties['current']['data'][$description_column] ?? ''))); ?>
+                        <?php wpl_esc::e(apply_filters('the_content', stripslashes($this->wpl_properties['current']['data'][$description_column] ?? ''))); ?>
                     </div>
                 </div>
                 <?php endif; ?>
@@ -211,6 +211,22 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
 							</div>
 							<?php
                         }
+						elseif($value['type'] == 'textarea')
+						{
+							?>
+							<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows textarea">
+								<?php wpl_esc::kses($value['value'], !empty($value['iframe']) ? ['iframe' => ['src' => [], 'width' => [], 'height' => [], 'style' => []]] : []); ?>
+							</div>
+							<?php
+						}
+						elseif($value['type'] == 'url')
+						{
+							?>
+							<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows url">
+								<?php wpl_esc::html_t($value['name']); ?> : <span><?php wpl_esc::e($value['value'] ?? ''); ?></span>
+							</div>
+							<?php
+						}
                         else {
 							?>
 							<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows other">

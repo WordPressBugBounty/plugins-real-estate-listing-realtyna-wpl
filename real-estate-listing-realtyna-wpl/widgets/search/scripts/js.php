@@ -285,7 +285,7 @@ function wpl_do_search_ajax<?php wpl_esc::numeric($this->widget_id); ?>(request_
     }
 
     /** Load Markers **/
-    if (typeof wpl_load_map_markers == 'function') wpl_load_map_markers(request_str, true);
+    if (typeof wpl_load_map_markers == 'function') wpl_load_map_markers(request_str, true, true);
 
     /** Load Multiple Circles **/
     <?php if(wpl_global::check_addon('aps')): ?>

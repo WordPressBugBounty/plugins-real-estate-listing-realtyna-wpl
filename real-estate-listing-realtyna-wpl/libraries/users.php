@@ -1050,8 +1050,7 @@ class wpl_users
 	{
 		/** fetch current user data if user id is empty **/
 		if(trim($user_id ?? '') == '') $user_id = self::get_cur_user_id();
-        
-        $user_data = get_userdata($user_id);
+
         $home_type = wpl_global::get_wp_option('show_on_front', 'posts');
         $home_id = wpl_global::get_wp_option('page_on_front', 0);
             
@@ -1073,7 +1072,10 @@ class wpl_users
                 $url = wpl_global::add_qs_var('wplview', 'profile_show', $url);
                 $url = wpl_global::add_qs_var('uid', $user_id, $url);
             }
-            else $url .= urlencode($user_data->data->user_login ?? "").'/';
+            else {
+				$user_data = WP_User::get_data_by( 'ID', $user_id );
+				$url .= urlencode($user_data->user_login ?? "").'/';
+			}
         }
 		
         return $url;
@@ -1158,7 +1160,6 @@ class wpl_users
         
 		// Create Folder
 		$folder_path = wpl_items::get_path($user_id, 2);
-		if(!wpl_folder::exists($folder_path)) wpl_folder::create($folder_path);
 
 		// Turn Off Force Profile Completion
 		if(wpl_global::check_addon('membership')) {
@@ -1437,10 +1438,10 @@ class wpl_users
 		else $result['location_text'] = self::generate_location_text($raw_data);
 		
 		/** profile full link **/
-        $target_id = isset($params['wpltarget']) ? $params['wpltarget'] : 0;
+        $target_id = $params['wpltarget'] ?? 0;
 		$result['profile_link'] = self::get_profile_link($profile->id, $target_id);
 		
-        $path = wpl_items::get_path($profile->id, 2);
+        $path = wpl_items::get_path($profile->id, 2, null, false);
         $folder = wpl_items::get_folder($profile->id, 2);
         
 		/** profile picture **/
@@ -1594,8 +1595,8 @@ class wpl_users
         /** first validation **/
         if(!trim($user_id ?? '')) return false;
         
-		$ext_array = array('jpg', 'jpeg', 'gif', 'png');
-        $path = wpl_items::get_path($user_id, 2);
+		$ext_array = array('jpg', 'jpeg', 'gif', 'png', 'webp');
+        $path = wpl_items::get_path($user_id, 2, null, false);
         $thumbnails = wpl_folder::files($path, 'th.*\.('.implode('|', $ext_array).')$', 3, true);
 
         foreach($thumbnails as $thumbnail)
@@ -1992,5 +1993,42 @@ class wpl_users
     public static function change_parent($user_id, $parent)
     {
         return wpl_db::set('wpl_users', $user_id, 'parent', $parent);
+    }
+
+
+    public static function autocomplete($selected_user_id = null, $attributes = [], $check_brokerage = false)
+    {
+		$show_ajax = true;
+		$limit = 1;
+		$condition = '';
+		if($check_brokerage) {
+			$current_user_id = wpl_users::get_cur_user_id();
+			if(wpl_users::is_part_of_brokerage($current_user_id))
+			{
+				$broker = wpl_users::get_broker($current_user_id);
+				$condition = wpl_db::prepare('AND (wpl.`parent` = %d OR wpl.`id` = %d)', $broker->id, $broker->id);
+				$show_ajax = false;
+				$limit = 1000;
+			}
+		}
+		$wpl_users = wpl_db::select("SELECT * FROM `#__users` AS u INNER JOIN `#__wpl_users` AS wpl ON u.ID = wpl.id WHERE 1 $condition order by wpl.id LIMIT $limit");
+		if(!empty($selected_user_id)) {
+			if(!is_array($selected_user_id)) {
+				$selected_user_id = [$selected_user_id];
+			}
+			$fetched_users = array_keys($wpl_users);
+			$missing_users = implode(',', array_diff($selected_user_id, $fetched_users));
+
+			$wpl_user_list = wpl_db::select("SELECT * FROM `#__users` AS u INNER JOIN `#__wpl_users` AS wpl ON u.ID = wpl.id WHERE 1 $condition AND wpl.id in ($missing_users)");
+			foreach ($wpl_user_list as $key => $wpl_user) {
+				$wpl_users[$key] = $wpl_user;
+			}
+		} else {
+			$selected_user_id = [];
+		}
+		if(count($wpl_users) < $limit) {
+			$show_ajax = false;
+		}
+		include _wpl_import('views.backend.users.tmpl.autocomplete', false, true);
     }
 }

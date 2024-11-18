@@ -97,6 +97,9 @@ elseif($type == 'textarea' and !$done_this) //////////////////////////// textare
 		if(!preg_match('!!u', $value)) $value = utf8_decode($value);
 
         $return['value'] = $value;
+		if(!empty($options['iframe'])) {
+			$return['iframe'] = true;
+		}
 	}
 	
 	$done_this = true;
@@ -110,7 +113,7 @@ elseif($type == 'feature' and !$done_this) //////////////////////////// Features
 		$return['name'] = wpl_esc::return_html_t($field->name);
 		
 		/** options of property column **/
-		$column_options = isset($values[$field->table_column.'_options']) ? $values[$field->table_column.'_options'] : '';
+		$column_options = $values[$field->table_column . '_options'] ?? '';
 		$column_values = explode(',', trim($column_options, ', '));
         if(count($column_values) == 1 and trim($column_values[0] ?? '') == '') $column_values = array();
         
@@ -291,6 +294,9 @@ elseif(($type == 'volume' or $type == 'area' or $type == 'length') and !$done_th
 		$return['field_id'] = $field->id;
 		$return['type'] = $field->type;
 		$return['name'] = wpl_esc::return_html_t($field->name);
+
+		// set default value if not exists
+		$values[$field->table_column.'_unit'] = $values[$field->table_column.'_unit'] ?? 1;
 		
         /** adding unit **/
         $unit_id = $values[$field->table_column.'_unit'];
@@ -416,6 +422,9 @@ elseif($type == 'price' and !$done_this) //////////////////////////// Price ////
 	$return['field_id'] = $field->id;
 	$return['type'] = $field->type;
 	$return['name'] = wpl_esc::return_html_t($field->name);
+
+	// set default value if not exists
+	$values[$field->table_column.'_unit'] = $values[$field->table_column.'_unit'] ?? 260;
     
     $unit_id = $values[$field->table_column.'_unit'] ?? 260;
     $cookie_unit = wpl_request::getVar('wpl_unit4', 0, 'COOKIE');

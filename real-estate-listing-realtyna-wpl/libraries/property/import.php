@@ -152,8 +152,8 @@ class wpl_property_import
             foreach($property_to_import as $key=>$row)
             {
                 $wpl_field = !empty($row['wpl_table_column']) ? $row['wpl_table_column'] : $key;
-                $wpl_field_lang = isset($row['wpl_table_column_lang']) ? $row['wpl_table_column_lang'] : NULL;
-                $wpl_value = isset($row['wpl_value']) ? $row['wpl_value'] : NULL;
+                $wpl_field_lang = $row['wpl_table_column_lang'] ?? NULL;
+                $wpl_value = $row['wpl_value'] ?? NULL;
 
                 // Validation Table Column
                 if(!in_array($wpl_field, $this->all_possible_columns)) continue;

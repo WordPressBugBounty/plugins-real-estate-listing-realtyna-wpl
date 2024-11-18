@@ -567,6 +567,12 @@ class wpl_flex
 		foreach($fields as $key=>$field)
 		{
 			if(!$field) return;
+
+			$field = apply_filters('wpl_flex/generate_wizard_form/field', $field);
+
+			if(!$field) {
+				continue;
+			}
 			
 			$done_this = false;
 			$type = $field->type;
@@ -574,7 +580,7 @@ class wpl_flex
             $mandatory = $field->mandatory;
 			$options = json_decode($field->options ?? "", true);
             $value = isset($values[$field->table_column]) ? stripslashes($values[$field->table_column] ?? '') : NULL;
-            $kind = isset($values['kind']) ? $values['kind'] : NULL;
+            $kind = $values['kind'] ?? NULL;
             $specified_children = self::get_field_specific_children($field->id);
 			$display = '';
 

@@ -1051,7 +1051,7 @@ wplj.fn.wplSortable = function (options, dataString, postUrl, messages, update) 
                     }
                 });
 
-                $('.wpl-wrapper-class select').not('[data-chosen-opt], wpl-chosen-inited').each(function () {
+                $('.wpl-wrapper-class select').not('[data-chosen-opt],[data-chosen-disable], .wpl-chosen-inited').each(function () {
                     $(this).parent().css({overflow: 'visible'});
                     $(this).addClass('wpl-chosen-inited').chosen(rta.config.chosen);
                 });

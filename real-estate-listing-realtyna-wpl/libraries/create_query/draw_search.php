@@ -5,8 +5,8 @@ defined('_WPLEXEC') or die('Restricted access');
 if($format == 'radiussearchunit' and !$done_this)
 {
 	$unit_id = $value;
-	$address = isset($vars['sf_radiussearch']) ? $vars['sf_radiussearch'] : '';
-	$radius = isset($vars['sf_radiussearchradius']) ? $vars['sf_radiussearchradius'] : 0;
+	$address = $vars['sf_radiussearch'] ?? '';
+	$radius = $vars['sf_radiussearchradius'] ?? 0;
 	
     if(trim($address))
     {
@@ -20,8 +20,8 @@ if($format == 'radiussearchunit' and !$done_this)
     }
     else
     {
-        $latitude = isset($vars['sf_radiussearch_lat']) ? $vars['sf_radiussearch_lat'] : 0;
-        $longitude = isset($vars['sf_radiussearch_lng']) ? $vars['sf_radiussearch_lng'] : 0;
+        $latitude = $vars['sf_radiussearch_lat'] ?? 0;
+        $longitude = $vars['sf_radiussearch_lng'] ?? 0;
     }
 	
 	if($latitude and $longitude and $radius and $unit_id)
@@ -54,8 +54,10 @@ elseif(($format == 'polygonsearch' or $format == 'dmgfc') and !$done_this)
 
         wpl_request::setVar('sf_polygonsearch', 1);
         wpl_request::setVar('sf_polygonsearchpoints', $raw_points);
+		$GLOBALS['system_polygonsearchpoints'] = $raw_points;
+		$GLOBALS['system_selected_demographic'] = $demographic->get($value);
     }
-    else $raw_points = isset($vars['sf_polygonsearchpoints']) ? $vars['sf_polygonsearchpoints'] : '[]';
+    else $raw_points = $vars['sf_polygonsearchpoints'] ?? '[]';
 
     // Convert Raw Points to Polygon
     $polygons = wpl_global::toPolygons($raw_points);
@@ -148,8 +150,8 @@ elseif($format == 'multipleradiussearch' and wpl_global::check_addon('aps') and 
         }
         else
         {
-            $latitude = isset($vars['sf_radiussearch_lat']) ? $vars['sf_radiussearch_lat'] : 0;
-            $longitude = isset($vars['sf_radiussearch_lng']) ? $vars['sf_radiussearch_lng'] : 0;
+            $latitude = $vars['sf_radiussearch_lat'] ?? 0;
+            $longitude = $vars['sf_radiussearch_lng'] ?? 0;
         }
 
         if($latitude and $longitude and $radius and $unit_id)

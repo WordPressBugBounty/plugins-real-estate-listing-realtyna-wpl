@@ -23,7 +23,7 @@ $listings_page = wpl_property::get_property_listing_link();
     
     <?php if($this->property_css_class_switcher): ?>
     <div class="wpl_list_grid_switcher <?php wpl_esc::attr($this->switcher_type == "icon+text" ? 'wpl-list-grid-switcher-icon-text' : ''); ?>">
-        <span id="grid_view" class="<?php wpl_esc::attr($this->switcher_type == "icon" ? 'wpl-tooltip-top ' : ''); ?>grid_view <?php wpl_esc::attr($this->property_css_class == 'grid_box' ? 'active' : ''); ?>">
+        <div id="grid_view" class="<?php wpl_esc::attr($this->switcher_type == "icon" ? 'wpl-tooltip-top ' : ''); ?>grid_view <?php wpl_esc::attr($this->property_css_class == 'grid_box' ? 'active' : ''); ?>">
 			<?php if ($this->switcher_type == "icon+text"): ?>
 				<span><?php wpl_esc::html_t('Grid') ?></span>
 			<?php endif; ?>

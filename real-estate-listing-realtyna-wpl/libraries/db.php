@@ -262,20 +262,39 @@ class wpl_db
 		
 		/** db object **/
 		$database = self::get_DBO();
-		
-		if($result == 'loadObjectList') return $database->get_results($query, OBJECT_K);
-		if($result == 'loadObject') return $database->get_row($query, OBJECT);
-		if($result == 'loadAssocList') return $database->get_results($query, ARRAY_A);
-		if($result == 'loadAssoc') return $database->get_row($query, ARRAY_A);
-		if($result == 'loadResult') return $database->get_var($query);
-		if($result == 'loadColumn') return $database->get_col($query);
-		return $database->get_results($query, OBJECT_K);
+
+		$start = round(microtime(true) * 1000);
+		switch ($result) {
+			case 'loadObjectList':
+				$return = $database->get_results($query, OBJECT_K);
+				break;
+			case 'loadObject':
+				$return = $database->get_row($query, OBJECT);
+				break;
+			case 'loadAssocList':
+				$return = $database->get_results($query, ARRAY_A);
+				break;
+			case 'loadAssoc':
+				$return = $database->get_row($query, ARRAY_A);
+				break;
+			case 'loadResult':
+				$return = $database->get_var($query);
+				break;
+			case 'loadColumn':
+				$return = $database->get_col($query);
+				break;
+			default:
+				$return = $database->get_results($query, OBJECT_K);
+		}
+		$end = round(microtime(true) * 1000);
+		do_action('wpl_db/select', $query, $start, $end, $result);
+		return $return;
 	}
 	
     /**
-     * Use this function for runnig SELECT queries just for 1 record. it creats query automatically.
+     * Use this function for running SELECT queries just for 1 record. it creates query automatically.
      * @author Howard <howard@realtyna.com>
-     * @param string $selects
+     * @param string|string[] $selects
      * @param string $table
      * @param string $field
      * @param string $value
@@ -580,6 +599,7 @@ class wpl_db
             
             $query = str_replace('#__usermeta', $database->base_prefix.'usermeta', $query);
             $query = str_replace('#__users', $database->base_prefix.'users', $query);
+            $query = str_replace('#__realtyna_rf_mappings', $database->base_prefix.'realtyna_rf_mappings', $query);
             $query = str_replace('#__blogs', $database->base_prefix.'blogs', $query);
             $query = str_replace('#__wpl', $database->base_prefix.'wpl', $query);
             $query = str_replace('#__', $database->prefix, $query);

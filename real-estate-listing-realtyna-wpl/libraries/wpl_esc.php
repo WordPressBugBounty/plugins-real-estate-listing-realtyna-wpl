@@ -19,12 +19,12 @@ class wpl_esc {
 	public static function html($string) {
 		wpl_esc::e(esc_html($string));
 	}
-	public static function kses($string) {
-		wpl_esc::e(wpl_esc::return_kses($string));
+	public static function kses($string, $appendTag = []) {
+		wpl_esc::e(wpl_esc::return_kses($string, $appendTag));
 	}
 
-	public static function return_kses($string) {
-		return wp_kses($string, [
+	public static function return_kses($string, $appendTag = []) {
+		$tags = [
 			'a'       => [
 				'href'   => [],
 				'title'  => [],
@@ -56,7 +56,11 @@ class wpl_esc {
 				'class' => [],
 				'alt'   => [],
 			],
-		]);
+		];
+		if(!empty($appendTag) && is_array($appendTag)) {
+			$tags = array_merge($tags, $appendTag);
+		}
+		return wp_kses($string, $tags);
 	}
 	public static function attr($string) {
 		wpl_esc::e(esc_attr($string));
@@ -77,6 +81,9 @@ class wpl_esc {
 	}
 	public static function js($string) {
 		wpl_esc::e(esc_js($string));
+	}
+	public static function escapeQuote($string) {
+		wpl_esc::e(addslashes($string));
 	}
 	public static function return_js($string) {
 		return esc_js($string);

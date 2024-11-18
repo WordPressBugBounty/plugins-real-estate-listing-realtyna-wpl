@@ -306,14 +306,14 @@ class wpl_security
      */
     public function validate_token($token, $delete = false)
     {
-        $num = wpl_db::num(wpl_db::prepare("SELECT COUNT(*) FROM `#__wpl_items` WHERE `item_name` = %s AND `parent_kind` = '-1'", $token));
+        $num = wpl_db::num(wpl_db::prepare("SELECT 1 FROM `#__wpl_items` WHERE `item_name` = %s AND `parent_kind` = '-1' LIMIT 1", $token));
         
         if($num and $delete)
         {
             wpl_db::q(wpl_db::prepare("DELETE FROM `#__wpl_items` WHERE `parent_kind` = '-1' AND `item_name` = %s", $token), 'DELETE');
         }
         
-        return $num ? true : false;
+        return (bool)$num;
     }
     
     /**
@@ -656,6 +656,11 @@ class wpl_ftp
     {
         return ftp_get($this->connection, $local_file, $ftp_file, $mode);
     }
+
+	public function upload($ftp_file, $local_file, $mode = FTP_BINARY)
+	{
+		return ftp_put($this->connection, $ftp_file, $local_file, $mode);
+	}
 
     public function buffer($ftp_file, $mode = FTP_BINARY)
     {

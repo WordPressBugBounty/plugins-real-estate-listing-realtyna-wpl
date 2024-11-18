@@ -332,6 +332,12 @@ class wpl_settings
             if(wpl_global::check_multilingual_status()) $q = self::get_multilingual_query(array('alias', 'location_text', 'rendered'));
 
             wpl_db::q("UPDATE `#__wpl_properties` SET ".$q);
+            wpl_locations::purge_cached_locations(true);
+        }
+
+        if($cache_type == 'location_cached_data' or $cache_type == 'all')
+        {
+            wpl_locations::purge_cached_locations(true);
         }
 
         if($cache_type == 'properties_title' or $cache_type == 'all')
@@ -430,7 +436,7 @@ class wpl_settings
 
             foreach($users as $user)
             {
-                $path = wpl_items::get_path($user['id'], 2);
+                $path = wpl_items::get_path($user['id'], 2, null, false);
                 $thumbnails = wpl_folder::files($path, '^(th|wm).*\.('.implode('|', $ext_array).')$', 3, true);
 
                 foreach($thumbnails as $thumbnail) wpl_file::delete($thumbnail);
@@ -526,7 +532,7 @@ class wpl_settings
 
 	public static function is_mls_on_the_fly() {
 		return wpl_global::check_addon('pro')
-			&& defined('REALTYNA_RF_SHELL_BASE_PATH')
+			&& (defined('REALTYNA_RF_SHELL_BASE_PATH') || defined('REALTYNA_MLS_ON_THE_FLY_VERSION'))
 			&& static::get('property_source') == 'rf'
 			&& file_exists(_wpl_import('libraries.rf_shell.rf_property', true, true));
 	}

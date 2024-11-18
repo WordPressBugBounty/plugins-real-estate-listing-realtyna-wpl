@@ -41,8 +41,16 @@ function trigger_addon_update(addon_id)
     wplj("#wpl_addon_container"+addon_id+" .wpl_addon_message span").trigger("click");
 }
 
-function update_package(sid)
+function update_package(sid, element)
 {
+	let text;
+	if(element) {
+		text = wplj(element).text();
+		if(text === 'Updating ...') {
+			return;
+		}
+		wplj(element).html('Updating ...');
+	}
 	wpl_show_messages('<?php wpl_esc::js_t('Please wait ...'); ?>', '.wpl_addons_message .wpl_show_message', 'wpl_gold_msg');
     rta.util.equalPanel(true);
     
@@ -54,10 +62,14 @@ function update_package(sid)
 		url: '<?php wpl_esc::current_url(); ?>',
 		data: request_str,
 		success: function (data) {
-			if(data.error != '')
+			if(data.error !== '')
 			{
 				wpl_show_messages(data.error, '.wpl_addons_message .wpl_show_message', 'wpl_red_msg');
 				rta.util.equalPanel(true);
+
+				if(element && text) {
+					wplj(element).html(text);
+				}
 			}
 			else
 			{

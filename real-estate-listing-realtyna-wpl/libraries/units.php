@@ -352,7 +352,7 @@ class wpl_units
 		$unit_from_data = self::get_unit($unit_from);
         $unit_to_data = self::get_unit($unit_to);
 
-        $value_si = $value*$unit_from_data['tosi'];
+        $value_si = floatval($value)*floatval($unit_from_data['tosi']);
         $value_final = $value_si/$unit_to_data['tosi'];
         
         return $value_final;

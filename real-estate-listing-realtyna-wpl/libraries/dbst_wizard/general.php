@@ -290,6 +290,7 @@ if ($type == 'boolean' and !$done_this) {
 	<?php
 	$done_this = true;
 } elseif ($type == 'mmnumber' and !$done_this) {
+	$value = empty($value) ? 0 : $value;
 	$value_max = $values[$field->table_column . '_max'] ?? 0;
 	?>
 	<label for="wpl_c_<?php wpl_esc::attr($field->id); ?>"><?php wpl_esc::html_t($label); ?><?php if (in_array($mandatory, array(1, 2))): ?>

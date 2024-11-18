@@ -15,13 +15,29 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 	$element_id = 'sf'.$widget_id.'_advancedlocationtextsearch';
 	$element_column_id = 'sf'.$widget_id.'_advancedlocationcolumn';
 	
-	$html .= '<div class="wpl_search_widget_location_level_container" id="wpl'.$widget_id.'_search_widget_location_level_container_advanced_location_text">';
+	$html .= '<div style="position: relative" class="wpl_search_widget_location_level_container" id="wpl'.$widget_id.'_search_widget_location_level_container_advanced_location_text">';
 	$html .= '<input class="wpl_search_widget_location_textsearch" value="'.esc_attr($current_value).'" name="'.$element_id.'" id="'.$element_id.'" placeholder="'.wpl_esc::return_attr_t($placeholder).'" />';
 	$html .= '<input type="hidden" value="'.esc_attr($current_column_value).'" name="'.$element_column_id.'" id="'.$element_column_id.'" />';
-	
+
+	$suggest_fields = wpl_property::get_suggestion_fields($this->kind);
+	if(empty($suggest_fields)) {
+		$suggest_fields = [];
+	} else {
+		$first_fields = [];
+		$second_fields = [];
+		foreach ($suggest_fields as $field_name => $field_title) {
+			if(in_array($field_name, ['location_text', 'mls_id'])) {
+				$second_fields[] = $field_name;
+			} else {
+				$first_fields[] = $field_name;
+			}
+		}
+		$suggest_fields = [implode(',', $first_fields), implode(',', $second_fields)];
+	}
+	$suggest_fields = json_encode($suggest_fields);
 	wpl_html::set_footer('<script type="text/javascript">
-    var ajaxRequest = null;
-	var autocomplete_cache = {};
+    var ajaxRequest'.$widget_id.' = null;
+	var autocomplete_cache'.$widget_id.' = {};
 	(function($){$(function()
     {    
 		$.widget( "custom.wpl_catcomplete", $.ui.autocomplete,
@@ -37,7 +53,7 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 				$.each(items, function(index, item)
 				{
 				    var li;
-				    if(item.title != currentCategory)
+				    if(item.title !== currentCategory)
 					{
 						ul.append( "<li class=\'ui-autocomplete-category\' aria-label=\'" + item.title + "\'>" + item.title + "</li>" );
 						currentCategory = item.title;
@@ -61,39 +77,57 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 			{
 				wplj("#'.$element_id.'").val(ui.item.value);
 				wplj("#'.$element_column_id.'").val(ui.item.column);
-				wpl_do_search_'.$widget_id.'();
+				wplj("#wpl_search_form_'.$widget_id.'").submit();
 			},
-			source: function(request, response)
-			{
+			source: function (request, response) {
 				var term = request.term.toUpperCase(), items = [];
-				for(var key in autocomplete_cache)
-				{
-					if(key === term)
-					{
-						response(autocomplete_cache[key]);
+				for (var key in autocomplete_cache'.$widget_id.') {
+					if (key === term) {
+						response(autocomplete_cache'.$widget_id.'[key]);
 						return;
 					}
 				}
-				
-				if (ajaxRequest) {
-					ajaxRequest.abort();
-				}
-					
-				ajaxRequest = $.ajax(
-				{
-					type: "GET",
-					url: "'.wpl_global::get_wp_site_url().'?wpl_format=f:property_listing:ajax&wpl_function=advanced_locationtextsearch_autocomplete&kind=' . $this->kind . '&term="+request.term,
-					contentType: "application/json; charset=utf-8",
-					success: function (msg)
-					{
-                       ajaxRequest = null;
-					   response($.parseJSON(msg));
-					   autocomplete_cache[request.term.toUpperCase()] = $.parseJSON(msg);
-					},
-					error: function (msg)
-					{
+
+				if (ajaxRequest'.$widget_id.') {
+					for (const ajaxRequestItem of ajaxRequest'.$widget_id.') {
+						ajaxRequestItem.abort();
 					}
-				});
+					ajaxRequest'.$widget_id.' = [];
+				} else {
+					ajaxRequest'.$widget_id.' = [];
+				}
+				$(".advanced_suggestion_loading").show();
+				const fields = JSON.parse("' . addslashes($suggest_fields) . '");
+				const totalItems = [];
+				if (fields) {
+					for (const fieldIndex in fields) {
+						const field = fields[fieldIndex];
+						ajaxRequest'.$widget_id.'.push($.ajax({
+							type: "GET",
+							url: "' . wpl_global::get_wp_site_url() . '?wpl_format=f:property_listing:ajax&wpl_function=advanced_locationtextsearch_autocomplete&field=" + field + "&kind=' . $this->kind . '&term=" + request.term,
+							contentType: "application/json; charset=utf-8",
+							success: function (msg) {
+								let wplContinue = false;
+								for (const ajaxRequestItem of ajaxRequest'.$widget_id.') {
+									if(ajaxRequestItem.status === undefined) {
+										wplContinue = true;
+										break;
+									}
+								}
+								totalItems.push(...$.parseJSON(msg)); 
+								if (!wplContinue) {
+									ajaxRequest'.$widget_id.' = [];
+									$(".advanced_suggestion_loading").hide();
+									autocomplete_cache'.$widget_id.'[request.term.toUpperCase()] = totalItems;
+								}
+								response(totalItems);
+							}
+						}));
+						for (const ajaxRequestItem of ajaxRequest'.$widget_id.') {
+							console.log("ajaxRequestItem", ajaxRequestItem.status);
+						}
+					}
+				}
 			},
 			width: 260,
 			matchContains: true,
@@ -103,7 +137,8 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 		});
 	})(jQuery);
 	</script>');
-    
+
+	$html .= '<span style="display: none; position: absolute; right: 5px;" class="advanced_suggestion_loading"><img src="' . wpl_global::get_wpl_asset_url('img/ajax-loader3.gif') . '" /></span>';
 	$html .= '</div>';
 	$done_this = true;
 }

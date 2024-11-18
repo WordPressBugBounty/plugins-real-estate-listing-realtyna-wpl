@@ -26,7 +26,7 @@ class wpl_images
         $source = $source ?? '';
 		// Don't execute the function if source file doesn't exists.
         if(!wpl_file::exists($source) and strpos($source, '://') === false) return $source;
-        
+
         // Set memory limit
         @ini_set('memory_limit', '-1');
         
@@ -71,6 +71,16 @@ class wpl_images
     
         list($src_width, $src_height) = getimagesize($source);
         
+		$rotate_degree = static::get_rotate_degree($source);
+		if(!empty($rotate_degree)) {
+			$src_image = static::rotate_image($src_image, $rotate_degree);
+			if($rotate_degree != 180) {
+				$temp_width = $src_width;
+				$src_width = $src_height;
+				$src_height = $temp_width;
+			}
+		}
+
         // Set default width if both width and height are unspecified or invalid
         if ((empty($width) || !intval($width)) && (empty($height) || !intval($height))) {
             $width = 800;
@@ -232,6 +242,32 @@ class wpl_images
 		return apply_filters('wpl_images/resize_image/after_resize', $dest, $extension);
     }
     
+	private static function rotate_image($src_image, $rotate_degree) {
+		if(!empty($rotate_degree)) {
+			return imagerotate($src_image, $rotate_degree, 0);
+		}
+		return $src_image;
+	}
+
+	private static function get_rotate_degree($source) {
+		if(!function_exists('exif_read_data')) {
+			return 0;
+		}
+		$exif = exif_read_data($source);
+		if(!empty($exif['Orientation'])) {
+			switch($exif['Orientation'])
+			{
+				case 3: // 180 rotate left
+					return 180;
+				case 6: // 90 rotate right
+					return -90;
+				case 8:    // 90 rotate left
+					return 90;
+			}
+		}
+		return 0;
+	}
+
     /**
      * Add watermark to an image
      * @author Francis R <francis@realtyna.com>
@@ -395,7 +431,7 @@ class wpl_images
         elseif($extension == 'webp')
         {
             ob_start();
-            imagegif($w_dest);
+            imagewebp($w_dest);
             $out_image = ob_get_clean();
             wpl_file::write($dest, $out_image);
         }

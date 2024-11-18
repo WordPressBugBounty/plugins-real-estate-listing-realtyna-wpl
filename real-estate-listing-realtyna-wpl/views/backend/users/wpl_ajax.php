@@ -143,6 +143,30 @@ class wpl_users_controller extends wpl_controller
 
             $this->change_parent($user_id, $parent);
         }
+        elseif($function == 'autocomplete')
+        {
+			wpl_global::min_access('administrator');
+            $this->autocomplete();
+        }
+	}
+
+	private function autocomplete() {
+		$page = wpl_request::getVar('page');
+		$offset = (intval($page) - 1) * 20;
+		if($offset < 0) {
+			$offset = 0;
+		}
+		$condition = '';
+		$search = wpl_request::getVar('search');
+		if(!empty($search)) {
+			$condition = wpl_db::prepare(' AND user_login LIKE %s', wpl_db::esc_like($search));
+		}
+		$wpl_users = wpl_db::select("SELECT * FROM `#__users` AS u INNER JOIN `#__wpl_users` AS wpl ON u.ID = wpl.id WHERE 1 $condition order by wpl.id LIMIT $offset, 40");
+		$response = [
+			'success' => true,
+			'data' => array_values(array_map(function ($user) {return ['id' => $user->ID, 'name' => $user->user_login];}, $wpl_users))
+		];
+		$this->response($response);
 	}
 	
 	private function add_user_to_wpl($user_id)
@@ -484,7 +508,7 @@ class wpl_users_controller extends wpl_controller
 	{
 		$field_data = (array) wpl_db::get('*', 'wpl_dbst', 'id', $field_id);
 		$user_data = (array) wpl_users::get_wpl_user($user_id);
-		$path = wpl_items::get_path($user_id, $field_data['kind']). $user_data[$field_data['table_column']];
+		$path = wpl_items::get_path($user_id, $field_data['kind'], null, false). $user_data[$field_data['table_column']];
 		
 		/** delete file and reset db **/
 		wpl_file::delete($path);

@@ -19,7 +19,7 @@ jQuery(document).ready(function()
         if(markers<?php wpl_esc::attr($this->activity_id); ?>.length === 1)
         {
             /** restore the zoom level after the map is done scaling **/
-            var listener = wpl_map<?php wpl_esc::attr($this->activity_id); ?>.addEventListener('idle', function(event)
+            var listener = google.maps.event.addListener(wpl_map<?php wpl_esc::js($this->activity_id); ?>, 'idle', function(event)
             {
                 wpl_map<?php wpl_esc::attr($this->activity_id); ?>.setZoom(default_zoom<?php wpl_esc::attr($this->activity_id); ?>);
                 google.maps.event.removeListener(listener);

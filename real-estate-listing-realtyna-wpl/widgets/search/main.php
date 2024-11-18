@@ -24,6 +24,7 @@ class wpl_search_widget extends wpl_widget
 	public $more_options_type;
 	public $show_reset_button;
 	public $style;
+	public $layout;
 	public $show_saved_searches;
 	public $show_favorites;
 	public $rendered;
@@ -60,6 +61,7 @@ class wpl_search_widget extends wpl_widget
         $this->more_options_type = $instance['more_options_type'] ?? '0';
         $this->show_reset_button = $instance['show_reset_button'] ?? '0';
 		$this->style = $instance['style'] ?? '0';
+		$this->layout = $instance['layout'] ?? 'default';
 		$this->show_saved_searches = $instance['show_saved_searches'] ?? '0';
 		$this->show_favorites = $instance['show_favorites'] ?? '0';
 
@@ -80,7 +82,7 @@ class wpl_search_widget extends wpl_widget
 			else wpl_esc::e(($args['before_title'] ?? '') . wpl_esc::return_html($title). ($args['after_title'] ?? ''));
 		}
 
-		$layout = 'widgets.search.tmpl.'.($instance['layout'] ?? 'default');
+		$layout = 'widgets.search.tmpl.'.$this->layout;
 		$layout = _wpl_import($layout, true, true);
 		$find_files = array();
 

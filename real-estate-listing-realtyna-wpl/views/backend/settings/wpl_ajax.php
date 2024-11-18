@@ -503,11 +503,11 @@ class wpl_settings_controller extends wpl_controller
 
 			if ($field['type'] == 'select') {
 				foreach ($options['params'] as $param) {
-					$params[] = array('key' => $param['key'], 'name' => wpl_esc::return_html_t($param['value']));
+					$params[] = array('key' => $param['key'], 'name' => wpl_esc::return_html_t(stripslashes($param['value'])));
 				}
 			} elseif ($field['type'] == 'feature') {
 				foreach ($options['values'] as $param) {
-					$params[] = array('key' => $param['key'], 'name' => wpl_esc::return_html_t($param['value']));
+					$params[] = array('key' => $param['key'], 'name' => wpl_esc::return_html_t(stripslashes($param['value'])));
 				}
 
 				if (count($params)) {

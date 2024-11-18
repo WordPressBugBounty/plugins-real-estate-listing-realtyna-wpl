@@ -122,7 +122,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.pshow_modern', true, false);
 	<?php if($show_tags): ?>
     <div class="wpl-listing-tags-wp">
         <div class="wpl-listing-tags-cnt">
-             <?php wpl_esc::kses($this->tags()); ?>
+             <?php wpl_esc::e($this->tags()); ?>
         </div>
     </div>
 	<?php endif; ?>

@@ -359,7 +359,6 @@ $location_settings = wpl_settings::get_settings(3);
 			</option>
 		</select>
 	</div>
-
 	<div id="<?php wpl_esc::attr($this->get_field_id('data_sml_fields_container')); ?>"
 		 style="<?php wpl_esc::e((!isset($instance['data']['sml_only_similars']) or !$instance['data']['sml_only_similars']) ? 'display: none;' : ''); ?>">
 		<div class="wpl-widget-row">
@@ -509,6 +508,7 @@ $location_settings = wpl_settings::get_settings(3);
 				</option>
 			</select>
 		</div>
+		<?php do_action('wpl_view/widgets/carousel/form/similar', $instance, $this); ?>
 	</div>
 
 	<h4><?php wpl_esc::html_t('Sort and Limit'); ?></h4>

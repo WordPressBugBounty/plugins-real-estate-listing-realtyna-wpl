@@ -55,7 +55,7 @@ if (isset($wpl_user['materials']['website']['value'])) {
 				<img <?php wpl_esc::item_prop($this->microdata, 'image'); ?>
 						src="<?php wpl_esc::url($profile_image); ?>"
 						alt="<?php wpl_esc::attr($agent_name . ' ' . $agent_l_name); ?>"
-						title="<?php wpl_esc::attr($agent_name . ' ' . $agent_l_name); ?>"/>';
+						title="<?php wpl_esc::attr($agent_name . ' ' . $agent_l_name); ?>"/>
 			<?php else: ?>
 				<div class="no_image"></div>
 			<?php endif; ?>

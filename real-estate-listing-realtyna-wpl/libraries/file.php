@@ -137,7 +137,7 @@ class wpl_file
         
 		// Check src path
 		if (!is_readable($src)) return false;
-		if (!@rename($src, $dest)) return false;
+		if (!rename($src, $dest)) return false;
 		
 		return true;
 	}
@@ -156,9 +156,9 @@ class wpl_file
 
 		clearstatcache();
 
-		if($fsize = @filesize($filename))
+		if($filesize = filesize($filename))
 		{
-			$data = fread($fh, $fsize);
+			$data = fread($fh, $filesize);
 			
 			fclose($fh);
 			return $data;
@@ -190,8 +190,8 @@ class wpl_file
 
 		$file = wpl_path::clean($file);
         
-        if($append) $ret = is_int(file_put_contents($file, $buffer, FILE_APPEND)) ? true : false;
-		else $ret = is_int(file_put_contents($file, $buffer)) ? true : false;
+        if($append) $ret = is_int(file_put_contents($file, $buffer, FILE_APPEND));
+		else $ret = is_int(file_put_contents($file, $buffer));
 
 		return $ret;
 	}

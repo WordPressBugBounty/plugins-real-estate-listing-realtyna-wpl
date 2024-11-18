@@ -28,6 +28,18 @@ if($type == 'textarea' and !$done_this)
 				/** include specific file * */
 				include _wpl_import('libraries.dbst_modify.main.'.($kind == 2 ? 'user' : '').'specific', true, true);
 			?>
+			<div class="fanc-row fanc-inline-title">
+				<span>
+					<?php wpl_esc::html_t('Params'); ?>
+				</span>
+			</div>
+			<div class="fanc-row">
+				<label for="<?php wpl_esc::attr($__prefix); ?>opt_iframe"><?php wpl_esc::html_t('Show Iframe'); ?></label>
+				<select name="<?php wpl_esc::attr($__prefix); ?>opt_iframe" id="<?php wpl_esc::attr($__prefix); ?>opt_iframe">
+					<option <?php wpl_esc::e((!empty($options['iframe'])) ? 'selected="selected"' : ''); ?> value="1"><?php wpl_esc::html_t('Yes'); ?></option>
+					<option <?php wpl_esc::e((empty($options['iframe'])) ? 'selected="selected"' : ''); ?> value="0"><?php wpl_esc::html_t('No'); ?></option>
+				</select>
+			</div>
             <?php if(wpl_global::check_addon('pro')): ?>
 			<div class="fanc-row fanc-inline-title">
 				<?php wpl_esc::html_t('Editor Settings'); ?>

@@ -43,6 +43,7 @@ class wpl_property
     public $time_taken;
     public $total;
     public $kind;
+    public $source;
     public $listing_fields;
     private $rf_property;
     private $rush_data;
@@ -240,7 +241,7 @@ class wpl_property
         $order_ex = explode(':', $orderby);
 
         $orderby = $order_ex[0];
-        $order_val = isset($order_ex[1]) ? $order_ex[1] : '';
+        $order_val = $order_ex[1] ?? '';
 
 		// prevent sql injection
 		$orderby = explode('.', $orderby);
@@ -272,6 +273,21 @@ class wpl_property
         $this->orderby = $orderby;
         $this->order_val = $order_val;
         $this->kind = $kind;
+        $this->source = strtolower($where['sf_select_source'] ?? '');
+		if(wpl_settings::is_mls_on_the_fly() && !empty($where['sf_select_id']) || !empty($where['sf_multiple_id'])) {
+			if(!empty($where['sf_multiple_id'])) {
+				$first_property_id = explode(',', $where['sf_multiple_id']);
+				$first_property_id = $first_property_id[0];
+			}
+			if(!empty($where['sf_select_id'])) {
+				$first_property_id = $where['sf_select_id'];
+			}
+			if(!empty($first_property_id)) {
+				$source = wpl_db::get('source', 'wpl_properties', 'id', $first_property_id);
+				$this->source = strtolower($source);
+			}
+
+		}
 
         // Apply Maximum Search Result
         if($max = wpl_property::get_maximum_search_results() and ($this->start+$this->limit) > $max)
@@ -290,9 +306,10 @@ class wpl_property
         $this->groupby_query = $this->create_groupby();
 
         // Generate Where Condition
-		$where = apply_filters('wpl_property/start/where', (array)$where);
+			$where = apply_filters('wpl_property/start/where', (array)$where, $this);
 		$this->where = wpl_db::create_query($where);
-		if(wpl_settings::is_mls_on_the_fly() && $this->kind == 0) {
+		$this->where = apply_filters('wpl_property/start/where_query', $this->where, $where);
+		if($this->isSourceRf()) {
 			$this->rf_property->createQuery($where);
 		}
 
@@ -304,6 +321,14 @@ class wpl_property
         // Generate Select
         $this->select = $this->select ?? $this->generate_select($this->listing_fields, 'p');
 
+	}
+
+	public function isSourceRf() {
+		return wpl_settings::is_mls_on_the_fly() && $this->kind == 0 && (empty($this->source) || $this->source == 'rf');
+	}
+
+	public function getRfProperty() {
+		return $this->rf_property;
 	}
 
     /**
@@ -323,12 +348,17 @@ class wpl_property
         $this->query .= $this->join_query;
         $this->query .= " WHERE 1 ".$this->where;
         $this->query .= $this->groupby_query;
-        if($longitude and $latitude){
-            $this->query .= " ORDER BY  ".$this->orderby." ".$this->order.', `id` '.$this->order.', `distance_from_center` ASC';
-        }else{
-            $this->query .= " ORDER BY ".$this->orderby." ".$this->order.', `id` '.$this->order;
-        }
-        $this->query .= " LIMIT ".$this->start.", ".($this->limit);
+		$order = apply_filters('wpl_property/query/order', '', $latitude, $longitude, $this);
+		if($order !== false && empty($order)) {
+			if ($longitude and $latitude) {
+				$order = " ORDER BY  " . $this->orderby . " " . $this->order . ', `id` ' . $this->order . ', `distance_from_center` ASC';
+			} else {
+				$order = " ORDER BY " . $this->orderby . " " . $this->order . ', `id` ' . $this->order;
+			}
+		}
+		$this->query .= ' ' . $order;
+
+		$this->query .= " LIMIT ".$this->start.", ".($this->limit);
         $this->query  = trim($this->query ?? '', ', ');
 
 		$this->query = apply_filters('wpl_property/query', $this->query);
@@ -383,8 +413,15 @@ class wpl_property
      */
     public function search($query = '')
     {
-		if(wpl_settings::is_mls_on_the_fly() && $this->kind == 0) {
-			return $this->rf_property->search($this->orderby, $this->order, $this->start, $this->limit);
+		$properties = apply_filters('wpl_property/search/pre', [], $this);
+		if($properties === false) {
+			return [];
+		}
+		if(!empty($properties)) {
+			return $properties;
+		}
+		if($this->isSourceRf()) {
+			return apply_filters('wpl_property/search/post', $this->rf_property->search($this->orderby, $this->order, $this->start, $this->limit), $this);
 		}
 
         if(!trim($query ?? '' ) ) $query = $this->query;
@@ -402,12 +439,12 @@ class wpl_property
             if(is_array($results)) 
             {
                 $this->elastic_total = $results['found'];
-                return $results['properties'];
+                return apply_filters('wpl_property/search/post', $results['properties'], $this);
             }
         }
         /* End - Zap Search */
 
-        return wpl_db::select($query);
+        return apply_filters('wpl_property/search/post', wpl_db::select($query), $this);
     }
 
     /**
@@ -510,12 +547,9 @@ class wpl_property
     {
         // First Validation
         if(!$property_id) return NULL;
-
-		if(wpl_settings::is_mls_on_the_fly()) {
-			$found =  wpl_rf_property::getInstance()->get_property_raw_data($property_id, 'loadAssoc');
-			if($found) {
-				return $found;
-			}
+		$source = wpl_db::get('source', 'wpl_properties', 'id', $property_id);
+		if(wpl_settings::is_mls_on_the_fly() && $source == 'RF') {
+			return wpl_rf_property::getInstance()->get_property_raw_data($property_id, 'loadAssoc');
 		}
 
         // Property Data
@@ -561,8 +595,8 @@ class wpl_property
         $files = wpl_folder::files($path, '.php$', false, false);
         $values = (array) $property;
 
-        $prp_listing = isset($values['listing']) ? $values['listing'] : NULL;
-        $prp_property_type = isset($values['property_type']) ? $values['property_type'] : NULL;
+        $prp_listing = $values['listing'] ?? NULL;
+        $prp_property_type = $values['property_type'] ?? NULL;
 
         foreach($fields as $key=>$field)
         {
@@ -706,7 +740,7 @@ class wpl_property
         foreach($files as $file)
         {
             require $path.DS.$file;
-            if($done_this == true) break;
+            if($done_this) break;
         }
 
         /** Accesses **/
@@ -791,7 +825,7 @@ class wpl_property
                 $property['raw']['googlemap_ln'] = (double) $LatLng[1];
             }
 
-            // Still geo-point is not available so we will hide the marker
+            // Still geo-point is not available, so we will hide the marker
             if((!$property['raw']['googlemap_lt'] or !$property['raw']['googlemap_ln']) and wpl_global::get_setting('hide_invalid_markers')) continue;
 
             // Create multiple marker
@@ -864,7 +898,7 @@ class wpl_property
 
         $condition = trim($condition ?? '') != '' ? $condition : $this->where;
 
-		if(wpl_settings::is_mls_on_the_fly() && $this->kind == 0) {
+		if($this->isSourceRf()) {
 			if($this->rf_property->searched) {
 				return $this->rf_property->total;
 			}
@@ -1350,7 +1384,7 @@ class wpl_property
      */
     public static function update_alias($property_data, $property_id = 0, $glue = '-', $force = false, $only_return = false)
     {
-        // Fetch property data if property id is setted
+        // Fetch property data if property id is set
         if($property_id) $property_data = self::get_property_raw_data($property_id);
         if(!$property_id) $property_id = $property_data['id'];
 
@@ -1406,6 +1440,8 @@ class wpl_property
 
         // Escape
         $alias_str = wpl_global::url_encode($alias_str);
+
+		$alias_str = strtolower($alias_str);
 
         // Don't save and return the value
         if($only_return) return $alias_str;
@@ -1618,7 +1654,8 @@ class wpl_property
     {
         $cached = (array) wpl_property::get_property_cached_data($property_id);
         if($cached and isset($cached[$field_name])) return $cached[$field_name];
-		if(wpl_settings::is_mls_on_the_fly()) {
+		$source = wpl_db::get('source', 'wpl_properties', 'id', $property_id);
+		if(wpl_settings::is_mls_on_the_fly() && $source == 'RF') {
 			$raw = wpl_rf_property::getInstance()->get_property_raw_data($property_id);
 			if(!empty($raw)) {
 				return $raw[$field_name];
@@ -1783,7 +1820,7 @@ class wpl_property
 
         // Purging Property Folder
         $blog_id = wpl_property::get_blog_id($property_id);
-        wpl_folder::delete(wpl_items::get_path($property_id, $property_data['kind'], $blog_id));
+        wpl_folder::delete(wpl_items::get_path($property_id, $property_data['kind'], $blog_id, false));
 
         // Purging Property Record
         wpl_db::delete('wpl_properties', $property_id);
@@ -1917,7 +1954,7 @@ class wpl_property
         $result['location_text'] = self::generate_location_text($raw_data);
 
         /** property full link **/
-        $target_page = isset($params['wpltarget']) ? $params['wpltarget'] : 0;
+        $target_page = $params['wpltarget'] ?? 0;
         $result['property_link'] = self::get_property_link($raw_data, NULL, $target_page);
         $result['property_title'] = self::update_property_title($raw_data);
 
@@ -2057,7 +2094,7 @@ class wpl_property
 
         $ext_array = array('jpg', 'jpeg', 'gif', 'png', 'webp');
 
-        $path = wpl_items::get_path($property_id, $kind, wpl_property::get_blog_id($property_id));
+        $path = wpl_items::get_path($property_id, $kind, wpl_property::get_blog_id($property_id), false);
         $thumbnails = wpl_folder::files($path, '^(th|wm).*\.('.implode('|', $ext_array).')$', 3, true);
 
         foreach($thumbnails as $thumbnail) wpl_file::delete($thumbnail);
@@ -2337,12 +2374,7 @@ class wpl_property
         if(empty($property_id)) return;
 
         $kind = wpl_property::get_property_kind($property_id);
-        $ext_array = array('jpg', 'jpeg', 'gif', 'png');
-
-        $path = wpl_items::get_path($property_id, $kind, wpl_property::get_blog_id($property_id));
-        $thumbnails = wpl_folder::files($path, '^th.*\.('.implode('|', $ext_array).')$', 3, true);
-
-        foreach($thumbnails as $thumbnail) wpl_file::delete($thumbnail);
+		wpl_property::remove_thumbnails($property_id, $kind);
     }
 
     /**
@@ -2355,8 +2387,8 @@ class wpl_property
     {
         $listing_data = wpl_property::get_property_raw_data($property_id);
 
-        $kind = isset($listing_data['kind']) ? $listing_data['kind'] : 0;
-        $user_id = isset($listing_data['user_id']) ? $listing_data['user_id'] : wpl_users::get_cur_user_id();
+        $kind = $listing_data['kind'] ?? 0;
+        $user_id = $listing_data['user_id'] ?? wpl_users::get_cur_user_id();
 
         // Generate new property
         $clone_id = wpl_property::create_property_default($user_id, $kind);
@@ -2366,7 +2398,7 @@ class wpl_property
         $wpl_properties2_columns = wpl_db::columns('wpl_properties2');
 
         // Clone listing data
-        $forbidden_fields = array('id', 'kind', 'mls_id', 'pic_numb', 'user_id', 'add_date', 'last_modified_time_stamp', 'sp_featured', 'sp_hot', 'geopoints', 'blog_id');
+        $forbidden_fields = array('id', 'kind', 'mls_id', 'pic_numb', 'user_id', 'add_date', 'last_modified_time_stamp', 'sp_featured', 'sp_hot', 'geopoints', 'blog_id', 'visit_time', 'contact_numb', 'inc_in_listings_numb');
 
         $q = '';
         $q2 = '';
@@ -2402,7 +2434,7 @@ class wpl_property
         }
 
         // Clone listing folder
-        $listing_path = wpl_items::get_path($property_id, $kind, wpl_property::get_blog_id($property_id));
+        $listing_path = wpl_items::get_path($property_id, $kind, wpl_property::get_blog_id($property_id), false);
         $clone_path = wpl_items::get_path($clone_id, $kind, wpl_property::get_blog_id($clone_id));
 
         wpl_folder::copy($listing_path, $clone_path, '', true);
@@ -2700,5 +2732,33 @@ class wpl_property
 			$where[] = wpl_db::prepare('%i IN (' . implode(',', $values) . ')', $table_column);
 		}
 		return wpl_db::select(wpl_db::prepare('SELECT DISTINCT %i FROM `#__wpl_properties` WHERE '. implode(' AND ', $where) . ' ORDER BY %i ASC', "location{$level}_name", "location{$level}_name"), 'loadColumn');
+	}
+
+	public static function get_suggestion_fields($kind, $term = '') {
+		$settings = wpl_settings::get_settings(3);
+		$street = 'field_42';
+		$location2 = 'location2_name';
+		$location3 = 'location3_name';
+		$location4 = 'location4_name';
+		$location5 = 'location5_name';
+		$location6 = 'location6_name';
+
+		if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($street, 0)) $street = wpl_addon_pro::get_column_lang_name($street, wpl_global::get_current_language(), false);
+
+		$queries = array(
+			$street => wpl_esc::return_html_t('Street'),
+			$location2 => wpl_esc::return_html_t($settings['location2_keyword']),
+			$location3 => wpl_esc::return_html_t($settings['location3_keyword']),
+			$location4 => wpl_esc::return_html_t($settings['location4_keyword']),
+			$location5 => wpl_esc::return_html_t($settings['location5_keyword']),
+			$location6 => wpl_esc::return_html_t($settings['location6_keyword']),
+			'location_text' => wpl_esc::return_html_t('Address'),
+			'zip_name' => wpl_esc::return_html_t($settings['locationzips_keyword']),
+			'mls_id' => wpl_esc::return_html_t('Listing ID')
+		);
+		if($kind == 1) {
+			$queries = array_merge(['field_313' => 'Complex'], $queries);
+		}
+		return apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/queries', $queries, $term, $kind);
 	}
 }

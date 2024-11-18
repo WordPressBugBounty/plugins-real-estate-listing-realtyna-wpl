@@ -66,7 +66,7 @@ $gallery = wpl_items::render_gallery($raw_gallery, wpl_property::get_blog_id($th
     ?>
     <div class="wpl-listing-tags-wp">
         <div class="wpl-listing-tags-cnt">
-            <?php wpl_esc::kses($this->tags()); ?>
+            <?php wpl_esc::e($this->tags()); ?>
         </div>
     </div>
 	<?php endif; ?>

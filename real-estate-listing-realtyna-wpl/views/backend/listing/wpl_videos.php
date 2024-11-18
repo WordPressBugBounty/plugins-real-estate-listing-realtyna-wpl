@@ -29,12 +29,28 @@ class wpl_listing_controller extends wpl_controller
 		elseif($function == 'change_status') wpl_items::update_file(wpl_request::getVar('video'), wpl_request::getVar('pid'),  array('enabled'=>wpl_request::getVar('enabled')));
 		elseif($function == 'embed_video')
 		{
+			$embed = stripslashes(wpl_request::getVar('embedcode'));
 			if(wpl_request::getVar('item_id') != -1)
-				wpl_items::update(wpl_request::getVar('item_id'),array('item_name'=>wpl_request::getVar('title'),'item_extra1'=>wpl_request::getVar('desc'),'item_extra2'=>wpl_request::getVar('embedcode'),'item_extra3'=>wpl_request::getVar('thumbnail')));
+				wpl_items::update(wpl_request::getVar('item_id'),[
+					'item_name'=>wpl_request::getVar('title'),
+					'item_extra1'=>wpl_request::getVar('desc'),
+					'item_extra2'=>$embed,
+					'item_extra3'=>wpl_request::getVar('thumbnail')
+				]);
 			else
 			{
-				$item = array('parent_id'=>wpl_request::getVar('pid'),'parent_kind'=>wpl_request::getVar('kind'),'item_type'=>'video',
-				'item_cat'=>'video_embed','item_name'=>wpl_request::getVar('title'),'creation_date'=>date("Y-m-d H:i:s"),'item_extra1'=>wpl_request::getVar('desc'),'item_extra2'=>wpl_request::getVar('embedcode'),'item_extra3'=>wpl_request::getVar('thumbnail'),'index'=>'1.00');
+				$item = [
+					'parent_id'=>wpl_request::getVar('pid'),
+					'parent_kind'=>wpl_request::getVar('kind'),
+					'item_type'=>'video',
+					'item_cat'=>'video_embed',
+					'item_name'=>wpl_request::getVar('title'),
+					'creation_date'=>date("Y-m-d H:i:s"),
+					'item_extra1'=>wpl_request::getVar('desc'),
+					'item_extra2'=>$embed,
+					'item_extra3'=>wpl_request::getVar('thumbnail'),
+					'index'=>'1.00'
+				];
 				$id = wpl_items::save($item);
 				wpl_esc::e($id);
 			}
@@ -57,19 +73,14 @@ class wpl_listing_controller extends wpl_controller
         
 		$params = array();
 		$params['accept_ext'] = wpl_flex::get_field_options(567);
-		
-		$extentions = explode(',',$params['accept_ext']['ext_file']);
-		$ext_str = '';
-		
-		foreach($extentions as $extention) $ext_str .= $extention .'|';
-		
-		// remove last |
-		$ext_str = substr($ext_str, 0, -1);
-		$ext_str = rtrim($ext_str, ';');
+
+		$extensions = explode(',',$params['accept_ext']['ext_file']);
+		$extensionsStr = str_replace(';', '', implode('|', wpl_global::filter_extensions($extensions)));
+
 		$custom_op = array(
             'upload_dir' => wpl_global::get_upload_base_path($blog_id),
             'upload_url' => wpl_global::get_upload_base_url($blog_id),
-            'accept_file_types' => '/\.('.$ext_str.')$/i',
+            'accept_file_types' => '/\.('.$extensionsStr.')$/i',
             'max_file_size' => $params['accept_ext']['file_size'] * 1000 ,
             'min_file_size' => 1,
             'max_number_of_files' => null

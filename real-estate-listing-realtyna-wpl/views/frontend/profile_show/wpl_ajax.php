@@ -15,7 +15,7 @@ class wpl_profile_show_controller extends wpl_controller
 		$function = wpl_request::getVar('wpl_function');
         
         $this->wpl_security = new wpl_security();
-        $this->token = wpl_request::getVar('token', NULL);
+        $this->token = wpl_request::getVar('token');
         
         if($function == 'login') $this->login();
         elseif($function == 'register') $this->register();
@@ -28,8 +28,8 @@ class wpl_profile_show_controller extends wpl_controller
         $vars = wpl_request::get('POST');
         
         $credentials = array();
-        $credentials['user_login'] = isset($vars['username']) ? $vars['username'] : NULL;
-        $credentials['user_password'] = isset($vars['password']) ? $vars['password'] : NULL;
+        $credentials['user_login'] = $vars['username'] ?? NULL;
+        $credentials['user_password'] = $vars['password'] ?? NULL;
         $credentials['remember'] = 0;
         
         $result = wpl_users::login_user($credentials);
@@ -69,12 +69,12 @@ class wpl_profile_show_controller extends wpl_controller
         if(!$this->wpl_security->validate_token($this->token, true)) $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('Invalid Token!'), 'code'=>'invalid_token', 'field_name'=>'token', 'data'=>array('token'=>$this->wpl_security->token())));
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('Invalid Email!'), 'code'=>'invalid_email', 'field_name'=>'email', 'data'=>array('token'=>$this->wpl_security->token())));
         
-        /** Checking existance of email **/
+        /** Checking existence of email **/
         if(wpl_users::email_exists($email)) $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('Email exists.'), 'code'=>'email_exists', 'field_name'=>'email', 'data'=>array('token'=>$this->wpl_security->token())));
         
-        $first_name = isset($vars['first_name']) ? $vars['first_name'] : '';
-        $last_name = isset($vars['last_name']) ? $vars['last_name'] : '';
-        $mobile = isset($vars['mobile']) ? $vars['mobile'] : '';
+        $first_name = $vars['first_name'] ?? '';
+        $last_name = $vars['last_name'] ?? '';
+        $mobile = $vars['mobile'] ?? '';
         
         $result = wpl_users::insert_user(array('user_login'=>$username, 'user_email'=>$email, 'user_pass'=>$password, 'first_name'=>$first_name, 'last_name'=>$last_name));
         
@@ -97,7 +97,7 @@ class wpl_profile_show_controller extends wpl_controller
             wpl_users::change_membership($user_id);
 
             // Update User
-            wpl_users::update('wpl_users', $user_id, 'mobile', $tel);
+            wpl_users::update('wpl_users', $user_id, 'mobile', $mobile);
             
             $success = 1;
             $message = wpl_esc::return_html_t('User registered. Please check your email for password and then login.');

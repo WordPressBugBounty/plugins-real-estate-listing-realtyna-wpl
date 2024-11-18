@@ -225,6 +225,9 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
         // Start Search
         $this->model->start($this->start, $this->limit, $this->orderby, $this->order, $where, $this->kind);
 
+        if($this->method == 'get_markers' and $this->model->isSourceRf()) {
+			$this->model->getRfProperty()->setMarkerColumns();
+		}
         // Run the Search
         $this->model->query();
         $properties = $this->model->search();
@@ -249,14 +252,14 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
         if(!$this->return_listings)
         {
             // Save Search in SESSION
-            wpl_session::set('wpl_listing_criteria', $this->model->where);
-            wpl_session::set('wpl_listing_orderby', $this->orderby);
-            wpl_session::set('wpl_listing_order', $this->order);
-            wpl_session::set('wpl_listing_total', $this->model->total);
+            wpl_session::set('wpl_listing_criteria_' . $this->kind, $this->model->where);
+            wpl_session::set('wpl_listing_orderby_' . $this->kind, $this->orderby);
+            wpl_session::set('wpl_listing_order_' . $this->kind, $this->order);
+            wpl_session::set('wpl_listing_total_' . $this->kind, $this->model->total);
 
             // Search URL
             $search_url = wpl_global::remove_qs_var('wpl_format', wpl_global::get_full_url());
-            wpl_session::set('wpl_last_search_url', $search_url);
+            wpl_session::set('wpl_last_search_url_' . $this->kind, $search_url);
 
             // Market Reports Addon
             if(wpl_global::check_addon('market_reports'))
@@ -270,7 +273,7 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
             }
         }
 
-        // We have to disable the cache if some of units changed by unit switcher feature or something else
+        // We have to disable the cache if some of the units changed by unit switcher feature or something else
         $force = false;
         $cookies = wpl_request::get('COOKIE');
         if(isset($cookies['wpl_unit1']) or isset($cookies['wpl_unit2']) or isset($cookies['wpl_unit3']) or isset($cookies['wpl_unit4'])) $force = true;
@@ -280,7 +283,15 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
 
         foreach($properties as $property)
         {
-            if($this->wplraw and $this->method == 'get_markers' && !wpl_settings::is_mls_on_the_fly()) $wpl_property_ids[] = $property->id;
+
+            if($this->wplraw and $this->method == 'get_markers') {
+                if($this->model->isSourceRf()) {
+                    $wpl_properties[$property->id] = (array) $property;
+                } else {
+                    $wpl_property_ids[] = $property->id;
+                }
+
+            }
             else
             {
                 $wpl_properties[$property->id] = $this->model->full_render($property->id, $this->model->listing_fields, $property, array(), $force);
@@ -290,7 +301,7 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
             }
         }
 
-        if($this->wplraw and $this->method == 'get_markers' && (!wpl_settings::is_mls_on_the_fly() || $this->kind != 0))
+        if($this->wplraw and $this->method == 'get_markers' && !$this->model->isSourceRf())
         {
 			$raw_properties = wpl_db::select("SELECT id, kind, listing, property_type, price, price_unit, googlemap_lt, googlemap_ln FROM `#__wpl_properties` WHERE `id` IN (" . implode(',', $wpl_property_ids) . ")", 'loadAssocList');
 
@@ -308,6 +319,28 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
 
         if($this->wplraw and $this->method == 'get_markers')
         {
+            if($this->model->isSourceRf()) {
+                $rf_markers = [];
+                foreach($wpl_properties as $key => $wpl_property) {
+                    if($key == 'current' and !count($wpl_property)) continue;
+                    if(empty($wpl_property['googlemap_lt'])) {
+                        continue;
+                    }
+					$rf_markers[] = [
+                        'id' => $wpl_property['id'],
+                        'googlemap_lt' => $wpl_property['googlemap_lt'],
+                        'googlemap_ln' => $wpl_property['googlemap_ln'],
+                        'title' => wpl_global::wpl_minimize_price($wpl_property['price']),
+                        'pids' => $wpl_property['id'] . '', // convert to string
+                        'gmap_icon' => 'dot-blue.png',
+                    ];
+                }
+                $markers = ['markers' => $rf_markers, 'total' => $this->model->total];
+
+            echo json_encode($markers);
+            exit;
+            }
+
             $markers = array('markers'=>$this->model->render_markers($wpl_properties, true), 'total'=>$this->model->total);
             $this->response($markers);
         }

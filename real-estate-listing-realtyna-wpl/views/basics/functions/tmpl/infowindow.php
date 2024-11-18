@@ -3,8 +3,8 @@
 defined('_WPLEXEC') or die('Restricted access');
 _wpl_import('libraries.images');
 
-$image_width = isset($image_width) ? $image_width : 180;
-$image_height = isset($image_height) ? $image_height : 125;
+$image_width = $image_width ?? 180;
+$image_height = $image_height ?? 125;
 
 /*Agent and office name for mls compliance*/
 $show_agent_name = wpl_global::get_setting('show_agent_name');
@@ -46,7 +46,7 @@ foreach($this->wpl_properties as $key=>$property)
 			{
 				$i = 0;
                 $images_total = count($property['items']['gallery']);
-                $property_path = wpl_items::get_path($property_id, $kind, $blog_id);
+                $property_path = wpl_items::get_path($property_id, $kind, $blog_id, false);
 
                 $image = $property['items']['gallery'][0];
                 $params = array();

@@ -47,7 +47,7 @@ foreach($this->wpl_properties as $key=>$property)
 ?>
 	<div class="wpl-column">
 		<div class="wpl_prp_cont wpl_prp_cont_old
-			<?php wpl_esc::attr(isset($this->property_css_class) and in_array($this->property_css_class, array('row_box', 'grid_box')) ? $this->property_css_class : ''); ?>"
+			<?php wpl_esc::attr((isset($this->property_css_class) and in_array($this->property_css_class, array('row_box', 'grid_box'))) ? $this->property_css_class : ''); ?>"
 			 id="wpl_prp_cont<?php wpl_esc::e($property['data']['id']); ?>"
 			 <?php wpl_esc::item_type($this->microdata, 'SingleFamilyResidence');?>
 			>

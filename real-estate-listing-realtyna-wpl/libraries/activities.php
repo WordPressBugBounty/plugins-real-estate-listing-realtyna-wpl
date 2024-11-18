@@ -131,7 +131,7 @@ class wpl_activity
         $wpl_activity_path = 'views.' . $_wpl_activity_client . '.' . self::$_wpl_activity_name;
         $path = _wpl_import($wpl_activity_path . '.' . self::$_wpl_activity_file, true, true);
 
-        /** check existation of an activity * */
+        /** check an activity if exists * */
         if(!wpl_file::exists($path))
         {
 			wpl_esc::e('<div>' . wpl_esc::return_html_t("Activity not found!") . '</div>');

@@ -149,6 +149,11 @@ class wpl_listings_controller extends wpl_controller
 		/** Add search conditions to the where **/
         $vars = array_merge(wpl_request::get('POST'), wpl_request::get('GET'));
 		$where = array_merge($vars, $where);
+
+		if(empty($where['sf_select_source']) && wpl_settings::is_mls_on_the_fly()) {
+			$where['sf_select_source'] = 'wpl';
+			wpl_request::setVar('sf_select_source', 'wpl');
+		}
 		
         $this->model->start($start, $limit, $orderby, $order, $where, $this->kind);
         

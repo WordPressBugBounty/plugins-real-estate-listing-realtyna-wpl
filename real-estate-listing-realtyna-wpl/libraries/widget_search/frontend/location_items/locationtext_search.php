@@ -38,7 +38,7 @@ if($show == 'locationtextsearch' and !$done_this)
 				$.ajax(
 				{
 					type: "GET",
-					url: "'.wpl_global::get_wp_site_url().'?wpl_format=f:property_listing:ajax&wpl_function=locationtextsearch_autocomplete&term="+request.term,
+					url: "'.wpl_global::get_wp_site_url().'?wpl_format=f:property_listing:ajax&kind=' . ($this->kind ?? 0) . '&wpl_function=locationtextsearch_autocomplete&term="+request.term,
 					contentType: "application/json; charset=utf-8",
 					success: function (msg)
 					{

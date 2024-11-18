@@ -49,6 +49,27 @@ class wpl_carousel_widget extends wpl_widget
 		parent::__construct('wpl_carousel_widget', wpl_esc::return_html_t('(WPL) Carousel'), array('description'=>wpl_esc::return_html_t('Showing specific properties.')));
 	}
 
+	public function search($instance) {
+		/** render properties **/
+		$model = self::query($instance);
+		$model->query();
+		$properties = $model->search();
+
+		/** return if no property found **/
+		if(empty($properties)) return [];
+
+		$plisting_fields = $model->get_plisting_fields();
+		$wpl_properties = array();
+		$render_params['wpltarget'] = $instance['wpltarget'] ?? 0;
+
+		foreach($properties as $property)
+		{
+			$wpl_properties[$property->id] = $model->full_render($property->id, $plisting_fields, $property, $render_params);
+		}
+
+		return apply_filters('property_listing_after_render', $wpl_properties);
+	}
+
     /**
      * @param array $args
      * @param array $instance
@@ -66,32 +87,21 @@ class wpl_carousel_widget extends wpl_widget
 		$this->widget_uq_name = 'wplc'.$this->widget_id;
 		$widget_id = $this->widget_id;
         
-        $this->css_class = isset($instance['data']['css_class']) ? $instance['data']['css_class'] : '';
+        $this->css_class = $instance['data']['css_class'] ?? '';
         
 		/** add main scripts **/
 		wp_enqueue_script('jquery-ui-core');
 		wp_enqueue_script('jquery-ui-slider');
-			
-		/** render properties **/
-		$model = self::query($instance);
-		$model->query();
-		$properties = $model->search();
-		
-        /** return if no property found **/
-        if(empty($properties)) return;
-        
-		$plisting_fields = $model->get_plisting_fields();
-		$wpl_properties = array();
-        $render_params['wpltarget'] = isset($instance['wpltarget']) ? $instance['wpltarget'] : 0;
-        
-		foreach($properties as $property)
-		{
-			$wpl_properties[$property->id] = $model->full_render($property->id, $plisting_fields, $property, $render_params);
+		$wpl_properties = apply_filters('wpl_carousel_widget/widget/pre_search', [], $instance, $this);
+		if(empty($wpl_properties)) {
+			$wpl_properties = $this->search($instance);
+		}
+
+		if(empty($wpl_properties)) {
+			return;
 		}
 		
 		wpl_esc::e($args['before_widget'] ?? '');
-
-		$wpl_properties = apply_filters('property_listing_after_render', $wpl_properties);
 
 		$title = apply_filters('widget_title', $instance['title']);
         if(trim($title ?? '') != '') wpl_esc::e(($args['before_title'] ?? '') .wpl_esc::return_html($title). ($args['after_title'] ?? ''));
@@ -259,7 +269,7 @@ class wpl_carousel_widget extends wpl_widget
         if( trim($data['parent'] ?? '') ) $where['sf_parent'] = $data['parent'];
         if( trim($data['auto_parent'] ?? '' ) )
         {
-            /** current proeprty id - This features works only in single property page **/
+            /** current property id - This features works only in single property page **/
             $property_data = NULL;
             $pid = wpl_request::getVar('pid', 0);
             if($pid) $property_data = $model->get_property_raw_data($pid);
@@ -302,8 +312,8 @@ class wpl_carousel_widget extends wpl_widget
 
                 if(isset($data['sml_inc_price']) and $data['sml_inc_price'])
                 {
-                    $down_rate = $data['sml_price_down_rate'] ? $data['sml_price_down_rate'] : 0.8;
-                    $up_rate = $data['sml_price_up_rate'] ? $data['sml_price_up_rate'] : 1.2;
+                    $down_rate = $data['sml_price_down_rate'] ?: 0.8;
+                    $up_rate = $data['sml_price_up_rate'] ?: 1.2;
 
                     $price_down_range = $property_data['price_si']*$down_rate;
                     $price_up_range = $property_data['price_si']*$up_rate;
@@ -343,13 +353,14 @@ class wpl_carousel_widget extends wpl_widget
                     
                     $sml_where['sf_select_'.$zip_code_field_type] = $zip_code;
                 }
+				$sml_where = apply_filters('wpl_carousel_widget/query/similar', $sml_where, $instance, $property_data);
             }
             
             /** overwrite $where if similar where is correct **/
             if(count($sml_where) > 3) $where = $sml_where;
         }
 
-		$where = apply_filters('carousel_where', $where, $this->widget_id, $instance);
+		$where = apply_filters('carousel_where', $where, $this->widget_id, $instance, $this);
 		
 		if( trim($data['random'] ?? '') and trim($data['listing_ids'] ?? '') == '')
 		{
@@ -425,6 +436,6 @@ class wpl_carousel_widget extends wpl_widget
         }
         
         $wplhtml = wpl_html::getInstance();
-        $wplhtml->set_footer('<style type="text/css">'.$styles_str.'</style>');
+        $wplhtml->set_footer('<style>'.$styles_str.'</style>');
     }
 }

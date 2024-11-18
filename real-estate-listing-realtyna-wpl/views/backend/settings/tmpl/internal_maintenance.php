@@ -69,6 +69,12 @@ defined('_WPLEXEC') or die('Restricted access');
                 </span>
             </li>
             <li>
+                <input type="checkbox" name="cache[location_cached_data]" value="1" id="wpl_cache_location_cached_data" />
+                <span class="title">
+                    <label for="wpl_cache_location_cached_data"><?php wpl_esc::html_t('Clear location cached data'); ?></label>
+                </span>
+            </li>
+            <li>
                 <input type="checkbox" name="cache[listings_meta_keywords]" value="1" id="wpl_cache_listings_meta_keywords" />
                 <span class="title">
                     <label for="wpl_cache_listings_meta_keywords"><?php wpl_esc::html_t('Listings meta keywords'); ?></label>
