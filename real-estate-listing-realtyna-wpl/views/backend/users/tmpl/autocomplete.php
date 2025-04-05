@@ -71,7 +71,6 @@ if(empty($id)) {
 				url: '<?php echo wpl_global::get_full_url(); ?>',
 				data: 'wpl_format=b:users:ajax&wpl_function=autocomplete&_wpnonce=<?php wpl_esc::attr(wpl_security::create_nonce('wpl_users')); ?>&search=' + search_value,
 				success: function (data) {
-					const selected_values = wplj('#<?php wpl_esc::js($id); ?>').val();
 					wplj('#<?php wpl_esc::js($id); ?> option:not(:selected)').remove();
 					const option_values = [];
 					wplj("#<?php wpl_esc::js($id); ?> option").each(function() {
@@ -84,10 +83,10 @@ if(empty($id)) {
 							}
 							wplj('#<?php wpl_esc::js($id); ?>').append('<option value="' + user.id + '">' + user.name + '</option>');
 						}
-						wplj('#<?php wpl_esc::js($id); ?>').trigger("chosen:updated");
-						wplj('#<?php wpl_esc::js($id); ?>_chosen input').val(search_value);
-						wplj('#<?php wpl_esc::js($id); ?>_chosen input').get(0).focus();
 					}
+					wplj('#<?php wpl_esc::js($id); ?>').trigger("chosen:updated");
+					wplj('#<?php wpl_esc::js($id); ?>_chosen input').val(search_value);
+					wplj('#<?php wpl_esc::js($id); ?>_chosen input').get(0).focus();
 				}
 			});
 			{

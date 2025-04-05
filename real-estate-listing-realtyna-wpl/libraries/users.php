@@ -230,7 +230,7 @@ class wpl_users
         $cached = wp_cache_get($cache_key);
         if($cached) return $cached;
 		
-		$user = wpl_db::select(wpl_db::prepare('SELECT * FROM `#__wpl_users` WHERE `id` = %d', $user_id), 'loadObject');
+		$user = wpl_db::select(wpl_db::prepare('SELECT * FROM `#__wpl_users` WHERE `id` = %d', $user_id), 'loadObject', true);
 
         // Set to Cache
         wp_cache_set($cache_key, $user, '', 100);
@@ -298,7 +298,7 @@ class wpl_users
      * @param int $user_id
      * @return int
      */
-    public static function get_user_membership($user_id = NULL)
+    public static function get_user_membership($user_id = NULL, $use_cache = true)
 	{
         /** Current User **/
         if(is_null($user_id)) $user_id = self::get_cur_user_id();
@@ -306,7 +306,7 @@ class wpl_users
         // Return From Cache
         if(isset(self::$user_memberships[$user_id])) return self::$user_memberships[$user_id];
         
-		$membership_id = wpl_db::get('membership_id', 'wpl_users', 'id', $user_id);
+		$membership_id = wpl_db::get('membership_id', 'wpl_users', 'id', $user_id, true, '', $use_cache);
         
         /** add to cache **/
 		self::$user_memberships[$user_id] = $membership_id;
@@ -1999,7 +1999,7 @@ class wpl_users
     public static function autocomplete($selected_user_id = null, $attributes = [], $check_brokerage = false)
     {
 		$show_ajax = true;
-		$limit = 1;
+		$limit = 40;
 		$condition = '';
 		if($check_brokerage) {
 			$current_user_id = wpl_users::get_cur_user_id();
@@ -2018,10 +2018,11 @@ class wpl_users
 			}
 			$fetched_users = array_keys($wpl_users);
 			$missing_users = implode(',', array_diff($selected_user_id, $fetched_users));
-
-			$wpl_user_list = wpl_db::select("SELECT * FROM `#__users` AS u INNER JOIN `#__wpl_users` AS wpl ON u.ID = wpl.id WHERE 1 $condition AND wpl.id in ($missing_users)");
-			foreach ($wpl_user_list as $key => $wpl_user) {
-				$wpl_users[$key] = $wpl_user;
+			if(!empty($missing_users)) {
+				$wpl_user_list = wpl_db::select("SELECT * FROM `#__users` AS u INNER JOIN `#__wpl_users` AS wpl ON u.ID = wpl.id WHERE 1 $condition AND wpl.id in ($missing_users)");
+				foreach ($wpl_user_list as $key => $wpl_user) {
+					$wpl_users[$key] = $wpl_user;
+				}
 			}
 		} else {
 			$selected_user_id = [];

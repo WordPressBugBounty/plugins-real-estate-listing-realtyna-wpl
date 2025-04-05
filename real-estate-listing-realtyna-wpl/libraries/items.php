@@ -37,10 +37,9 @@ class wpl_items
 			}
 			$media = $property['realty_feed_raw_data']->Media ?? [];
 			$records = [];
-			$item_key = 0;
 			if(!empty($media)) {
 				foreach ($media as $media_item) {
-					$item_key++;
+					$item_key = $media_item['Order'];
 					$records[] = (object)[
 						'id' => $media_item['MediaKey'],
 						'parent_kind' => $parent_kind,
@@ -61,6 +60,15 @@ class wpl_items
 					];
 				}
 			}
+
+			usort($records, function($a, $b) {
+				if ($a->index > $b->index) {
+					return 1;
+				} elseif ($a->index < $b->index) {
+					return -1;
+				}
+				return 0;
+			});
 			// to show thumbnail url for thumbnails
 			add_filter('wpl_activities/listing_gallery/image_thumbnail_url', function($image_thumbnail_url, $image) {
 			    if($image['raw']['item_extra4'] == 'rf') {
@@ -749,6 +757,7 @@ class wpl_items
             $opendates[$j]['date'] = $formatted_date;
             $opendates[$j]['comment'] = $open_date->item_extra2;
             $opendates[$j]['id'] = $open_date->id;
+            $opendates[$j]['origin'] = $open_date;
             $j++;
         }
 

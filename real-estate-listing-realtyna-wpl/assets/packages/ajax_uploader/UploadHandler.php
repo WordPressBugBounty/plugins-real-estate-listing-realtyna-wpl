@@ -84,7 +84,7 @@ class wpl_UploadHandler
             // is enabled, set to 0 to disable chunked reading of files:
             'readfile_chunk_size' => 10 * 1024 * 1024, // 10 MiB
             // Defines which files can be displayed inline when downloaded:
-            'inline_file_types' => '/\.(gif|jpe?g|png)$/i',
+            'inline_file_types' => '/\.(gif|jpe?g|png|webp)$/i',
             // Defines which files (based on their names) are accepted for upload:
             'accept_file_types' => '/.+$/i',
             // The php.ini settings upload_max_filesize and post_max_size
@@ -392,6 +392,11 @@ class wpl_UploadHandler
                 imagecolortransparent($new_img, imagecolorallocate($new_img, 0, 0, 0));
                 $src_img = imagecreatefromgif($file_path);
                 $write_image = 'imagegif';
+                $image_quality = null;
+                break;
+            case 'webp':
+                $src_img = imagecreatefromwebp($file_path);
+                $write_image = 'imagewebp';
                 $image_quality = null;
                 break;
             case 'png':
@@ -748,7 +753,8 @@ class wpl_UploadHandler
                         case 'png': $ext='.png'; break;
                         case 'gif': $ext='.gif'; break;
                         case 'bmp': $ext='.bmp'; break;
-    
+                        case 'webp': $ext='.webp'; break;
+
                         case 'jpg':
                         case 'jpeg':
                         default: $ext='.jpg'; break;
@@ -887,6 +893,8 @@ class wpl_UploadHandler
                 return 'image/png';
             case 'gif':
                 return 'image/gif';
+            case 'webp':
+                return 'image/webp';
             default:
                 return '';
         }

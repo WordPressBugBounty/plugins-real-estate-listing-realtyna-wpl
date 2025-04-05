@@ -24,8 +24,9 @@ class wpl_images
     public static function resize_image($source, $dest, $width, $height, $crop = 0)
     {
         $source = $source ?? '';
-		// Don't execute the function if source file doesn't exists.
+		// Don't execute the function if source file doesn't exist.
         if(!wpl_file::exists($source) and strpos($source, '://') === false) return $source;
+		if(strpos($source, '://') === false and filesize($source) == 0 ) return $source;
 
         // Set memory limit
         @ini_set('memory_limit', '-1');

@@ -478,7 +478,7 @@ class wpl_sef
     public static function get_post_name($post_id)
     {
         if(!trim($post_id ?? '')) return '';
-        return wpl_db::get('post_name', 'posts', 'id', $post_id);
+        return wpl_db::get('post_name', 'posts', 'id', $post_id, true, '', true);
     }
     
     /**
@@ -491,7 +491,7 @@ class wpl_sef
     public static function get_post_id($post_name)
     {
         if(!trim($post_name ?? "")) return 0;
-        return wpl_db::get('ID', 'posts', 'post_name', $post_name);
+        return wpl_db::get('ID', 'posts', 'post_name', $post_name, true, '', true);
     }
     
     /**

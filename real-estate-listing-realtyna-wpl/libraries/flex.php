@@ -49,7 +49,7 @@ class wpl_flex
 			if(trim($key ?? '') != '') $condition .= wpl_db::prepare(" AND %i >= %s", $key, $value);
 		}
 		
-		return wpl_db::select("SELECT * FROM `#__wpl_dbst` WHERE 1 $condition ORDER BY `index` ASC", 'loadObjectList');
+		return wpl_db::select("SELECT * FROM `#__wpl_dbst` WHERE 1 $condition ORDER BY `index` ASC", 'loadObjectList', true);
 	}
 	
     /**
@@ -61,7 +61,7 @@ class wpl_flex
      */
 	public static function get_field($field_id)
 	{
-        return wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_dbst` WHERE `id` = %d", $field_id), 'loadObject');
+        return wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_dbst` WHERE `id` = %d", $field_id), 'loadObject', true);
 	}
 
     /**
@@ -150,7 +150,7 @@ class wpl_flex
 	{
         if(trim($condition ?? '') == '') $condition = wpl_db::prepare(" AND `id` = %d", $category_id);
         
-		return wpl_db::select("SELECT * FROM `#__wpl_dbcat` WHERE 1 ".$condition, 'loadObject');
+		return wpl_db::select("SELECT * FROM `#__wpl_dbcat` WHERE 1 ".$condition, 'loadObject', true);
 	}
 	
     /**

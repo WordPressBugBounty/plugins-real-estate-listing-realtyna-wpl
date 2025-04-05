@@ -129,7 +129,7 @@ if ($type == 'boolean' and !$done_this) {
 				maxDate: "+' . $maxdate[0] . '/' . ($maxdate[1] - 1) . '/' . $maxdate[2] . '",
 				onChangeDateTime: function(dp,input)
 				{
-					ajax_save("' . $field->table_name . '","' . $field->table_column . '",input.val(),' . $item_id . ',;' . $field->id . ';)
+					ajax_save("' . $field->table_name . '","' . $field->table_column . '",input.val(),' . $item_id . ',' . $field->id . ');
 				}
 			});
 		});

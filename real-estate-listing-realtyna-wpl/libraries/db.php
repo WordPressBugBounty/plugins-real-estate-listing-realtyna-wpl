@@ -20,6 +20,7 @@ add_filter('pre_get_table_charset', function($charset,$table){
 class wpl_db
 {
 	public static $cachedNullable = [];
+	public static $cachedQueries = [];
     public static function q_raw($query, $type = '')
     {
         static::disable_parser();
@@ -34,13 +35,13 @@ class wpl_db
      * @param string $type
      * @return mixed based on $type parameter
      */
-	public static function q($query, $type = '')
+	public static function q($query, $type = '', $use_cache = false)
 	{
 		/** convert type to lowercase **/
 		$type = strtolower($type);
 		
 		/** call select function if query type is select **/
-		if($type == 'select') return wpl_db::select($query);
+		if($type == 'select') return wpl_db::select($query, 'loadObjectList', $use_cache);
 		
         /** db prefix **/
 		$query = self::_prefix($query);
@@ -255,10 +256,15 @@ class wpl_db
      * @param string $result
      * @return mixed
      */
-	public static function select($query, $result = 'loadObjectList')
+	public static function select($query, $result = 'loadObjectList', $use_cache = false)
 	{
 		/** db prefix **/
 		$query = self::_prefix($query);
+
+		$cacheKey = md5($query . $result);
+		if($use_cache and array_key_exists($cacheKey, static::$cachedQueries)) {
+			return static::$cachedQueries[$cacheKey];
+		}
 		
 		/** db object **/
 		$database = self::get_DBO();
@@ -288,6 +294,7 @@ class wpl_db
 		}
 		$end = round(microtime(true) * 1000);
 		do_action('wpl_db/select', $query, $start, $end, $result);
+		static::$cachedQueries[$cacheKey] = $return;
 		return $return;
 	}
 	
@@ -302,7 +309,7 @@ class wpl_db
      * @param string $condition
      * @return mixed
      */
-	public static function get($selects, $table, $field, $value, $return_object = true, $condition = '')
+	public static function get($selects, $table, $field, $value, $return_object = true, $condition = '', $use_cache = false)
 	{
 		$fields = '';
 		
@@ -321,19 +328,24 @@ class wpl_db
 		
 		/** db prefix **/
 		$query = self::_prefix($query);
+
+		$cacheKey = md5('get_' . $query . ($return_object ? '1' : '0'));
+		if($use_cache and array_key_exists($cacheKey, static::$cachedQueries)) {
+			return static::$cachedQueries[$cacheKey];
+		}
 		
 		/** db object **/
 		$database = self::get_DBO();
 		
 		if($selects != '*' and !is_array($selects)) {
-			return $database->get_var($query);
+			$return = $database->get_var($query);
+		} elseif($return_object) {
+			$return = $database->get_row($query);
+		} else {
+			$return = $database->get_row($query, ARRAY_A);
 		}
-
-		if($return_object) {
-			return $database->get_row($query);
-		}
-
-		return $database->get_row($query, ARRAY_A);
+		static::$cachedQueries[$cacheKey] = $return;
+		return $return;
 	}
     
     /**
@@ -431,7 +443,7 @@ class wpl_db
 	{
 		if(trim($table ?? '') == '') return false;
 
-		$results = wpl_db::q(wpl_db::prepare('SHOW COLUMNS FROM %i', "#__$table"), "select");
+		$results = wpl_db::q(wpl_db::prepare('SHOW COLUMNS FROM %i', "#__$table"), "select", true);
 		
 		$columns = array();
 		foreach($results as $key=>$result) $columns[] = $result->Field;
@@ -599,7 +611,7 @@ class wpl_db
             
             $query = str_replace('#__usermeta', $database->base_prefix.'usermeta', $query);
             $query = str_replace('#__users', $database->base_prefix.'users', $query);
-            $query = str_replace('#__realtyna_rf_mappings', $database->base_prefix.'realtyna_rf_mappings', $query);
+            $query = str_replace('#__realtyna_rf_mappings', $database->get_blog_prefix().'realtyna_rf_mappings', $query);
             $query = str_replace('#__blogs', $database->base_prefix.'blogs', $query);
             $query = str_replace('#__wpl', $database->base_prefix.'wpl', $query);
             $query = str_replace('#__', $database->prefix, $query);
@@ -608,6 +620,7 @@ class wpl_db
         {
             $query = str_replace('#__usermeta', $database->base_prefix.'usermeta', $query);
             $query = str_replace('#__users', $database->base_prefix.'users', $query);
+			$query = str_replace('#__realtyna_rf_mappings', $database->get_blog_prefix().'realtyna_rf_mappings', $query);
             $query = str_replace('#__', $database->prefix, $query);
         }
         

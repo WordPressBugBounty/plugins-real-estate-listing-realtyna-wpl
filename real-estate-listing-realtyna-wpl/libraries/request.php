@@ -220,12 +220,7 @@ class wpl_session
     public static function set($key, $value = NULL, $override = true)
     {
         $apply = false;
-        if(!isset($_SESSION[$key]))
-        {
-            $apply = true;
-            $_SESSION[$key] = $value;
-        }
-        elseif(isset($_SESSION[$key]) and $override)
+        if(!isset($_SESSION[$key]) || $override)
         {
             $apply = true;
             $_SESSION[$key] = $value;
@@ -435,7 +430,7 @@ class wpl_cookie
         if(!is_numeric($days) or $days < 1) $days = 30;
 
         $apply = false;
-        if((!isset($_COOKIE[$key])) or (isset($_COOKIE[$key]) and $override))
+        if((!isset($_COOKIE[$key]) or $override) and !headers_sent())
         {
             $apply = true;
             setcookie($key, $value, time() + (86400 * $days), '/');

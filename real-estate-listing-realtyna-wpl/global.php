@@ -189,7 +189,7 @@ class wpl_global
             /** add to cache **/
             foreach($results as $result) self::$listing_types_by_id[$result->id] = $result;
 
-            return (isset(self::$listing_types_by_id[$listing_id]) ? self::$listing_types_by_id[$listing_id] : NULL);
+            return self::$listing_types_by_id[$listing_id] ?? null;
 		}
 	}
 
@@ -1895,15 +1895,18 @@ class wpl_global
      */
     public static function switch_language($language)
     {
-        $path = wpl_global::get_language_mo_path($language, 'wpl');
-        $wpl = wpl_global::load_textdomain('wpl', $path);
+        $path = wpl_global::get_language_mo_path($language, wpl_global::get_textdomain());
+        $loaded = wpl_global::load_textdomain(wpl_global::get_textdomain(), $path);
+        if($loaded) {
+			wpl_request::setVar('wpllang', $language);
+		}
 
-        $path = wpl_global::get_language_mo_path($language, 'real-estate-listing-realtyna-wpl');
-        $real_estate_listing_realtyna_wpl = wpl_global::load_textdomain('real-estate-listing-realtyna-wpl', $path);
+        return $loaded;
+    }
 
-        if($wpl or $real_estate_listing_realtyna_wpl) wpl_request::setVar('wpllang', $language);
-
-        return ($wpl or $real_estate_listing_realtyna_wpl);
+    public static function get_textdomain()
+    {
+        return 'real-estate-listing-realtyna-wpl';
     }
 
     /**
@@ -1916,23 +1919,10 @@ class wpl_global
      */
     public static function load_textdomain($domain, $mofile)
     {
-        /**
-         * load_textdomain accepts language directory instead of language file
-         * convert language file path to language directory
-         * @author John S. <john.s@realtyna.net>
-         */
-        if(!is_dir($mofile)){
-            $mofile = dirname($mofile);
-        }
-        
         if ( function_exists('load_textdomain') ){
-			
 			return load_textdomain($domain, $mofile);
-			
 		}
-		
 		return false;
-		
     }
 
     /**
@@ -3053,5 +3043,9 @@ class wpl_global
 		$clear_string = preg_replace($regex_dingbats, '', $clear_string);
 
 		return $clear_string;
+	}
+
+	public static function convert_camel_case_to_space($string) {
+		return preg_replace('/([a-z])([A-Z])/', '$1 $2', $string);
 	}
 }

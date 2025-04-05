@@ -3,71 +3,29 @@ Contributors: realtyna
 Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
 Requires at least: 4.7.0
-Tested up to: 6.7.0
-Stable tag: 4.14.14
+Tested up to: 6.7.2
+Stable tag: 5.0.0
 Requires PHP: 7.4
-Version: 4.14.14
+Version: 5.0.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 
-Manage property listings, RESO Web API / IDX / VOW real estate options and scalable features. Support for all RESO Web API based MLS providers in North America.
+Your comprehensive solution for creating dynamic and feature-rich real estate websites on WordPress. Designed to cater to the diverse needs of real estate professionals, WPL offers unparalleled flexibility and scalability, empowering you to manage property listings, integrate MLS data, and enhance user engagement seamlessly.
 
-[vimeo https://vimeo.com/314215669]
+== Key Features ==
+*   Flexible Property Listings: Effortlessly add, modify, and showcase property listings with customizable fields tailored to your specific requirements.
+*   Advanced Search Functionality: Provide users with intuitive search options, enabling them to filter properties based on various criteria for a personalized browsing experience.
+*   MLS Integration with MLS On The Fly™: Stay ahead with MLS On The Fly™, Realtyna’s latest technology that revolutionizes MLS integration. Starting April 1, 2025, WPL Basic is fully compatible with MLS On The Fly™, allowing you to display real-time MLS listings directly on your website without the need for extensive data storage. This integration offers lightning-fast performance, reduces hosting burdens, and ensures your listings are always up-to-date.
+Supported MLS Providers: [https://realtyna.com/mls-providers](https://realtyna.com/mls-providers)
+MLS On The Fly: [https://realtyna.com/mls-on-the-fly](https://realtyna.com/mls-on-the-fly)
+Docs: [https://docs.realtyfeed.com](https://docs.realtyfeed.com)
+*   Scalable Add-ons: Enhance your website’s functionality with a range of add-ons, including demographic packages, Listhub integration, and native mobile apps, ensuring your platform evolves alongside your business needs.
+*   Theme Compatibility: WPL seamlessly integrates with various themes, offering both native and compatible options to maintain your site’s aesthetic appeal while delivering robust functionality.
 
-== WPL Real Estate ==
+== Why Choose Realtyna WPL Real Estate? ==
+By integrating WPL with MLS On The Fly™, you position your website at the forefront of real estate technology. Experience reduced hosting costs, faster load times, and real-time data synchronization, providing your clients with an unparalleled property search experience.
+Elevate your real estate website with the Realtyna WPL Real Estate plugin and harness the power of MLS On The Fly™ for a streamlined, efficient, and cutting-edge property listing platform.
 
-Run your real estate website using WPL. WPL has lots of features and addons for real estate agents and real estate agencies. Check [Realtyna WPL official website](https://realtyna.com/) and WPL demo website: [http://wpl28.realtyna.com](http://wpl28.realtyna.com)
-
-Download [WPL manual](http://wpl.realtyna.com/wassets/wpl-manual.pdf) and check [WPL knowledge base](https://support.realtyna.com/index.php?/Default/Knowledgebase/List/Index/28/wpl---wordpress-property-listing). If you can't find an answer to your question in WPL Manual or Knowledge Base, please [open a Support Ticket!](https://support.realtyna.com/index.php?/Default/Tickets/Submit) to ask your question. We will respond as soon as possible with an answer.
-
-[WPL](http://wpl.realtyna.com/) (WordPress Property Listing) is an amazing flexible plugin for real estate and vertical markets. The system is designed in such a way that database management is fully flexible. This means you can add/remove/change the fields without custom changing the database. Sequentially, the property search function in WPL is flexible as well allowing the admin to set the desired search parameters from the administration panel.
-
-**WPL Expansion options**
-
-*   Have necessary database fields for further MLS Integration ([MLS Coverage](https://realtyna.com/mls-coverage/)) (integrating MLS / IDX / RESO Web API / VOW / XML / DDF servers into WPL - Wordpress directly) - Extra customization may be needed. [http://WordPress-IDX.COM](http://WordPress-IDX.COM) also: [http://MLS-Integration.com](http://MLS-Integration.com)
-*   Native Custom Brand Mobile App [https://realtyna.com/real-estate-ios-android-app/](https://realtyna.com/real-estate-ios-android-app/)
-*   Demographic Package [https://realtyna.com/demographic-info-for-wpl/](https://realtyna.com/demographic-info-for-wpl/)
-*   Listhub Integration add-on
-*   Cloud Hosting (Starting from $49.95 per month) [http://hosting.realtyna.com](http://hosting.realtyna.com)
-*   Option for Multisite Franchise Solution [https://realtyna.com/enterprise-solutions/franchise-multisite-solution/](https://realtyna.com/enterprise-solutions/franchise-multisite-solution/)
-
-**Native Themes for WPL**
-
-*   [Theme28](http://wpldemo.realtyna.com/theme28/)
-
-**Compatible Themes for WPL (Using external views)**
-
-*   [Bridge](http://wpl28.realtyna.com/bridge/)
-*   [Enfold](http://wpl28.realtyna.com/enfold/)
-*   [X Theme](http://wpl28.realtyna.com/theme-x/)
-*   [Avada](http://wpl28.realtyna.com/avada/)
-*   [Be](http://wpl28.realtyna.com/be/)
-*   [Agent Press Pro](http://wpl28.realtyna.com/genesis/)
-*   [Divi](http://wpl28.realtyna.com/divi/)
-
-WPL is a translation ready plugin to make changing languages as easy as possible. If you need a site with multiple languages, we offer the multilingual feature for use under WPL PRO. Our solution is compatible with WPML.
-
-
-**How to build a real estate website using WPL**
-
-Check out our course on Udemy on [how to build a real estate website using WPL](https://www.udemy.com/course/how-to-build-a-real-estate-website-with-wordpress-and-wpl/)
-
-*	It is a step-by-step guide to building your real estate site without the need for coding or technical experience.
-*	If you finish the course successfully and share your certificate with us, you will earn a voucher for $150 to buy our products and services.
-
-== Installation ==
-
-For installing WPL please follow below steps:
-
-1. Install WPL either via the WordPress.org plugin directory, or by uploading the files to your server.
-2. Activate the plugin through the 'Plugins' menu in WordPress.
-3. Add your listings from WPL backend and place [WPL] shortcode into your page/post content.
-
-== Frequently Asked Questions ==
-
-= What is WPL? =
-
-WPL (WordPress Property Listing) is a great plugin for real estate agents and agencies. Also it can be used for vertical markets.
 
 = How can I ask about custom developments? =
 
@@ -88,6 +46,10 @@ Submit a support ticket on Realtyna ticketing system: [https://support.realtyna.
 7. Agent listing
 
 == Changelog ==
+= 5.0.0 =
+- Added: MLS On The Fly™
+- Fixed: Known issues
+
 = 4.14.9 =
 - Fixed: Known issues
 

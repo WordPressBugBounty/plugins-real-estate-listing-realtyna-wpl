@@ -152,6 +152,7 @@ function item_save(value, item_id, field_id, item_type, item_cat, item_extra1, i
 				}
 			}
 			else
+			
 			{
 				wplj(ajax_loader_element).html('');
 			}

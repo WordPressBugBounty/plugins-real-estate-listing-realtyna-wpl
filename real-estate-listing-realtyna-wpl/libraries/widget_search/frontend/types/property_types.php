@@ -13,7 +13,6 @@ function widget_search_frontend_general_property_types(
 ) {
     if ($type == 'property_types') {
         $property_types = wpl_global::get_property_types();
-        $property_types = apply_filters('widget_search/frontend/general/property_types', $property_types);
 
         switch ($field['type']) {
             case 'select':

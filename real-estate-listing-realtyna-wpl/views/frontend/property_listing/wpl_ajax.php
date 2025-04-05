@@ -163,7 +163,11 @@ class wpl_property_listing_controller extends wpl_controller
 						if($counter > $limit) {
 							break;
 						}
-						$output[] = array('title' => $title, 'label' => $found_item->{$column}, 'column' => $column, 'value' => $found_item->{$column});
+						$value = $found_item->{$column};
+						if($column == 'location_text') {
+							$value = wpl_property::generate_location_text((array) $found_item);
+						}
+						$output[] = array('title' => $title, 'label' => $value, 'column' => $column, 'value' => $value);
 					}
 					continue;
 				}
@@ -233,8 +237,12 @@ class wpl_property_listing_controller extends wpl_controller
         $property_id = wpl_request::getVar('pid', '');
         $gre = wpl_request::getVar('g-recaptcha-response', '');
 
+		do_action('wpl_property_listing_controller/contact_listing_user/pre', $this);
+
         // check recaptcha 
         $gre_response = wpl_global::verify_google_recaptcha($gre, 'gre_listing_contact_activity');
+
+		$check_security = apply_filters('wpl_property_listing_controller/contact_listing_user/check_security', true);
 
         $returnData = array();
         if(!filter_var($email, FILTER_VALIDATE_EMAIL))
@@ -242,7 +250,7 @@ class wpl_property_listing_controller extends wpl_controller
             $returnData['success'] = 0;
             $returnData['message'] = wpl_esc::return_html_t('Your email is not a valid email!');
         }
-        elseif(!wpl_security::verify_nonce(wpl_request::getVar('_wpnonce', ''), 'wpl_listing_contact_form'))
+        elseif($check_security and !wpl_security::verify_nonce(wpl_request::getVar('_wpnonce', ''), 'wpl_listing_contact_form'))
         {
             $returnData['success'] = 0;
             $returnData['message'] = wpl_esc::return_html_t('The security nonce is not valid!');

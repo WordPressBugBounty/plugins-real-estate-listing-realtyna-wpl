@@ -37,6 +37,8 @@ abstract class wpl_profile_show_controller_abstract extends wpl_controller
                 $this->uid = wpl_request::getVar('sf_select_user_id', 0);
                 wpl_request::setVar('uid', $this->uid);
             }
+            
+            $this->uid = apply_filters('wpl_profile_show_controller_abstract/display/uid', $this->uid);
 
 			$check_access = wpl_global::check_access('public_profile',$this->uid);
             /** check user id **/

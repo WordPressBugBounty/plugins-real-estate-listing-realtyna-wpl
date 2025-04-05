@@ -216,6 +216,10 @@ class wpl_html
      */
 	public static function generate_head()
 	{
+		$show = apply_filters( 'wpl_html/generate_head/show', true );
+		if(!$show) {
+			return;
+		}
 		/** generate meta keywords **/
 		if(self::$meta_keywords)
 		{

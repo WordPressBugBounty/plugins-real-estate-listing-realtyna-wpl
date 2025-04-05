@@ -508,6 +508,7 @@ if ($type == 'gallery' and !$done_this) {
 			<div class="erow">
 				<select name="<?php wpl_esc::attr($this->get_field_name('data')); ?>[<?php wpl_esc::attr($field->id); ?>][type]">
 					<option value="text" <?php if (isset($value['type']) and $value['type'] == 'text') wpl_esc::e('selected="selected"'); ?> ><?php wpl_esc::html_t('Text'); ?></option>
+					<option value="multiple" <?php if (isset($value['type']) and $value['type'] == 'multiple') wpl_esc::e('selected="selected"'); ?> ><?php wpl_esc::html_t('Multiple'); ?></option>
 					<option value="exacttext" <?php if (isset($value['type']) and $value['type'] == 'exacttext') wpl_esc::e('selected="selected"'); ?> ><?php wpl_esc::html_t('Exact text'); ?></option>
 					<option value="checkbox" <?php if (isset($value['type']) and $value['type'] == "checkbox") wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Check box'); ?></option>
 					<option value="yesno" <?php if (isset($value['type']) and $value['type'] == "yesno") wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Any/Yes'); ?></option>

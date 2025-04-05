@@ -321,6 +321,7 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
         {
             if($this->model->isSourceRf()) {
                 $rf_markers = [];
+				$listings = wpl_global::return_in_id_array(wpl_global::get_listings());
                 foreach($wpl_properties as $key => $wpl_property) {
                     if($key == 'current' and !count($wpl_property)) continue;
                     if(empty($wpl_property['googlemap_lt'])) {
@@ -330,9 +331,9 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
                         'id' => $wpl_property['id'],
                         'googlemap_lt' => $wpl_property['googlemap_lt'],
                         'googlemap_ln' => $wpl_property['googlemap_ln'],
-                        'title' => wpl_global::wpl_minimize_price($wpl_property['price']),
-                        'pids' => $wpl_property['id'] . '', // convert to string
-                        'gmap_icon' => 'dot-blue.png',
+						'title' => wpl_render::render_price($wpl_property['price'], $wpl_property['price_unit'], '', wpl_global::wpl_minimize_price($wpl_property['price'])),
+                        'pids' => $wpl_property['id'] . '', // convert to string to avoid javascript issue
+                        'gmap_icon' => $listings[$wpl_property['listing']]['gicon'] ?? 'default.png',
                     ];
                 }
                 $markers = ['markers' => $rf_markers, 'total' => $this->model->total];

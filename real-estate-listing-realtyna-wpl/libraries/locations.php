@@ -559,7 +559,7 @@ class wpl_locations
         if(isset(self::$names_by_abbr[$location_level])) return isset(self::$names_by_abbr[$location_level][$abbr]) ? self::$names_by_abbr[$location_level][$abbr] : $abbr;
 
         // Get All Locations
-        $locations = wpl_db::select(wpl_db::prepare("SELECT `abbr`, `name` FROM %i WHERE 1", "#__wpl_location{$location_level}"), 'loadObjectList');
+        $locations = wpl_db::select(wpl_db::prepare("SELECT `abbr`, `name` FROM %i WHERE ifnull(`abbr`, '') != ''", "#__wpl_location{$location_level}"), 'loadObjectList');
 
         $names_by_abbr = array();
         $abbr_by_names = array();
@@ -597,7 +597,7 @@ class wpl_locations
         if(isset(self::$abbrs_by_name[$location_level])) return self::$abbrs_by_name[$location_level][$key] ?? $name;
 
         // Get All Locations
-        $locations = wpl_db::select(wpl_db::prepare('SELECT `abbr`, `name` FROM %i WHERE 1', "#__wpl_location{$location_level}"), 'loadObjectList');
+        $locations = wpl_db::select(wpl_db::prepare("SELECT `abbr`, `name` FROM %i WHERE ifnull(`abbr`, '') != ''", "#__wpl_location{$location_level}"), 'loadObjectList');
 
         $names_by_abbr = array();
         $abbr_by_names = array();

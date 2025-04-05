@@ -336,7 +336,7 @@ elseif(($type == 'volume' or $type == 'area' or $type == 'length') and !$done_th
         }
         
         $return['raw'] = $value;
-        $return['unit_id'] = $values[$field->table_column.'_unit'];
+        $return['unit_id'] = $values[$field->table_column.'_unit'] ?? 1;
         
         if(isset($options['if_zero']) and $options['if_zero'] == 2 and !trim($value)) $return['value'] = wpl_esc::return_html_t($options['call_text']);
         if(isset($options['if_zero']) and !$options['if_zero'] and !trim($value)) $return = array();

@@ -78,9 +78,17 @@ class wpl_settings
         if(trim($name ?? '') == '') return false;
 
         $exists = wpl_settings::is_setting_exists($name, $category);
-
-        if($exists) $result = wpl_settings::update_setting($name, $value, $category, $condition);
-        else $result = wpl_settings::insert_setting($name, $value, $category);
+		$old_value = null;
+        if($exists) {
+			$old_value = wpl_settings::get($name);
+			$result = wpl_settings::update_setting($name, $value, $category, $condition);
+		}
+        else {
+			$result = wpl_settings::insert_setting($name, $value, $category);
+		}
+		if($result) {
+			do_action('wpl_settings/save_setting', $name, $value, $old_value);
+		}
 
         return $result;
     }
@@ -173,7 +181,7 @@ class wpl_settings
      * @param string $category
      * @return mixed
      */
-    public static function get($setting_name, $category = '')
+    public static function get($setting_name, $category = '', $use_cache = true)
     {
         // Return from cache if exists
         $cache_key  = trim($category ?? '') != '' ? $category : 'all';
@@ -189,7 +197,7 @@ class wpl_settings
         }
 
         // Get Setting
-        return wpl_db::get('setting_value', 'wpl_settings', '', '', true, $condition);
+        return wpl_db::get('setting_value', 'wpl_settings', '', '', true, $condition, $use_cache);
     }
 
     /**
@@ -531,8 +539,7 @@ class wpl_settings
     }
 
 	public static function is_mls_on_the_fly() {
-		return wpl_global::check_addon('pro')
-			&& (defined('REALTYNA_RF_SHELL_BASE_PATH') || defined('REALTYNA_MLS_ON_THE_FLY_VERSION'))
+		return (defined('REALTYNA_RF_SHELL_BASE_PATH') || defined('REALTYNA_MLS_ON_THE_FLY_VERSION'))
 			&& static::get('property_source') == 'rf'
 			&& file_exists(_wpl_import('libraries.rf_shell.rf_property', true, true));
 	}

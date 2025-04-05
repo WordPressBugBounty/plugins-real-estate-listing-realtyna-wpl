@@ -22,6 +22,10 @@ function widget_search_frontend_general_text(
                 $query_type = 'text';
                 break;
 
+            case 'multiple':
+                $query_type = 'multiple';
+                break;
+
             case 'exacttext':
                 $query_type = 'select';
                 break;

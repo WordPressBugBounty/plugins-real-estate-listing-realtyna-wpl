@@ -234,12 +234,12 @@ class wpl_service_sef
         if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($content_column, $property_data['kind'])) $content_column = wpl_addon_pro::get_column_lang_name($content_column, $locale, false);
 
 		$metaTags['og:url'] = ['content' => str_replace('&', '&amp;', $property_link)];
-		$metaTags['og:title'] = ['data-page-subject' => 'true', 'content' => $this->property_page_title];
-		$metaTags['og:description'] = ['content' => strip_tags(stripslashes($property_data[$content_column] ?? ""))];
+		$metaTags['og:title'] = ['data-page-subject' => 'true', 'content' => wpl_esc::return_attr($this->property_page_title)];
+		$metaTags['og:description'] = ['content' => wpl_esc::return_attr(strip_tags(stripslashes($property_data[$content_column] ?? "")))];
 
 		$metaTags['twitter:card'] = ['content' => 'summary'];
-		$metaTags['twitter:title'] = ['content' => $this->property_page_title];
-		$metaTags['twitter:description'] = ['content' => strip_tags(stripslashes($property_data[$content_column] ?? ""))];
+		$metaTags['twitter:title'] = ['content' => wpl_esc::return_attr($this->property_page_title)];
+		$metaTags['twitter:description'] = ['content' => wpl_esc::return_attr(strip_tags(stripslashes($property_data[$content_column] ?? "")))];
 		$metaTags['twitter:url'] = ['content' => str_replace('&', '&amp;', $property_link)];
         
         $gallery = wpl_items::get_gallery($property_id, $property_data['kind']);

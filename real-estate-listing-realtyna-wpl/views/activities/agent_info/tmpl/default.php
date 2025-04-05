@@ -10,7 +10,9 @@ $picture_height = $params['picture_height'] ?? '100';
 $mailto = $params['mailto'] ?? 0;
 
 /** getting user id from current property (used in property_show and property_listing) **/
-if (!trim($main_user_id ?? '')) $main_user_id = $wpl_properties['current']['data']['user_id'];
+if (!trim($main_user_id ?? '') and !empty($wpl_properties['current']['data']['user_id'])) {
+	$main_user_id = $wpl_properties['current']['data']['user_id'];
+}
 
 $user_ids = array();
 $user_ids[] = $main_user_id;

@@ -137,7 +137,7 @@ class wpl_controller
             if($this->wrapper == 1) $this->wrapper($path);
             else $this->showView($path);
             
-			return $output = ob_get_clean();
+			return ob_get_clean();
 		}
 		
 		if(!wpl_file::exists($path)) exit("tpl not found!");
@@ -164,7 +164,7 @@ class wpl_controller
     }
 	
     /**
-     * Adds separator betweens submenus
+     * Adds separator between submenus
      * @author Howard <howard@realtyna.com>
      * @return string
      */

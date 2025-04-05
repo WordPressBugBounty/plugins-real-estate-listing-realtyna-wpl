@@ -42,7 +42,7 @@ class wpl_functions_controller extends wpl_controller
 		$kind = wpl_property::get_property_kind($ex_pids[0]);
 
 		$plisting_fields = $wpl_property->get_plisting_fields('', $kind);
-		$wpl_property->start(0, count($ex_pids), wpl_settings::get('default_orderby'), wpl_settings::get('default_order'), ["sf_multiple_id" => $property_ids]);
+		$wpl_property->start(0, count($ex_pids), wpl_settings::get('default_orderby'), wpl_settings::get('default_order'), ["sf_multiple_id" => $property_ids], $kind);
 		$wpl_property->query();
 		$properties = $wpl_property->search();
 
@@ -393,11 +393,9 @@ class wpl_functions_controller extends wpl_controller
 
 			if (isset($parameters['enabled']) and $parameters['enabled'] == 'on') {
 				if (!wpl_db::num(wpl_db::prepare('SELECT COUNT(*) FROM `#__wpl_addon_watch_changes` WHERE `pid` = %d AND `user_id` = %d', $property_id, $user_id))) {
-					$query = "";
 					wpl_db::q(wpl_db::prepare('INSERT INTO `#__wpl_addon_watch_changes` (`pid`, `user_id`) VALUES (%d, %d)', $property_id, $user_id), 'insert');
 				}
 			} else {
-				$query = "";
 				wpl_db::q(wpl_db::prepare('DELETE FROM `#__wpl_addon_watch_changes` WHERE `pid` = %d AND `user_id` = %d', $property_id, $user_id), 'delete');
 			}
 

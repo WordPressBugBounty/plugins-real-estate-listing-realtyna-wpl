@@ -77,7 +77,7 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 			{
 				wplj("#'.$element_id.'").val(ui.item.value);
 				wplj("#'.$element_column_id.'").val(ui.item.column);
-				wplj("#wpl_search_form_'.$widget_id.'").submit();
+				wpl_do_search_'.$widget_id.'();
 			},
 			source: function (request, response) {
 				var term = request.term.toUpperCase(), items = [];

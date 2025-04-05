@@ -320,6 +320,7 @@ class wpl_property
 
         // Generate Select
         $this->select = $this->select ?? $this->generate_select($this->listing_fields, 'p');
+		$this->select = apply_filters('wpl_property/start/select', $this->select);
 
 	}
 
@@ -543,7 +544,7 @@ class wpl_property
      * @param int $property_id
      * @return mixed
      */
-    public static function get_property_raw_data($property_id)
+    public static function get_property_raw_data($property_id, $use_cache = false)
     {
         // First Validation
         if(!$property_id) return NULL;
@@ -553,7 +554,7 @@ class wpl_property
 		}
 
         // Property Data
-        $result = wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_properties` as p LEFT JOIN `#__wpl_properties2` as p2 ON p.`id` = p2.`id` WHERE p.`id`= %d", $property_id), 'loadAssoc');
+        $result = wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_properties` as p LEFT JOIN `#__wpl_properties2` as p2 ON p.`id` = p2.`id` WHERE p.`id`= %d", $property_id), 'loadAssoc', $use_cache);
 
 		if(!empty($result) && empty($result['id'])) {
 			wpl_db::insert('wpl_properties2', ['id' => $property_id]);
@@ -1286,7 +1287,7 @@ class wpl_property
     public static function generate_location_text($property_data, $property_id = 0, $glue = ',', $force = false, $only_return = false)
     {
         /** fetch property data if property id is setted **/
-        if($property_id) $property_data = self::get_property_raw_data($property_id);
+        if($property_id) $property_data = self::get_property_raw_data($property_id, true);
         if(!$property_id) $property_id = $property_data['id'];
 
         /** Return hidex_keyword if address of property is hidden **/
@@ -1658,10 +1659,10 @@ class wpl_property
 		if(wpl_settings::is_mls_on_the_fly() && $source == 'RF') {
 			$raw = wpl_rf_property::getInstance()->get_property_raw_data($property_id);
 			if(!empty($raw)) {
-				return $raw[$field_name];
+				return $raw[$field_name] ?? null;
 			}
 		}
-        return wpl_db::get($field_name, 'wpl_properties', 'id', $property_id);
+        return wpl_db::get($field_name, 'wpl_properties', 'id', $property_id, true, '', true);
     }
 
     /**
@@ -1918,7 +1919,7 @@ class wpl_property
         /** get plisting fields **/
         if(!$plisting_fields) $plisting_fields = self::get_plisting_fields();
 
-        $raw_data = self::get_property_raw_data($property_id);
+        $raw_data = self::get_property_raw_data($property_id, true);
         if(!$raw_data) return array();
         if(!$property) $property = (object) $raw_data;
 
@@ -2743,7 +2744,7 @@ class wpl_property
 		$location5 = 'location5_name';
 		$location6 = 'location6_name';
 
-		if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($street, 0)) $street = wpl_addon_pro::get_column_lang_name($street, wpl_global::get_current_language(), false);
+		if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($street, $kind)) $street = wpl_addon_pro::get_column_lang_name($street, wpl_global::get_current_language(), false);
 
 		$queries = array(
 			$street => wpl_esc::return_html_t('Street'),

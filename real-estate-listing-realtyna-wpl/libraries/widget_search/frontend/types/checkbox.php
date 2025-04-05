@@ -1,7 +1,7 @@
 <?php
 defined('_WPLEXEC') or die('Restricted access');
 
-function widget_search_frontend_general_select(
+function widget_search_frontend_general_checkbox(
     $html,
     $type,
     $options,
@@ -61,6 +61,5 @@ function widget_search_frontend_general_select(
     return $html;
 }
 
-add_filter('widget_search/frontend/general/checkbox', 'widget_search_frontend_general_select', 10, 8);
-add_filter('widget_search/frontend/general/yesno', 'widget_search_frontend_general_select', 10, 8);
-add_filter('widget_search/frontend/general/select', 'widget_search_frontend_general_select', 10, 8);
+add_filter('widget_search/frontend/general/checkbox', 'widget_search_frontend_general_checkbox', 10, 8);
+add_filter('widget_search/frontend/general/yesno', 'widget_search_frontend_general_checkbox', 10, 8);

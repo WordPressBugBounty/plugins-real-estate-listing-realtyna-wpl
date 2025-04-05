@@ -40,7 +40,7 @@ if (wpl_global::is_multisite()) $source_blog_id = wpl_property::get_property_fie
 					   for="pmanager_change_user_select<?php wpl_esc::attr($pid); ?>">
 					<?php wpl_esc::html_t('User'); ?>:
 				</label>
-				<?php wpl_users::autocomplete($property_data['user_id'], [
+				<?php wpl_users::autocomplete($property_data['user_id'] ?? 0, [
 					'id' => 'pmanager_change_user_select' . $pid,
 					'onchange' => 'change_user(' . $pid . ', this.value);',
 				], true); ?>

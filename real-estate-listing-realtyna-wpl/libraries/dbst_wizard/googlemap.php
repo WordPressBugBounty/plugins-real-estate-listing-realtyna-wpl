@@ -5,13 +5,11 @@ defined('_WPLEXEC') or die('Restricted access');
 if($type == 'googlemap' and !$done_this)
 {
     /** WPL Demographic addon **/
-    $demographic_addon_objects = array();
     $demographic_objects = array();
     if(wpl_global::check_addon('demographic'))
     {
         _wpl_import('libraries.addon_demographic');
         $demographic = new wpl_addon_demographic();
-        $demographic_addon_objects = $demographic->get_all('id, name');
 
         $demographic_objects = wpl_items::get_items($item_id, 'demographic', $kind);
     }
@@ -574,14 +572,10 @@ function wpl_dmgfc_apply_shapes()
         <div id="wpl_map_canvas<?php wpl_esc::attr($field->id); ?>"></div>
     </div>
 
-    <?php if(wpl_global::check_addon('demographic') and count($demographic_addon_objects)): ?>
+    <?php if(wpl_global::check_addon('demographic')): ?>
     <div class="dmgfc-objects-wp" style="margin-top: 10px;">
         <label for="wpl_dmgfc_objects<?php wpl_esc::attr($field->id); ?>"><?php wpl_esc::html('Apply boundary from Demographic addon'); ?></label>
-        <select id="wpl_dmgfc_objects<?php wpl_esc::attr($field->id); ?>">
-            <?php foreach ($demographic_addon_objects as $object): ?>
-                <option value="<?php wpl_esc::attr($object->id); ?>"><?php wpl_esc::html($object->name); ?></option>
-            <?php endforeach; ?>
-        </select>
+		<?php $demographic->autocomplete(null, ['id' => 'wpl_dmgfc_objects' . $field->id]); ?>
         <input type="button" class="wpl-button button-1" onclick="wpl_dmgfc_apply_shapes()" value="<?php wpl_esc::attr_t('Apply'); ?>">
         <div id="wpl_dmgfc_objects_loading"></div>
     </div>

@@ -292,7 +292,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                                 <ul>
                                     <?php if(trim($listing_id ?? '') != ''): ?>
                                         <li class="wpl-listing-id">
-                                            <?php wpl_esc::html($this->wpl_properties['current']['materials']['mls_id']['name']).' : <span class="value">'.$listing_id.'</span>'; ?>
+                                            <?php wpl_esc::html($this->wpl_properties['current']['materials']['mls_id']['name']) ?>: <span class="value"><?php wpl_esc::html($listing_id); ?></span>
                                         </li>
                                     <?php endif; ?>
                                     <?php if(trim($bedroom ?? '') != ''): ?>

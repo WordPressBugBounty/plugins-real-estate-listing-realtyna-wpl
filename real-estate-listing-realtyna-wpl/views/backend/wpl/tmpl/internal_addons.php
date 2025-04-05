@@ -31,7 +31,7 @@ defined('_WPLEXEC') or die('Restricted access');
                 <?php if($settings['realtyna_verified'] == 0): ?>
                     <?php if(!isset($settings['realtyna_envato_purchase'])): ?>
 							<div class="wpl_realtyna_envato_container_drop"
-								 onclick="dropdown_envato_purchase_form();"><?php wpl_esc::html_t('Did you buy WPL from <i>CodeCanyon</i>? Click Here to get your username and password.'); ?></div>
+								 onclick="dropdown_envato_purchase_form();"><?php wpl_esc::e('Did you buy WPL from <i>CodeCanyon</i>? Click Here to get your username and password.'); ?></div>
                         <div class="wpl_realtyna_envato_container">
 								<input type="text" name="realtyna_envato_fullname" id="realtyna_envato_fullname"
 									   value="<?php wpl_esc::attr(trim($user->user_firstname . ' ' . $user->user_lastname)); ?>"
@@ -76,7 +76,7 @@ defined('_WPLEXEC') or die('Restricted access');
 									)</a><?php endif; ?></label>
                     <span class="wpl_addon_info">
                         <?php if(trim($addon['message'] ?? '') != ''): ?>
-                        <span class="wpl_addon_message"><?php wpl_esc::attr($addon['message']); ?></span>
+                        <span class="wpl_addon_message"><?php wpl_esc::e($addon['message']); ?></span>
                         <?php endif; ?>
                         <span title="<?php wpl_esc::attr_t('Version'); ?>"><?php wpl_esc::html($addon['version']); ?></span>
                         <?php if($addon['updatable']): ?>

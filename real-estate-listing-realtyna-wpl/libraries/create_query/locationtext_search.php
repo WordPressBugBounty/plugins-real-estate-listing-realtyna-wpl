@@ -144,17 +144,8 @@ elseif($format == 'advancedlocationtextsearch' and !$done_this)
         }
         else // Search based on keyword
         {
-            $street = 'field_42';
-            $location2 = 'location2_name';
-            $location3 = 'location3_name';
-            $location4 = 'location4_name';
-            $location5 = 'location5_name';
-            $location6 = 'location6_name';
-            
-            if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($street, $kind)) $street = wpl_addon_pro::get_column_lang_name($street, wpl_global::get_current_language(), false);
-
-            $columns = array($street, $location2, $location3, $location4, $location5, $location6, 'location_text', 'zip_name', 'mls_id', 'field_308', 'meta_keywords', 'meta_description');
-
+			$columns = array_keys(wpl_property::get_suggestion_fields($kind, '') ?? []);
+			$columns = array_merge($columns, ['field_308', 'meta_keywords', 'meta_description']);
             $query .= " AND `show_address` = '1' AND (";
             foreach ($columns as $column)
             {

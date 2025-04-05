@@ -173,7 +173,7 @@ function wpl_get_request_str_<?php wpl_esc::numeric($this->widget_id); ?>(force)
 }
 
 /** main search function **/
-function wpl_do_search_<?php wpl_esc::numeric($this->widget_id); ?>()
+function wpl_do_search_<?php wpl_esc::numeric($this->widget_id); ?>(remove_lat_long = false)
 {
     request_str = wpl_get_request_str_<?php wpl_esc::numeric($this->widget_id); ?>();
 
@@ -189,6 +189,12 @@ function wpl_do_search_<?php wpl_esc::numeric($this->widget_id); ?>()
     if (search_page.indexOf('?') >= 0) search_str = search_page + '&' + request_str;
     else search_str = search_page + '?' + request_str;
 
+	if(remove_lat_long) {
+		request_str = wpl_update_qs('sf_tmin_googlemap_lt', '', request_str);
+		request_str = wpl_update_qs('sf_tmax_googlemap_lt', '', request_str);
+		request_str = wpl_update_qs('sf_tmin_googlemap_ln', '', request_str);
+		request_str = wpl_update_qs('sf_tmax_googlemap_ln', '', request_str);
+	}
     <?php if(!$this->ajax): ?>
     wpl_do_search_no_ajax<?php wpl_esc::numeric($this->widget_id); ?>(search_str);
     <?php elseif($this->ajax): ?>

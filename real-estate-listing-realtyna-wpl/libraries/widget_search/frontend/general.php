@@ -1,22 +1,27 @@
 <?php
 
 defined('_WPLEXEC') or die('Restricted access');
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 $imports = [
+	'addon_calendar',
+	'area',
+	'checkbox',
+	'date',
+	'feature',
     'gallery',
-    'date',
-    'feature',
-    'checkbox',
     'listings',
     'neighborhood',
     'number',
+	'price',
+	'property_types',
+	'ptcategory',
+	'select',
+	'separator',
+	'text',
+	'textarea',
+	'textsearch',
     'user_type',
-    'textarea',
-    'price',
-    'area',
-    'text',
-    'textsearch',
-    'separator',
 ];
 
 foreach ($imports as $import) {
@@ -26,6 +31,7 @@ foreach ($imports as $import) {
 $options = apply_filters('widget_search/frontend/general/options', $options, $field_data);
 
 $current = '';
+
 
 $html .= apply_filters(
     'widget_search/frontend/general/' . $type,
