@@ -25,6 +25,7 @@ if(@file_exists($rush_path)) include_once $rush_path;
  * @package WPL
  * @date 05/26/2013
  */
+#[AllowDynamicProperties]
 class wpl_property
 {
     public $query;
@@ -554,7 +555,7 @@ class wpl_property
 		}
 
         // Property Data
-        $result = wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_properties` as p LEFT JOIN `#__wpl_properties2` as p2 ON p.`id` = p2.`id` WHERE p.`id`= %d", $property_id), 'loadAssoc', $use_cache);
+        $result = wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_properties` as p INNER JOIN `#__wpl_properties2` as p2 ON p.`id` = p2.`id` WHERE p.`id`= %d", $property_id), 'loadAssoc', $use_cache);
 
 		if(!empty($result) && empty($result['id'])) {
 			wpl_db::insert('wpl_properties2', ['id' => $property_id]);
@@ -626,17 +627,32 @@ class wpl_property
             }
 
             /** Take care for field specific **/
-            if( trim($field->field_specific ?? '' ) )
-            {
-                $ex = explode(':', $field->field_specific);
-                $parent_field = wpl_flex::get_field($ex[0]);
+			if( trim($field->field_specific ?? '' ) )
+			{
+				$ex = explode(':', $field->field_specific);
+				$parent_field = wpl_flex::get_field($ex[0]);
 
-                if(isset($parent_field) and $values[$parent_field->table_column] != $ex[1])
-                {
-                    $values[$field->table_column] = NULL;
-                    continue;
-                }
-            }
+				$field_value = $values[$parent_field->table_column];
+				if($parent_field->type == 'feature') {
+					$field_value = $values[$parent_field->table_column . '_options'];
+					$field_value = explode(',', $field_value);
+					$field_value = array_filter($field_value, function($value) { return $value !== ''; });
+				}
+				$must_be_null = false;
+				if(!empty($parent_field)) {
+					$must_be_null = true;
+					if(is_array($field_value) and in_array($ex[1], $field_value)) {
+						$must_be_null = false;
+					}
+					if(!is_array($field_value) and $field_value == $ex[1]) {
+						$must_be_null = false;
+					}
+				}
+				if($must_be_null) {
+					$values[$field->table_column] = NULL;
+					continue;
+				}
+			}
 
             /** Accesses **/
             if(isset($field->accesses) and trim($field->accesses ?? '') != '' and wpl_global::check_addon('membership'))
@@ -1181,8 +1197,12 @@ class wpl_property
     {
         /** fetch property data if property id is setted **/
         if($property_id) $property_data = self::get_property_raw_data($property_id);
-        if(!$property_id) $property_id = $property_data['id'];
 
+		if(empty($property_data)) {
+			return '';
+		}
+
+        if(!$property_id) $property_id = $property_data['id'];
 
         $kind = $property_data['kind'];
         $url = wpl_sef::get_wpl_permalink(true, $kind);
@@ -1288,6 +1308,10 @@ class wpl_property
     {
         /** fetch property data if property id is setted **/
         if($property_id) $property_data = self::get_property_raw_data($property_id, true);
+
+		if(empty($property_data)) {
+			return '';
+		}
         if(!$property_id) $property_id = $property_data['id'];
 
         /** Return hidex_keyword if address of property is hidden **/
@@ -1387,6 +1411,10 @@ class wpl_property
     {
         // Fetch property data if property id is set
         if($property_id) $property_data = self::get_property_raw_data($property_id);
+
+		if(empty($property_data)) {
+			return '';
+		}
         if(!$property_id) $property_id = $property_data['id'];
 
         $column = 'alias';
@@ -1472,6 +1500,10 @@ class wpl_property
     {
         /** fetch property data if property id is setted **/
         if($property_id) $property_data = self::get_property_raw_data($property_id);
+
+		if(empty($property_data)) {
+			return '';
+		}
         if(!$property_id) $property_id = $property_data['id'];
 
         $column = 'field_312';
@@ -1529,6 +1561,10 @@ class wpl_property
     {
         /** fetch property data if property id is set **/
         if($property_id) $property_data = self::get_property_raw_data($property_id);
+
+		if(empty($property_data)) {
+			return '';
+		}
         if(!$property_id) $property_id = $property_data['id'];
 
         $column = 'field_313';
@@ -2098,9 +2134,10 @@ class wpl_property
         $path = wpl_items::get_path($property_id, $kind, wpl_property::get_blog_id($property_id), false);
         $thumbnails = wpl_folder::files($path, '^(th|wm).*\.('.implode('|', $ext_array).')$', 3, true);
 
-        foreach($thumbnails as $thumbnail) wpl_file::delete($thumbnail);
-
-		do_action('wpl_property/remove_thumbnails', $property_id, $thumbnails, $path, $ext_array);
+		if(!empty($thumbnails)) {
+			foreach ($thumbnails as $thumbnail) wpl_file::delete($thumbnail);
+			do_action('wpl_property/remove_thumbnails', $property_id, $thumbnails, $path, $ext_array);
+		}
 
         return true;
     }
@@ -2232,6 +2269,10 @@ class wpl_property
     {
         /** fetch property data if property id is setted **/
         if($property_id) $property_data = self::get_property_raw_data($property_id);
+
+		if(empty($property_data)) {
+			return '';
+		}
         if(!$property_id) $property_id = $property_data['id'];
 
         $column = 'meta_keywords';
@@ -2288,6 +2329,11 @@ class wpl_property
     {
         /** fetch property data if property id is setted **/
         if($property_id) $property_data = self::get_property_raw_data($property_id);
+
+		if(empty($property_data)) {
+			return '';
+		}
+
         if(!$property_id) $property_id = $property_data['id'];
 
         $column = 'meta_description';

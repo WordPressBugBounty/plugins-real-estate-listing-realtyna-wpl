@@ -114,11 +114,11 @@ class wpl_logs
         $dynamic_params = $params[0];
         $static_params = $params[1];
         
-        $section = isset($static_params['section']) ? $static_params['section'] : 'no-section';
-        $addon_id = isset($static_params['addon_id']) ? $static_params['addon_id'] : 0;
-        $user_id = isset($static_params['user_id']) ? $static_params['user_id'] : NULL;
-        $status = isset($static_params['status']) ? $static_params['status'] : 1;
-        $priority = isset($static_params['priority']) ? $static_params['priority'] : 3;
+        $section = $static_params['section'] ?? 'no-section';
+        $addon_id = $static_params['addon_id'] ?? 0;
+        $user_id = $static_params['user_id'] ?? null;
+        $status = $static_params['status'] ?? 1;
+        $priority = $static_params['priority'] ?? 3;
         $log_text = '';
         
         $patterns = array('[',']');

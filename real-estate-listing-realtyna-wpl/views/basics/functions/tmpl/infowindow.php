@@ -35,8 +35,8 @@ foreach($this->wpl_properties as $key=>$property)
     $agent_name = '';
     if(wpl_global::check_addon('MLS') and ($show_agent_name or $show_office_name))
     {
-        $office_name = isset($property['raw']['field_2111']) ? '<div class="wpl-prp-office-name">'.$property['raw']['field_2111'].'</div>' : '';
-        $agent_name = isset($property['raw']['field_2112']) ? '<div class="wpl-prp-agent-name">'.$property['raw']['field_2112'].'</div>' : '';
+        $office_name = isset($property['raw']['field_2111']) ? '<div class="wpl-prp-office-name">'.wpl_esc::return_html($property['raw']['field_2111']).'</div>' : '';
+        $agent_name = isset($property['raw']['field_2112']) ? '<div class="wpl-prp-agent-name">'.wpl_esc::return_html($property['raw']['field_2112']).'</div>' : '';
     }
 ?>
 	<div id="main_infowindow">
@@ -77,8 +77,8 @@ foreach($this->wpl_properties as $key=>$property)
 				<a itemprop="url" class="main_infowindow_title" href="<?php wpl_esc::attr($property['property_link']); ?>"><?php wpl_esc::html($property['property_title']); ?></a>
 				<div class="main_infowindow_location" itemprop="address" ><?php wpl_esc::html($locations); ?></div>
 			    <?php
-                    if($show_agent_name) wpl_esc::html($agent_name);
-                    if($show_office_name) wpl_esc::html($office_name);
+                    if($show_agent_name) wpl_esc::e($agent_name);
+                    if($show_office_name) wpl_esc::e($office_name);
 			    ?>
             </div>
 			<div class="main_infowindow_r_b">

@@ -26,13 +26,13 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 		$first_fields = [];
 		$second_fields = [];
 		foreach ($suggest_fields as $field_name => $field_title) {
-			if(in_array($field_name, ['location_text', 'mls_id'])) {
+			if(in_array($field_name, ['location_text', 'mls_id']) and !wpl_global::zap_search_enabled()) {
 				$second_fields[] = $field_name;
 			} else {
 				$first_fields[] = $field_name;
 			}
 		}
-		$suggest_fields = [implode(',', $first_fields), implode(',', $second_fields)];
+		$suggest_fields = array_filter([implode(',', $first_fields), implode(',', $second_fields), ['keyword']]);
 	}
 	$suggest_fields = json_encode($suggest_fields);
 	wpl_html::set_footer('<script type="text/javascript">
@@ -98,7 +98,7 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 				}
 				$(".advanced_suggestion_loading").show();
 				const fields = JSON.parse("' . addslashes($suggest_fields) . '");
-				const totalItems = [];
+				const totalItems = {};
 				if (fields) {
 					for (const fieldIndex in fields) {
 						const field = fields[fieldIndex];
@@ -114,13 +114,14 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 										break;
 									}
 								}
-								totalItems.push(...$.parseJSON(msg)); 
+								totalItems[fieldIndex] = $.parseJSON(msg); 
+								const mergedItems = [...(totalItems[0] ?? []), ...(totalItems[1] ?? []), ...(totalItems[2] ?? [])];
 								if (!wplContinue) {
 									ajaxRequest'.$widget_id.' = [];
 									$(".advanced_suggestion_loading").hide();
-									autocomplete_cache'.$widget_id.'[request.term.toUpperCase()] = totalItems;
+									autocomplete_cache'.$widget_id.'[request.term.toUpperCase()] = mergedItems;
 								}
-								response(totalItems);
+								response(mergedItems);
 							}
 						}));
 						for (const ajaxRequestItem of ajaxRequest'.$widget_id.') {

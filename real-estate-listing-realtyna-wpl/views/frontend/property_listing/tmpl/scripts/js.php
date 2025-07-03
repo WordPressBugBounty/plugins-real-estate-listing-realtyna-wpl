@@ -6,7 +6,7 @@ $geolocation_session = wpl_session::get('geolocation');
 ?>
 <script type="text/javascript">
 var wpl_ajax = <?php wpl_esc::numeric(wpl_global::check_addon('aps') ? (empty(wpl_global::get_setting('aps_ajax_listing')) ? 0 : wpl_global::get_setting('aps_ajax_listing')) : 0); ?>;
-var wpl_listing_request_str = '<?php wpl_esc::js(wpl_global::generate_request_str()); ?>';
+var wpl_listing_request_str = '<?php wpl_esc::e(wpl_global::generate_request_str()); ?>';
 var wpl_listing_limit = <?php wpl_esc::numeric(isset($this->model) ? $this->model->limit : wpl_settings::get('default_page_size')); ?>;
 var wpl_listing_total_pages = <?php wpl_esc::numeric($this->total_pages); ?>;
 var wpl_listing_current_page = <?php wpl_esc::numeric($this->page_number); ?>;
@@ -34,13 +34,23 @@ jQuery(document).ready(function()
     if(navigator.geolocation)
     {
 		const lastRedirect = localStorage.getItem('wpl_last_geolocation');
-		if(new Date().getTime() - 86400 > +lastRedirect) {
+		if(new Date().getTime() - (10 * 60 * 1000) > +lastRedirect) {
 			navigator.geolocation.getCurrentPosition(wpl_set_geolocation);
 		}
     }
 
     function wpl_set_geolocation(position)
     {
+		const searchParams = new URLSearchParams(wpl_listing_request_str);
+		if(
+			((searchParams.get('sf_tmin_googlemap_lt') ?? '').trim() !== '') ||
+			((searchParams.get('sf_advancedlocationtextsearch') ?? '').trim() !== '') ||
+			((searchParams.get('sf_radiussearch_lat') ?? '').trim() !== '') ||
+			((searchParams.get('sf_polygonsearchpoints') ?? '').trim() !== '')
+		) {
+			return;
+		}
+
         wpl_listing_request_str = wpl_update_qs('sf_radiussearch_lat', position.coords.latitude, wpl_listing_request_str);
         wpl_listing_request_str = wpl_update_qs('sf_radiussearch_lng', position.coords.longitude, wpl_listing_request_str);
         wpl_listing_request_str = wpl_update_qs('sf_radiussearchradius', '10', wpl_listing_request_str);

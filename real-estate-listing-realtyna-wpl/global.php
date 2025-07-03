@@ -2386,9 +2386,9 @@ class wpl_global
                 if(wpl_global::check_multilingual_status() and wpl_addon_pro::get_multiligual_status_by_column($pattern, ($property_data['kind'] ?? 2))) $pattern_multilingual = wpl_addon_pro::get_column_lang_name($pattern, wpl_global::get_current_language(), false);
 
                 $value = stripslashes( $property_data[ ($pattern_multilingual ?? $pattern) ] ?? '' );
-				if( !trim( $value ?? '' ) ) $value = '';
+				if(trim( $value ?? '' ) == '') $value = '';
 
-					$field = wpl_flex::get_field_by_column($pattern, ($property_data['kind'] ?? 2));
+				$field = wpl_flex::get_field_by_column($pattern, ($property_data['kind'] ?? 2));
 				$rendered_value = isset($field->id) ? wpl_property::render_field($value, $field->id, $property_id) : NULL;
 
 				if($rendered_value)

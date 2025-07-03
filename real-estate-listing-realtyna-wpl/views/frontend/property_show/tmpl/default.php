@@ -28,8 +28,8 @@ if($add_date != '0000-00-00 00:00:00')
 
 if(wpl_global::check_addon('MLS') && $this->show_agent_name || $this->show_office_name )
 {
-    $office_name = isset($this->wpl_properties['current']['raw']['field_2111']) ? '<div class="wpl-prp-office-name"><label>'.$this->label_office_name.'</label><span>'.$this->wpl_properties['current']['raw']['field_2111'].'</span></div>' : '';
-    $agent_name = isset($this->wpl_properties['current']['raw']['field_2112']) ? '<div class="wpl-prp-agent-name"> <label>'.$this->label_agent_name.'</label><span>'.$this->wpl_properties['current']['raw']['field_2112'].'</span></div>' : '';
+    $office_name = isset($this->wpl_properties['current']['raw']['field_2111']) ? '<div class="wpl-prp-office-name"><label>'. wpl_esc::return_html($this->label_office_name).'</label><span>'.wpl_esc::return_html($this->wpl_properties['current']['raw']['field_2111']).'</span></div>' : '';
+    $agent_name = isset($this->wpl_properties['current']['raw']['field_2112']) ? '<div class="wpl-prp-agent-name"> <label>'.wpl_esc::return_html($this->label_agent_name).'</label><span>'.wpl_esc::return_html($this->wpl_properties['current']['raw']['field_2112']).'</span></div>' : '';
 }
 
 $pshow_gallery_activities = wpl_activity::get_activities('pshow_gallery', 1);
@@ -292,7 +292,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                                 <ul>
                                     <?php if(trim($listing_id ?? '') != ''): ?>
                                         <li class="wpl-listing-id">
-                                            <?php wpl_esc::html($this->wpl_properties['current']['materials']['mls_id']['name']) ?>: <span class="value"><?php wpl_esc::html($listing_id); ?></span>
+                                            <?php wpl_esc::html($this->wpl_properties['current']['materials']['mls_id']['name']);?> : <span class="value"><?php wpl_esc::html($listing_id); ?></span>
                                         </li>
                                     <?php endif; ?>
                                     <?php if(trim($bedroom ?? '') != ''): ?>
@@ -328,8 +328,8 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                                     <?php endif; ?>
                                     <?php if(wpl_global::check_addon('MLS') && $this->show_agent_name || $this->show_office_name): ?>
                                         <div class="wpl-mls-brokerage-info">
-                                            <?php if($this->show_agent_name): ?> <li><?php wpl_esc::html($agent_name) ?></li> <?php endif; ?>
-                                            <?php if($this->show_office_name): ?> <li><?php wpl_esc::html($office_name) ?></li> <?php endif; ?>
+                                            <?php if($this->show_agent_name): ?> <li><?php wpl_esc::e($agent_name) ?></li> <?php endif; ?>
+                                            <?php if($this->show_office_name): ?> <li><?php wpl_esc::e($office_name) ?></li> <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
                                 </ul>

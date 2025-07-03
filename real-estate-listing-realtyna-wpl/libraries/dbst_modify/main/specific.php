@@ -83,6 +83,11 @@ if((isset($values->specificable) and $values->specificable) or !$dbst_id)
                     } elseif ($field_values->type == "none" || empty($field_values)) {
 						wpl_esc::e('<option>' . wpl_esc::return_html_t('No option') . '</option>');
                     } else {
+						if(!empty($field_values->params)) {
+							foreach ($field_values->params as $value) {
+								wpl_esc::e('<option value="' . $value->key . '"' . ($field_value == $value->key ? ' selected="selected"' : '') . '>' . wpl_esc::return_html($value->value) . '</option>');
+							}
+						}
                         foreach ($field_values->values as $value) {
 							wpl_esc::e('<option value="' . $value->key . '"' . ($field_value == $value->key ? ' selected="selected"' : '') . '>' . wpl_esc::return_html($value->value) . '</option>');
                         }

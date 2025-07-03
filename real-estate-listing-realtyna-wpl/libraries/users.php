@@ -114,9 +114,8 @@ class wpl_users
 		$default_data = wpl_users::get_wpl_data($group_id);
 		
 		$forbidden_fields = array('id', 'first_name', 'last_name', 'main_email', 'blog_id');
+		$forbidden_fields = apply_filters('wpl_property/add_user_to_wpl/forbidden_fields', $forbidden_fields, $user_data);
 		$values = ['id' => $user_id];
-		$auto_query1 = '';
-		$auto_query2 = '';
 		
 		foreach($default_data as $key=>$value)
 		{
@@ -219,23 +218,11 @@ class wpl_users
      * @param int $user_id
      * @return object
      */
-	public static function get_wpl_user($user_id = '')
+	public static function get_wpl_user($user_id = '', $use_cache = false)
 	{
 		// Load Current User
 		if(trim($user_id ?? '') == '') $user_id = self::get_cur_user_id();
-
-		$cache_key = 'wpl_get_user_'.$user_id;
-
-        // Return From Cache
-        $cached = wp_cache_get($cache_key);
-        if($cached) return $cached;
-		
-		$user = wpl_db::select(wpl_db::prepare('SELECT * FROM `#__wpl_users` WHERE `id` = %d', $user_id), 'loadObject', true);
-
-        // Set to Cache
-        wp_cache_set($cache_key, $user, '', 100);
-
-		return $user;
+		return wpl_db::select(wpl_db::prepare('SELECT * FROM `#__wpl_users` WHERE `id` = %d', $user_id), 'loadObject', $use_cache);
 	}
 	
     /**
@@ -1078,7 +1065,7 @@ class wpl_users
 			}
         }
 		
-        return $url;
+        return apply_filters('wpl_users/get_profile_link/url', $url, $user_id);
     }
     
     /**

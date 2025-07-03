@@ -4,6 +4,11 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.0.0 (<span class="wpl_log_date">05/23/2025</span>)</h4>
+		-- Added: Stripe payment<br>
+		-- Added: Useful hooks<br>
+		-- Fixed: Known issues<br>
+
 		<h4>WPL4.14.7 (<span class="wpl_log_date">04/03/2024</span>)</h4>
 		-- Fixed: Known issues<br>
 

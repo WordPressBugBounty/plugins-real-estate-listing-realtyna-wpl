@@ -88,6 +88,8 @@ class wpl_events_notifications
             $replacements['listing_id'] = '<a href="'.wpl_property::get_property_link(NULL, $property_id).'">'.$property['mls_id'].' ('.$property_title.')</a>';
             $replacements['location'] = $property['location_text'];
 
+			$replacements = apply_filters('wpl_events_notifications/2/replacements', $replacements, $property);
+
             $notification->set_replyto($replacements['fullname'], $replacements['email']);
             $notification->replacements = $notification->set_replacements($replacements);
             $notification->rendered_content = $notification->render_notification_content();

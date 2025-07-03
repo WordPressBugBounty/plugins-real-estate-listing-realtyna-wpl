@@ -159,9 +159,11 @@ $this->_wpl_import($this->tpl_path.'.scripts.js');
                             <div class="detail p-add-date">
                                 <span class="title"><?php wpl_esc::html_t('Add date'); ?> : </span>
                                 <span class="value" title="<?php wpl_esc::attr_t('Visited times'); ?> : <?php wpl_esc::attr(wpl_property::get_property_stats_item($property['data']['id'], 'visit_time')) ?>">
-									<?php wpl_esc::html($property['data']['add_date']); ?>
+									<?php wpl_esc::html(wpl_render::render_date($property['data']['add_date'])); ?>
 								</span>
                             </div>
+
+							<?php do_action('wpl_view/backend/listings/tmpl/manager', $property); ?>
 
                             <?php if(!$property['data']['finalized']): ?>
                             <div class="finilize-msg" id="pmanager_finalized_status<?php wpl_esc::attr($property['data']['id']); ?>">

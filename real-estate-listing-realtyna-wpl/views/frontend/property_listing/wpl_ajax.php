@@ -138,6 +138,12 @@ class wpl_property_listing_controller extends wpl_controller
 		$condition = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/condition', $condition, $kind);
 
 		$selected_field = wpl_request::getVar('field');
+
+		if(!empty($selected_field) and $selected_field === 'keyword') {
+			$output[] = array('label' => $term, 'title' => wpl_esc::return_html_t('Keyword'), 'column' => '', 'value' => $term);
+			$output = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/output', $output, $term, $kind, $limit);
+			$this->response($output);
+		}
 		if(!empty($selected_field)) {
 			$selected_field_array = explode(',', $selected_field);
 			$new_queries = [];
@@ -184,7 +190,6 @@ class wpl_property_listing_controller extends wpl_controller
 					}
 				}
 			}
-			$output[] = array('label' => $term, 'title' => wpl_esc::return_html_t('Keyword'), 'column' => '', 'value' => $term);
 			$output = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/output', $output, $term, $kind, $limit);
 			$this->response($output);
 		}
@@ -220,10 +225,6 @@ class wpl_property_listing_controller extends wpl_controller
 	            }
 	        }
         }
-		if(empty($selected_field)) {
-			$output[] = array('label' => $term, 'title' => wpl_esc::return_html_t('Keyword'), 'column' => '', 'value' => $term);
-		}
-
 		$output = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/output', $output, $term, $kind, $limit);
         $this->response($output);
     }
@@ -270,6 +271,8 @@ class wpl_property_listing_controller extends wpl_controller
                 'property_id' => $property_id,
                 'user_id' => wpl_property::get_property_user($property_id)
             );
+
+			$parameters = apply_filters('wpl_property_listing_controller/contact_listing_user/parameters', $parameters);
 
             wpl_events::trigger('contact_agent', $parameters);
 

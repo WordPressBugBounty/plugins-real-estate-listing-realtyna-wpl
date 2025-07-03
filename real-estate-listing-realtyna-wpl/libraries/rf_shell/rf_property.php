@@ -19,13 +19,13 @@ class wpl_rf_property
 	}
 
 	public function setMarkerColumns() {
-		$this->columns = [
+		$this->columns = apply_filters('wpl_rf_property/setMarkerColumns', [
 			'ListingId',
 			'ListingKey',
 			'ListPrice',
 			'Latitude',
 			'Longitude',
-		];
+		]);
 	}
 
 	private function map_listing($listing)
@@ -165,6 +165,48 @@ class wpl_rf_property
 		return wpl_db::select($query, 'loadResult');
 	}
 
+	public static function render_markers($wpl_properties) {
+		$rf_markers = [];
+		$listings = wpl_global::return_in_id_array(wpl_global::get_listings());
+		$geo_points = [];
+		$index = 0;
+		$multiple_marker_icon = wpl_global::get_setting('multiple_marker_icon');
+		if(trim($multiple_marker_icon ?? '') == '') $multiple_marker_icon = 'multiple.png';
+		$advanced_markers_json = wpl_global::get_setting('advanced_markers');
+		$advanced_markers = json_decode($advanced_markers_json ?? '', true);
+		if(!is_array($advanced_markers)) $advanced_markers = array();
+		$advanced_markers_status = false;
+		if(isset($advanced_markers['status']) and $advanced_markers['status']) $advanced_markers_status = true;
+
+		foreach($wpl_properties as $key => $wpl_property) {
+			if($key == 'current' and !count($wpl_property)) continue;
+			if(empty($wpl_property['googlemap_lt'])) {
+				continue;
+			}
+			$lat_long =  $wpl_property['googlemap_lt'].','.$wpl_property['googlemap_ln'];
+			if(isset($geo_points[$lat_long]))
+			{
+				$j = $geo_points[$lat_long];
+				$rf_markers[$j]['pids'] .= ',' . $wpl_property['id'];
+				$rf_markers[$j]['gmap_icon'] = $multiple_marker_icon;
+				if($advanced_markers_status) $rf_markers[$j]['advanced_marker'] = '<img src="'.wpl_global::get_wpl_asset_url('img/listing_types/gicon/'.$multiple_marker_icon).'">';
+				continue;
+			}
+			$rf_marker = [
+				'id' => $wpl_property['id'],
+				'googlemap_lt' => $wpl_property['googlemap_lt'],
+				'googlemap_ln' => $wpl_property['googlemap_ln'],
+				'title' => wpl_render::render_price($wpl_property['price'], $wpl_property['price_unit'], '', wpl_global::wpl_minimize_price($wpl_property['price'])),
+				'pids' => $wpl_property['id'] . '',
+				'gmap_icon' => $listings[$wpl_property['listing']]['gicon'] ?? 'default.png',
+			];
+			$rf_markers[$index] = apply_filters('wpl_property/render_markers', $rf_marker, $wpl_property);
+			$geo_points[$lat_long] = $index;
+			$index++;
+		}
+		return apply_filters('wpl_property/render_markers/all', array_values($rf_markers), $wpl_properties);
+	}
+
 	public function createQuery($where, $needle_str = 'sf_') {
 		$this->query = $this->getQuery($where, $needle_str);
 	}
@@ -180,7 +222,7 @@ class wpl_rf_property
 
 		$find_files = [];
 		$query = [];
-		if(!empty($where['sf_tmin_googlemap_lt']) and empty($where['sf_polygonsearch'])) {
+		if(!empty($where['sf_tmin_googlemap_lt']) and ($where['sf_polygonsearch'] ?? '') != '1') {
 			$where['sf_polygonsearch'] = 1;
 			$where['sf_polygonsearchpoints'] = '[' . implode(';', [
 				$where['sf_tmin_googlemap_lt'] . ',' . $where['sf_tmin_googlemap_ln'],
@@ -499,7 +541,7 @@ class wpl_rf_property
 			$post->meta_data['sp_forclosure'] = $post->meta_data['sp_forclosure'] ?? null;
 			$post->meta_data['sp_featured'] = $post->meta_data['sp_featured'] ?? null;
 			$post->meta_data['sp_hot'] = $post->meta_data['sp_hot'] ?? null;
-			$post->meta_data['meta_keywords'] = $post->meta_data['meta_keywords'] ?? null;
+			$post->meta_data['meta_keywords'] = $post->meta_data['meta_keywords'] ?? wpl_property::get_meta_keywords($post->meta_data);
 			$post->meta_data['show_internet'] = $post->meta_data['show_internet'] ?? 1;
 			$post->meta_data['finalized'] = 1;
 			$post->meta_data['confirmed'] = 1;

@@ -570,6 +570,8 @@ class wpl_flex
 
 			$field = apply_filters('wpl_flex/generate_wizard_form/field', $field);
 
+
+
 			if(!$field) {
 				continue;
 			}

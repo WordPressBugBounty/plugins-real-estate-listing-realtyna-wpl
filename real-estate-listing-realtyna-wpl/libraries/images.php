@@ -102,6 +102,8 @@ class wpl_images
             $height_ratio = $src_height / $height;
             $width = round($src_width / $height_ratio);
         }
+        $width = intval($width);
+        $height = intval($height);
 
         $dest_width = $width;
         $dest_height = $height;
@@ -171,7 +173,10 @@ class wpl_images
                     $src_y = ($tmpy - $height) / 2;
                 }
             }
-
+            $tmpx = intval($tmpx);
+            $tmpy = intval($tmpy);
+            $src_x = intval($src_x);
+            $src_y = intval($src_y);
             $tmp_dest = imagecreatetruecolor($tmpx, $tmpy);
             if($extension == 'png')
             {

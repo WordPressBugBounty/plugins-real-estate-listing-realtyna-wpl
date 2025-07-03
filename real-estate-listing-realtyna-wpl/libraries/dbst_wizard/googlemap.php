@@ -69,7 +69,7 @@ function wpl_initialize()
         zoom: <?php wpl_esc::numeric(wpl_global::get_setting('wizard_map_zoomlevel')); ?>,
         center: marker_position,
         mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
+    };
 
     pw_map = new google.maps.Map(document.getElementById("wpl_map_canvas<?php wpl_esc::attr($field->id); ?>"), myOptions);
     
@@ -78,6 +78,7 @@ function wpl_initialize()
     var pw_listener = google.maps.event.addListener(pw_map, 'idle', function(event)
     {
         pw_map.fitBounds(bounds);
+        pw_map.setZoom(<?php wpl_esc::numeric(wpl_global::get_setting('wizard_map_zoomlevel')); ?>);
         google.maps.event.removeListener(pw_listener);
     });
     <?php endif; ?>

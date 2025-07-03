@@ -17,24 +17,27 @@ jQuery(document).ready(function()
             {
                 beforeOpen: function()
                 {
-                    var html_simple = wplj('#wpl_default_search_<?php wpl_esc::numeric($this->widget_id); ?>').html();
+					var html_simple = wplj('#wpl_default_search_<?php wpl_esc::numeric($this->widget_id); ?>').children().detach();
+					wplj('#wpl_form_override_search<?php wpl_esc::numeric($this->widget_id); ?>').append(html_simple);
 
-                    wplj('#wpl_default_search_<?php wpl_esc::numeric($this->widget_id); ?> form').remove();
-                    wplj('#wpl_form_override_search<?php wpl_esc::numeric($this->widget_id); ?>').html(html_simple);
-
-                    wpl_render_checkbox_select_<?php wpl_esc::numeric($this->widget_id); ?>();
                 },
                 afterOpen: function()
                 {
                     wplj("#realtyna-js-lightbox-content .hasDatepicker").removeClass('hasDatepicker').datepicker();
                     wplj('.wpl_search_from_box #wpl_search_from_box_bot' + widget_id).show();
+
+					wpl_render_checkbox_select_<?php wpl_esc::numeric($this->widget_id); ?>();
+
+					wplj('#wpl_form_override_search<?php wpl_esc::numeric($this->widget_id); ?> select').chosen('destroy');
+					wplj('#wpl_form_override_search<?php wpl_esc::numeric($this->widget_id); ?> select').chosen();
+
+					wplj('#realtyna-js-lightbox-wrapper').css('height', 'auto');
                 },
                 afterClose: function()
                 {
-                    var html_adv = wplj('#wpl_form_override_search<?php wpl_esc::numeric($this->widget_id); ?>').html();
+					var html_adv = wplj('#wpl_form_override_search<?php wpl_esc::numeric($this->widget_id); ?>').children().detach();
+					wplj('#wpl_default_search_<?php wpl_esc::numeric($this->widget_id); ?>').append(html_adv);
 
-                    wplj('#wpl_form_override_search<?php wpl_esc::numeric($this->widget_id); ?> form').remove();
-                    wplj('#wpl_default_search_<?php wpl_esc::numeric($this->widget_id); ?>').html(html_adv);
                     wplj('.wpl_search_from_box #wpl_search_from_box_bot' + widget_id).hide();
 
                     wpl_render_checkbox_select_<?php wpl_esc::numeric($this->widget_id); ?>();
@@ -646,6 +649,7 @@ function wpl_render_checkbox_select_<?php wpl_esc::numeric($this->widget_id); ?>
         {
             wplj(this).show(function()
             {
+				wplj(this).chosen('destroy');
                 wplj(this).chosen();
             })
         });

@@ -735,14 +735,18 @@ function wpl_flex_change_field_specific_fields(dbst_id, prefix, value_element){
 
 			valuesField.empty().removeClass('disabled');
 
-			if (response.data.values && response.data.values.length > 0) {
-				var options = response.data.values.map(function(item) {
+			if (response.data.values) {
+				const values = Array.isArray(response.data.values) ? response.data.values : Object.values(response.data.values)
+				valuesField.append(values.map(function(item) {
 					return wplj('<option>', { value: item.key, text: item.value });
-				});
-				valuesField.append(options);
+				}));
+			} else if (response.data.params) {
+				const values = Array.isArray(response.data.params) ? response.data.params : Object.values(response.data.params)
+				valuesField.append(values.map(function(item) {
+					return wplj('<option>', { value: item.key, text: item.value });
+				}));
 			} else {
-				var option = wplj('<option>', { text: "<?php wpl_esc::js_t('No option'); ?>" });
-				valuesField.append(option);
+				valuesField.append(wplj('<option>', { text: "<?php wpl_esc::js_t('No option'); ?>" }));
 			}
 		},
 	});

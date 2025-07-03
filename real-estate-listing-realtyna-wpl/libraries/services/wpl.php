@@ -59,7 +59,7 @@ class wpl_service_wpl
         
         // Show update notification in WPL backend
         $available_updates = wpl_global::get_updates_count();
-        if($available_updates >= 1 and wpl_users::is_administrator()) wpl_flash::set(sprintf(wpl_esc::return_html_t('%s update(s) are available for WPL and its addons. Please proceed with update after creating a backup.'), '<strong>'.$available_updates.'</strong>'), 'wpl_gold_msg', 1);
+        if($available_updates >= 1 and wpl_users::is_administrator()) wpl_flash::set(sprintf(wpl_esc::return_t('%s update(s) are available for WPL and its addons. Please proceed with update after creating a backup.'), '<strong>'.$available_updates.'</strong>'), 'wpl_gold_msg', 1);
     }
     
     public function frontend()

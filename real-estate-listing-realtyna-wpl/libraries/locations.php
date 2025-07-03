@@ -392,6 +392,7 @@ class wpl_locations
 
         // Google Geocoding Server
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address=".$address."&key=".$api_key;
+		$url = apply_filters('wpl_locations/get_LatLng_google/url', $url, $address, $api_key);
 
         // Getting Geopoint Using Google
         $ch = curl_init();

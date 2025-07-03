@@ -40,6 +40,7 @@ var wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?> = <?php wpl_es
 var wpl_found_properties<?php wpl_esc::js($this->activity_id); ?> = <?php wpl_esc::js(intval($this->found_properties_count ?? 0)); ?>;
 var wpl_map_set_default_geo_point<?php wpl_esc::js($this->activity_id); ?> = true;
 var wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>;
+var wpl_current_url = '<?php wpl_esc::current_url(); ?>';
 
 var wpl_enable_cluster<?php echo $this->activity_id; ?> = <?php echo ($this->clustering and wpl_global::check_addon('aps')) ? 'true' : 'false' ?>;
 var wpl_enable_cluster_method<?php echo $this->activity_id; ?> = '<?php echo ($this->clustering and wpl_global::check_addon('aps')) ? $this->clustering_method : '' ?>';
@@ -57,14 +58,10 @@ function wpl_initialize<?php wpl_esc::js($this->activity_id); ?>()
 		mapTypeControlOptions: {
               mapTypeIds: ['roadmap', 'satellite'],
               style: google.maps.MapTypeControlStyle.DEFAULT,
-              position: google.maps.ControlPosition.RIGHT_BOTTOM
+              position: google.maps.ControlPosition.LEFT_BOTTOM
         },
 		fullscreenControl: false,
 		streetViewControl: false,
-		zoomControl: true,
-		zoomControlOptions: {
-			position: google.maps.ControlPosition.LEFT_BOTTOM
-		},
 		rotateControl: true,
 		rotateControlOptions: {
 			position: google.maps.ControlPosition.LEFT_CENTER
@@ -271,9 +268,9 @@ function wpl_marker<?php wpl_esc::js($this->activity_id); ?>(dataMarker)
 			}
 			else
 			{
-				const loading_info_window = `<div><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader1.gif')); ?>" /></div>`;
+				const loading_info_window = `<?php echo apply_filters('wpl_view/activities/googlemap/js/loading_info_window', '<div><img src="' . wpl_global::get_wpl_asset_url('img/ajax-loader1.gif') . '" /></div>'); ?>`;
 				/** AJAX loader **/
-				wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<div class="map_search_ajax_loader"><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')); ?>" /></div>`);
+				wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<?php echo apply_filters('wpl_view/activities/googlemap/js/ajax_loader', '<div class="map_search_ajax_loader"><img src="' .  wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')  . '" /></div>'); ?>`);
 
 				infowindow<?php wpl_esc::js($this->activity_id); ?>.close();
 				infowindow<?php wpl_esc::js($this->activity_id); ?>.open(wpl_map<?php wpl_esc::js($this->activity_id); ?>, this);
@@ -379,8 +376,15 @@ function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, dele
 
 	if(!markers.length && wpl_map_set_default_geo_point<?php wpl_esc::js($this->activity_id); ?>)
 	{
+		<?php if(empty($_GET['sf_tmin_googlemap_lt'])): ?>
 		wpl_map<?php wpl_esc::js($this->activity_id); ?>.setCenter(new google.maps.LatLng(default_lt<?php wpl_esc::js($this->activity_id); ?>, default_ln<?php wpl_esc::js($this->activity_id); ?>));
 		wpl_map<?php wpl_esc::js($this->activity_id); ?>.setZoom(parseInt(default_zoom<?php wpl_esc::js($this->activity_id); ?>));
+		<?php else: ?>
+			wpl_map<?php wpl_esc::js($this->activity_id); ?>.fitBounds(new google.maps.LatLngBounds(
+				{ lat: <?php wpl_esc::numeric($_GET['sf_tmin_googlemap_lt']); ?>, lng: <?php wpl_esc::numeric($_GET['sf_tmin_googlemap_ln']); ?> },
+				{ lat: <?php wpl_esc::numeric($_GET['sf_tmax_googlemap_lt']); ?>, lng: <?php wpl_esc::numeric($_GET['sf_tmax_googlemap_ln']); ?> }
+			));
+		<?php endif; ?>
 	}
 	else
 	{
@@ -453,7 +457,7 @@ function get_infowindow_html<?php wpl_esc::js($this->activity_id); ?>(property_i
 
 	wplj.ajax(
 	{
-		url: '<?php wpl_esc::current_url(); ?>',
+		url: wpl_current_url,
 		data: 'wpl_format=c:functions:ajax&wpl_function=infowindow&property_ids='+property_ids+'&wpltarget=<?php wpl_esc::numeric(wpl_request::getVar('wpltarget', 0)); ?>'+ajax_layout,
 		type: 'GET',
 		cache: false,
@@ -528,12 +532,13 @@ function wpl_gplace_marker<?php wpl_esc::js($this->activity_id);?>(place)
 
 function wpl_load_map_markers(request_str, delete_markers, extend_bound = false)
 {
-	let url = '<?php wpl_esc::current_url(); ?>';
+	let url = wpl_current_url;
     if(wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?> > 0)
     {
         let current_page = <?php wpl_esc::numeric($wpl_map_current_page); ?>;
 		let current_limit = <?php wpl_esc::numeric($wpl_map_current_limit); ?>;
-        url = '<?php wpl_esc::url(wpl_global::remove_qs_var('wplpage', wpl_global::remove_qs_var('limit', wpl_global::get_full_url()))); ?>';
+		url = wpl_update_qs('wplpage', '', url);
+		url = wpl_update_qs('limit', '', url);
         request_str = wpl_update_qs('limit', wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?>, request_str);
 		let map_page = Math.ceil((current_page * current_limit ) / wpl_map_search_limit<?php wpl_esc::js($this->activity_id); ?>);
         if(!map_page) map_page = 1;
@@ -544,7 +549,7 @@ function wpl_load_map_markers(request_str, delete_markers, extend_bound = false)
     if(typeof delete_markers == 'undefined') delete_markers = false;
 
     /** AJAX loader **/
-    wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<div class="map_search_ajax_loader"><img src="<?php wpl_esc::e(wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')); ?>" /></div>`);
+    wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<?php echo apply_filters('wpl_view/activities/googlemap/js/ajax_loader', '<div class="map_search_ajax_loader"><img src="' .  wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')  . '" /></div>'); ?>`);
 
     request_str = 'wpl_format=f:property_listing:raw&wplmethod=get_markers&'+request_str;
 	let markers;

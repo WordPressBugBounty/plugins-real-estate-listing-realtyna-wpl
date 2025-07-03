@@ -45,7 +45,9 @@ class wpl_service_helps
         if(!trim($page)) return false;
         
         $tabs = array();
-        
+		if(!$this->file_exists($page, 'helps')) {
+			return false;
+		}
         $path = _wpl_import('assets.helps.'.$page, true, true);
         if(wpl_file::exists($path)) $tabs = include_once $path;
         
@@ -85,13 +87,21 @@ class wpl_service_helps
         if(!trim($page)) return false;
         
         $tips = array();
-        
+        if(!$this->file_exists($page, 'tips')) {
+			return false;
+		}
         $path = _wpl_import('assets.tips.'.$page, true, true);
         if(wpl_file::exists($path)) $tips = include_once $path;
         
         /** Generate script **/
         $this->generate_scripts($tips);
     }
+
+	private function file_exists($page, $directory) {
+		$path = WPL_ABSPATH .DS. 'assets' .DS. $directory;
+		$files = wpl_folder::files($path, '.php$');
+		return in_array(basename($page) . '.php', $files);
+	}
     
     public function generate_scripts($tips = array())
     {

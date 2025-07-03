@@ -1,8 +1,6 @@
 <?php
 
 defined('_WPLEXEC') or die('Restricted access');
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 $imports = [
 	'addon_calendar',
 	'area',

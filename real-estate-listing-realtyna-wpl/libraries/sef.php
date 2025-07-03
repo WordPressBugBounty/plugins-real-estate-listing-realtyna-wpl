@@ -144,7 +144,11 @@ class wpl_sef
 		}
 		elseif($view == 'profile_show')
 		{
-			$uid = wpl_db::select(wpl_db::prepare("SELECT `ID` FROM `#__users` WHERE `user_login` = %s ORDER BY ID ASC LIMIT 1", $ex[0]), 'loadResult');
+			$uid = apply_filters('wpl_sef/setVars/profile_show/uid', 0, $ex);
+			if(empty($uid)) {
+				$uid = wpl_db::select(wpl_db::prepare("SELECT `ID` FROM `#__users` WHERE `user_login` = %s ORDER BY ID LIMIT 1", $ex[0]), 'loadResult');
+			}
+
 			
             // Set the User ID
             if($uid)

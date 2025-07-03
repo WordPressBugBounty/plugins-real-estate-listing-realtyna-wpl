@@ -62,13 +62,14 @@ class wpl_service_sef
 		elseif($this->view == 'profile_show')
 		{
             $ex = explode($settings['sef_main_separator'], $wpl_qs);
-			$username = isset($ex[0]) ? $ex[0] : NULL;
+			$username = $ex[0] ?? null;
             $user_id = 0;
 
             if(trim($username ?? '') != '') $user_id = wpl_users::get_id_by_username($username);
             elseif(wpl_request::getVar('sf_select_user_id', 0)) $user_id = wpl_request::getVar('sf_select_user_id', 0);
             elseif(wpl_request::getVar('uid', 0)) $user_id = wpl_request::getVar('uid', 0);
-                
+
+			$user_id = apply_filters('wpl_service_sef/run/profile_show/user_id', $user_id);
 			$this->set_profile_page_params($user_id);
 		}
 		elseif($this->view == 'property_listing')
