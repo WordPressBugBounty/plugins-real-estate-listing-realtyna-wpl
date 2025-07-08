@@ -4,9 +4,9 @@ Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
 Requires at least: 4.7.0
 Tested up to: 6.7.2
-Stable tag: 5.0.1
+Stable tag: 5.0.3
 Requires PHP: 7.4
-Version: 5.0.1
+Version: 5.0.3
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 

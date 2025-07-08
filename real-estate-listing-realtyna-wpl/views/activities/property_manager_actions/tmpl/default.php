@@ -27,6 +27,7 @@ if (wpl_global::check_addon("facebook") && get_option('wpl_addon_facebook_init_i
 
 }
 
+$property_source = $property_data['source'] ?? '';
 
 if (wpl_global::is_multisite()) $source_blog_id = wpl_property::get_property_field('source_blog_id', $pid);
 ?>
@@ -47,14 +48,14 @@ if (wpl_global::is_multisite()) $source_blog_id = wpl_property::get_property_fie
 			</div>
 		</div>
 	<?php endif; ?>
-	<?php if((!empty($property_data['source']) and $property_data['source'] !== 'RF') && wpl_users::check_access('confirm', $property_data['user_id'])): ?>
+	<?php if(($property_source !== 'RF') && wpl_users::check_access('confirm', $property_data['user_id'])): ?>
 		<div id="pmanager_confirm<?php wpl_esc::attr($pid); ?>" class="p-action-btn"
 			 onclick="confirm_property(<?php wpl_esc::attr($pid); ?>);">
 			<span><?php wpl_esc::html_t($property_data['confirmed'] == 1 ? 'Publish' : 'Unpublish'); ?></span>
 			<i class="<?php wpl_esc::attr($property_data['confirmed'] == 1 ? 'icon-confirm' : 'icon-unconfirm'); ?>"></i>
 		</div>
 	<?php endif; ?>
-	<?php if((!empty($property_data['source']) and $property_data['source'] !== 'RF') && wpl_users::check_access('delete', $property_data['user_id'])): ?>
+	<?php if(($property_source !== 'RF') && wpl_users::check_access('delete', $property_data['user_id'])): ?>
 		<div id="pmanager_trash<?php wpl_esc::attr($pid); ?>" class="p-action-btn"
 			 onclick="trash_property(<?php wpl_esc::attr($pid); ?>);">
 			<span><?php wpl_esc::html_t($property_data['deleted'] == 1 ? 'Restore' : 'Trash'); ?></span>
@@ -66,14 +67,14 @@ if (wpl_global::is_multisite()) $source_blog_id = wpl_property::get_property_fie
 			<i class="icon-delete"></i>
 		</div>
 	<?php endif; ?>
-	<?php if((!empty($property_data['source']) and $property_data['source'] !== 'RF') && wpl_users::check_access('clone') and wpl_global::check_addon('pro')): ?>
+	<?php if(($property_source !== 'RF') && wpl_users::check_access('clone') and wpl_global::check_addon('pro')): ?>
 		<div id="pmanager_clone<?php wpl_esc::attr($pid); ?>" class="p-action-btn"
 			 onclick="clone_property(<?php wpl_esc::attr($pid); ?>);">
 			<span><?php wpl_esc::html_t('Clone'); ?></span>
 			<i class="icon-clone"></i>
 		</div>
 	<?php endif; ?>
-	<?php if(!empty($property_data['source']) and $property_data['source'] !== 'RF'): ?>
+	<?php if($property_source !== 'RF'): ?>
 		<a id="pmanager_edit<?php wpl_esc::attr($pid); ?>" class="p-action-btn"
 		   href="<?php wpl_esc::url(wpl_property::get_property_edit_link($pid)); ?>">
 			<span><?php wpl_esc::html_t('Edit'); ?></span>
