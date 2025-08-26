@@ -4,9 +4,9 @@ Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
 Requires at least: 4.7.0
 Tested up to: 6.7.2
-Stable tag: 5.0.3
+Stable tag: 5.0.13
 Requires PHP: 7.4
-Version: 5.0.3
+Version: 5.0.13
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 
@@ -46,6 +46,58 @@ Submit a support ticket on Realtyna ticketing system: [https://support.realtyna.
 7. Agent listing
 
 == Changelog ==
+
+= 5.0.13 =
+- Added: cache some queries
+- Added: useful hooks
+- Fixed: RankMath image issue
+- Fixed: Multi-language issue
+- Fixed: update X icons
+- Fixed: issue with braintree payment
+
+= 5.0.12 =
+- Fixed: location search issue
+
+= 5.0.11 =
+- Added: SEO improvement
+- Fixed: font issue
+- Fixed: distance issue for neighborhoods
+
+= 5.0.10 =
+- Added: hook for sef service
+- Fixed: search issue
+
+= 5.0.9 =
+- Fixed: marker icon issue for MOF
+- Improved: suggestion speed
+
+= 5.0.8 =
+- Added: filters for flex
+- Fixed: pagination in print feature
+
+= 5.0.7 =
+- Fixed: Known issues
+
+= 5.0.6 =
+- Fixed: Known issues
+
+= 5.0.5 =
+- Fixed complex issue on property wizard page
+- Fixed search issue with sf_multiplelocationtextsearch
+
+= 5.0.4 =
+- Fixed: Known issues
+
+= 5.0.3 =
+- Fixed listings manager buttons issue
+
+= 5.0.2 =
+- Added: some hooks for customizations
+- Removed: some warning errors
+
+= 5.0.1 =
+- Fixed: Known issues
+
 = 5.0.0 =
 - Added: MLS On The Fly™
 - Fixed: Known issues

@@ -54,9 +54,7 @@ defined('_WPLEXEC') or die('Restricted access');
                             <select name="sf_select_user_id" id="sf_select_user_id">
                                 <option value="-1"><?php wpl_esc::html_t('User'); ?></option>
                                 <?php foreach($this->users as $user): ?>
-                                    <option value="<?php wpl_esc::attr($user->ID); ?>" <?php wpl_esc::attr_str_if($current_value == $user->ID, 'selected', 'selected'); ?>>
-										<?php wpl_esc::html_t($user->user_login); ?>
-									</option>
+                                    <option value="<?php wpl_esc::attr($user->ID); ?>" <?php wpl_esc::attr_str_if($current_value == $user->ID, 'selected', 'selected'); ?>><?php wpl_esc::html_t($user->user_login); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>

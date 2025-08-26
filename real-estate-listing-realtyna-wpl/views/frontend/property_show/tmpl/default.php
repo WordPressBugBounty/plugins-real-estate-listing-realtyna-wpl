@@ -135,7 +135,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                     ?>
 					<div class="wpl_prp_show_detail_boxes wpl_category_<?php wpl_esc::attr($values['self']['id']); ?>">
 						<div class="wpl_prp_show_detail_boxes_title"><span><?php wpl_esc::html($values['self']['name']); ?></span></div>
-						<div class="wpl-small-up-1 wpl-medium-up-1 wpl-large-up-<?php wpl_esc::attr($this->fields_columns); ?> wpl_prp_show_detail_boxes_cont">
+						<dl class="wpl-small-up-1 wpl-medium-up-1 wpl-large-up-<?php wpl_esc::attr($this->fields_columns); ?> wpl_prp_show_detail_boxes_cont">
 					<?php
                     foreach($values['data'] as $key => $value)
 					{
@@ -145,9 +145,9 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                         {
 						?>
 							<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows neighborhood">
-								<?php wpl_esc::html($value['name']); ?>
+								<dt><?php wpl_esc::html($value['name']); ?></dt>
 								<?php if(isset($value['distance'])): ?>
-									<span class="<?php wpl_esc::attr($value['vehicle_type']); ?>"><?php wpl_esc::html($value['vehicle_type']); ?> <?php wpl_esc::html_t('Minutes'); ?></span>
+									<span class="<?php wpl_esc::attr($value['vehicle_type']); ?>"><?php wpl_esc::html($value['distance']); ?> <?php wpl_esc::html_t('Minutes'); ?></span>
 								<?php endif; ?>
 							</div>
 						<?php
@@ -156,10 +156,9 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                         {
 							?>
 							<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows feature <?php wpl_esc::attr(!isset($value['values'][0]) ? 'single' : ''); ?>">
-								<?php wpl_esc::html_t($value['name']); ?>
+								<dt><?php wpl_esc::html_t($value['name']);?><?php if(isset($value['values'][0])): ?>:<?php endif;?></dt>
+                                <dd>
 								<?php if(isset($value['values'][0])): ?>
-								:
-								<span>
 									<?php
 									$featured_values = [];
 									foreach($value['values'] as $val) {
@@ -167,8 +166,8 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
 									}
 									wpl_esc::e(implode(', ', $featured_values));
 									?>
-								</span>
 								<?php endif; ?>
+                                </dd>
 							</div>
 							<?php
                         }
@@ -184,7 +183,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                                     if(trim($lk) == '') continue;
 									?>
 									<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>-<?php wpl_esc::attr($lk); ?>" class="wpl-column rows location <?php wpl_esc::attr($lk); ?>">
-										<?php wpl_esc::html_t($lk); ?> : <span><?php wpl_esc::html($value['locations'][$ii]); ?></span>
+										<dt><?php wpl_esc::html_t($lk); ?>:</dt> <dd><?php wpl_esc::html($value['locations'][$ii]); ?></dd>
 									</div>
 									<?php
                                 }
@@ -197,7 +196,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                                     if(trim($lk) == '') continue;
 									?>
 									<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows location <?php wpl_esc::attr($lk); ?>">
-										<?php wpl_esc::html_t($lk); ?> : <span><?php wpl_esc::html($lvalue); ?></span>
+										<dt><?php wpl_esc::html_t($lk); ?>:</dt> <dd><?php wpl_esc::html($lvalue); ?></dd>
 									</div>
 									<?php
                                 }
@@ -207,7 +206,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                         {
 							?>
                             <div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows separator">
-								<?php wpl_esc::html_t($value['name']); ?>
+								<dt><?php wpl_esc::html_t($value['name']); ?></dt><dd></dd>
 							</div>
 							<?php
                         }
@@ -223,21 +222,23 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
 						{
 							?>
 							<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows url">
-								<?php wpl_esc::html_t($value['name']); ?> : <span><?php wpl_esc::e($value['value'] ?? ''); ?></span>
+								<dt><?php wpl_esc::html_t($value['name']); ?>:</dt> <dd><?php wpl_esc::e($value['value'] ?? ''); ?></dd>
 							</div>
 							<?php
 						}
                         else {
 							?>
 							<div id="wpl-dbst-show<?php wpl_esc::attr($value['field_id']); ?>" class="wpl-column rows other">
-								<?php wpl_esc::html_t($value['name']); ?> : <span><?php wpl_esc::html_t($value['value'] ?? ''); ?></span>
+								<dt><?php wpl_esc::html_t($value['name']); ?>:</dt> <dd><?php wpl_esc::e($value['value'] ?? ''); ?></dd>
 							</div>
 							<?php
 						}
                     }
-					
-                    wpl_esc::e('</div></div>');
-                	$i++;
+                    ?>
+                    </dl>
+                </div>
+                	<?php
+                    $i++;
                 }
                 ?>
                 
@@ -289,42 +290,43 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                     <div class="wpl_prp_right_boxes_content">
                         <div class="wpl_prp_right_boxe_details_top clearfix">
                             <div class="wpl_prp_right_boxe_details_left">
-                                <ul>
+                                <dl>
                                     <?php if(trim($listing_id ?? '') != ''): ?>
-                                        <li class="wpl-listing-id">
-                                            <?php wpl_esc::html($this->wpl_properties['current']['materials']['mls_id']['name']);?> : <span class="value"><?php wpl_esc::html($listing_id); ?></span>
-                                        </li>
+                                        <div class="wpl-listing-id">
+                                            <dt><?php wpl_esc::html($this->wpl_properties['current']['materials']['mls_id']['name']);?>:</dt> <dd class="value"><?php wpl_esc::html($listing_id); ?></dd>
+                                        </div>
                                     <?php endif; ?>
                                     <?php if(trim($bedroom ?? '') != ''): ?>
-                                        <li class="wpl-bedroom" <?php wpl_esc::item_prop($this->microdata, 'numberOfRooms'); ?><?php wpl_esc::item_type($this->microdata, 'QuantitativeValue'); ?>>
-                                            <span <?php wpl_esc::item_prop($this->microdata, 'name'); ?> ><?php wpl_esc::html($this->wpl_properties['current']['materials']['bedrooms']['name']); ?> : </span>
-											<span <?php wpl_esc::item_prop($this->microdata, 'value'); ?> class="value"><?php wpl_esc::html($bedroom); ?></span>
-                                        </li>
+                                        <div class="wpl-bedroom" <?php wpl_esc::item_prop($this->microdata, 'numberOfRooms'); ?><?php wpl_esc::item_type($this->microdata, 'QuantitativeValue'); ?>>
+                                            <dt <?php wpl_esc::item_prop($this->microdata, 'name'); ?> ><?php wpl_esc::html($this->wpl_properties['current']['materials']['bedrooms']['name']); ?>: </dt>
+											<dd <?php wpl_esc::item_prop($this->microdata, 'value'); ?> class="value"><?php wpl_esc::html($bedroom); ?></dd>
+                                        </div>
                                     <?php endif; ?>
                                     <?php if(trim($bathroom ?? '') != ''): ?>
-                                        <li class="wpl-bathroom" <?php wpl_esc::item_prop($this->microdata, 'numberOfRooms'); ?><?php wpl_esc::item_type($this->microdata, 'QuantitativeValue'); ?>>
-                                            <span <?php wpl_esc::item_prop($this->microdata, 'name'); ?>><?php wpl_esc::html($this->wpl_properties['current']['materials']['bathrooms']['name']); ?> : </span>
-											<span <?php wpl_esc::item_prop($this->microdata, 'value'); ?> class="value"><?php wpl_esc::html($bathroom); ?></span>
-                                        </li>
+                                        <div class="wpl-bathroom" <?php wpl_esc::item_prop($this->microdata, 'numberOfRooms'); ?><?php wpl_esc::item_type($this->microdata, 'QuantitativeValue'); ?>>
+                                            <dt <?php wpl_esc::item_prop($this->microdata, 'name'); ?>><?php wpl_esc::html($this->wpl_properties['current']['materials']['bathrooms']['name']); ?>: </dt>
+											<dd <?php wpl_esc::item_prop($this->microdata, 'value'); ?> class="value"><?php wpl_esc::html($bathroom); ?></dd>
+                                        </div>
                                     <?php endif; ?>
                                     <?php if(trim($build_up_area ?? '') != ''): ?>
-                                        <li class="wpl-build-up-area">
-                                            <?php wpl_esc::html($build_up_area_name) ?> :
-											<span class="value" <?php wpl_esc::item_prop($this->microdata, 'floorSize'); ?><?php wpl_esc::item_type($this->microdata, 'QuantitativeValue'); ?> >
+                                        <div class="wpl-build-up-area">
+                                            <dt><?php wpl_esc::html($build_up_area_name) ?>:</dt>
+											<dd class="value" <?php wpl_esc::item_prop($this->microdata, 'floorSize'); ?><?php wpl_esc::item_type($this->microdata, 'QuantitativeValue'); ?> >
 												<span class="value" <?php wpl_esc::item_prop($this->microdata, 'value'); ?>><?php wpl_esc::html($build_up_area); ?></span>
-											</span>
-                                        </li>
+											</dd>
+                                        </div>
                                     <?php endif; ?>
                                     <?php if($price_type): ?>
-                                        <li class="wpl-price">
-                                            <?php wpl_esc::html($this->wpl_properties['current']['materials']['price_period']['name']); ?>  :
-											<span class="value"><?php wpl_esc::html($price_type); ?></span>
-                                        </li>
+                                        <div class="wpl-price">
+                                            <dt><?php wpl_esc::html($this->wpl_properties['current']['materials']['price_period']['name']); ?>:</dt>
+											<dd class="value"><?php wpl_esc::html($price_type); ?></dd>
+                                        </div>
                                     <?php endif; ?>
                                     <?php if(wpl_global::get_setting('show_plisting_visits')): ?>
-                                    <li class="wpl-property-visit">
-                                        <?php wpl_esc::html('Visits').' : <span class="value">'.$visits.($days ? ' '.sprintf(__('in %d days'), $days) : '').'</span>'; ?>
-                                    </li>
+                                    <div class="wpl-property-visit">
+                                        <dt><?php wpl_esc::html('Visits:'); ?></dt>
+                                        <?php wpl_esc::e('<dd class="value">'.$visits.($days ? ' '.sprintf(__('in %d days'), $days) : '').'</dd>'); ?>
+                                    </div>
                                     <?php endif; ?>
                                     <?php if(wpl_global::check_addon('MLS') && $this->show_agent_name || $this->show_office_name): ?>
                                         <div class="wpl-mls-brokerage-info">
@@ -332,7 +334,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                                             <?php if($this->show_office_name): ?> <li><?php wpl_esc::e($office_name) ?></li> <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
-                                </ul>
+                                </dl>
                             </div>
                             <div class="wpl_prp_right_boxe_details_right">
                                 <?php /** load wpl_pshow_link activity **/ wpl_activity::load_position('wpl_pshow_link', array('wpl_properties'=>$this->wpl_properties)); ?>

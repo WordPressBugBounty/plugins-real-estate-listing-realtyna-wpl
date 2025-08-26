@@ -23,16 +23,7 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 	if(empty($suggest_fields)) {
 		$suggest_fields = [];
 	} else {
-		$first_fields = [];
-		$second_fields = [];
-		foreach ($suggest_fields as $field_name => $field_title) {
-			if(in_array($field_name, ['location_text', 'mls_id']) and !wpl_global::zap_search_enabled()) {
-				$second_fields[] = $field_name;
-			} else {
-				$first_fields[] = $field_name;
-			}
-		}
-		$suggest_fields = array_filter([implode(',', $first_fields), implode(',', $second_fields), ['keyword']]);
+		$suggest_fields = [implode(',', array_keys($suggest_fields))];
 	}
 	$suggest_fields = json_encode($suggest_fields);
 	wpl_html::set_footer('<script type="text/javascript">
@@ -67,7 +58,7 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 				});
 			 }
 		});
-		
+		let timeout_handler;
 		$("#'.$element_id.'").wpl_catcomplete(
 		{
 			search: function(){},
@@ -80,6 +71,20 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 				wpl_do_search_'.$widget_id.'();
 			},
 			source: function (request, response) {
+				if(timeout_handler) {
+					clearTimeout(timeout_handler);
+				}
+				timeout_handler = setTimeout(() => send_request(request, response), 500);
+			},
+			width: 260,
+			matchContains: true,
+			minLength: 1,
+			delay: 100
+			});
+		});
+		
+		function send_request(request, response) {
+			
 				var term = request.term.toUpperCase(), items = [];
 				for (var key in autocomplete_cache'.$widget_id.') {
 					if (key === term) {
@@ -129,13 +134,7 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 						}
 					}
 				}
-			},
-			width: 260,
-			matchContains: true,
-			minLength: 1,
-			delay: 100
-			});
-		});
+		}
 	})(jQuery);
 	</script>');
 

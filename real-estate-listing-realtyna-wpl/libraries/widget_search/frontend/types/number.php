@@ -50,8 +50,8 @@ function widget_search_frontend_general_number(
         $extoptions = isset($field['extoption']) ? explode(',', $field['extoption']) : array();
 
         $min_value = (isset($extoptions[0]) and trim($extoptions[0] ?? '') != '') ? $extoptions[0] : 0;
-        $max_value = isset($extoptions[1]) ? $extoptions[1] : 100000;
-        $division = isset($extoptions[2]) ? $extoptions[2] : 1000;
+        $max_value = $extoptions[1] ?? 100000;
+        $division = $extoptions[2] ?? 1000;
         if ($field_data['table_column'] == 'build_year') {
             $separator = '';
         } else {
@@ -66,7 +66,7 @@ function widget_search_frontend_general_number(
             $min_value
         );
         $current_max_value = min(
-            stripslashes(wpl_request::getVar('sf_tmax_' . $field_data['table_column'], $max_value)),
+            stripslashes(wpl_request::getVar('sf_tmax_' . $field_data['table_column'], '-1')),
             $max_value
         );
 
@@ -92,7 +92,7 @@ function widget_search_frontend_general_number(
                     wpl_request::getVar('sf_tmin_' . $field_data['table_column'], '')
                 ) != '' ? esc_attr(
                     $current_min_value
-                ) : (isset($extoptions[0]) ? $extoptions[0] : '')) . '" placeholder="' . wpl_esc::return_attr_t(
+                ) : ($extoptions[0] ?? '')) . '" placeholder="' . wpl_esc::return_attr_t(
                     'Min'
                 ) . '" />';
 
@@ -176,19 +176,14 @@ function widget_search_frontend_general_number(
 
             $html .= '<select name="sf' . $widget_id . '_tmax_' . $field_data['table_column'] . '" id="sf' . $widget_id . '_tmax_' . $field_data['table_column'] . '">';
 
-            $i = $min_value;
-            $html .= '<option value="-1" ' . ($current_max_value == $i ? 'selected="selected"' : '') . '>' . sprintf(
+            $html .= '<option value="-1" ' . ($current_max_value == '-1' ? 'selected="selected"' : '') . '>' . sprintf(
                     wpl_esc::return_html_t('Max %s'),
                     wpl_esc::return_html_t($field_data['name'])
                 ) . '</option>';
 
-            $selected_printed = false;
-            if ($current_max_value == $i) {
-                $selected_printed = true;
-            }
-
+			$i = $min_value;
             while ($i < $max_value) {
-                $html .= '<option value="' . $i . '" ' . (($current_max_value == $i and !$selected_printed) ? 'selected="selected"' : '') . '>' . $i . '</option>';
+                $html .= '<option value="' . $i . '" ' . (($current_max_value == $i) ? 'selected="selected"' : '') . '>' . $i . '</option>';
                 $i += $division;
             }
 

@@ -28,7 +28,7 @@ class wpl_items
 	{
 		$source = '';
 		if($parent_kind == 0) {
-			$source = wpl_db::get('source', 'wpl_properties', 'id', $parent_id);
+			$source = wpl_property::get_property_source($parent_id);
 		}
 		if(wpl_settings::is_mls_on_the_fly() && $parent_kind == 0 && (empty($source) || $source == 'RF')) {
 			$property = wpl_rf_property::getInstance()->get_property_raw_data($parent_id);

@@ -939,8 +939,11 @@ class wpl_users
 		
 		// Generate where condition
 		$where = (array) $where;
+
+		$where = apply_filters('wpl_users/start/where', $where);
 		$this->where = wpl_db::create_query($where);
-		
+		$this->where = apply_filters('wpl_users/start/query', $this->where, $where);
+
 		// Generate select
 		$this->select = '*';
     }

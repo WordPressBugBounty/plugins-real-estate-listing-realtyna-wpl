@@ -3,14 +3,14 @@
 defined('_WPLEXEC') or die('Restricted access');
 
 /** set params **/
-$wpl_properties = isset($params['wpl_properties']) ? $params['wpl_properties'] : array();
-$this->property_id = isset($wpl_properties['current']['data']['id']) ? $wpl_properties['current']['data']['id'] : NULL;
+$wpl_properties = $params['wpl_properties'] ?? array();
+$this->property_id = $wpl_properties['current']['data']['id'] ?? NULL;
 $this->current_property = $wpl_properties['current'];
 
 /** get image params **/
-$this->image_width = isset($params['image_width']) ? $params['image_width'] : 360;
-$this->image_height = isset($params['image_height']) ? $params['image_height'] : 285;
-$this->image_class = isset($params['image_class']) ? $params['image_class'] : '';
+$this->image_width = $params['image_width'] ?? 360;
+$this->image_height = $params['image_height'] ?? 285;
+$this->image_class = $params['image_class'] ?? '';
 $this->category = ( trim($params['category'] ?? '') != '') ? $params['category'] : '';
 $this->autoplay = ( trim($params['autoplay'] ?? '') != '') ? $params['autoplay'] : 1;
 $this->resize = ( trim($params['resize'] ?? '') != '') ? $params['resize'] : 1;
@@ -22,7 +22,7 @@ $this->lazyload = ( trim($params['lazyload'] ?? '') != '') ? $params['lazyload']
 $show_tags = ( trim($params['show_tags'] ?? '') != '') ? $params['show_tags'] : 0;
 
 /** render gallery **/
-$raw_gallery = isset($wpl_properties['current']['items']['gallery']) ? $wpl_properties['current']['items']['gallery'] : array();
+$raw_gallery = $wpl_properties['current']['items']['gallery'] ?? array();
 
 // Filter images by category
 if(trim($this->category ?? '') != '') $raw_gallery = $this->categorize($raw_gallery, $this->category);

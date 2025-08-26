@@ -4,7 +4,7 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <script type="text/javascript">
 var wpl_ajax = <?php wpl_esc::numeric(wpl_global::check_addon('aps') ? wpl_global::get_setting('aps_ajax_listing') : 0); ?>;
-var wpl_listing_request_str = '<?php wpl_esc::js(wpl_global::generate_request_str()); ?>';
+var wpl_listing_request_str = '<?php wpl_esc::e(wpl_global::generate_request_str()); ?>';
 var wpl_listing_limit = <?php wpl_esc::numeric($this->model->limit); ?>;
 var wpl_listing_total_pages = <?php wpl_esc::numeric($this->total_pages); ?>;
 var wpl_listing_current_page = <?php wpl_esc::numeric($this->page_number); ?>;

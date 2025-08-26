@@ -6,8 +6,8 @@ defined('_WPLEXEC') or die('Restricted access');
 jQuery(document).ready(function()
 {
 	wplj.jqplot.config.enablePlugins = true;
-	var s1 = <?php wpl_esc::js($this->rendered[0]); ?>;
-	var ticks = <?php wpl_esc::js($this->rendered[1]); ?>;
+	var s1 = <?php wpl_esc::e($this->rendered[0]); ?>;
+	var ticks = <?php wpl_esc::e($this->rendered[1]); ?>;
 	
 	plot = wplj.jqplot('chartdiv<?php wpl_esc::attr($this->data['unique_chart_id']); ?>', [s1],
 	{

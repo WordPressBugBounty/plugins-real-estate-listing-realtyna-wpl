@@ -456,6 +456,10 @@ function wpl_generate_print_rp()
     prp = wpl_update_qs('wplpage', '', wpl_listing_request_str);
     prp = wpl_update_qs('wplview', '', prp);
     prp = wpl_update_qs('wplpagination', '', prp);
+	const wplpage = wplj('.wpl_pagination_container .pagination .active a').text();
+	if((wplpage ?? '') !== '') {
+		prp = prp + "&wplpage=" + wplpage;
+	}
 
     window.open("<?php wpl_esc::url(wpl_property::get_property_print_link()); ?>?"+prp);
 	<?php endif; ?>

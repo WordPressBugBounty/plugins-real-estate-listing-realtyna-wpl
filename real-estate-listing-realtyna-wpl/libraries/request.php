@@ -400,7 +400,7 @@ class wpl_flash
             
             if(!in_array($client, array(2, wpl_global::get_client()))) continue;
             
-            $flashes .= '<div class="'.wpl_esc::return_attr($HTML_class).'">'.wpl_esc::return_html($message).'</div>';
+            $flashes .= '<div class="'.wpl_esc::return_attr($HTML_class).'">'.wpl_esc::return_t($message).'</div>';
         }
         
         return $flashes;

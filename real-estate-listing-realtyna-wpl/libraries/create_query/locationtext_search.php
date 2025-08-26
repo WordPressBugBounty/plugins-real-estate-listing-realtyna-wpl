@@ -38,8 +38,7 @@ if($format == 'locationtextsearch' and !$done_this)
         foreach($values as $val)
         {
             if(strlen($val) < 2) continue;
-
-            $qq[] = wpl_db::prepare('+%s', "LOC-$val");
+			$qq[] = wpl_db::prepare('+"LOC-%1$s"', $val);
         } 
 
         $match_against = implode(' ', $qq);
@@ -49,7 +48,7 @@ if($format == 'locationtextsearch' and !$done_this)
 		$listing_id =wpl_esc::return_t('Listing ID');
         if(($kind == 0 or $kind == 1) and count($values) == 1 and !$profile) $mls_id_q = wpl_db::prepare('"%1$s %2$s"', $listing_id, $values[0]);
         
-        $qqq[] = wpl_db::prepare(" MATCH(%i) AGAINST ( %s IN BOOLEAN MODE ) ", $column, "($match_against) $mls_id_q");
+        $qqq[] = wpl_db::prepare(" MATCH(%i) AGAINST ( '($match_against) $mls_id_q' IN BOOLEAN MODE ) ", $column);
         
         $query .= " AND (".implode(' OR ', $qqq).")";
         if($kind == 0 or $kind == 1) $query .= " AND `show_address`='1'";
@@ -108,7 +107,7 @@ elseif($format == 'multiplelocationtextsearch' and !$done_this)
                 foreach($values as $val)
                 {
                     if(strlen($val) < 2) continue;
-					$qq[] = wpl_db::prepare('+%s', "LOC-$val");
+					$qq[] = wpl_db::prepare('+"LOC-%1$s"', $val);
                 } 
 
                 $match_against = implode(' ', $qq);
@@ -118,7 +117,7 @@ elseif($format == 'multiplelocationtextsearch' and !$done_this)
 				$listing_id =wpl_esc::return_t('Listing ID');
 				if(($kind == 0 or $kind == 1) and count($values) == 1 and !$profile) $mls_id_q = wpl_db::prepare('"%1$s %2$s"', $listing_id, $values[0]);
 
-				$qqq[] = wpl_db::prepare(" MATCH(%i) AGAINST ( %s IN BOOLEAN MODE ) ", $column, "($match_against) $mls_id_q");
+				$qqq[] = wpl_db::prepare(" MATCH(%i) AGAINST ( '($match_against) $mls_id_q' IN BOOLEAN MODE ) ", $column);
 				$qqqq[] = '('.implode(' OR ', $qqq).')';
             }
         }

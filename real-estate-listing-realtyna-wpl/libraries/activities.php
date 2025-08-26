@@ -162,7 +162,7 @@ class wpl_activity
      */
     public static function data($activity_id)
     {
-        return wpl_db::select(wpl_db::prepare('SELECT * FROM `#__wpl_activities` WHERE `id` = %d', $activity_id), 'loadObject');
+        return wpl_db::select(wpl_db::prepare('SELECT * FROM `#__wpl_activities` WHERE `id` = %d', $activity_id), 'loadObject', true);
     }
     
     /**

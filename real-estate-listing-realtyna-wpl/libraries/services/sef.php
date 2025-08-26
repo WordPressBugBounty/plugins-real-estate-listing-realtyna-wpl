@@ -122,6 +122,7 @@ class wpl_service_sef
                 wpl_addon_pro::compare_display();
             }
         }
+		do_action('wpl_service_sef/run/after', $this->view);
 	}
 	
     /**
@@ -178,8 +179,21 @@ class wpl_service_sef
      */
 	public function set_property_page_params($property_id)
 	{
+		if(class_exists('RankMath')) {
+			remove_all_actions('rank_math/head', 20);
+		}
+
+		$this->remove_canonical();
+		$this->remove_page_title_filters();
+		$this->remove_page_meta_tags_filters();
+		$this->remove_open_graph_filters();
+
 		$property_data = wpl_property::get_property_raw_data($property_id);
-        
+
+		if(empty($property_data)) {
+			return;
+		}
+
         $locale = wpl_global::get_current_language();
 		$this->property_page_title = wpl_property::update_property_page_title($property_data);
         
@@ -197,11 +211,6 @@ class wpl_service_sef
         
 		$html = wpl_html::getInstance();
         
-        //Remove Rank Math SEO canonical
-        if(class_exists('RankMath')) {
-            remove_all_actions('rank_math/head', 20);
-        }
-        
 		// Set Title
 		$html->set_title($this->property_page_title);
 		
@@ -209,23 +218,11 @@ class wpl_service_sef
 		$html->set_meta_keywords($this->property_keywords);
 		
 		// Set Meta Description
-		$html->set_meta_description(strip_tags($this->property_description ?? ''));
+		$html->set_meta_description(apply_filters('wpl_service_sef/set_property_page_params/property_description', strip_tags($this->property_description ?? ''), $property_data));
         
         // SET Canonical URL
         $property_link = wpl_property::get_property_link($property_data);
         wpl_html::$canonical = $property_link;
-        
-        // Remove canonical tags
-        $this->remove_canonical();
-        
-        // Remove Page Title Filters
-		$this->remove_page_title_filters();
-        
-        // Remove Page Title Filters
-		$this->remove_page_meta_tags_filters();
-
-        // Remove Open Graph Filters
-        $this->remove_open_graph_filters();
 
 		$metaTags = [];
 		$metaTags['og:type'] = ['content' => 'article'];
@@ -558,8 +555,10 @@ class wpl_service_sef
             $pid = wpl_request::getVar('pid', 0);
             $property = wpl_property::get_property_raw_data($pid);
 
-            if($property['kind'] == 1) $tpl = wpl_global::get_setting('wpl_complex_propertyshow_layout');
-            elseif($property['kind'] == 4) $tpl = wpl_global::get_setting('wpl_neighborhood_propertyshow_layout');
+			$kind = $property['kind'] ?? 0;
+
+            if($kind == 1) $tpl = wpl_global::get_setting('wpl_complex_propertyshow_layout');
+            elseif($kind == 4) $tpl = wpl_global::get_setting('wpl_neighborhood_propertyshow_layout');
             else $tpl = wpl_global::get_setting('wpl_propertyshow_layout');
             
             if(trim($tpl ?? "") == '') $tpl = 'default';

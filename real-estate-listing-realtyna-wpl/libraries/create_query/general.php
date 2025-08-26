@@ -13,7 +13,7 @@ if($format == 'select' and !$done_this)
         // If Multi Agent addon is instaled then filter additional agents column as well
         if($table_column == 'user_id' and wpl_global::check_addon('multi_agents') and !in_array($wplview, array('addon_crm')))
         {
-            $query .= wpl_db::prepare(" AND (%i = %s OR `additional_agents` LIKE %s)",[$table_column, $value, wpl_db::esc_like(",$value,")]);
+            $query .= wpl_db::prepare(" AND (%i = %s OR `additional_agents` LIKE %s)", $table_column, $value, wpl_db::esc_like(",$value,"));
         }
         else $query .= wpl_db::prepare(" AND %i = %s", $table_column, $value);
     }

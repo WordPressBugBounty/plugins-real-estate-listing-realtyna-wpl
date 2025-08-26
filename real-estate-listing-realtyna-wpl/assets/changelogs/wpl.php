@@ -4,6 +4,57 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.0.13 (<span class="wpl_log_date">08/25/2025</span>)</h4>
+		- Added: cache some queries<br>
+		- Added: useful hooks<br>
+		- Fixed: RankMath image issue<br>
+		- Fixed: Multi-language issue<br>
+		- Fixed: update X icons<br>
+		- Fixed: issue with braintree payment<br>
+
+		<h4>WPL5.0.12 (<span class="wpl_log_date">08/01/2025</span>)</h4>
+		- Fixed: location search issue<br>
+
+		<h4>WPL5.0.11 (<span class="wpl_log_date">07/29/2025</span>)</h4>
+		- Added: SEO improvement<br>
+		- Fixed: font issue<br>
+		- Fixed: distance issue for neighborhoods<br>
+
+		<h4>WPL5.0.10 (<span class="wpl_log_date">07/24/2025</span>)</h4>
+		- Added: hook for sef service<br>
+		- Fixed: search issue<br>
+
+		<h4>WPL5.0.9 (<span class="wpl_log_date">07/22/2025</span>)</h4>
+		- Fixed: marker icon issue for MOF<br>
+		- Improved: suggestion speed<br>
+
+		<h4>WPL5.0.8 (<span class="wpl_log_date">07/15/2025</span>)</h4>
+		- Added: filters for flex<br>
+		- Fixed: pagination in print feature<br>
+
+		<h4>WPL5.0.7 (<span class="wpl_log_date">07/12/2025</span>)</h4>
+		- Fixed: Known issues<br>
+
+		<h4>WPL5.0.6 (<span class="wpl_log_date">07/11/2025</span>)</h4>
+		- Fixed: Known issues<br>
+
+		<h4>WPL5.0.5 (<span class="wpl_log_date">07/10/2025</span>)</h4>
+		- Fixed complex issue on property wizard page<br>
+		- Fixed search issue with sf_multiplelocationtextsearch<br>
+
+		<h4>WPL5.0.4 (<span class="wpl_log_date">07/09/2025</span>)</h4>
+		- Fixed: Known issues<br>
+
+		<h4>WPL5.0.3 (<span class="wpl_log_date">07/08/2025</span>)</h4>
+		- Fixed listings manager buttons issue<br>
+
+		<h4>WPL5.0.2 (<span class="wpl_log_date">07/03/2025</span>)</h4>
+		- Added: some hooks for customizations<br>
+		- Removed: some warning errors<br>
+
+		<h4>WPL5.0.1 (<span class="wpl_log_date">06/24/2025</span>)</h4>
+		- Fixed: Known issues
+
 		<h4>WPL5.0.0 (<span class="wpl_log_date">05/23/2025</span>)</h4>
 		-- Added: Stripe payment<br>
 		-- Added: Useful hooks<br>

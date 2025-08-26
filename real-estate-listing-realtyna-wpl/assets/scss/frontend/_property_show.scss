@@ -650,7 +650,8 @@
 
     .twitter_link {
       &:before {
-        content: "\e600";
+        content: "\e947";
+        font-size: 26px;
       }
 
       &:hover {
@@ -975,8 +976,14 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }*/
-
-    span {
+    dt{
+      display: inline;
+    }
+    dd,dt{
+      line-height: inherit;
+      font-weight: inherit;
+    }
+    span, dd {
       @if $text-direction == ltr {
         float: right;
       } @else {
@@ -985,6 +992,7 @@
       max-width: 100%;
       font-weight: normal;
       color: lighten($black, 25%);
+      margin: 0;
     }
 
     &.feature.single {
@@ -1048,7 +1056,7 @@
   }
 
   .neighborhood {
-    & > span {
+    & > span, & > dd {
       @if $text-direction == ltr {
         padding-right: 25px;
       } @else {
@@ -1147,15 +1155,18 @@
   margin: 0 auto;
   list-style: none;
 
-  li {
+  li, dl>div {
     font-weight: bold;
     line-height: 20px;
     color: $black;
     list-style: none;
-
-    span.value {
+    dt{
+      display: inline;
+    }
+    span.value, dd.value {
       font-weight: normal;
       color: #717171;
+      margin: 0;
       @if $text-direction == ltr {
         float: right;
       } @else {
@@ -1739,7 +1750,7 @@
     .rows {
       font-size: 14px;
       font-weight: normal;
-      span {
+      span, dd {
         color: $co-35;
       }
       &.feature {

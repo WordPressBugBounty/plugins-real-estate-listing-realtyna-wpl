@@ -39,6 +39,7 @@ class wpl_property
     public $order;
     public $order_val;
     public $where;
+    public $raw_where;
     public $select;
     public $finish_time;
     public $time_taken;
@@ -284,7 +285,7 @@ class wpl_property
 				$first_property_id = $where['sf_select_id'];
 			}
 			if(!empty($first_property_id)) {
-				$source = wpl_db::get('source', 'wpl_properties', 'id', $first_property_id);
+				$source = wpl_property::get_property_source($first_property_id);
 				$this->source = strtolower($source);
 			}
 
@@ -307,7 +308,8 @@ class wpl_property
         $this->groupby_query = $this->create_groupby();
 
         // Generate Where Condition
-			$where = apply_filters('wpl_property/start/where', (array)$where, $this);
+		$where = apply_filters('wpl_property/start/where', (array)$where, $this);
+		$this->raw_where = $where;
 		$this->where = wpl_db::create_query($where);
 		$this->where = apply_filters('wpl_property/start/where_query', $this->where, $where);
 		if($this->isSourceRf()) {
@@ -538,6 +540,10 @@ class wpl_property
         return $mls_id;
     }
 
+	public static function get_property_source($property_id) {
+		return wpl_db::get('source', 'wpl_properties', 'id', $property_id, true,'', true);
+	}
+
     /**
      * Get raw data of a listing
      * @author Howard R <howard@realtyna.com>
@@ -549,7 +555,7 @@ class wpl_property
     {
         // First Validation
         if(!$property_id) return NULL;
-		$source = wpl_db::get('source', 'wpl_properties', 'id', $property_id);
+		$source = wpl_property::get_property_source($property_id);
 		if(wpl_settings::is_mls_on_the_fly() && $source == 'RF') {
 			return wpl_rf_property::getInstance()->get_property_raw_data($property_id, 'loadAssoc');
 		}
@@ -830,8 +836,8 @@ class wpl_property
             array_push($rendered, $property['raw']['id']);
 
             // Fix Latitude and longitude
-            $property['raw']['googlemap_lt'] = (double) $property['raw']['googlemap_lt'];
-            $property['raw']['googlemap_ln'] = (double) $property['raw']['googlemap_ln'];
+            $property['raw']['googlemap_lt'] = (double) ($property['raw']['googlemap_lt'] ?? 0);
+            $property['raw']['googlemap_ln'] = (double) ($property['raw']['googlemap_ln'] ?? 0);
 
             // Fetch latitude and longitude if it's not set
             if(!$property['raw']['googlemap_lt'] or !$property['raw']['googlemap_ln'])
@@ -1691,7 +1697,7 @@ class wpl_property
     {
         $cached = (array) wpl_property::get_property_cached_data($property_id);
         if($cached and isset($cached[$field_name])) return $cached[$field_name];
-		$source = wpl_db::get('source', 'wpl_properties', 'id', $property_id);
+		$source = wpl_property::get_property_source($property_id);
 		if(wpl_settings::is_mls_on_the_fly() && $source == 'RF') {
 			$raw = wpl_rf_property::getInstance()->get_property_raw_data($property_id);
 			if(!empty($raw)) {
@@ -1918,7 +1924,7 @@ class wpl_property
      */
     public static function select_active_properties($extra_condition = '', $select = '*', $output = 'loadAssocList', $limit = 0, $order = '`id` ASC')
     {
-        $condition = ' AND `deleted` = 0 AND `finalized` = 1 AND `confirmed` = 1 AND `expired` = 0';
+        $condition = ' AND `deleted` = 0 AND `finalized` = 1 AND `confirmed` = 1 AND `expired` = 0 ';
         if(trim($extra_condition) != '') $condition .= $extra_condition;
 
         $query = 'SELECT ' .$select. ' FROM `#__wpl_properties` WHERE 1 ' .$condition." ORDER BY $order ".($limit ? "LIMIT $limit" : '');

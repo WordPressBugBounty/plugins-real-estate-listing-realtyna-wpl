@@ -11,7 +11,7 @@ function widget_search_frontend_general_checkbox(
     $specified_children,
     $ajax
 ) {
-    if (in_array($type, array('checkbox', 'yesno', 'select'))) {
+    if (in_array($type, array('checkbox', 'yesno', 'select', 'tag'))) {
         switch ($field['type']) {
             case 'checkbox':
                 $show = 'checkbox';
@@ -63,3 +63,4 @@ function widget_search_frontend_general_checkbox(
 
 add_filter('widget_search/frontend/general/checkbox', 'widget_search_frontend_general_checkbox', 10, 8);
 add_filter('widget_search/frontend/general/yesno', 'widget_search_frontend_general_checkbox', 10, 8);
+add_filter('widget_search/frontend/general/tag', 'widget_search_frontend_general_checkbox', 10, 8);

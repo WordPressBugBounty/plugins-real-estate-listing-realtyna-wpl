@@ -283,6 +283,9 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
         $wpl_properties = array();
         $wpl_property_ids = array();
 
+
+		$properties = apply_filters('wpl_property_listing_controller_abstract/before_render', $properties, $this);
+
         foreach($properties as $property)
         {
 

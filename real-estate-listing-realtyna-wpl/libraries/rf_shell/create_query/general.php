@@ -71,28 +71,6 @@ elseif($format == 'tmax' and !$done_this)
 	}
 	$done_this = true;
 }
-elseif($format == 'min' and !$done_this)
-{
-	if($value != '-1' and trim($value) != '' and intval($value) != 0) {
-		$query[] = [
-			'key' => $table_column,
-			'value' => $value,
-			'compare' => '>=',
-		];
-	}
-	$done_this = true;
-}
-elseif($format == 'max' and !$done_this)
-{
-	if($value != '-1' and trim($value) != '' and intval($value) != $MAX_VALUE) {
-		$query[] = [
-			'key' => $table_column,
-			'value' => $value,
-			'compare' => '<=',
-		];
-	}
-	$done_this = true;
-}
 elseif($format == 'multiple' and !$done_this)
 {
 	if(!($value == '' or $value == '-1' or $value == ','))
@@ -273,8 +251,8 @@ elseif($format == 'between' and !$done_this)
 	if($value != '-1' and trim($value) != '')
     {
         $ex = explode(':', $value);
-        $min = isset($ex[0])? $ex[0] : 0;
-        $max = isset($ex[1])? $ex[1] : NULL;
+        $min = $ex[0] ?? 0;
+        $max = $ex[1] ?? null;
 
 		$query[] = [
 			'key' => $table_column,

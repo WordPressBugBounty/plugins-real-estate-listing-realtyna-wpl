@@ -46,6 +46,8 @@ var wpl_enable_cluster<?php echo $this->activity_id; ?> = <?php echo ($this->clu
 var wpl_enable_cluster_method<?php echo $this->activity_id; ?> = '<?php echo ($this->clustering and wpl_global::check_addon('aps')) ? $this->clustering_method : '' ?>';
 if(typeof google_place_radius == 'undefined') var google_place_radius = 1100;
 
+<?php do_action('wpl_view/activities/googlemap/scripts/js/vars'); ?>
+
 function wpl_initialize<?php wpl_esc::js($this->activity_id); ?>()
 {
 	/** create empty LatLngBounds object **/
@@ -192,7 +194,7 @@ function wpl_initialize<?php wpl_esc::js($this->activity_id); ?>()
     {
         setTimeout(function()
         {
-            var request_string = '<?php wpl_esc::attr( http_build_query($_GET)); ?>';
+            var request_string = '<?php wpl_esc::escapeQuote(http_build_query($_GET)); ?>';
             wpl_load_map_markers(request_string, false);
         }, 200)
     }
@@ -290,6 +292,8 @@ function wpl_marker<?php wpl_esc::js($this->activity_id); ?>(dataMarker)
 
 function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, delete_markers, total = null)
 {
+	<?php do_action('wpl_view/activities/googlemap/scripts/js/wpl_load_markers/pre'); ?>
+
 	if(delete_markers)
 	{
 		delete_markers<?php wpl_esc::js($this->activity_id); ?>();
@@ -553,6 +557,8 @@ function wpl_load_map_markers(request_str, delete_markers, extend_bound = false)
 
     request_str = 'wpl_format=f:property_listing:raw&wplmethod=get_markers&'+request_str;
 	let markers;
+
+	<?php do_action('wpl_view/activities/googlemap/scripts/js/wpl_load_map_markers/before_ajax'); ?>
 
     wplj.ajax(
     {

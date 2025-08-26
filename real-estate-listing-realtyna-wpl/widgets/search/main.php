@@ -224,7 +224,7 @@ class wpl_search_widget extends wpl_widget
 			$done_this = false;
 			$type = $field->type;
 			$options = json_decode($field->options ?? '', true);
-			$value = $values[$field->id] ?? NULL;
+			$value = $values[$field->id] ?? null;
 
 			if(isset($finds[$type]))
 			{
@@ -333,10 +333,11 @@ class wpl_search_widget extends wpl_widget
 				$rendered[$field_id]['id'] = $field_id;
 				$rendered[$field_id]['field_data'] = $field_data;
 				$rendered[$field_id]['field_options'] = json_decode($field_data['options'] ?? '', true);
-				$rendered[$field_id]['search_options'] = $field['extoption'] ?? NULL;
+				$rendered[$field_id]['search_options'] = $field['extoption'] ?? null;
 				$rendered[$field_id]['html'] = $html;
-                $rendered[$field_id]['current_value'] = $current_value ?? NULL;
+                $rendered[$field_id]['current_value'] = $current_value ?? null;
 				$rendered[$field_id]['display'] = $display;
+				$rendered[$field_id] = apply_filters('wpl_search_widget/render_search_fields/rendered', $rendered[$field_id], $field);
 				continue;
 			}
 
@@ -378,10 +379,11 @@ class wpl_search_widget extends wpl_widget
 			$rendered[$field_id]['id'] = $field_id;
 			$rendered[$field_id]['field_data'] = $field_data;
 			$rendered[$field_id]['field_options'] = json_decode($field_data['options'] ?? '', true);
-			$rendered[$field_id]['search_options'] = $field['extoption'] ?? NULL;
+			$rendered[$field_id]['search_options'] = $field['extoption'] ?? null;
 			$rendered[$field_id]['html'] = $html;
-            $rendered[$field_id]['current_value'] = $current_value ?? NULL;
+            $rendered[$field_id]['current_value'] = $current_value ?? null;
 			$rendered[$field_id]['display'] = $display;
+			$rendered[$field_id] = apply_filters('wpl_search_widget/render_search_fields/rendered', $rendered[$field_id], $field);
 		}
 
 		return $rendered;
@@ -408,7 +410,7 @@ class wpl_search_widget extends wpl_widget
      * @param integer $target_id
      * @return string
      */
-    public function get_target_page($target_id = NULL)
+    public function get_target_page($target_id = null)
     {
         if(trim( $target_id ?? '' ) and $target_id == '-1') $target_page = wpl_global::get_full_url();
         else $target_page = wpl_property::get_property_listing_link($target_id);

@@ -52,7 +52,7 @@ if((isset($values->specificable) and $values->specificable) or !$dbst_id)
         <?php 
         $field_name = '';
         $field_value = '';
-        $fields = wpl_flex::get_fields('', 0, 0, '', '', wpl_db::prepare("AND `type` IN ('feature','neighborhood','boolean','checkbox','') AND `kind` = %d AND `enabled` > 0", $kind));
+		$fields = wpl_db::select("SELECT * FROM `#__wpl_dbst` WHERE `type` IN ('feature','neighborhood','boolean','checkbox','select','') AND `kind` = 0 AND `enabled` > 0 ORDER BY `name` ASC", 'loadObjectList', true);
         
         if(isset($values->field_specific) and trim($values->field_specific ?? '') != '')
         {

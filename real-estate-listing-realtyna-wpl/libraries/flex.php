@@ -860,7 +860,8 @@ class wpl_flex
 				$rendered[$field_id]['id'] = $field_id;
 				$rendered[$field_id]['field_options'] = json_decode($field['options'] ?? '', true);
 				$rendered[$field_id]['html'] = $html;
-                $rendered[$field_id]['current_value'] = isset($current_value) ? $current_value : NULL;
+                $rendered[$field_id]['current_value'] = $current_value ?? null;
+				$rendered[$field_id] = apply_filters('wpl_flex/generate_search_fields/rendered', $rendered[$field_id], $field);
 				continue;
 			}
 			
@@ -881,7 +882,8 @@ class wpl_flex
 			$rendered[$field_id]['id'] = $field_id;
 			$rendered[$field_id]['field_options'] = json_decode($field['options'] ?? '', true);
 			$rendered[$field_id]['html'] = $html;
-            $rendered[$field_id]['current_value'] = isset($current_value) ? $current_value : NULL;
+            $rendered[$field_id]['current_value'] = $current_value ?? null;
+			$rendered[$field_id] = apply_filters('wpl_flex/generate_search_fields/rendered', $rendered[$field_id], $field);
 		}
         
 		return $rendered;

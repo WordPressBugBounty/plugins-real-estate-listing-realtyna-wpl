@@ -100,6 +100,7 @@ $this->_wpl_import($this->tpl_path.'.scripts.js');
                 </div>
                 <?php endif; ?>
             <?php endif; ?>
+			<?php do_action('wpl_view/backend/listings/tmpl/mass-actions'); ?>
         </div>
         <?php if(isset($this->pagination->max_page) and $this->pagination->max_page > 1): ?>
         <div class="pagination-wp">

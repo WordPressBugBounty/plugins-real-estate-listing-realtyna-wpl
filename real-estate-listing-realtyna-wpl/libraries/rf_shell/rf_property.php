@@ -25,6 +25,9 @@ class wpl_rf_property
 			'ListPrice',
 			'Latitude',
 			'Longitude',
+			'Coordinates',
+			'PropertyType',
+			'StandardStatus',
 		]);
 	}
 
@@ -164,6 +167,11 @@ class wpl_rf_property
 		$query = "SELECT `name` FROM `#__wpl_listing_types` WHERE id = '" . $listing_type_id . "'";
 		return wpl_db::select($query, 'loadResult');
 	}
+	private static function normalizeLatLong($latLong)
+	{
+		$factor = pow(10, 6);
+		return intval($latLong * $factor) / $factor;
+	}
 
 	public static function render_markers($wpl_properties) {
 		$rf_markers = [];
@@ -178,12 +186,16 @@ class wpl_rf_property
 		$advanced_markers_status = false;
 		if(isset($advanced_markers['status']) and $advanced_markers['status']) $advanced_markers_status = true;
 
+		$icons = wpl_global::get_property_type_icons();
+
 		foreach($wpl_properties as $key => $wpl_property) {
 			if($key == 'current' and !count($wpl_property)) continue;
 			if(empty($wpl_property['googlemap_lt'])) {
 				continue;
 			}
-			$lat_long =  $wpl_property['googlemap_lt'].','.$wpl_property['googlemap_ln'];
+			$lat = static::normalizeLatLong($wpl_property['googlemap_lt']);
+			$long = static::normalizeLatLong($wpl_property['googlemap_ln']);
+			$lat_long =  $lat .','. $long;
 			if(isset($geo_points[$lat_long]))
 			{
 				$j = $geo_points[$lat_long];
@@ -194,12 +206,30 @@ class wpl_rf_property
 			}
 			$rf_marker = [
 				'id' => $wpl_property['id'],
-				'googlemap_lt' => $wpl_property['googlemap_lt'],
-				'googlemap_ln' => $wpl_property['googlemap_ln'],
+				'googlemap_lt' => $lat,
+				'googlemap_ln' => $long,
 				'title' => wpl_render::render_price($wpl_property['price'], $wpl_property['price_unit'], '', wpl_global::wpl_minimize_price($wpl_property['price'])),
 				'pids' => $wpl_property['id'] . '',
 				'gmap_icon' => $listings[$wpl_property['listing']]['gicon'] ?? 'default.png',
 			];
+			if($advanced_markers_status)
+			{
+				$color = (isset($advanced_markers['listing_types'][$wpl_property['listing']])) ? $advanced_markers['listing_types'][$wpl_property['listing']] : '#333333';
+				$icon = (isset($advanced_markers['property_types'][$wpl_property['property_type']])) ? $advanced_markers['property_types'][$wpl_property['property_type']] : 'residential.svg';
+				$icon_url = '';
+				foreach ($icons as $icon_item) {
+					if($icon_item['icon'] == $icon) {
+						$icon_url = $icon_item['url'];
+						break;
+					}
+				}
+
+				$rich_marker = '<div class="wpl-richmarker-wp" style="color: '.$color.';">';
+				$rich_marker .= '<div class="wpl-richmarker-icon"><img src="'. $icon_url .'"></div>';
+				$rich_marker .= '</div>';
+
+				$rf_marker['advanced_marker'] = $rich_marker;
+			}
 			$rf_markers[$index] = apply_filters('wpl_property/render_markers', $rf_marker, $wpl_property);
 			$geo_points[$lat_long] = $index;
 			$index++;
@@ -348,6 +378,11 @@ class wpl_rf_property
 
 
 			$done_this = false;
+			$created_query = apply_filters("wpl_rf_property/createQuery/$format", [], $table_column, $value, $vars);
+			if(!empty($created_query)) {
+				$query[] = $created_query;
+				continue;
+			}
 
 			/** using detected files **/
 			if(isset($find_files[$format]))
@@ -541,8 +576,9 @@ class wpl_rf_property
 			$post->meta_data['sp_forclosure'] = $post->meta_data['sp_forclosure'] ?? null;
 			$post->meta_data['sp_featured'] = $post->meta_data['sp_featured'] ?? null;
 			$post->meta_data['sp_hot'] = $post->meta_data['sp_hot'] ?? null;
-			$post->meta_data['meta_keywords'] = $post->meta_data['meta_keywords'] ?? wpl_property::get_meta_keywords($post->meta_data);
+			$post->meta_data['meta_keywords'] = $post->meta_data['meta_keywords'] ?? '';
 			$post->meta_data['show_internet'] = $post->meta_data['show_internet'] ?? 1;
+			$post->meta_data['kind'] = $post->meta_data['kind'] ?? 0;
 			$post->meta_data['finalized'] = 1;
 			$post->meta_data['confirmed'] = 1;
 			$post->meta_data['deleted'] = 0;
@@ -550,7 +586,7 @@ class wpl_rf_property
 			$mls_id = $post->meta_data['mls_id'];
 			$ref_id = $post->meta_data['ref_id'];
 			$source = $post->meta_data['source'];
-			$kind = $post->meta_data['kind'] ?? 0;
+			$kind = $post->meta_data['kind'];
 			$rfData = (array)$post->meta_data['realty_feed_raw_data'];
 			if (empty($kind)) {
 				$kind = 0;
@@ -590,6 +626,7 @@ class wpl_rf_property
 				$this->update_existing_property($property_id, $saved_property, $ref_id, $rfData);
 			}
 			$post->meta_data['_wpl_id'] = intval($property_id);
+			$post->meta_data['id'] = intval($property_id);
 			$post->meta_data['show_address'] = 1;
 		}
 
@@ -715,6 +752,7 @@ class wpl_rf_property
 			$row['price'] = $rawData->ListPrice;
 			$row['price_si'] = $rawData->ListPrice;
 			$row['price_unit'] = 260;
+			$row['kind'] = 0;
 			$saved_property = wpl_db::select("SELECT * FROM `#__wpl_properties` WHERE kind = '0' and mls_id = '{$rawData->ListingId}' and `source` = 'RF'", 'loadAssoc');
 			if(!$saved_property) {
 				$default_user_id = wpl_settings::get('rf_default_user');
@@ -908,7 +946,7 @@ class wpl_rf_property
 	}
 
 	private function get_local_property($propertyId) {
-		$result = wpl_db::select('select id, user_id, googlemap_ln, googlemap_lt from `#__wpl_properties` where id = ' . $propertyId, 'loadAssoc');
+		$result = wpl_db::select('select id, user_id, googlemap_ln, googlemap_lt from `#__wpl_properties` where id = ' . $propertyId, 'loadAssoc', true);
 		if(empty($result)) {
 			return [];
 		}

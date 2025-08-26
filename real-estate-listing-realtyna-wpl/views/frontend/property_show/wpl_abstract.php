@@ -98,6 +98,17 @@ abstract class wpl_property_show_controller_abstract extends wpl_controller
         $property = $this->model->get_property_raw_data($this->pid);
 		$property = apply_filters('wpl_property_show_controller_abstract/display/property', $property);
 
+		/** no property found **/
+		if(!$property or $property['finalized'] == 0 or $property['confirmed'] == 0 or $property['deleted'] == 1 or $property['expired'] >= 1)
+		{
+			/** import message tpl **/
+			if(isset($property['confirmed']) and !$property['confirmed']) $this->message = wpl_esc::return_html_t("Sorry! The property is not visible until it is confirmed by someone.");
+			else $this->message = wpl_esc::return_html_t("Sorry! Either the url is incorrect or the listing is no longer available.");
+			status_header(410);
+			$this->message = apply_filters('wpl_property_show_controller_abstract/display/message', $this->message, $property);
+			return parent::render($this->tpl_path, 'message', false, true);
+		}
+
         // Property show layout
         if($property['kind'] == 1) $tpl = wpl_global::get_setting('wpl_complex_propertyshow_layout');
         elseif ($property['kind'] == 4) $tpl = wpl_global::get_setting('wpl_neighborhood_propertyshow_layout');
@@ -106,16 +117,6 @@ abstract class wpl_property_show_controller_abstract extends wpl_controller
         if(trim($tpl ?? "") == '') $tpl = 'default';
         
         $this->tpl = wpl_request::getVar('tpl', $tpl);
-
-		/** no property found **/
-		if(!$property or $property['finalized'] == 0 or $property['confirmed'] == 0 or $property['deleted'] == 1 or $property['expired'] >= 1)
-		{
-			/** import message tpl **/
-			if(isset($property['confirmed']) and !$property['confirmed']) $this->message = wpl_esc::return_html_t("Sorry! The property is not visible until it is confirmed by someone.");
-            else $this->message = wpl_esc::return_html_t("Sorry! Either the url is incorrect or the listing is no longer available.");
-            
-			return parent::render($this->tpl_path, 'message', false, true);
-		}
 		
 		$current_user = wpl_users::get_wpl_user();
 		$lrestrict = !empty($current_user->maccess_lrestrict_pshow) ? $current_user->maccess_lrestrict_pshow : '';
