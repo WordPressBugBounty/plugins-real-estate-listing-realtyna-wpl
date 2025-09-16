@@ -275,19 +275,24 @@ function widget_search_frontend_general_price(
                         ) . '</option>';
                 }
 
-                while ($i < $listing_field['max']) {
-                    if ($i == '0' and $any) {
-                        $i += $listing_field['division'];
-                        continue;
-                    }
+				$select_options = [];
+				while ($i < $listing_field['max']) {
+					if ($i == '0' and $any) {
+						$i += $listing_field['division'];
+						continue;
+					}
+					$select_options[] = $i;
+					$i += $listing_field['division'];
+				}
+				$select_options = apply_filters('widget_search/frontend/general/price/minmax_selectbox/options', $select_options, $listing_field);
 
+				foreach ($select_options as $i) {
                     $html .= '<option value="' . $i . '" ' . (($listing_field['cur_min'] == $i and $i != $listing_field['min']) ? 'selected="selected"' : '') . '>' . $unit_name . ' ' . number_format(
                             $i,
                             0,
                             '.',
                             $listing_field['separator']
                         ) . '</option>';
-                    $i += $listing_field['division'];
                 }
 
                 $html .= '<option value="' . $listing_field['max'] . '">' . $unit_name . ' ' . number_format(
@@ -308,19 +313,24 @@ function widget_search_frontend_general_price(
 
                 $i = $listing_field['min'];
 
-                while ($i < $listing_field['max']) {
-                    if ($i == '0' and $any) {
-                        $i += $listing_field['division'];
-                        continue;
-                    }
+				$select_options = [];
+				while ($i < $listing_field['max']) {
+					if ($i == '0' and $any) {
+						$i += $listing_field['division'];
+						continue;
+					}
+					$select_options[] = $i;
+					$i += $listing_field['division'];
+				}
+				$select_options = apply_filters('widget_search/frontend/general/price/minmax_selectbox/options', $select_options, $listing_field);
 
+				foreach ($select_options as $i) {
                     $html .= '<option value="' . $i . '" ' . (($listing_field['cur_max'] == $i and $i != $listing_field['min']) ? 'selected="selected"' : '') . '>' . $unit_name . ' ' . number_format(
                             $i,
                             0,
                             '.',
                             $listing_field['separator']
                         ) . '</option>';
-                    $i += $listing_field['division'];
                 }
 
                 $html .= '<option value="' . $listing_field['max'] . '">' . $unit_name . ' ' . number_format(

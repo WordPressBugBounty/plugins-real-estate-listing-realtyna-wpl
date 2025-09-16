@@ -62,7 +62,7 @@ function widget_search_frontend_general_number(
 
         /** current values **/
         $current_min_value = max(
-            stripslashes(wpl_request::getVar('sf_tmin_' . $field_data['table_column'], $min_value)),
+            stripslashes(wpl_request::getVar('sf_tmin_' . $field_data['table_column'], '-1')),
             $min_value
         );
         $current_max_value = min(

@@ -2814,4 +2814,30 @@ class wpl_property
 		}
 		return apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/queries', $queries, $term, $kind);
 	}
+
+	public function update_openhouse_tag()
+	{
+		$listings = wpl_db::select("SELECT distinct `parent_id` FROM `#__wpl_items` WHERE `item_type`='opendates' and parent_id in (select id from `#__wpl_properties` where sp_openhouse = 1)", 'loadAssocList');
+		if (empty($listings)){
+			return;
+		}
+
+		foreach($listings as $key => $listing)
+		{
+			$id = $listing['parent_id'];
+			$open_dates = wpl_db::select("SELECT * FROM `#__wpl_items` WHERE `parent_id`='{$id}' AND `item_type`='opendates'", 'loadObjectList');
+			if(!empty($open_dates))
+			{
+				$valid_date = wpl_items::render_opendates($open_dates, true);
+				if(empty($valid_date)) unset($listings[$key]);
+			}
+		}
+		$listing_ids = array_column($listings,'parent_id');
+
+		if(count($listing_ids) > 0){
+			wpl_db::q("UPDATE `#__wpl_properties` SET `sp_openhouse`='0' WHERE `sp_openhouse`='1' and `id` NOT IN (".implode(',', $listing_ids).")");
+		} else {
+			wpl_db::q("UPDATE `#__wpl_properties` SET `sp_openhouse`='0' WHERE `sp_openhouse`='1'");
+		}
+	}
 }

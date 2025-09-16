@@ -4,6 +4,11 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.1.0 (<span class="wpl_log_date">09/16/2025</span>)</h4>
+		- Added: Add cron to update openhouse tags<br>
+		- Fixed: Showing county/city list in search widget for MLS On The Fly™ listings<br>
+		- Fixed: Disable geocoding for MLS On The Fly™ listings<br>
+
 		<h4>WPL5.0.13 (<span class="wpl_log_date">08/25/2025</span>)</h4>
 		- Added: cache some queries<br>
 		- Added: useful hooks<br>

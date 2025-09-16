@@ -130,6 +130,7 @@ class wpl_property_listing_controller extends wpl_controller
 
     private function advanced_locationtextsearch_autocomplete($term, $kind = 0)
     {
+		$term = trim($term ?? '');
 		$settings = wpl_settings::get_settings(3);
 		$queries = wpl_property::get_suggestion_fields($kind, $term);
         $limit = 5;
@@ -152,36 +153,24 @@ class wpl_property_listing_controller extends wpl_controller
 			$output = [];
 			foreach($queries as $column => $title)
 			{
-				if(in_array($column, ['mls_id', 'location_text'])) {
-					$property_object = new wpl_property();
-					$property_object->start(0, $limit, '', '', ["sf_text_$column" => $term]);
-					$property_object->query();
-					$found = $property_object->search();
-					$counter = 0;
-					foreach ($found as $found_item) {
-						$counter++;
-						if($counter > $limit) {
-							break;
-						}
-						$value = $found_item->{$column};
-						if($column == 'location_text') {
-							$value = wpl_property::generate_location_text((array) $found_item);
-						}
-						$output[$column . $value] = array('title' => $title, 'label' => $value, 'column' => $column, 'value' => $value);
-					}
+				if($column == 'mls_id' and strpos($term, ' ') !== false) {
 					continue;
 				}
-				$found_terms = get_terms('wpl_property_' . $column);
+				$property_object = new wpl_property();
+				$property_object->start(0, $limit, '', '', ["sf_text_$column" => $term]);
+				$property_object->query();
+				$found = $property_object->search();
 				$counter = 0;
-				foreach($found_terms as $found_term) {
-					if(strpos(strtolower($found_term->name), strtolower($term)) !== false) {
-						$counter++;
-						if($counter > $limit) {
-							break;
-						}
-						$output_row = array('title' => $title, 'label' => $found_term->name, 'column' => $column, 'value' => $found_term->name);
-	                    $output[$column . $found_term->name] = apply_filters('wpl_property_listing_controller/advanced_locationtextsearch_autocomplete/rf/output_row', $output_row, $found_term);
+				foreach ($found as $found_item) {
+					$counter++;
+					if($counter > $limit) {
+						break;
 					}
+					$value = $found_item->{$column};
+					if($column == 'location_text') {
+						$value = wpl_property::generate_location_text((array) $found_item);
+					}
+					$output[$column . $value] = array('title' => $title, 'label' => $value, 'column' => $column, 'value' => $value);
 				}
 			}
 			$output[] = array('label' => $term, 'title' => wpl_esc::return_html_t('Keyword'), 'column' => '', 'value' => $term);
@@ -333,7 +322,7 @@ class wpl_property_listing_controller extends wpl_controller
         // WHERE statement
         $vars = array_merge(wpl_request::get('POST'), wpl_request::get('GET'));
 		$where = array_merge($vars, $default);
-		if(wpl_settings::is_mls_on_the_fly() && $kind == 0) {
+		if($kind == 0) {
 			$model = new wpl_property();
 			$model->start(1, 1, 'id', 'ASC', $where, $kind);
 			$model->query();

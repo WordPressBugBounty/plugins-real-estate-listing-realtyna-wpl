@@ -93,7 +93,7 @@ class wpl_units
 		if(trim($id ?? '') == '') return array();
 		
 		$unit = wpl_units::get_units('', '', wpl_db::prepare(" AND `id` = %d", $id));
-		return (isset($unit[0]) ? $unit[0] : NULL);
+		return $unit[0] ?? null;
 	}
 	
     /**

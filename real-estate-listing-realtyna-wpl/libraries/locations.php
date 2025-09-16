@@ -522,6 +522,11 @@ class wpl_locations
 		if($property_id) $property_data = wpl_property::get_property_raw_data($property_id);
         if(!$property_id) $property_id = $property_data['id'];
 
+		// no need to get lat/long for RF properties
+		$source = wpl_property::get_property_source($property_id);
+		if($source == 'RF') {
+			return [0, 0];
+		}
         $location_text = wpl_property::generate_location_text($property_data);
 		$location_text = apply_filters('wpl_locations/update_LatLng/location_text', $location_text, $property_data);
         $LatLng = self::get_LatLng($location_text);
@@ -536,8 +541,8 @@ class wpl_locations
             }
         }
 
-        $latitude = (double) ($LatLng[0] ? $LatLng[0] : $property_data['googlemap_lt']);
-        $longitude = (double) ($LatLng[1] ? $LatLng[1] : $property_data['googlemap_ln']);
+        $latitude = (double) ($LatLng[0] ?: $property_data['googlemap_lt']);
+        $longitude = (double) ($LatLng[1] ?: $property_data['googlemap_ln']);
 
         return array($latitude, $longitude);
     }
@@ -694,11 +699,13 @@ class wpl_locations
 		$full = static::makeFull($text);
 		$abbreviation = static::makeAbbreviation($text);
 		$abbreviationState = static::makeFullState($abbreviation);
+		$fullState = static::makeFullState($full);
 		return array_unique([
 			$text,
 			$full,
 			$abbreviation,
 			$abbreviationState,
+			$fullState,
 		]);
 	}
 }

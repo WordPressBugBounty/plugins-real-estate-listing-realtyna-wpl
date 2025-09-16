@@ -935,24 +935,14 @@ class wpl_rf_property
 
 	private function merge_fields($property_id, $cloud_data) {
 		$local = $this->get_local_property($property_id);
-		if(!empty($cloud_data['googlemap_lt'])) {
-			unset($local['googlemap_lt']);
-		}
-		if(!empty($cloud_data['googlemap_ln'])) {
-			unset($local['googlemap_ln']);
-		}
 		$return = array_merge($cloud_data, $local);
 		return apply_filters('wpl_rf_property/merge_fields', $return, $property_id);
 	}
 
 	private function get_local_property($propertyId) {
-		$result = wpl_db::select('select id, user_id, googlemap_ln, googlemap_lt from `#__wpl_properties` where id = ' . $propertyId, 'loadAssoc', true);
+		$result = wpl_db::select('select id, user_id from `#__wpl_properties` where id = ' . $propertyId, 'loadAssoc', true);
 		if(empty($result)) {
 			return [];
-		}
-		if($result['googlemap_ln'] == 0 || $result['googlemap_lt'] == 0) {
-			unset($result['googlemap_lt']);
-			unset($result['googlemap_ln']);
 		}
 		// to remove columns that have no value
 		return array_filter($result);
@@ -1026,45 +1016,38 @@ class wpl_rf_property
 	}
 
 	public static function get_location_names($level, $conditions = []) {
-		$args = array(
-			'taxonomy' => 'wpl_property_location' . $level . '_name',
-		);
+		$mapped = [
+			2 => 'StateOrProvince',
+			3 => 'CountyOrParish',
+			4 => 'City',
+		];
+		$mapped = apply_filters('wpl_rf_property/get_location_names/mapped', $mapped);
+
+		$rf = \Realtyna\MlsOnTheFly\Boot\App::get(\Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RF::class);
+		$RFQuery = new \Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RFQuery();
+		$RFQuery->set_entity('Property');
+		$RFQuery->set_top(1000);
+		$RFQuery->set_groups([$mapped[$level], 'aggregate($count as ' . $mapped[$level] . 'Count)']);
 		if(!empty($conditions)) {
-			$args['meta_query'] = [];
 			foreach ($conditions as $table_column => $column_value) {
-				if(!is_array($column_value)) {
+				if (!is_array($column_value)) {
 					$column_value = trim($column_value);
-					if(empty($column_value)) {
+					if (empty($column_value)) {
 						continue;
 					}
 					$column_value = explode(',', $column_value);
 				}
-				$orQuery = [
-					'relation' => 'OR',
-				];
-				foreach ($column_value as $column_value_item) {
-					$column_value_item = trim($column_value_item);
-					if(empty($column_value_item)) {
-						continue;
-					}
-					$orQuery[] = [
-						'key' => $table_column,
-						'value' => $column_value_item,
-						'compare' => '=',
-					];
-				}
-				if(count($orQuery) == 1) {
-					continue;
-				}
-				$args['meta_query'][] = $orQuery;
+				$levelNumber = str_replace('location', '', $table_column);
+				$levelNumber = intval(str_replace('_name', '', $levelNumber));
+				$RFQuery->add_filter('where', $mapped[$levelNumber], 'eq', implode(', ', $column_value));
 			}
 		}
-		$terms = get_terms($args);
+
+		$RFResponse = $rf->get($RFQuery);
 		$return = [];
-		foreach($terms as $term) {
-			$return[] = $term->name;
+		foreach ($RFResponse->items as $item) {
+			$return[] = $item[$mapped[$level]];
 		}
-		sort($return);
 		return apply_filters('wpl_rf_property/get_location_names', $return, $level) ;
 	}
 

@@ -18,5 +18,11 @@ defined('_WPLEXEC') or die('Restricted access');
 .wpl_video_embed_container{margin: 10px 0;}
 .prow-textarea textarea.wpl_c_field_308{width: 60%;}
 .pwizard-wp .after-finilize-wp .message-wp{width: 60%;}
+.pwizard-wp .after-finilize-wp .message-wp .wpl-button{margin-bottom: 5px}
 .wpl-mass-actions{text-align: right;}
+    @media (max-width: 480px) {
+        .pwizard-wp .after-finilize-wp{text-align: center}
+        .pwizard-wp .after-finilize-wp .message-wp{width:100%;padding-left: 0;}
+        .pwizard-wp .after-finilize-wp .message-wp .wpl-button{margin-bottom: 5px;width: 100% !important;}
+    }
 </style>
