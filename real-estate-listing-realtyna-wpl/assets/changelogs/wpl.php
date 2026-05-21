@@ -4,6 +4,33 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.2.0 (<span class="wpl_log_date">05/22/2026</span>)</h4>
+		- Added: New `mmnumber` search field type with text, selectbox, and min/max selectbox display modes<br>
+		- Added: `andfeature` query format for AND-logic feature matching in search queries<br>
+		- Added: Auto-purge cron for RF-sourced properties not synced within 30 days<br>
+		- Added: State name/abbreviation expansion in location text search (matches both full and abbreviated US state names)<br>
+		- Added: PropertyRooms import from RF feed for MLS On The Fly™ listings<br>
+		- Added: WebP image support for user profile photo uploads<br>
+		- Improved: OpenHouse date parsing with timezone-aware DateTime, past-event filtering, and cached results<br>
+		- Improved: Skip MLS ID generation for RF-imported listings via `$generate_mls_id` parameter<br>
+		- Improved: Broadened shortcode detection in SEF to cover all registered shortcodes<br>
+		- Improved: Suppress display of private RF listings (`PrivateYn`)<br>
+		- Improved: Registered `boolean` type in checkbox search widget and `multiselect` in select widget<br>
+		- Fixed: Broken PHP expression in listing contact form template causing attribute output failure<br>
+		- Fixed: Double `itemprop` attribute on address microdata element<br>
+		- Fixed: Fatal errors when property/user columns are absent (null-safe fallback added)<br>
+		- Fixed: PHP warnings on corrupt or non-image files in EXIF reader<br>
+		- Fixed: Unintended parent event bubbling on remove-parameter buttons in params activity<br>
+		- Fixed: Price field min/max inputs rendering outside labeled wrapper in single-currency mode<br>
+		- Fixed: Undefined index notice for `secondary_email` in agent info template<br>
+		- Fixed: Premature output from `apply_filters('the_content', ...)` on description field<br>
+		- Fixed: Sanitized pagination and sort parameters in users query to prevent SQL injection<br>
+
+		<h4>WPL5.1.1 (<span class="wpl_log_date">09/26/2025</span>)</h4>
+		- Fixed: OpenHouse issue for MLS On The Fly™ listings<br>
+		- Fixed: Saving customized UI in settings<br>
+
+
 		<h4>WPL5.1.0 (<span class="wpl_log_date">09/16/2025</span>)</h4>
 		- Added: Add cron to update openhouse tags<br>
 		- Fixed: Showing county/city list in search widget for MLS On The Fly™ listings<br>

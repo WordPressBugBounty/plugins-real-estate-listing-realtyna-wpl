@@ -29,7 +29,7 @@ foreach($this->wpl_properties as $key=>$property)
     $parking    = (isset($property['raw']['f_150']) and trim($property['raw']['f_150_options'])) ? '<div class="parking">'.$parking_number.'</div>' : '';
 
     $pic_count  = '<div class="pic_count">'.$property['raw']['pic_numb'].'</div>';
-    $price 		= '<div class="price">'.$property['materials']['price']['value'].'</div>';
+    $price 		= isset($property['materials']['price']['value']) ? '<div class="price">'.$property['materials']['price']['value'].'</div>' : '';
 
     $office_name = '';
     $agent_name = '';

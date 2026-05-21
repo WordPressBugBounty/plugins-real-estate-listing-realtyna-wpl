@@ -884,6 +884,12 @@ class wpl_global
      */
 	public static function get_wp_pages($args = array())
 	{
+		// David.M.
+		// to avoid extra load
+		// we need to make it better
+		if(empty($args['number'])) {
+			$args['number'] = 100;
+		}
 		return get_pages($args);
 	}
 
@@ -2066,7 +2072,7 @@ class wpl_global
         foreach($vars as $field=>$value)
         {
             if(!is_string($value) or (is_string($value) and trim($value ?? '') == '')) continue;
-            $request_str .= $field .'='.urlencode($value).'&';
+            $request_str .= wpl_esc::return_attr($field) .'='.wpl_esc::return_attr($value).'&';
         }
 
         return trim($request_str ?? '', '& ');
@@ -2473,7 +2479,7 @@ class wpl_global
         @extract(wpl_filters::apply('wpl_googlemaps_api_key', array('API_key'=>$API_key)));
 
         // Include Google Maps Library
-        $javascript = (object) array('param1'=>'google-maps-wpl', 'param2'=>'http'.(stristr(wpl_global::get_full_url(), 'https://') != '' ? 's' : '').'://maps.googleapis.com/maps/api/js?libraries=places,drawing&callback=wpl_do_googlemaps_callbacks'.(trim($API_key ?? "") != '' ? '&key='.$API_key : ''), 'param4'=>'1', 'external'=>true);
+        $javascript = (object) array('param1'=>'google-maps-wpl', 'param2'=>'http'.(stristr(wpl_global::get_full_url(), 'https://') != '' ? 's' : '').'://maps.googleapis.com/maps/api/js?libraries=places,drawing&loading=async&callback=wpl_do_googlemaps_callbacks'.(trim($API_key ?? "") != '' ? '&key='.$API_key : ''), 'param4'=>'1', 'external'=>true);
         wpl_extensions::import_javascript($javascript);
 
         return true;
@@ -2560,7 +2566,7 @@ class wpl_global
         else
         {
             // To prevent email spam, the client must set recaptcha for send_to_friend form
-            if($option == 'gre_send_to_friend') {
+            if($option == 'gre_send_to_friend' && apply_filters('gre_send_to_friend_required', true)) {
                 return array('success'=>0, 'message'=>__('Please set recaptcha.', 'real-estate-listing-realtyna-wpl'));
             }
             return array('success'=>1, 'message'=>'');

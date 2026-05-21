@@ -48,7 +48,7 @@ jQuery(document).ready(function()
 	wpl_listing_set_js_triggers();
 	wpl_idx_check_existence();
     
-    <?php if(wpl_global::check_addon('membership') and wpl_session::get('wpl_dpr_popup')): ?>
+    <?php if(wpl_global::check_addon('membership') and wpl_session::get('wpl_dpr_popup') and !get_current_user_id()): ?>
     	wpl_dpr_popup();
     <?php endif; ?>    
     // check if listhub is enbaled run api tracker of api

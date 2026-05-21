@@ -119,9 +119,10 @@ class wpl_property
      * @static
      * @param int $user_id
      * @param int $kind
+     * @param bool $generate_mls_id
      * @return int Created Property ID
      */
-    public static function create_property_default($user_id = NULL, $kind = 0)
+    public static function create_property_default($user_id = NULL, $kind = 0, $generate_mls_id = true)
     {
         if(!$user_id) $user_id = wpl_users::get_cur_user_id();
 
@@ -129,8 +130,11 @@ class wpl_property
         list($query, $values) = self::generate_default_query($fields, $user_id, 'wpl_properties');
 
 		$query = apply_filters('create_default_property', $query, $values, $user_id, $kind, 'wpl_properties');
-
-        $property_id = wpl_db::q(wpl_db::prepare("INSERT INTO `#__wpl_properties` (".(trim($query ?? '') != '' ? $query . ", " : '')." `kind`, `user_id`, `finalized`, `add_date`, `mls_id`) VALUES (".(trim($values ?? '') != '' ? $values.", " : '')." %d, %d, '0', %s, %s)", $kind, $user_id, date("Y-m-d H:i:s"), self::get_new_mls_id()), 'insert');
+		$mls_id = 0;
+		if($generate_mls_id) {
+			$mls_id = self::get_new_mls_id();
+		}
+        $property_id = wpl_db::q(wpl_db::prepare("INSERT INTO `#__wpl_properties` (".(trim($query ?? '') != '' ? $query . ", " : '')." `kind`, `user_id`, `finalized`, `add_date`, `mls_id`) VALUES (".(trim($values ?? '') != '' ? $values.", " : '')." %d, %d, '0', %s, %s)", $kind, $user_id, date("Y-m-d H:i:s"), $mls_id), 'insert');
 
         list($query2, $values2) = self::generate_default_query($fields, $user_id, 'wpl_properties2');
 
@@ -541,7 +545,10 @@ class wpl_property
     }
 
 	public static function get_property_source($property_id) {
-		return wpl_db::get('source', 'wpl_properties', 'id', $property_id, true,'', true);
+		if(class_exists('wpl_sql_parser')) wpl_sql_parser::getInstance()->disable();
+		$source = wpl_db::get('source', 'wpl_properties', 'id', $property_id, true,'', true);
+		if(class_exists('wpl_sql_parser')) wpl_sql_parser::getInstance()->enable();
+		return $source;
 	}
 
     /**
@@ -555,9 +562,11 @@ class wpl_property
     {
         // First Validation
         if(!$property_id) return NULL;
-		$source = wpl_property::get_property_source($property_id);
-		if(wpl_settings::is_mls_on_the_fly() && $source == 'RF') {
-			return wpl_rf_property::getInstance()->get_property_raw_data($property_id, 'loadAssoc');
+		if(wpl_settings::is_mls_on_the_fly()) {
+			$source = wpl_property::get_property_source($property_id);
+			if($source == 'RF') {
+				return wpl_rf_property::getInstance()->get_property_raw_data($property_id, 'loadAssoc');
+			}
 		}
 
         // Property Data
@@ -1697,11 +1706,13 @@ class wpl_property
     {
         $cached = (array) wpl_property::get_property_cached_data($property_id);
         if($cached and isset($cached[$field_name])) return $cached[$field_name];
-		$source = wpl_property::get_property_source($property_id);
-		if(wpl_settings::is_mls_on_the_fly() && $source == 'RF') {
-			$raw = wpl_rf_property::getInstance()->get_property_raw_data($property_id);
-			if(!empty($raw)) {
-				return $raw[$field_name] ?? null;
+		if(wpl_settings::is_mls_on_the_fly()) {
+			$source = wpl_property::get_property_source($property_id);
+			if($source == 'RF') {
+				$raw = wpl_rf_property::getInstance()->get_property_raw_data($property_id);
+				if(!empty($raw)) {
+					return $raw[$field_name] ?? null;
+				}
 			}
 		}
         return wpl_db::get($field_name, 'wpl_properties', 'id', $property_id, true, '', true);
@@ -1988,7 +1999,7 @@ class wpl_property
         else $result['rendered'] = $rendered_fields['ids'];
 
         if(isset($rendered['materials']) and $rendered['materials']) $result['materials'] = $rendered['materials'];
-        else $result['materials'] = $rendered_fields['columns'];
+        else $result['materials'] = $rendered_fields['columns'] ?? [];
 
         $result['items'] = wpl_items::get_items($property_id, '', $property->kind, '', 1);
         $result['raw'] = $raw_data;

@@ -46,12 +46,15 @@ class wpl_listing_controller extends wpl_controller
 		$extensions = explode(',',$params['accept_ext']['ext_file']);
 		$extensions = apply_filters('wpl_listing_controller/gallery/upload/accept_ext', wpl_global::filter_extensions($extensions));
 		$extensionsStr = str_replace(';', '', implode('|', $extensions));
-		
+		$file_size = intval($params['accept_ext']['file_size']);
+		if(empty($file_size)) {
+			$file_size = 10000;
+		}
 		$upload_handler = new wpl_UploadHandler([
 			'upload_dir' => wpl_global::get_upload_base_path($blog_id),
 			'upload_url' => wpl_global::get_upload_base_url($blog_id),
 			'accept_file_types' => '/\.('.$extensionsStr.')$/i',
-			'max_file_size' => $params['accept_ext']['file_size']*1000,
+			'max_file_size' => $file_size*1000,
 			'min_file_size' => 1,
 			'max_number_of_files' => null
 		]);

@@ -232,6 +232,7 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
 		}
         // Run the Search
         $this->model->query();
+		do_action('wpl_property_listing_controller_abstract/before_search', $this);
         $properties = $this->model->search();
 
         // Finish Search
@@ -300,6 +301,13 @@ abstract class wpl_property_listing_controller_abstract extends wpl_controller
             else
             {
                 $wpl_properties[$property->id] = $this->model->full_render($property->id, $this->model->listing_fields, $property, array(), $force);
+
+				if(empty($wpl_properties[$property->id]) && wpl_global::zap_search_enabled()) {
+					wpl_db::insert('wpl_zap_listings_changes', ['pid' => $property->id, 'status' => 'delete']);
+					unset($wpl_properties[$property->id]);
+					continue;
+				}
+
                 // Add Include In Listings Stat
                 wpl_property::add_property_stats_item($property->id, 'inc_in_listings_numb');
 

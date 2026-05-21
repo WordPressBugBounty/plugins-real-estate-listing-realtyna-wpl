@@ -179,16 +179,29 @@ function widget_search_frontend_general_price(
                 $current_max_value = (isset($extoptions[1]) ? $extoptions[1] : '');
             }
 
+            if (count($units) == 1) {
+                $html .= '<div class="wpl_search_widget_from">';
+            }
+
             if ($input_type == 'number') {
                 $html .= '<label id="wpl_search_widget_from_label' . $widget_id . '" class="wpl_search_widget_from_label" for="sf' . $widget_id . '_min_' . $min_column . '">' . sprintf(
                         wpl_esc::return_html_t('Min %s'),
                         $field_data['name']
                     ) . '</label>';
             }
+
+            if (count($units) == 1) {
+                $html .= '<span class="wpl_search_widget_field_unit_sign">' . $units[0]['name'] . '</span>';
+            }
+
             $html .= '<input name="sf' . $widget_id . '_min_' . $min_column . '" type="' . $input_type . '" id="sf' . $widget_id . '_min_' . $min_column . '" step="' . $division . '" min="' . $min_value . '" value="' . $current_min_value . '" placeholder="' . sprintf(
                     wpl_esc::return_attr_t('Min %s'),
                     wpl_esc::return_attr_t($field_data['name'])
                 ) . '" />';
+
+            if (count($units) == 1) {
+                $html .= '</div><div class="wpl_search_widget_to">';
+            }
 
             if ($input_type == 'number') {
                 $html .= '<label id="wpl_search_widget_to_label' . $widget_id . '" class="wpl_search_widget_to_label" for="sf' . $widget_id . '_max_' . $max_column . '">' . sprintf(
@@ -196,10 +209,18 @@ function widget_search_frontend_general_price(
                         $field_data['name']
                     ) . '</label>';
             }
+
+            if (count($units) == 1) {
+                $html .= '<span class="wpl_search_widget_field_unit_sign">' . $units[0]['name'] . '</span>';
+            }
+
             $html .= '<input name="sf' . $widget_id . '_max_' . $max_column . '" type="' . $input_type . '" id="sf' . $widget_id . '_max_' . $max_column . '" step="' . $division . '" min="' . $min_value . '" value="' . $current_max_value . '" placeholder="' . sprintf(
                     wpl_esc::return_attr_t('Max %s'),
                     wpl_esc::return_attr_t($field_data['name'])
                 ) . '" />';
+            if (count($units) == 1) {
+                $html .= '</div>';
+            }
         } elseif ($show == 'minmax_slider') {
             foreach ($listing_fields as $list => $listing_field) {
                 wpl_html::set_footer(

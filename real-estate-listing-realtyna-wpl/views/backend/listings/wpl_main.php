@@ -63,7 +63,7 @@ class wpl_listings_controller extends wpl_controller
 		$this->page_number = wpl_request::getVar('wplpage', 1);
         $limit = wpl_request::getVar('limit', $settings['default_page_size']);
         $start = wpl_request::getVar('start', (($this->page_number-1)*$limit));
-        $orderby = wpl_request::getVar('orderby', $settings['default_orderby']);
+        $orderby = wpl_request::getVar('orderby', apply_filters('wpl_property/backend/default_orderby', $settings['default_orderby']));
         $order = wpl_request::getVar('order', $settings['default_order']);
 		$current_user_id = wpl_users::get_cur_user_id();
         $where = array();

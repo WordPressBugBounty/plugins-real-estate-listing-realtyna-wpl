@@ -239,6 +239,11 @@ class wpl_flex_controller extends wpl_controller
 			$dbst_id = wpl_flex::create_default_dbst();
 		}
 
+		$field_info = wpl_flex::get_field($dbst_id);
+		if(empty($field_info)) {
+			$this->response(['success'=> 0, 'message' => wpl_esc::return_html_t('Field not found.')]);
+		}
+
 		// Previous Storage
         $previous_storage = ($mode == 'add' ? $storage : wpl_flex::get_dbst_key('table_name', $dbst_id));
 

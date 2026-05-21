@@ -259,7 +259,7 @@ class wpl_images
 		if(!function_exists('exif_read_data')) {
 			return 0;
 		}
-		$exif = exif_read_data($source);
+		$exif = @exif_read_data($source);
 		if(!empty($exif['Orientation'])) {
 			switch($exif['Orientation'])
 			{

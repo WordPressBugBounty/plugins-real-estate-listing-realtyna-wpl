@@ -31,7 +31,7 @@ if (!$params_array) $params_array = array('' => '');
         <div class="fanc-row" id="wpl_param_row<?php wpl_esc::e($i); ?>">
             <input type="text" name="wpl_params[keys][]" placeholder="<?php wpl_esc::attr_t('Key'); ?>" value="<?php wpl_esc::html($key); ?>" />
             <input type="text" name="wpl_params[values][]" placeholder="<?php wpl_esc::attr_t('Value'); ?>" value="<?php wpl_esc::html($value); ?>" />
-            <span class="action-btn icon-recycle" onclick="wpl_remove_param(<?php wpl_esc::e($i); ?>);"></span>
+            <span class="action-btn icon-recycle" onclick="event.stopPropagation(); wpl_remove_param(<?php wpl_esc::e($i); ?>);"></span>
         </div>
 		<?php $i++; endforeach; ?>
     </div>
@@ -45,7 +45,7 @@ function wpl_add_param()
 	html = '<div class="fanc-row" id="wpl_param_row' + wpl_params_i + '">'+
 			'<input type="text" name="wpl_params[keys][]" placeholder="<?php wpl_esc::attr_t('Key'); ?>" /> '+
 			'<input type="text" name="wpl_params[values][]" placeholder="<?php wpl_esc::attr_t('Value'); ?>" /> '+
-			'<span class="action-btn icon-recycle" onclick="wpl_remove_param(' + wpl_params_i + ');"></span></div>';
+			'<span class="action-btn icon-recycle" onclick="event.stopPropagation(); wpl_remove_param(' + wpl_params_i + ');"></span></div>';
 	wplj(".fanc-body").append(html);
 
 	wpl_params_i++;

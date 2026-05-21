@@ -925,8 +925,20 @@ class wpl_users
 		$this->start_time = microtime(true);
 		
 		// Pagination and order options
-		$this->start = $start;
-		$this->limit = $limit;
+		$this->start = intval($start);
+		$this->limit = intval($limit);
+
+		$orderby = explode('.', $orderby);
+		foreach ($orderby as $orderbyKey => $orderbyItem) {
+			$orderbyItem = str_replace('`', '', $orderbyItem);
+			$orderby[$orderbyKey] = "`$orderbyItem`";
+		}
+		$orderby = implode('.', $orderby);
+
+		if(!in_array(strtolower($order), ['asc', 'desc'])) {
+			$order = 'DESC';
+		}
+
 		$this->orderby = $orderby;
 		$this->order = $order;
 		
@@ -1421,7 +1433,7 @@ class wpl_users
 		else $result['rendered'] = $rendered_fields['ids'];
         
         if(isset($rendered['materials']) and $rendered['materials']) $result['materials'] = $rendered['materials'];
-		else $result['materials'] = $rendered_fields['columns'];
+		else $result['materials'] = $rendered_fields['columns'] ?? [];
         
 		/** location text **/
 		if(isset($rendered['location_text'])) $result['location_text'] = $rendered['location_text'];

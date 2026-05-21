@@ -249,6 +249,7 @@ class wpl_property_listing_controller extends wpl_controller
         }
         else
         {
+			$returnData = apply_filters('wpl_property_listing_controller/contact_listing_user/pre_send', $returnData, $this);
             $parameters = array(
                 'fullname' => $fullname,
                 'phone' => $phone,

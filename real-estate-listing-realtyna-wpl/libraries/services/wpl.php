@@ -19,12 +19,6 @@ class wpl_service_wpl
 	{
         // Run WPL delete user function when a user removed from WordPress
         add_action('delete_user', array('wpl_users', 'delete_user'), 10, 1);
-        
-        // Start Session
-        $session_start = true;
-        if(defined('WPL_PHP_SESSIONS') and !WPL_PHP_SESSIONS) $session_start = false;
-        
-        if($session_start and !session_id() and !headers_sent()) session_start(['read_and_close' => true]);
 
         // Shutdown WPL objects
         add_action('wp_footer', array('wpl_global', 'wpl_shutdown'), 99);

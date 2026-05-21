@@ -40,8 +40,6 @@ foreach($this->wpl_profiles as $key=>$profile)
                       <?php else: ?>
 				  		<div <?php wpl_esc::item_prop($this->microdata, 'image'); ?> class="no_image"></div>
                       <?php endif; ?>
-
-                  ?>
               </div>
               <div class="back">
                   <a <?php wpl_esc::item_prop($this->microdata, 'url'); ?> href="<?php wpl_esc::url($profile['profile_link']); ?>" class="view_properties"><?php wpl_esc::html_t('View properties'); ?></a>

@@ -21,7 +21,7 @@ if($format == 'select' and !$done_this)
 		}
 		$query[] = [
 			'key' => $table_column,
-			'value' => $value,
+			'value' => urlencode($value),
 			'compare' => '=',
 		];
     }
@@ -36,12 +36,12 @@ elseif($format == 'multiselect' and !$done_this)
 			'relation' => 'OR',
 			[
 				'key' => $table_column,
-				'value' => $value,
+				'value' => urlencode($value),
 				'compare' => '=',
 			],
 			[
 				'key' => $table_column,
-				'value' => $value,
+				'value' => urlencode($value),
 				'compare' => 'LIKE',
 			],
 		];
@@ -91,7 +91,7 @@ elseif($format == 'multiple' and !$done_this)
 				}
 				$orQuery[] = [
 					'key' => $table_column,
-					'value' => $val,
+					'value' => urlencode($val),
 					'compare' => '=',
 				];
 			}
@@ -115,7 +115,7 @@ elseif($format == 'notmultiple' and !$done_this)
 			foreach ($values_ex as $val) {
 				$andQuery[] = [
 					'key' => $table_column,
-					'value' => $val,
+					'value' => urlencode($val),
 					'compare' => '<>',
 				];
 			}
@@ -239,7 +239,7 @@ elseif($format == 'text' and !$done_this)
 		} else {
 			$query[] = [
 				'key' => $table_column,
-				'value' => $value,
+				'value' => urlencode($value),
 				'compare' => '=',
 			];
 		}
@@ -351,7 +351,7 @@ elseif($format == 'feature' and !$done_this)
             foreach($values_ex as $value_ex) {
 				$orQuery[] = [
 					'key' => $table_column,
-					'value' => $field_values[$value_ex],
+					'value' => urlencode($field_values[$value_ex]),
 					'compare' => '=',
 				];
 			}
@@ -374,7 +374,7 @@ elseif($format == 'ptcategory' and !$done_this)
 			foreach ($property_types as $property_type) {
 				$orQuery[] = [
 					'key' => 'property_type',
-					'value' => $property_type,
+					'value' => urlencode($property_type),
 					'compare' => '=',
 				];
 			}
@@ -397,7 +397,7 @@ elseif($format == 'ltcategory' and !$done_this)
 			foreach ($listing_types as $listing_type) {
 				$orQuery[] = [
 					'key' => 'listing',
-					'value' => $listing_type,
+					'value' => urlencode($listing_type),
 					'compare' => '=',
 				];
 			}
@@ -477,7 +477,7 @@ elseif($format == 'notselect' and !$done_this)
 		}
 		$query[] = [
 			'key' => $table_column,
-			'value' => $value,
+			'value' => urlencode($value),
 			'compare' => '<>',
 		];
 	}

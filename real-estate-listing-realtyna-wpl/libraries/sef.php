@@ -126,8 +126,12 @@ class wpl_sef
 		
 		if($view == 'property_show')
 		{
-			$exp = explode('-', $ex[0]);
-			$property_id = apply_filters('wpl_service_sef/run/property_show/detect_property', $exp[0], $query_string);
+			$property_id = wpl_request::getVar('pid');
+			if(empty($property_id)) {
+				$exp = explode('-', $ex[0]);
+				$property_id = $exp[0];
+			}
+			$property_id = apply_filters('wpl_service_sef/run/property_show/detect_property', $property_id, $query_string);
 			wpl_request::setVar('pid', $property_id, 'method', false);
 			$source = wpl_property::get_property_field('source', $property_id);
 			// if it's not realty feed property
@@ -365,10 +369,11 @@ class wpl_sef
         /** set view **/
         if(trim($wplview ?? '') != '') wpl_request::setVar('wplview', $wplview);
         
-        $pattern = get_shortcode_regex();
+
+        $wpl_shortcodes = array('WPL', 'wpl_property_listings', 'wpl_property_show', 'et_pb_wpl_property_show', 'wpl_profile_listing', 'wpl_profile_show', 'wpl_my_profile', 'wpl_add_edit_listing', 'wpl_listing_manager');
+        $pattern = get_shortcode_regex($wpl_shortcodes);
         preg_match('/'.$pattern.'/s', $post_content, $matches);
-        
-        $wpl_shortcodes = array('WPL', 'wpl_property_listings', 'wpl_property_show', 'wpl_profile_listing', 'wpl_profile_show', 'wpl_my_profile', 'wpl_add_edit_listing', 'wpl_listing_manager');
+
         if(is_array($matches) and isset($matches[2]) and in_array($matches[2], $wpl_shortcodes))
         {
             $params_str = trim($matches[3] ?? '', ', ');
@@ -380,6 +385,9 @@ class wpl_sef
                 {
                     if(trim($key ?? '') == '') continue;
                     wpl_request::setVar($key, $value, 'method', false);
+					if($key == 'mls_id') {
+						wpl_request::setVar('pid', wpl_property::pid($value), 'method', false);
+					}
                 }
             }
         }

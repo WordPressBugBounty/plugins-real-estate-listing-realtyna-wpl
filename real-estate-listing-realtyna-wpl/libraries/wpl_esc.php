@@ -119,7 +119,7 @@ class wpl_esc {
 	public static function item_address($has_microdata) {
 		if($has_microdata) {
 			wpl_esc::item_type($has_microdata, 'PostalAddress');
-			wpl_esc::item_prop($$has_microdata, 'address');
+			wpl_esc::item_prop($has_microdata, 'address');
 		}
 	}
 

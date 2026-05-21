@@ -90,7 +90,12 @@ elseif($type == 'textarea' and !$done_this) //////////////////////////// textare
         }
         
         $value = stripslashes($value ?? '');
-        if($field->table_column == 'field_308') $value = apply_filters('the_content', $value);
+        if($field->table_column == 'field_308')
+		{
+			ob_start();
+			$value = apply_filters('the_content', $value);
+			ob_end_clean();
+		}
         $value = wpl_global::do_shortcode($value);
 
 		// UTF8 encoded

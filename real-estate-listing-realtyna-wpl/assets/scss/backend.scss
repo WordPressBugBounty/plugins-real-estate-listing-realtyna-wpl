@@ -2341,3 +2341,8 @@ a.wpl_actions {
 {
   z-index: 1000000 !important;
 }
+
+/*Showing scheduler*/
+.wpl-scheduler-addon .side-15{
+  overflow: auto;
+}

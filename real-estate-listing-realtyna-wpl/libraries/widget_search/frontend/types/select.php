@@ -208,3 +208,4 @@ function widget_search_frontend_general_select(
 }
 
 add_filter('widget_search/frontend/general/select', 'widget_search_frontend_general_select', 10, 8);
+add_filter('widget_search/frontend/general/multiselect', 'widget_search_frontend_general_select', 10, 8);

@@ -59,9 +59,9 @@ class wpl_flex
      * @param int $field_id
      * @return object
      */
-	public static function get_field($field_id)
+	public static function get_field($field_id, $use_cache = true)
 	{
-        return wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_dbst` WHERE `id` = %d", $field_id), 'loadObject', true);
+        return wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_dbst` WHERE `id` = %d", $field_id), 'loadObject', $use_cache);
 	}
 
     /**
@@ -309,8 +309,8 @@ class wpl_flex
 		/** first validation **/
 		if(trim($key ?? '') == '' or trim($dbst_id ?? '') == '') return false;
 		
-		$dbst_data = self::get_field($dbst_id);
-		return (isset($dbst_data->$key) ? $dbst_data->$key : NULL);
+		$dbst_data = self::get_field($dbst_id, false);
+		return ($dbst_data->$key ?? NULL);
 	}
 	
     /**
@@ -814,9 +814,9 @@ class wpl_flex
 
 		foreach($ex_sort_ids as $ex_sort_id)
 		{
-			if ($counter < 10) $index = $flex_category["index"] . '.00' . $counter;
-			elseif ($counter < 100) $index = $flex_category["index"] . '.0' . $counter;
-			else $index = $flex_category["index"] . '.' . $counter;
+			if ($counter < 10) $index = intval($flex_category["index"]) . '.00' . $counter;
+			elseif ($counter < 100) $index = intval($flex_category["index"]) . '.0' . $counter;
+			else $index = intval($flex_category["index"]) . '.' . $counter;
 
 			self::update('wpl_dbcat', $ex_sort_id, 'index', $index);
 			$counter++;

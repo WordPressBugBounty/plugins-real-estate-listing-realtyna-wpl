@@ -329,6 +329,13 @@ class wpl_rf_property
 							'compare' => $value == 10 ? '=' : '!=',
 						];
 					}
+					if($value == 10) {
+						$orQuery[] = [
+							'key' => 'listing',
+							'value' => 'For Lease',
+							'compare' => '=',
+						];
+					}
 
 					$query[] = $orQuery;
 				}
@@ -339,7 +346,7 @@ class wpl_rf_property
 				foreach ($field_options['values'] as $field_option) {
 					$field_values[$field_option['key']] = $field_option['value'];
 				}
-			} else {
+			} elseif($format != 'text') {
     			$flex_field_options = wpl_flex::get_field_options($field_id);
 
     			// feature
@@ -600,7 +607,7 @@ class wpl_rf_property
 					$default_user_id = 0;
 				}
 
-				$property_id = wpl_property::create_property_default(1, $kind);
+				$property_id = wpl_property::create_property_default(1, $kind, false);
 
 				$property = [
 					'kind' => $kind,
@@ -612,6 +619,7 @@ class wpl_rf_property
 					'expired' => 0,
 					'confirmed' => 1,
 					'finalized' => 1,
+					'last_sync_date' => date('Y-m-d H:i:s'),
 				];
 
 				$property = apply_filters('wpl_rf_property/rf_after_mapping/property', $property, $rfData, $property_id);
@@ -627,7 +635,10 @@ class wpl_rf_property
 			}
 			$post->meta_data['_wpl_id'] = intval($property_id);
 			$post->meta_data['id'] = intval($property_id);
-			$post->meta_data['show_address'] = 1;
+			$post->meta_data['show_address'] = $post->meta_data['show_address'] ?? 1;
+			if(empty($rfData['UnparsedAddress'])) {
+			    $post->meta_data['show_address'] = 0;
+			}
 		}
 
 		return $posts;
@@ -639,36 +650,55 @@ class wpl_rf_property
 		}
 		$cacheKey = "wpl-openhouse-$refId";
 		$found = wp_cache_get($cacheKey, 'wpl_rf_property');
-		if($found) {
-			return $found;
+		if(!empty($found) && !empty($found['timestamp'])) {
+			if(time() - $found['timestamp'] < 7200) {
+				return $found['result'];
+			}
 		}
 		try {
 			$items = $this->doRfRequest('OpenHouse', [
-				['method' => 'where', 'field' => 'ListingKey', 'operator' => 'eq', 'value' => $refId]
+				['method' => 'where', 'field' => 'ListingKey', 'operator' => 'eq', 'value' => $refId],
+				['method' => 'where', 'field' => 'OpenHouseDate', 'operator' => 'ge', 'value' => date('Y-m-d', strtotime('-1 day'))],
 			]);
 
 			usort($items, function ($a, $b) {
-				$dateA = DateTime::createFromFormat('Y-m-d H:i:s', $a->OpenHouseDate.' '.$a->OpenHouseStartTime);
-				$dateB = DateTime::createFromFormat('Y-m-d H:i:s', $b->OpenHouseDate.' '.$b->OpenHouseStartTime);
+				$dateA = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $a->OpenHouseStartTime);
+				$dateB = DateTime::createFromFormat('Y-m-d\TH:i:s\Z', $b->OpenHouseStartTime);
 				return $dateA <=> $dateB;
 			});
 			$openDates = [];
+			$timezone = new DateTimeZone(wp_timezone_string());
+			$now = new DateTime('now', $timezone);
 			foreach ($items as $key => $open_row) {
-				$open_row = apply_filters('wpl_rf_property/getOpenDates/openDateRaw', $open_row);
-				$openDates[] = (object)[
+				$itemDateStart = DateTime::createFromFormat('Y-m-d\TH:i:s\Z',$open_row->OpenHouseStartTime);
+				$itemDateEnd = DateTime::createFromFormat('Y-m-d\TH:i:s\Z',$open_row->OpenHouseEndTime);
+				if(!$itemDateStart or !$itemDateEnd) {
+					continue;
+				}
+
+				if($itemDateEnd->getTimestamp() < $now->getTimestamp()) {
+					continue;
+				}
+				$itemDateStart->setTimeZone( $timezone );
+				$openHouseStartTime = $itemDateStart->format('H:i');
+				$date = $itemDateStart->format('Y-m-d');
+
+				$itemDateEnd->setTimeZone( $timezone );
+				$openHouseEndTime = $itemDateEnd->format('H:i');
+				$openDate = (object)[
 					'item_extra3' => '',
-					'item_name' => $open_row->OpenHouseDate,
-					'item_extra2' => 'Start time: ' . $open_row->OpenHouseStartTime . ' - ' . 'End time: ' . $open_row->OpenHouseEndTime,
+					'item_name' => $date,
+					'item_extra2' => 'Start time: ' . $openHouseStartTime . ' - ' . 'End time: ' . $openHouseEndTime,
 					'id' => 0 - $key,
 					'raw' => $open_row,
 				];
+				$openDates[] = apply_filters('wpl_rf_property/getOpenDates/openDate', $openDate, $open_row);
 			}
-			wp_cache_set($cacheKey, $openDates, 'wpl_rf_property');
+			wp_cache_set($cacheKey, ['result' => $openDates, 'timestamp' => time()], 'wpl_rf_property');
 			return $openDates;
 		} catch (Exception $e) {
 			return [];
 		}
-
 	}
 
 	public function fetch_agent_info($property) {
@@ -689,7 +719,7 @@ class wpl_rf_property
 		return $property;
 	}
 
-	public function doRfRequest($entity, $where) {
+	public function doRfRequest($entity, $where, $orders = []) {
 		$rf = \Realtyna\MlsOnTheFly\Boot\App::get(\Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RF::class);
 		$RFQuery = new \Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RFQuery();
 		$RFQuery->set_entity($entity);
@@ -697,12 +727,24 @@ class wpl_rf_property
 		foreach ($where as $whereItem) {
 			$RFQuery->add_filter($whereItem['method'], $whereItem['field'], $whereItem['operator'], $whereItem['value']);
 		}
-		$filterCallback = function ($default) {
-			return [];
-		};
-		add_filter('pre_option_realtyna_rf_shell_global_filters', $filterCallback);
-		$RFResponse = $rf->get($RFQuery);
-		remove_filter('pre_option_realtyna_rf_shell_global_filters', $filterCallback);
+		if(!empty($orders)) {
+			foreach ($orders as $order) {
+				$RFQuery->set_order($order);
+			}
+		}
+
+		$args = [];
+
+		if($entity != 'Property') {
+			$args = [
+				'expand' => false,
+				'ignore_global_filter' => true,
+				'ignore_featured_properties' => true,
+				'count' => false,
+			];
+		}
+
+		$RFResponse = $rf->get($RFQuery, $args);
 		return $RFResponse->items;
 	}
 
@@ -726,6 +768,10 @@ class wpl_rf_property
 	public function getOffice($officeMlsId) {
 		if(empty($officeMlsId)) {
 			return [];
+		}
+		$return = apply_filters('wpl_rf_property/getOffice', null, $officeMlsId, $this);
+		if($return !== null) {
+			return $return;
 		}
 		try {
 			$items = $this->doRfRequest('Office', [
@@ -761,7 +807,7 @@ class wpl_rf_property
 					$default_user_id = 0;
 				}
 
-				$property_id = wpl_property::create_property_default(1, 0);
+				$property_id = wpl_property::create_property_default(1, 0, false);
 
 				$property = [
 					'kind' => 0,
@@ -773,6 +819,7 @@ class wpl_rf_property
 					'expired' => 0,
 					'confirmed' => 1,
 					'finalized' => 1,
+					'last_sync_date' => date('Y-m-d H:i:s'),
 				];
 
 				$property = apply_filters('wpl_rf_property/rf_after_mapping/property', $property, (object) $row, $property_id);
@@ -819,6 +866,13 @@ class wpl_rf_property
 		$default_user_id = wpl_settings::get('rf_default_user');
 		if(empty($update['user_id']) and empty($saved_property['user_id']) and !empty($default_user_id)) {
 			$update['user_id'] = $default_user_id;
+		}
+
+		if(empty($saved_property['last_sync_date']) ||
+			$saved_property['last_sync_date'] == '0000-00-00 00:00:00' ||
+			time() >= strtotime($saved_property['last_sync_date']) + 86400
+		) {
+			$update['last_sync_date'] = date('Y-m-d H:i:s');
 		}
 		if(!empty($update)) {
 			wpl_db::update('wpl_properties', $update, 'id', $property_id);
@@ -1002,7 +1056,9 @@ class wpl_rf_property
 				$result = $this->parse_post_meta($posts->posts[0]->ID, true);
 			}
 		} else {
+			if(class_exists('wpl_sql_parser')) wpl_sql_parser::getInstance()->disable();
 			$saved_property = wpl_db::select("SELECT * FROM `#__wpl_properties` WHERE id = '{$result['id']}' and `source` = 'RF'", 'loadAssoc');
+			if(class_exists('wpl_sql_parser')) wpl_sql_parser::getInstance()->enable();
 			$update =  $this->update_existing_property($property_id, $saved_property, $saved_property['ref_id'], $result);
 			foreach ($update as $field => $value) {
 				$result[$field] = $value;
@@ -1020,8 +1076,13 @@ class wpl_rf_property
 			2 => 'StateOrProvince',
 			3 => 'CountyOrParish',
 			4 => 'City',
+			5 => 'SubdivisionName',
 		];
 		$mapped = apply_filters('wpl_rf_property/get_location_names/mapped', $mapped);
+
+		if(empty($mapped[$level])) {
+			return [];
+		}
 
 		$rf = \Realtyna\MlsOnTheFly\Boot\App::get(\Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RF::class);
 		$RFQuery = new \Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RFQuery();
@@ -1094,6 +1155,24 @@ class wpl_rf_property
 		$this->total = $result->found_posts;
 		
 		return $this->total;
+	}
+
+	public static function auto_purge()
+	{
+		$last_month = date('Y-m-d H:i:s', time() - 2592000);
+		$last_week = date('Y-m-d H:i:s', time() - 604800);
+		if(wpl_global::is_multisite())
+		{
+			$fs = wpl_sql_parser::getInstance();
+			$fs->disable();
+		}
+		wpl_db::q(wpl_db::prepare("DELETE FROM `#__wpl_properties` WHERE `source` = 'RF' AND (`last_sync_date` != '0000-00-00 00:00:00' OR `last_modified_time_stamp` < %s) AND `last_sync_date` < %s LIMIT 5000", $last_month, $last_week), 'delete');
+
+		if(wpl_global::is_multisite())
+		{
+			$fs = wpl_sql_parser::getInstance();
+			$fs->enable();
+		}
 	}
 }
 

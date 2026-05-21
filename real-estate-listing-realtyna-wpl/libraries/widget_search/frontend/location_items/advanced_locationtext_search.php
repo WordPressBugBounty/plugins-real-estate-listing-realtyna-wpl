@@ -68,7 +68,7 @@ if($show == 'advanced_locationtextsearch' and !$done_this)
 			{
 				wplj("#'.$element_id.'").val(ui.item.value);
 				wplj("#'.$element_column_id.'").val(ui.item.column);
-				wpl_do_search_'.$widget_id.'();
+				wpl_do_search_'.$widget_id.'(true);
 			},
 			source: function (request, response) {
 				if(timeout_handler) {

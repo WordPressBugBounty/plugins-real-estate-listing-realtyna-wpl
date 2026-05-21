@@ -231,6 +231,30 @@
       margin-bottom: 0;
     }
   }
+  .wpl_search_field_price.minmax_type{
+    .wpl_search_widget_from,
+    .wpl_search_widget_to{
+      display: inline-block;
+      position: relative;
+      @include for-phone{
+        width: 100%;
+      }
+    }
+    .wpl_search_widget_field_unit_sign
+    {
+      position: absolute;
+      left: 10px;
+      line-height: 12px;
+      height: 12px;
+      font-size: 12px;
+      top: calc(50% - 6px);
+      & + input
+      {
+        padding-left: 25px;
+        font-size: inherit;
+      }
+    }
+  }
   &.wpl_search_kind0 {
     [id*="_search_field_container_6"] {
       [id*="_unit_price_chosen"] {

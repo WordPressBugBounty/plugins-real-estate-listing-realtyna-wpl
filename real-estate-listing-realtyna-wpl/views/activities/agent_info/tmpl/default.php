@@ -217,7 +217,7 @@ $is_multi_agent = count($users_data) > 1;
 						<li class="second_email">
 							<?php if ($mailto): ?>
 								<a <?php wpl_esc::item_prop($this->microdata, 'email'); ?>
-										href="mailto:<?php wpl_esc::attr($user_data['wpl_user']['materials']['secondary_email']['value']); ?>"><img
+										href="mailto:<?php wpl_esc::attr($user_data['wpl_user']['materials']['secondary_email']['value'] ?? ''); ?>"><img
 											src="<?php wpl_esc::attr($user_data['wpl_user']['second_email_url']); ?>"
 											alt="<?php wpl_esc::attr($user_data['agent_name'] . ' ' . $user_data['agent_l_name']); ?>"
 											title="<?php wpl_esc::attr($user_data['agent_name'] . ' ' . $user_data['agent_l_name']); ?>"/></a>
@@ -232,12 +232,12 @@ $is_multi_agent = count($users_data) > 1;
 						<li class="second_email">
 							<?php if ($mailto): ?>
 								<a <?php wpl_esc::item_prop($this->microdata, 'email'); ?>
-										href="mailto:<?php wpl_esc::attr($user_data['wpl_user']['materials']['secondary_email']['value']); ?>">
-									<?php wpl_esc::html($user_data['wpl_user']['materials']['secondary_email']['value']); ?>
+										href="mailto:<?php wpl_esc::attr($user_data['wpl_user']['materials']['secondary_email']['value'] ?? ''); ?>">
+									<?php wpl_esc::html($user_data['wpl_user']['materials']['secondary_email']['value'] ?? ''); ?>
 								</a>
 							<?php else: ?>
 								<p>
-									<?php wpl_esc::html($user_data['wpl_user']['materials']['secondary_email']['value']); ?></p>
+									<?php wpl_esc::html($user_data['wpl_user']['materials']['secondary_email']['value'] ?? ''); ?></p>
 							<?php endif; ?>
 						</li>
 					<?php endif; ?>

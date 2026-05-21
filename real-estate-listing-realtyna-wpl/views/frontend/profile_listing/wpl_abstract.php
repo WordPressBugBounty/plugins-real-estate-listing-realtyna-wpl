@@ -67,27 +67,27 @@ abstract class wpl_profile_listing_controller_abstract extends wpl_controller
 		$this->order = wpl_request::getVar('wplorder', $this->settings['default_profile_order'], '', true);
 		
         /** Set Property CSS class **/
-        $this->property_css_class = wpl_request::getVar('wplpcc', NULL);
+        $this->property_css_class = wpl_request::getVar('wplpcc');
         if(!$this->property_css_class) $this->property_css_class = wpl_request::getVar('wplpcc', 'grid_box', 'COOKIE');
         
         $this->property_css_class_switcher = wpl_request::getVar('wplpcc_switcher', '1');
         $this->property_listview = wpl_request::getVar('wplplv', '1'); #Show listview or not
 
 		// only icon or icon+text
-		$this->switcher_type = isset($this->settings['wpl_listing_switcher_type']) ? $this->settings['wpl_listing_switcher_type'] : 'icon';
+		$this->switcher_type = $this->settings['wpl_listing_switcher_type'] ?? 'icon';
 
 		// Disable or Enable Mouseover effect
-		$this->listing_picture_mouseover = isset($this->settings['wpl_listing_picture_mouseover']) ? $this->settings['wpl_listing_picture_mouseover'] : 1;
+		$this->listing_picture_mouseover = $this->settings['wpl_listing_picture_mouseover'] ?? 1;
 
 		/**Sort Option Type**/
-		$this->wpl_listing_sort_type = isset($this->settings['wpl_listing_sort_type']) ? $this->settings['wpl_listing_sort_type'] : 'list';
+		$this->wpl_listing_sort_type = $this->settings['wpl_listing_sort_type'] ?? 'list';
         
 		/** set page if start var passed **/
 		$this->page_number = ($this->start/$this->limit)+1;
 		wpl_request::setVar('wplpage', $this->page_number);
 		
         /** User Type **/
-        $this->user_type = wpl_request::getVar('sf_select_membership_type', NULL);
+        $this->user_type = wpl_request::getVar('sf_select_membership_type');
         
 		/** detect kind **/
 		$this->kind = wpl_request::getVar('kind', 2);
@@ -123,7 +123,7 @@ abstract class wpl_profile_listing_controller_abstract extends wpl_controller
 		if($this->page_number <= 0 or ($this->page_number > $this->total_pages)) $this->model->start = 0;
 
 		/** Microdata **/
-		$this->microdata = isset($this->settings['microdata']) ? $this->settings['microdata'] : 0;
+		$this->microdata = $this->settings['microdata'] ?? 0;
 		$this->itemscope = ($this->microdata) ? 'itemscope' : '';
 
 		$this->itemprop_name = ($this->microdata) ? 'itemprop="name"' : '';

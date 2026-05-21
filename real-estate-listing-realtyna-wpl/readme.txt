@@ -3,10 +3,10 @@ Contributors: realtyna
 Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
 Requires at least: 4.7.0
-Tested up to: 6.7.2
-Stable tag: 5.1.0
+Tested up to: 7.0.0
+Stable tag: 5.2.0
 Requires PHP: 7.4
-Version: 5.1.0
+Version: 5.2.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 
@@ -46,6 +46,32 @@ Submit a support ticket on Realtyna ticketing system: [https://support.realtyna.
 7. Agent listing
 
 == Changelog ==
+= 5.2.0 =
+- Added: New `mmnumber` search field type with text, selectbox, and min/max selectbox display modes
+- Added: `andfeature` query format for AND-logic feature matching in search queries
+- Added: Auto-purge cron for RF-sourced properties not synced within 30 days
+- Added: State name/abbreviation expansion in location text search (matches both full and abbreviated US state names)
+- Added: PropertyRooms import from RF feed for MLS On The Fly™ listings
+- Added: WebP image support for user profile photo uploads
+- Improved: OpenHouse date parsing with timezone-aware DateTime, past-event filtering, and cached results
+- Improved: Skip MLS ID generation for RF-imported listings via `$generate_mls_id` parameter
+- Improved: Broadened shortcode detection in SEF to cover all registered shortcodes
+- Improved: Suppress display of private RF listings (`PrivateYn`)
+- Improved: Registered `boolean` type in checkbox search widget and `multiselect` in select widget
+- Fixed: Broken PHP expression in listing contact form template causing attribute output failure
+- Fixed: Double `itemprop` attribute on address microdata element
+- Fixed: Fatal errors when property/user columns are absent (null-safe fallback added)
+- Fixed: PHP warnings on corrupt or non-image files in EXIF reader
+- Fixed: Unintended parent event bubbling on remove-parameter buttons in params activity
+- Fixed: Price field min/max inputs rendering outside labeled wrapper in single-currency mode
+- Fixed: Undefined index notice for `secondary_email` in agent info template
+- Fixed: Premature output from `apply_filters('the_content', ...)` on description field
+- Fixed: Sanitized pagination and sort parameters in users query to prevent SQL injection
+
+= 5.1.1 =
+- Fixed: OpenHouse issue for MLS On The Fly™ listings
+- Fixed: Saving customized UI in settings
+
 = 5.1.0 =
 - Added: Add cron to update openhouse tags
 - Fixed: Showing county/city list in search widget for MLS On The Fly™ listings

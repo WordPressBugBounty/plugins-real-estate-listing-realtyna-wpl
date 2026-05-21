@@ -148,6 +148,13 @@ elseif($format == 'advancedlocationtextsearch' and !$done_this)
             $query .= " AND `show_address` = '1' AND (";
             foreach ($columns as $column)
             {
+				if($column == 'location_text') {
+					$location_values = wpl_locations::getAbbrAndFull($value);
+					foreach ($location_values as $location_value) {
+						$query .= wpl_db::prepare("%i LIKE %s OR ", $column, wpl_db::esc_like($location_value));
+					}
+					continue;
+				}
                 $query .= wpl_db::prepare("%i LIKE %s OR ", $column, wpl_db::esc_like($value));
             }
             

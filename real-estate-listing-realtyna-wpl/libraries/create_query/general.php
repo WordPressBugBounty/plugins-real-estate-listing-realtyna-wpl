@@ -210,6 +210,28 @@ elseif($format == 'feature' and !$done_this)
 	
 	$done_this = true;
 }
+elseif($format == 'andfeature' and !$done_this)
+{
+	if(!($value == '' or $value == '-1' or $value == ','))
+	{
+        $value = trim($value, ',');
+
+		if($value != '')
+        {
+            $values_ex = explode(',', $value);
+
+            $sub_query = [];
+            foreach($values_ex as $value_ex) {
+				$sub_query[] = wpl_db::prepare("%i LIKE %s", "{$table_column}_options", wpl_db::esc_like(",$value_ex,"));
+			}
+            $q = implode(' AND ', $sub_query);
+
+            $query .= wpl_db::prepare(" AND %i='1' AND (".$q.")", $table_column);
+        }
+	}
+
+	$done_this = true;
+}
 elseif($format == 'ptcategory' and !$done_this)
 {
 	if($value != '-1' and trim($value) != '')

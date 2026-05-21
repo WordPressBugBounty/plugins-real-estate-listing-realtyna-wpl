@@ -59,6 +59,19 @@ defined('_WPLEXEC') or die('Restricted access');
             </select>
         </div>
 
+		<?php for ($i = 1; $i <= 7; $i++): ?>
+			<?php
+			$location_name = wpl_global::get_setting("location{$i}_keyword");
+			if(empty($location_name)) {
+				continue;
+			}
+			?>
+			<div class="plugin-row wpl_shortcode_parameter wpl_hidden_element pr_property_listing">
+				<label for="pr_location<?php echo $i ?>_name"><?php wpl_esc::html_t($location_name); ?></label>
+				<input type="text" id="pr_location<?php echo $i ?>_name" name="sf_text_location<?php echo $i ?>_name" placeholder="<?php wpl_esc::attr_t($location_name); ?>" />
+			</div>
+		<?php endfor; ?>
+
         <div class="plugin-row wpl_shortcode_parameter wpl_hidden_element pr_property_listing">
             <?php $location_settings = wpl_global::get_settings('3'); # location settings 
             ?>

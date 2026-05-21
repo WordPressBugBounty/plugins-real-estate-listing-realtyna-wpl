@@ -39,6 +39,7 @@ class wpl_locations
 		'Common' => 'Cmn',
 		'Corner' => 'Cor',
 		'Court' => 'Cou',
+		'Creek' => 'Crk',
 		'Crescent' => 'Cresc',
 		'Crossing' => 'Xing',
 		'Crossroad' => 'Xrd',
@@ -686,6 +687,15 @@ class wpl_locations
 		return $text;
 	}
 
+	public static function makeAbbreviationState($text)
+	{
+		$usStates = ["AL"=>"Alabama","AK"=>"Alaska","AZ"=>"Arizona","AR"=>"Arkansas","CA"=>"California","CO"=>"Colorado","CT"=>"Connecticut","DE"=>"Delaware","FL"=>"Florida","GA"=>"Georgia","HI"=>"Hawaii","ID"=>"Idaho","IL"=>"Illinois","IN"=>"Indiana","IA"=>"Iowa","KS"=>"Kansas","KY"=>"Kentucky","LA"=>"Louisiana","ME"=>"Maine","MD"=>"Maryland","MA"=>"Massachusetts","MI"=>"Michigan","MN"=>"Minnesota","MS"=>"Mississippi","MO"=>"Missouri","MT"=>"Montana","NE"=>"Nebraska","NV"=>"Nevada","NH"=>"New Hampshire","NJ"=>"New Jersey","NM"=>"New Mexico","NY"=>"New York","NC"=>"North Carolina","ND"=>"North Dakota","OH"=>"Ohio","OK"=>"Oklahoma","OR"=>"Oregon","PA"=>"Pennsylvania","RI"=>"Rhode Island","SC"=>"South Carolina","SD"=>"South Dakota","TN"=>"Tennessee","TX"=>"Texas","UT"=>"Utah","VT"=>"Vermont","VA"=>"Virginia","WA"=>"Washington","WV"=>"West Virginia","WI"=>"Wisconsin","WY"=>"Wyoming"];
+		foreach($usStates as $abbr => $full) {
+			$text = preg_replace("/\b$full\b/i", $abbr, $text);
+		}
+		return $text;
+	}
+
 	public static function makeFull($text)
 	{
 		foreach(static::$abbreviationList as $full => $abbr) {
@@ -699,13 +709,17 @@ class wpl_locations
 		$full = static::makeFull($text);
 		$abbreviation = static::makeAbbreviation($text);
 		$abbreviationState = static::makeFullState($abbreviation);
+		$textState = static::makeFullState($text);
 		$fullState = static::makeFullState($full);
+		$abbrState = static::makeAbbreviationState($text);
 		return array_unique([
 			$text,
 			$full,
+			$textState,
 			$abbreviation,
 			$abbreviationState,
 			$fullState,
+			$abbrState,
 		]);
 	}
 }

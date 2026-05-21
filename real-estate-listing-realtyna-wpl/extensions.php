@@ -434,7 +434,8 @@ class wpl_extensions
 					for ($i = 0; $i < count($list_query); $i++) {
 						if(trim($list_query[$i]) == '') continue;
 						// add semicolon to end of query
-						$query = trim($list_query[$i], ';') . ';';
+						$query = trim($list_query[$i]);
+						$query = trim($query, ';') . ';';
 						try {
 							$this->runQuery($query);
 						} catch (Exception $e) {

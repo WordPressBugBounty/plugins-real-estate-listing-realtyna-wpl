@@ -17,7 +17,7 @@ class wpl_activity_main_ajax_file_upload extends wpl_activity
         $html_ajax_loader = $params['html_ajax_loader'] ?? '#wpl_file_ajax_loader';
         $img_ajax_loader = $params['img_ajax_loader'] ?? 'ajax-loader3.gif';
         $request_str = $params['request_str'] ?? '';
-        $valid_extensions = (isset($params['valid_extensions']) and is_array($params['valid_extensions'])) ? $params['valid_extensions'] : array('jpg', 'gif', 'png');
+        $valid_extensions = (isset($params['valid_extensions']) and is_array($params['valid_extensions'])) ? $params['valid_extensions'] : array('jpg', 'jpeg', 'webp', 'gif', 'png');
         $footer_js = $params['footer_js'] ?? true;
         $js_callback = $params['js_callback'] ?? false;
 

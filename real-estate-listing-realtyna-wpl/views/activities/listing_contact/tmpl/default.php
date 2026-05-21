@@ -18,7 +18,7 @@ include _wpl_import($this->tpl_path.'.scripts.js', true, true);
     <?php endif; ?>
 	<form method="post" action="#" id="wpl_contact_form<?php wpl_esc::attr($this->activity_id); ?><?php wpl_esc::attr($this->property_id); ?>" onsubmit="return wpl_send_contact<?php wpl_esc::attr($this->activity_id); ?>(<?php wpl_esc::attr($this->property_id); ?>);">
         <div class="form-field">
-            <input class="text-box" type="text" value="<?php if(wpl_global::check_addon('membership')) wpl_esc::attr($user->first_name); if(!empty($user->last_name)) wpl_esc::attr(' ' . $user->last_name); ?>" id="wpl_contact_fullname<?php wpl_esc::attr($this->activity_id); ?><?php wpl_esc::attr($this->property_id); ?>" name="fullname" placeholder="<?php wpl_esc::html_t('Full Name'); ?>" />
+            <input class="text-box" type="text" value="<?php if(wpl_global::check_addon('membership')) (wpl_esc::attr(!empty($user->first_name) ? $user->first_name : '') . wpl_esc::attr(!empty($user->last_name) ? (' ' . $user->last_name) : '')); ?>" id="wpl_contact_fullname<?php wpl_esc::attr($this->activity_id); ?><?php wpl_esc::attr($this->property_id); ?>" name="fullname" placeholder="<?php wpl_esc::html_t('Full Name'); ?>" />
         </div>
 
         <div class="form-field">

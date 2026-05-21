@@ -421,7 +421,7 @@ class wpl_users_controller extends wpl_controller
 	{
 		$file = wpl_request::getVar($file_name, '', 'FILES');
 		$filename = $file['name'];
-		$ext_array = array('jpg','png','gif','jpeg');
+		$ext_array = array('jpg','png','gif','jpeg','webp');
 		$field_id = wpl_request::getVar('field_id');
 		if(!empty($field_id)) {
 			$field_options = wpl_flex::get_field_options($field_id);

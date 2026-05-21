@@ -54,6 +54,9 @@ class wpl_settings_controller extends wpl_controller
 
 	private function save($setting_name, $setting_value, $setting_category)
 	{
+	    $setting_value = stripslashes($setting_value);
+	    $setting_name = stripslashes($setting_name);
+	    $setting_category = stripslashes($setting_category);
 		$res = wpl_settings::save_setting($setting_name, $setting_value, $setting_category);
 
 		$res = (int)$res;

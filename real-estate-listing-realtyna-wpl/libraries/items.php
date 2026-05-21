@@ -40,6 +40,9 @@ class wpl_items
 			if(!empty($media)) {
 				foreach ($media as $media_item) {
 					$item_key = $media_item['Order'];
+					if(!empty($media_item['PrivateYn'])) {
+						continue;
+					}
 					$records[] = (object)[
 						'id' => $media_item['MediaKey'],
 						'parent_kind' => $parent_kind,
@@ -60,6 +63,34 @@ class wpl_items
 					];
 				}
 			}
+			if(empty($item_type) || $item_type == 'rooms') {
+				$rooms = $property['realty_feed_raw_data']->PropertyRooms ?? [];
+				if (!empty($rooms)) {
+					_wpl_import('libraries.room_types');
+					foreach ($rooms as $item_key => $room_item) {
+						$room_data = wpl_room_types::get_room_type($room_item['RoomType']);
+						if(!$room_data) $room_type_id = wpl_room_types::save_room_type($room_item['RoomType']);
+						else $room_type_id = $room_data['id'];
+						$dimensions = explode('x', $room_item['RoomDimensions']);
+						$records[] = (object)[
+							'id' => $room_item['RoomKey'],
+							'parent_kind' => $parent_kind,
+							'parent_id' => $parent_id,
+							'item_type' => 'rooms',
+							'item_cat' => $room_type_id,
+							'item_name' => $room_item['RoomType'],
+							'creation_date' => date('Y-m-d H:i:s'),
+							'edit_date' => date('Y-m-d H:i:s'),
+							'enabled' => 1,
+							'item_extra1' => trim($dimensions[0] ?? ''),
+							'item_extra2' => trim($dimensions[1] ?? ''),
+							'item_extra3' => $room_item['RoomLevel'],
+							'item_extra4' => 'rf',
+							'index' => $item_key,
+						];
+					}
+				}
+			}
 
 			usort($records, function($a, $b) {
 				if ($a->index > $b->index) {
@@ -71,7 +102,7 @@ class wpl_items
 			});
 			// to show thumbnail url for thumbnails
 			add_filter('wpl_activities/listing_gallery/image_thumbnail_url', function($image_thumbnail_url, $image) {
-			    if($image['raw']['item_extra4'] == 'rf') {
+			    if($image['raw']['item_extra4'] == 'rf' && !empty($image['raw']['item_extra5'])) {
 			        $image_thumbnail_url = $image['raw']['item_extra5'];
 			    }
 			    return $image_thumbnail_url;
@@ -598,6 +629,10 @@ class wpl_items
 			
 			$return[$i]['item_id'] = $video['id'];
 			$return[$i]['category'] = $video['item_cat'];
+
+			if($video['item_extra3'] == 'mls') {
+				$video['item_extra3'] = null;
+			}
 				
 			if($video['item_cat'] == 'video')
 			{
@@ -620,6 +655,7 @@ class wpl_items
 				$return[$i]['description'] = (string) $video['item_extra2'];
 				$return[$i]['thumbnail'] = (string) $video['item_extra3'];
 				$return[$i]['ext'] = $pathinfo['extension'];
+				$return[$i]['embedUrl'] = $video_url;
 			}
 			elseif($video['item_cat'] == 'video_embed')
 			{
@@ -631,6 +667,9 @@ class wpl_items
 				$return[$i]['description'] = (string) $video['item_extra1'];
 				$return[$i]['thumbnail'] = (string) $video['item_extra3'];
 				$return[$i]['ext'] = '';
+				preg_match('/<iframe[^>]+src=["\']([^"\']+)["\']/i', $video['item_extra2'], $matches);
+				$embedUrl = $matches[1] ?? '';
+				$return[$i]['embedUrl'] = $embedUrl;
 			}
 			
 			$return[$i]['raw'] = $video;
@@ -699,7 +738,7 @@ class wpl_items
 				$return[$custom_size][$i]['custom_size'] = $custom_size;
 				$return[$custom_size][$i]['path'] = $dest_path;
 				$return[$custom_size][$i]['url'] = $dest_url;
-				$return[$custom_size][$i]['size'] = @filesize($dest_path);
+				$return[$custom_size][$i]['size'] = $image['item_cat'] == 'external' ? 0 : @filesize($dest_path);
 				$return[$custom_size][$i]['title'] = (string) $image['item_extra1'];
 				$return[$custom_size][$i]['description'] = (string) $image['item_extra2'];
 				$return[$custom_size][$i]['category'] = $image['item_cat'];
