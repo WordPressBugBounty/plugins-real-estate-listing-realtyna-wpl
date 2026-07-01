@@ -35,7 +35,7 @@ $gallery = wpl_items::render_gallery($raw_gallery, wpl_property::get_blog_id($th
     <?php
     if(!count($gallery))
     {
-        wpl_esc::kses('<a class="no_image_box" href="'.wpl_esc::return_url($wpl_properties['current']['property_link']).'"></a>');
+        wpl_esc::e('<a class="no_image_box" href="'.wpl_esc::return_url($wpl_properties['current']['property_link']).'"></a>');
     }
     else
     {

@@ -2,8 +2,6 @@
 /** no direct access **/
 defined('_WPLEXEC') or die('Restricted access');
 
-_wpl_import('libraries.addon_mobile_application');
-
 /**
  * WPL IO Library
  * @author Howard R <howard@realtyna.com>
@@ -174,7 +172,7 @@ class wpl_io_global
 			$commands[] = $ex[0];
 		}
 		
-		return $commands;
+		return apply_filters('wpl_io_global/get_formats/commands', $commands);
 	}
 	
 	/**
@@ -192,8 +190,14 @@ class wpl_io_global
      */
 	public function get_format_path($format)
 	{
-		$path = WPL_ABSPATH.'libraries'.DS.'io'.DS. $this->formats_folder .DS. 'overrides' .DS. $format .'.php';
-		if(!wpl_file::exists($path)) $path = WPL_ABSPATH.'libraries'.DS.'io'.DS. $this->formats_folder .DS. $format .'.php';
+		$path = apply_filters('wpl_io_global/get_format_path', null, $format, $this);
+		if(is_null($path)) {
+			$path = WPL_ABSPATH.'libraries'.DS.'io'.DS. $this->formats_folder .DS. 'overrides' .DS. $format .'.php';
+
+			if (!wpl_file::exists($path))  {
+				$path = WPL_ABSPATH . 'libraries' . DS . 'io' . DS . $this->formats_folder . DS . $format . '.php';
+			}
+		}
 		
 		return $path;
 	}

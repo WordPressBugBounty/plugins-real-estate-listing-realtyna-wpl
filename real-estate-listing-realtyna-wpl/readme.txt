@@ -3,10 +3,10 @@ Contributors: realtyna
 Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
 Requires at least: 4.7.0
-Tested up to: 7.0.0
-Stable tag: 5.2.0
+Tested up to: 6.8.2
+Stable tag: 5.3.0
 Requires PHP: 7.4
-Version: 5.2.0
+Version: 5.3.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 
@@ -46,6 +46,11 @@ Submit a support ticket on Realtyna ticketing system: [https://support.realtyna.
 7. Agent listing
 
 == Changelog ==
+= 5.3.0 =
+- Added: Useful filters
+- Fixed: Removed deprecated mobile_application
+- Fixed: MOF issues
+
 = 5.2.0 =
 - Added: New `mmnumber` search field type with text, selectbox, and min/max selectbox display modes
 - Added: `andfeature` query format for AND-logic feature matching in search queries

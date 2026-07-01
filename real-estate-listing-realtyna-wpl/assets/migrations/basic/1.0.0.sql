@@ -1117,8 +1117,8 @@ INSERT INTO `#__wpl_settings` (`id`, `setting_name`, `setting_value`, `showable`
 (30, 'default_profile_order', 'DESC', 1, 1, 'select', 'Profile sort type', '', '{"show_shortcode":1,"shortcode_key":"wplorder","values":[{"key":"ASC","value":"Ascending"},{"key":"DESC","value":"Descending"}]} ', 111.00),
 (31, 'default_profile_page_size', '12', 1, 1, 'text', 'Profile page size', '', '{"show_shortcode":1,"shortcode_key":"limit"}', 99.00),
 (33, 'io_status', '1', 1, 1, 'select', 'I/O API', '', '{"values":[{"key":0,"value":"Disabled"},{"key":1,"value":"Enabled"}]}', 117.00),
-(34, 'api_key', 'U7hdbv673YhdjplzzX7wU7hdbv673YhdjplzzX7w', 1, 1, 'text', 'API key', '', '', 118.00),
-(35, 'api_secret', 'Eft76bdh0o2uyhJkbG3T', 1, 1, 'text', 'API secret', '', '', 119.00);
+(34, 'api_key', MD5(RAND()), 1, 1, 'text', 'API key', '', '', 118.00),
+(35, 'api_secret', SUBSTRING(MD5(RAND()), 1, 20), 1, 1, 'text', 'API secret', '', '', 119.00);
 
 CREATE TABLE IF NOT EXISTS `#__wpl_setting_categories` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,

@@ -35,14 +35,20 @@ class wpl_items
 			if(empty($property['realty_feed_raw_data'])) {
 				return [];
 			}
+			$show_items = apply_filters('wpl_items/get_items/mof/show_items', true, $property);
+			if(!$show_items) {
+				return [];
+			}
 			$media = $property['realty_feed_raw_data']->Media ?? [];
 			$records = [];
 			if(!empty($media)) {
+				$order = 0;
 				foreach ($media as $media_item) {
-					$item_key = $media_item['Order'];
 					if(!empty($media_item['PrivateYn'])) {
 						continue;
 					}
+					$order++;
+					$item_key = $media_item['Order'] ?? $order;
 					$records[] = (object)[
 						'id' => $media_item['MediaKey'],
 						'parent_kind' => $parent_kind,

@@ -25,7 +25,6 @@ class wpl_rf_property
 			'ListPrice',
 			'Latitude',
 			'Longitude',
-			'Coordinates',
 			'PropertyType',
 			'StandardStatus',
 		]);
@@ -333,6 +332,11 @@ class wpl_rf_property
 						$orQuery[] = [
 							'key' => 'listing',
 							'value' => 'For Lease',
+							'compare' => '=',
+						];
+						$orQuery[] = [
+							'key' => 'listing',
+							'value' => 'For Rent',
 							'compare' => '=',
 						];
 					}
@@ -719,11 +723,15 @@ class wpl_rf_property
 		return $property;
 	}
 
-	public function doRfRequest($entity, $where, $orders = []) {
+	public function doRfRequest($entity, $where, $orders = [], $select = ['ALL'], $top = null) {
 		$rf = \Realtyna\MlsOnTheFly\Boot\App::get(\Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RF::class);
 		$RFQuery = new \Realtyna\MlsOnTheFly\Components\CloudPost\SubComponents\RFClient\SDK\RF\RFQuery();
 		$RFQuery->set_entity($entity);
-		$RFQuery->set_select(['ALL']);
+		$RFQuery->set_select($select);
+		if(!empty($top) && $top > 0) {
+			$RFQuery->set_top($top);
+		}
+
 		foreach ($where as $whereItem) {
 			$RFQuery->add_filter($whereItem['method'], $whereItem['field'], $whereItem['operator'], $whereItem['value']);
 		}

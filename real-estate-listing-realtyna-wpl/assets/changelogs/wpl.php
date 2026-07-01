@@ -4,6 +4,11 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.3.0 (<span class="wpl_log_date">06/30/2026</span>)</h4>
+		- Added: Useful filters
+		- Fixed: Removed deprecated mobile_application
+		- Fixed: MOF issues
+
 		<h4>WPL5.2.0 (<span class="wpl_log_date">05/22/2026</span>)</h4>
 		- Added: New `mmnumber` search field type with text, selectbox, and min/max selectbox display modes<br>
 		- Added: `andfeature` query format for AND-logic feature matching in search queries<br>

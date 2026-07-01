@@ -480,10 +480,10 @@ function delete_markers<?php wpl_esc::js($this->activity_id); ?>()
 	if(markers_array<?php wpl_esc::js($this->activity_id); ?>)
 	{
 		for(i=0; i < markers_array<?php wpl_esc::js($this->activity_id); ?>.length; i++) markers_array<?php wpl_esc::js($this->activity_id); ?>[i].setMap(null);
-		markers_array<?php wpl_esc::js($this->activity_id); ?>.length = 0;
+		markers_array<?php wpl_esc::js($this->activity_id); ?> = [];
 	}
 
-	if(loaded_markers<?php wpl_esc::js($this->activity_id); ?>) loaded_markers<?php wpl_esc::js($this->activity_id); ?>.length = 0;
+	if(loaded_markers<?php wpl_esc::js($this->activity_id); ?>) loaded_markers<?php wpl_esc::js($this->activity_id); ?> = [];
 }
 
 /** Google places functions **/
