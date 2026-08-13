@@ -259,19 +259,32 @@ class wpl_property
 
         if(in_array(str_replace('`', '', $orderby), array('p.mls_id+0', 'p.mls_id'))) $orderby = 'p.mls_id_num';
 
+        /**
+         * The part of $orderby after the colon is a property/listing type id chosen by the caller
+         * and reaches the query as a literal. $orderby itself is quoted above, but this value was
+         * concatenated raw, so a request such as orderby=ptype_adv:x') OR (SELECT SLEEP(5)) --
+         * injected into the ORDER BY clause. wpl_db::prepare() emits the quoted literal for us.
+         **/
+
         // Advanced Property Type
-        if(str_replace('`', '', $orderby) == 'ptype_adv') $orderby = "(p.`property_type` ".($order == 'ASC' ? '!' : '')."= '".$order_val."'), p.`property_type`";
+        if(str_replace('`', '', $orderby) == 'ptype_adv') $orderby = "(p.`property_type` ".($order == 'ASC' ? '!' : '')."= ".wpl_db::prepare('%s', $order_val)."), p.`property_type`";
 
         // Advanced Listing Type
-        if(str_replace('`', '', $orderby) == 'ltype_adv') $orderby = "(p.`listing` ".($order == 'ASC' ? '!' : '')."= '".$order_val."'), p.`listing`";
+        if(str_replace('`', '', $orderby) == 'ltype_adv') $orderby = "(p.`listing` ".($order == 'ASC' ? '!' : '')."= ".wpl_db::prepare('%s', $order_val)."), p.`listing`";
 
         // Apply Filters
         $orderby = apply_filters('wpl_property/start/orderby', $orderby, $order);
         $order = apply_filters('wpl_property/start/order', $order, $orderby);
 
-        // Pagination and Order Options
-        $this->start = $start;
-        $this->limit = $limit;
+        /**
+         * Pagination and Order Options
+         *
+         * start/limit are concatenated into the LIMIT clause further down. Callers are inconsistent
+         * about casting them (the backend listing manager passed the raw request values straight
+         * through), so they are forced to integers here, where every caller is covered.
+         **/
+        $this->start = max(0, (int) $start);
+        $this->limit = max(0, (int) $limit);
 		if(!in_array(strtolower($order), ['asc', 'desc'])) {
 			$order = 'DESC';
 		}
@@ -1740,6 +1753,50 @@ class wpl_property
     public static function get_property_kind($property_id)
     {
         return self::get_property_field('kind', $property_id);
+    }
+
+    /**
+     * Checks whether the current user may act on a property
+     *
+     * The listing wizard runs this check before it renders, but the AJAX controllers behind it took
+     * the property id straight from the request and never checked it, so anyone who could reach
+     * them was able to edit, upload to, or delete from somebody else's listing. The multi agents
+     * rule matches the wizard: an additional agent counts as an owner.
+     *
+     * @author Howard <howard@realtyna.com>
+     * @static
+     * @param int $property_id
+     * @param string $access 'edit' or 'delete'
+     * @return boolean
+     */
+    public static function can_edit($property_id, $access = 'edit')
+    {
+        $property_id = (int) $property_id;
+        if($property_id <= 0) return false;
+
+        /** Multisite: read the row without the franchise criteria, as the wizard does **/
+        $sqlParser = NULL;
+        if(wpl_global::is_multisite())
+        {
+            $sqlParser = wpl_sql_parser::getInstance();
+            $sqlParser->criteria('off');
+        }
+
+        $data = wpl_property::get_property_raw_data($property_id);
+
+        if($sqlParser) $sqlParser->criteria('on');
+
+        if(!$data) return false;
+
+        $owner_id = $data['user_id'] ?? 0;
+        $current_user_id = wpl_users::get_cur_user_id();
+
+        if(wpl_global::check_addon('multi_agents') and strpos($data['additional_agents'] ?? '', ",$current_user_id,") !== false)
+        {
+            $owner_id = $current_user_id;
+        }
+
+        return (boolean) wpl_users::check_access($access, $owner_id);
     }
 
     /**

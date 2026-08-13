@@ -152,7 +152,8 @@ class wpl_listings_controller extends wpl_controller
      */
     private function change_user()
     {
-        $pid = wpl_request::getVar('pid');
+        /** the change_user capability does not say which listing, so confirm this one **/
+        $pid = $this->assert_can_edit_property(wpl_request::getVar('pid'));
         $uid = wpl_request::getVar('uid');
 		
 		/** purge property **/
@@ -176,7 +177,8 @@ class wpl_listings_controller extends wpl_controller
      */
     private function additional_agents()
     {
-        $pid = wpl_request::getVar('pid');
+        /** the capability check below does not say which listing, so confirm this one **/
+        $pid = $this->assert_can_edit_property(wpl_request::getVar('pid'));
         $uids = explode(',', wpl_request::getVar('uids', ''));
 		
         // Validation
@@ -210,7 +212,8 @@ class wpl_listings_controller extends wpl_controller
     
     private function clone_property()
     {
-        $pid = wpl_request::getVar('pid');
+        /** without this, any user holding the clone capability could copy another agent's listing **/
+        $pid = $this->assert_can_edit_property(wpl_request::getVar('pid'));
         $clone_id = 0;
         
 		// PRO addon

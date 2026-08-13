@@ -19,6 +19,9 @@ class wpl_listing_controller extends wpl_controller
 			$this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('The security nonce is not valid!')));
 		}
 		
+		/** pid came from the request and was never checked against the caller **/
+		$this->assert_can_edit_property(wpl_request::getVar('pid'));
+
 		if($function == 'save_room') $this->save_room();
 		elseif($function == 'delete_room') $this->delete_room();
 	}

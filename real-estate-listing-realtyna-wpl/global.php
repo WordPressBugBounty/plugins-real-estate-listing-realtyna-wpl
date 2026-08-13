@@ -597,11 +597,13 @@ class wpl_global
 		/** get user id **/
 		if(trim($user_id ?? "") == '') $user_id = wpl_users::get_cur_user_id();
 
-		/** get all roles **/
-		$roles = wpl_users::get_wpl_roles();
-
-		/** role validation **/
-		if(!in_array($role, $roles)) $role = 'guest';
+		/**
+		 * Resolve the required role. It arrives either as a WPL alias ('agent', 'admin') or as a
+		 * WordPress role ('author', 'administrator'), and a requirement we cannot recognise must
+		 * deny rather than fall back to 'guest', which scores 0 and would let everybody through.
+		 **/
+		$role = wpl_users::normalize_role($role);
+		if($role === false) return false;
 
 		$user_role = wpl_users::get_role($user_id);
 		$user_role_point = wpl_users::get_role_point($user_role);
@@ -672,10 +674,23 @@ class wpl_global
 		/** return admin access **/
 		if($check_admin && wpl_users::is_administrator($user_id)) return 1000;
 
-		if(!trim($user_id ?? '') or !wpl_users::is_wpl_user($user_id)) $query = "SELECT `access_".$access."` FROM `#__wpl_users` WHERE `id`='-2'";
-		else $query = "SELECT `access_".$access."` FROM `#__wpl_users` WHERE `id`='$user_id'";
+		/**
+		 * $access named a column and $user_id a row, and both were interpolated into the query with
+		 * no escaping. The column is now confirmed against the table's real columns before use, and
+		 * the row id is bound. An unrecognised column returns 0, which is what the resulting SQL
+		 * error produced before.
+		 **/
+		/** resolve to the column as the table spells it, since callers vary in case (access_CRM) **/
+		$columns = array();
+		foreach((array) wpl_db::columns('wpl_users') as $existing) $columns[strtolower($existing)] = $existing;
 
-		$result = wpl_db::select($query, 'loadResult');
+		$column = $columns[strtolower('access_'.$access)] ?? '';
+		if($column === '') return 0;
+
+		/** id -2 holds the access defaults used for visitors and non WPL users **/
+		$row_id = (!trim($user_id ?? '') or !wpl_users::is_wpl_user($user_id)) ? -2 : (int) $user_id;
+
+		$result = wpl_db::select(wpl_db::prepare("SELECT %i FROM `#__wpl_users` WHERE `id` = %d", $column, $row_id), 'loadResult');
 		if($result == '') return 0;
 
 		return $result;
@@ -2570,9 +2585,23 @@ class wpl_global
         if($property_id !== NULL)
         {
             $id_attr = 'id="'. $unique_id .'"';
-            $script  = 
+            /** api.js is enqueued in the footer, so it is not defined yet when this inline script runs; wait until grecaptcha.render is available before rendering **/
+            $script  =
             "<script type='text/javascript'>
-                grecaptcha.render(document.getElementById('$unique_id'));
+                (function(id){
+                    function wplRenderCaptcha(){
+                        if(window.grecaptcha && typeof window.grecaptcha.render === 'function'){
+                            var el = document.getElementById(id);
+                            if(el && !el.getAttribute('data-wpl-rendered')){
+                                el.setAttribute('data-wpl-rendered', '1');
+                                try { window.grecaptcha.render(el); } catch(e) {}
+                            }
+                        } else {
+                            window.setTimeout(wplRenderCaptcha, 50);
+                        }
+                    }
+                    wplRenderCaptcha();
+                })('$unique_id');
             </script>";
         }
 
@@ -2936,21 +2965,23 @@ class wpl_global
 				array('Zealbot','Looksmart','active') //Link checker
 				
 			);
-			
-			$regex_string = '/bot|crawl|slurp|spider|mediapartners|';
-			foreach($bot_names as $bot_name){
-				if($bot_name[2] == 'active'){
-					$regex_string .= $bot_name[1].'|';
-				}
+
+			$patterns = array('bot', 'crawl', 'slurp', 'spider', 'mediapartners');
+
+			foreach($bot_names as $bot_name)
+			{
+				if(!isset($bot_name[2]) or $bot_name[2] !== 'active') continue;
+
+				$patterns[] = preg_quote($bot_name[0], '/');
 			}
-			$regex_string = substr($regex_string, 0, -1);
-			$regex_string .= '/i';
-			
-			return (boolean)(
-				isset($_SERVER['HTTP_USER_AGENT'])
-				&& preg_match($regex_string, $_SERVER['HTTP_USER_AGENT'])
-			);
-			
+
+			$regex_string = '/'.implode('|', $patterns).'/i';
+
+			$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '';
+
+			$is_bot = ($user_agent !== '' and preg_match($regex_string, $user_agent));
+
+			return (boolean) apply_filters('wpl_global/is_bot', $is_bot, $user_agent);
 		}
 
     /**
@@ -3055,14 +3086,77 @@ class wpl_global
 		return !boolval(Flare\Rush\Config::get('DISABLED')) && wpl_request::getVar('query_to_mysql') === null;
 	}
 
-	public static function filter_extensions($extensions) {
+    /**
+     * The image and video extensions WPL falls back to
+     *
+     * Used when a field's ext_file option is missing, or when nothing in it survives
+     * filter_extensions(), so an upload field keeps working instead of refusing every file.
+     *
+     * @author Howard <howard@realtyna.com>
+     * @static
+     * @return array
+     */
+	public static function default_extensions() {
+		return apply_filters('wpl_global/default_extensions', [
+			/** images **/
+			'jpg', 'jpeg', 'jpe', 'png', 'gif', 'webp', 'bmp', 'tif', 'tiff', 'ico', 'avif', 'heic',
+			/** video **/
+			'mp4', 'm4v', 'mov', 'qt', 'avi', 'mpeg', 'mpg', 'mpe', 'ogv', 'webm', 'wmv', 'flv',
+			'3gp', '3g2', 'mkv',
+		]);
+	}
+
+    /**
+     * Reduces a configured extension list to the extensions that are safe to accept
+     *
+     * This used to block a fixed list of eleven extensions and pass everything else through. A
+     * denylist that short missed the usual ways of getting code executed (phtml, phar, php7, pht,
+     * inc) and the ways of getting script into a page (svg, html, shtml), so it is now an
+     * allowlist: an extension has to be one WordPress itself accepts for uploads on this site, and
+     * must not appear in the list below, which stays excluded even if a plugin adds it via
+     * upload_mimes.
+     *
+     * When nothing survives, the image and video defaults are used rather than an empty list, so a
+     * field whose ext_file is empty or entirely unusable still accepts ordinary media. The defaults
+     * go through the same checks, so this cannot widen what is accepted.
+     *
+     * @author Howard <howard@realtyna.com>
+     * @static
+     * @param array $extensions Extensions from a dbst field's ext_file option
+     * @param boolean $use_default Fall back to default_extensions() when nothing survives
+     * @return array
+     */
+	public static function filter_extensions($extensions, $use_default = true) {
+		/** extensions WordPress accepts for uploads on this site **/
+		$allowed = [];
+		foreach (array_keys(get_allowed_mime_types()) as $pattern) {
+			foreach (explode('|', $pattern) as $ext) $allowed[] = strtolower($ext);
+		}
+
+		/** these execute server side, or script inside the browser, so they are never accepted **/
+		$never = ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phps', 'phtml', 'phpt', 'phar',
+			'pht', 'inc', 'exe', 'com', 'bat', 'cmd', 'sh', 'bash', 'pl', 'py', 'rb', 'cgi', 'jsp',
+			'jspx', 'asp', 'aspx', 'ashx', 'asa', 'asax', 'cer', 'dll', 'so', 'js', 'mjs', 'json',
+			'html', 'htm', 'shtml', 'xhtml', 'xml', 'svg', 'svgz', 'htaccess', 'htpasswd', 'ini',
+			'mdb', 'jar', 'war', 'class'];
+
+		$allowed = apply_filters('wpl_global/filter_extensions/allowed', array_values(array_diff(array_unique($allowed), $never)));
+
 		$return = [];
-		foreach ($extensions as $extension) {
-			if(in_array(strtolower($extension), ['php', 'php5', 'exe', 'js', 'pl', 'py', 'sh', 'asp', 'aspx', 'mdb', 'dll'])) {
-				continue;
-			}
+		foreach ((array) $extensions as $extension) {
+			/** ext_file values are entered by hand, so tolerate padding, dots and semicolons **/
+			$extension = strtolower(trim((string) $extension, " \t\n\r\0\x0B.;"));
+
+			if($extension === '' or !in_array($extension, $allowed, true)) continue;
+
 			$return[] = $extension;
 		}
+
+		$return = array_values(array_unique($return));
+
+		/** nothing configured or nothing usable: fall back to images and video, through the same checks **/
+		if(!$return and $use_default) $return = array_values(array_intersect(self::default_extensions(), $allowed));
+
 		return $return;
 	}
 

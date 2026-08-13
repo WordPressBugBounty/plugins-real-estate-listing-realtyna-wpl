@@ -4,6 +4,25 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.4.1 (<span class="wpl_log_date">08/12/2026</span>)</h4>
+		- Security: The permission check behind the agent-level admin endpoints did not enforce the role it named, leaving those endpoints open to any visitor<br>
+		- Security: The inline field editors on the listing and user wizards accepted any database table and column from the request, and are now limited to the fields those forms render<br>
+		- Security: Listing images, attachments, videos, rooms and inline fields can now only be changed by users who have access to that listing<br>
+		- Security: Reassigning, cloning and setting additional agents on a listing now check access to that specific listing<br>
+		- Security: WPL admin pages are registered with WordPress capabilities instead of role names, so the pages meant for administrators are limited to them<br>
+		- Security: The listing manager sort and paging parameters are now bound before they reach the query<br>
+		- Security: Uploads are restricted to an allowlist of media types, replacing a blocklist that missed several executable extensions<br>
+		- Security: Uploaded file names are sanitised, so a crafted name can no longer be written outside the item folder<br>
+		- Security: Membership renewal, expiry and agent reassignment are restricted to administrators<br>
+		- Security: The access level lookup is now a bound query<br>
+		- Security: PRO Add-on: the public agents and users REST endpoints bind their filter parameters, which were previously placed into the query as given<br>
+		- Security: PRO Add-on: the multi-agents REST endpoint no longer accepts a listing id from the query string in place of the one in the route<br>
+		- Security: PRO Add-on: the Zapier trigger endpoints escape their filter parameters<br>
+		- Security: PRO Add-on: payment endpoints confirm a transaction belongs to the current user, and a transaction can no longer be raised against another user's account<br>
+		- Security: PRO Add-on: the Stripe webhook and password reset queries are bound<br>
+		- Fixed: The map was missing for some visitors, most often on Android, because the crawler check compared the visitor's browser against search engine names such as "Google" instead of the crawler user agents themselves<br>
+		- Improved: Upload fields fall back to the image and video defaults when their configured extension list is empty or unusable<br>
+
 		<h4>WPL5.4.0 (<span class="wpl_log_date">08/04/2026</span>)</h4>
 		- Security: Restricted the IDX AJAX endpoints to administrators and limited dispatch to a known list of functions<br>
 		- Security: Required the site's IDX token before the IDX REST API import and update routes run<br>

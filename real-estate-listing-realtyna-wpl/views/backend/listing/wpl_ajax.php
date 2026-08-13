@@ -12,7 +12,42 @@ class wpl_listing_controller extends wpl_controller
 {
 	public $tpl_path = 'views.backend.listing.tmpl';
 	public $tpl;
-	
+
+    /**
+     * Confirms $table_name/$table_column is a field the property wizard renders
+     *
+     * Both arrived from the request and were written without any check. wpl_db::set() prefixes the
+     * table through wpl_db::_prefix(), where '#__users' resolves to the WordPress users table, so
+     * the endpoint could be pointed at wp_users and used to overwrite an administrator's password.
+     *
+     * @param string $table_name
+     * @param string $table_column
+     * @param int $property_id
+     */
+    private function assert_editable_property_field($table_name, $table_column, $property_id)
+    {
+        $table_name = (string) $table_name;
+        $table_column = (string) $table_column;
+
+        $kind = wpl_property::get_property_kind($property_id);
+
+        /** administrators edit the whole record, other users only what the wizard renders **/
+        $is_admin = wpl_users::is_administrator();
+        $map = $is_admin
+            ? wpl_flex::get_kind_field_map($kind)
+            : wpl_flex::get_kind_field_map($kind, 'pwizard', 1);
+
+        $allowed = isset($map[$table_name]);
+
+        if($allowed and $is_admin) $allowed = in_array($table_column, (array) wpl_db::columns($table_name), true);
+        elseif($allowed) $allowed = in_array($table_column, $map[$table_name], true);
+
+        if(!$allowed)
+        {
+            $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('This field cannot be edited here.')));
+        }
+    }
+
 	public function display()
 	{
 		/** check permission **/
@@ -69,6 +104,9 @@ class wpl_listing_controller extends wpl_controller
 	
 	private function save($table_name, $table_column, $value, $item_id)
 	{
+		$item_id = $this->assert_can_edit_property($item_id);
+		$this->assert_editable_property_field($table_name, $table_column, $item_id);
+
 		$field_type = wpl_global::get_db_field_type($table_name, $table_column);
 		if($field_type == 'datetime' or $field_type == 'date') $value = wpl_render::derender_date($value);
 
@@ -87,11 +125,17 @@ class wpl_listing_controller extends wpl_controller
 	{
         $dbst_id = wpl_request::getVar('dbst_id');
         $value = stripslashes(wpl_request::getVar('value', ''));
-        $item_id = wpl_request::getVar('item_id');
+        $item_id = $this->assert_can_edit_property(wpl_request::getVar('item_id'));
         $lang = wpl_request::getVar('lang');
-        
+
         $field = wpl_flex::get_field($dbst_id);
-        
+
+        /** dbst_id came from the request, so confirm it belongs to this property's kind **/
+        if(!$field or (int) $field->kind !== (int) wpl_property::get_property_kind($item_id))
+        {
+            $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('This field cannot be edited here.')));
+        }
+
         $table_name = $field->table_name;
         $table_column1 = wpl_addon_pro::get_column_lang_name($field->table_column, $lang, false);
         $default_language = wpl_addon_pro::get_default_language();
@@ -116,6 +160,9 @@ class wpl_listing_controller extends wpl_controller
 	
 	private function location_save($table_name, $table_column, $value, $item_id)
 	{
+		$item_id = $this->assert_can_edit_property($item_id);
+		$this->assert_editable_property_field($table_name, $table_column, $item_id);
+
 		$location_settings = wpl_global::get_settings('3'); # location settings
 		
 		$location_level = str_replace('_id', '', $table_column ?? '');
@@ -181,6 +228,8 @@ class wpl_listing_controller extends wpl_controller
 	
 	private function finalize($item_id, $mode, $value = 1)
 	{
+		$item_id = $this->assert_can_edit_property($item_id);
+
 		if($value) wpl_property::finalize($item_id, $mode);
 		else wpl_property::unfinalize($item_id);
 		
@@ -196,7 +245,7 @@ class wpl_listing_controller extends wpl_controller
     private function item_save()
 	{
 		$kind = wpl_request::getVar('kind', 0);
-		$parent_id = wpl_request::getVar('item_id', 0);
+		$parent_id = $this->assert_can_edit_property(wpl_request::getVar('item_id', 0));
         $item_type = wpl_request::getVar('item_type', '');
         $item_cat = wpl_request::getVar('item_cat', '');
         $item_name = wpl_request::getVar('value', '');
@@ -223,7 +272,7 @@ class wpl_listing_controller extends wpl_controller
     private function remove_items()
     {
         $kind = wpl_request::getVar('kind', 0);
-		$parent_id = wpl_request::getVar('item_id', 0);
+		$parent_id = $this->assert_can_edit_property(wpl_request::getVar('item_id', 0));
         $item_type = wpl_request::getVar('item_type', '');
         $item_cat = wpl_request::getVar('item_cat', '');
 
@@ -267,10 +316,19 @@ class wpl_listing_controller extends wpl_controller
     private function set_parent()
     {
         $parent_id = wpl_request::getVar('parent_id', 0);
-		$item_id = wpl_request::getVar('item_id', 0);
+		$item_id = $this->assert_can_edit_property(wpl_request::getVar('item_id', 0));
         $replace = wpl_request::getVar('replace', 1);
         $key = wpl_request::getVar('key', 'parent');
-        
+
+        /**
+         * %i escapes the identifier but does not limit which column it names, and $key came from
+         * the request, so this could set user_id, confirmed or sp_featured on the property.
+         **/
+        if(!in_array($key, array('parent', 'parent_kind'), true))
+        {
+            $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('This field cannot be edited here.')));
+        }
+
         // Set Parent
         wpl_db::q(wpl_db::prepare("UPDATE `#__wpl_properties` SET %i = %d WHERE `id` = %d", $key, $parent_id, $item_id));
 

@@ -709,6 +709,59 @@ class wpl_extensions
     }
 
     /**
+     * Maps a value of the wpl_menus.capability column to a WordPress capability
+     *
+     * That column holds WPL role aliases ('admin', 'agent') or the literal 'current', not
+     * WordPress capabilities, yet the value was handed straight to add_menu_page(), whose third
+     * argument is a capability. Passing a role name only appeared to work because WP_User builds
+     * $allcaps from the wp_capabilities meta, which contains the user's own role slug. So
+     * 'current' resolved to the visitor's own role and the check was self-satisfying: every
+     * capability test passed for whoever asked. The same quirk hid pages seeded as 'agent' from
+     * administrators, who have no 'author' entry in $allcaps.
+     *
+     * Pages seeded as 'current' are the per-user ones (My Profile, Add Listing, Listing Manager).
+     * They map to 'read' so any logged-in user can reach them, exactly as before; the real
+     * authorization for those pages is wpl_users::check_access(), which each one already calls.
+     *
+     * @author Howard <howard@realtyna.com>
+     * @static
+     * @param string $capability Value of the wpl_menus.capability column
+     * @return string A WordPress capability
+     */
+    public static function menu_capability($capability)
+    {
+        $capability = strtolower(trim((string) $capability));
+
+        switch($capability)
+        {
+            /** any logged in WPL user; the page itself checks its WPL access **/
+            case '':
+            case 'current':
+            case 'guest':
+            case 'subscriber':
+                return 'read';
+
+            case 'contributor':
+                return 'edit_posts';
+
+            case 'agent':
+            case 'author':
+                return 'publish_posts';
+
+            case 'editor':
+                return 'edit_others_posts';
+
+            case 'admin':
+            case 'administrator':
+            case 'superadmin':
+                return 'manage_options';
+        }
+
+        /** unrecognised value: restrict to administrators rather than guessing **/
+        return 'manage_options';
+    }
+
+    /**
      * For creating admin menus
      * @author Howard <howard@realtyna.com>
      */
@@ -717,8 +770,6 @@ class wpl_extensions
         $cur_user_id = wpl_users::get_cur_user_id();
         $cur_user_data = wpl_users::get_user($cur_user_id);
 
-        $cur_role = wpl_users::get_role($cur_user_id, false);
-        $wpl_roles = wpl_users::get_wpl_roles();
         $menus = wpl_global::get_menus('menu', 'backend');
         $submenus = wpl_global::get_menus('submenu', 'backend');
 
@@ -733,13 +784,13 @@ class wpl_extensions
             /** add menus **/
             foreach($menus as $menu)
             {
-                $role = $menu->capability == 'current' ? $cur_role : $wpl_roles[$menu->capability];
+                $capability = self::menu_capability($menu->capability);
                 $position = $menu->position ? $menu->position : NULL;
                 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 $menu_title = __($menu->menu_title, 'real-estate-listing-realtyna-wpl').((wpl_users::is_administrator($cur_user_id) and $available_updates >= 1) ? '<span class="update-plugins update-wpl count-'.$available_updates.'"><span class="wpl-count">'.$available_updates.'</span></span>' : '');
 
                 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
-                add_menu_page(__($menu->page_title, 'real-estate-listing-realtyna-wpl'), $menu_title, $role, $menu->menu_slug, array($controller, $menu->function), '', $position);
+                add_menu_page(__($menu->page_title, 'real-estate-listing-realtyna-wpl'), $menu_title, $capability, $menu->menu_slug, array($controller, $menu->function), '', $position);
             }
 
             /** add sub menus **/
@@ -747,12 +798,12 @@ class wpl_extensions
             {
                 if(!wpl_users::has_menu_access($submenu->menu_slug, $cur_user_id)) continue;
 
-                $role = $submenu->capability == 'current' ? $cur_role : $wpl_roles[$submenu->capability];
+                $capability = self::menu_capability($submenu->capability);
                 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 $menu_title = $submenu->separator ? $controller->wpl_add_separator().__($submenu->menu_title, 'real-estate-listing-realtyna-wpl') : __($submenu->menu_title, 'real-estate-listing-realtyna-wpl');
 
                 // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
-                add_submenu_page($submenu->parent, __($submenu->page_title, 'real-estate-listing-realtyna-wpl'), $menu_title, $role, $submenu->menu_slug, array($controller, $submenu->function));
+                add_submenu_page($submenu->parent, __($submenu->page_title, 'real-estate-listing-realtyna-wpl'), $menu_title, $capability, $submenu->menu_slug, array($controller, $submenu->function));
             }
         }
     }

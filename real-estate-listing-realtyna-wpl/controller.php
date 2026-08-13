@@ -242,6 +242,36 @@ class wpl_controller
         exit;
     }
 
+    /**
+     * Confirms the current user may act on a property, and returns its id as an int
+     *
+     * The listing wizard page checks this before rendering, but the AJAX controllers behind it took
+     * the property id straight from the request and never checked it, so any user who could reach
+     * them was able to edit, upload to, or delete from another user's listing. It lives here
+     * because each of those controllers declares its own wpl_listing_controller class.
+     *
+     * @author David M
+     * @param int|string $property_id
+     * @param string $access 'edit' or 'delete'
+     * @return int
+     */
+    public function assert_can_edit_property($property_id, $access = 'edit')
+    {
+        _wpl_import('libraries.property');
+
+        $property_id = (int) $property_id;
+
+        if(!wpl_property::can_edit($property_id, $access))
+        {
+            $this->response(array(
+                'success' => 0,
+                'message' => __('You can not edit this property.', 'real-estate-listing-realtyna-wpl')
+            ));
+        }
+
+        return $property_id;
+    }
+
 	public function verifyNonce($nonce, $action) {
         if(!wpl_security::verify_nonce($nonce, $action))  {
             $this->response([

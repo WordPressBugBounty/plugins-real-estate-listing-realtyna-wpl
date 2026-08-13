@@ -64,6 +64,7 @@ function wpl_initialize<?php wpl_esc::js($this->activity_id); ?>()
         },
 		fullscreenControl: false,
 		streetViewControl: false,
+		zoomControl: true,
 		rotateControl: true,
 		rotateControlOptions: {
 			position: google.maps.ControlPosition.LEFT_CENTER
@@ -452,9 +453,31 @@ function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, dele
             wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>.addMarkers(markers_array<?php wpl_esc::js($this->activity_id); ?>, false);
             wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>.redraw();
         }
+		wpl_cleanup_orphan_cluster_icons<?php wpl_esc::js($this->activity_id); ?>();
         <?php endif; ?>
 	}
 }
+
+<?php if($this->clustering and wpl_global::check_addon('aps') && $this->clustering_method != 'super_cluster'): ?>
+function wpl_cleanup_orphan_cluster_icons<?php wpl_esc::js($this->activity_id); ?>()
+{
+	if(typeof wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?> == 'undefined') return;
+
+	var container = document.getElementById('wpl_googlemap_container<?php wpl_esc::js($this->activity_id); ?>');
+	if(!container) return;
+
+	var candidates = container.querySelectorAll('div[style*="background-image"]');
+	var tracked = wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>.clusters_.map(function(c) { return c.clusterIcon_.div_; });
+
+	for(var i = 0; i < candidates.length; i++)
+	{
+		if(tracked.indexOf(candidates[i]) === -1 && candidates[i].parentNode)
+		{
+			candidates[i].parentNode.removeChild(candidates[i]);
+		}
+	}
+}
+<?php endif;?>
 
 function get_infowindow_html<?php wpl_esc::js($this->activity_id); ?>(property_ids, callback)
 {

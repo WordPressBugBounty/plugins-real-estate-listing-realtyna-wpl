@@ -19,6 +19,9 @@ class wpl_listing_controller extends wpl_controller
 			$this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('The security nonce is not valid!')));
 		}
         
+		/** pid came from the request and was never checked against the caller **/
+		$this->assert_can_edit_property(wpl_request::getVar('pid'));
+
 		if($function == 'upload') $this->upload();
 		elseif($function == 'title_update') wpl_items::update_file(wpl_request::getVar('image'), wpl_request::getVar('pid'), array('item_extra1'=>wpl_request::getVar('value')));
 		elseif($function == 'desc_update') wpl_items::update_file(wpl_request::getVar('image'), wpl_request::getVar('pid'), array('item_extra2'=>wpl_request::getVar('value')));
@@ -44,8 +47,15 @@ class wpl_listing_controller extends wpl_controller
 		$params['accept_ext'] = wpl_flex::get_field_options(300);
 
 		$extensions = explode(',',$params['accept_ext']['ext_file']);
-		$extensions = apply_filters('wpl_listing_controller/gallery/upload/accept_ext', wpl_global::filter_extensions($extensions));
-		$extensionsStr = str_replace(';', '', implode('|', $extensions));
+
+		/** the allowlist runs last so a filter cannot put a dangerous extension back **/
+		$extensions = wpl_global::filter_extensions(apply_filters('wpl_listing_controller/gallery/upload/accept_ext', $extensions));
+
+		/** the list is built into a regex, so quote it; an ext_file of '.*' matched everything **/
+		$extensionsStr = implode('|', array_map('preg_quote', $extensions));
+
+		/** an empty list must reject everything rather than compile to /\.()$/ **/
+		if($extensionsStr === '') return;
 		$file_size = intval($params['accept_ext']['file_size']);
 		if(empty($file_size)) {
 			$file_size = 10000;

@@ -6,7 +6,148 @@ class wpl_users_controller extends wpl_controller
 {
 	public $tpl_path = 'views.backend.users.tmpl';
 	public $tpl;
-	
+
+    /**
+     * Extra columns wpl_flex stores next to a dbst field, keyed by field type.
+     *
+     * Mirrors the column list wpl_flex::change_storage() builds, so a field the profile wizard
+     * renders is accepted together with the companion columns its editor posts.
+     *
+     * @var array
+     */
+    protected static $column_suffixes = array(
+        'feature'      => array('_options'),
+        'neighborhood' => array('_distance', '_distance_by'),
+        'area'         => array('_si', '_unit'),
+        'length'       => array('_si', '_unit'),
+        'volume'       => array('_si', '_unit'),
+        'price'        => array('_si', '_unit'),
+        'mmarea'       => array('_si', '_max', '_max_si', '_unit'),
+        'mmlength'     => array('_si', '_max', '_max_si', '_unit'),
+        'mmvolume'     => array('_si', '_max', '_max_si', '_unit'),
+        'mmprice'      => array('_si', '_max', '_max_si', '_unit'),
+        'mmnumber'     => array('_max'),
+    );
+
+    /**
+     * Confirms the caller is allowed to modify $user_id's record
+     *
+     * item_id/id arrived from the request and was never compared against the current user, so any
+     * caller could act on any other user's record. Administrators keep managing every WPL user;
+     * everybody else is limited to their own record.
+     *
+     * @param int|string $user_id
+     * @return int The validated user id
+     */
+    private function assert_can_edit_user($user_id)
+    {
+        $user_id = (int) $user_id;
+
+        if($user_id <= 0)
+        {
+            $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('Invalid user.')));
+        }
+
+        if(!wpl_users::is_administrator() and $user_id !== (int) wpl_users::get_cur_user_id())
+        {
+            $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('Permission denied.')));
+        }
+
+        return $user_id;
+    }
+
+    /**
+     * Returns the tables and columns of the user kind, as table_name => array of columns
+     *
+     * @param boolean $wizard_only Limit to the fields the profile wizard renders
+     * @return array
+     */
+    private function user_field_map($wizard_only = true)
+    {
+        $kind = wpl_flex::get_kind_id('user');
+
+        $fields = $wizard_only
+            ? wpl_flex::get_fields('', 1, $kind, 'pwizard', 1)
+            : wpl_flex::get_fields('', 0, $kind);
+
+        $map = array();
+
+        foreach((array) $fields as $field)
+        {
+            if(!trim($field->table_name ?? '') or !trim($field->table_column ?? '')) continue;
+
+            $map[$field->table_name][] = $field->table_column;
+
+            foreach((self::$column_suffixes[$field->type] ?? array()) as $suffix)
+            {
+                $map[$field->table_name][] = $field->table_column.$suffix;
+            }
+        }
+
+        return $map;
+    }
+
+    /**
+     * Confirms $table_name/$table_column is a field these endpoints may write
+     *
+     * Both values arrived from the request, and the only guard compared $table_name against the
+     * literal 'wpl_users'. Any other name was accepted, and wpl_db::set() passes it through
+     * wpl_db::_prefix(), where '#__users' resolves to the WordPress users table, so an agent could
+     * overwrite an administrator's user_pass. Deriving the allowed pairs from the dbst definitions
+     * also stops a user writing the access_* and maccess_* columns that hold their own WPL
+     * permissions, since those are not part of the profile wizard.
+     *
+     * @param string $table_name
+     * @param string $table_column
+     */
+    private function assert_editable_user_field($table_name, $table_column)
+    {
+        $table_name = (string) $table_name;
+        $table_column = (string) $table_column;
+
+        /** administrators edit the whole record through the user manager **/
+        $is_admin = wpl_users::is_administrator();
+        $map = $this->user_field_map(!$is_admin);
+
+        $allowed = isset($map[$table_name]);
+
+        if($allowed and $is_admin)
+        {
+            /** any real column of a user table, so the user manager keeps editing non dbst columns **/
+            $allowed = in_array($table_column, (array) wpl_db::columns($table_name), true);
+        }
+        elseif($allowed)
+        {
+            $allowed = in_array($table_column, $map[$table_name], true);
+        }
+
+        if(!$allowed)
+        {
+            $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('This field cannot be edited here.')));
+        }
+    }
+
+    /**
+     * Returns a dbst field when it belongs to the user kind, otherwise NULL
+     *
+     * field_id arrived from the request and selected both the upload extension list and the target
+     * column, so a field from another kind could be pointed at a user record.
+     *
+     * @param int|string $field_id
+     * @return object|NULL
+     */
+    private function get_user_field($field_id)
+    {
+        if(!trim($field_id ?? '')) return NULL;
+
+        $field = wpl_flex::get_field($field_id);
+        if(!$field or !isset($field->kind)) return NULL;
+
+        if((int) $field->kind !== (int) wpl_flex::get_kind_id('user')) return NULL;
+
+        return $field;
+    }
+
 	public function display()
 	{
 		$function = wpl_request::getVar('wpl_function');
@@ -64,12 +205,12 @@ class wpl_users_controller extends wpl_controller
 		}
 		elseif($function == 'change_membership')
 		{
-            /** check permission **/
-            wpl_global::min_access('agent');
-        
+            /** changing a membership is an administrative action, not something an agent may do **/
+            wpl_global::min_access('administrator');
+
 			$user_id = wpl_request::getVar('id');
 			$membership_id = wpl_request::getVar('membership_id');
-			
+
 			$this->change_membership($user_id, $membership_id);
 		}
 		elseif($function == 'location_save')
@@ -121,9 +262,9 @@ class wpl_users_controller extends wpl_controller
         }
         elseif($function == 'renew_membership')
         {
-            /** check permission **/
-            wpl_global::min_access('agent');
-            
+            /** renewing extends a paid membership, so it stays with administrators **/
+            wpl_global::min_access('administrator');
+
             $this->renew_membership();
         }
         elseif($function == 'expire_membership')
@@ -135,8 +276,8 @@ class wpl_users_controller extends wpl_controller
         }
         elseif($function == 'change_parent')
         {
-            /** check permission **/
-            wpl_global::min_access('agent');
+            /** reparenting changes which agent a user reports to, so it stays with administrators **/
+            wpl_global::min_access('administrator');
 
             $user_id = wpl_request::getVar('id');
             $parent = wpl_request::getVar('parent');
@@ -316,12 +457,8 @@ class wpl_users_controller extends wpl_controller
 	
 	private function save($table_name, $table_column, $value, $item_id)
 	{
-	    $user = wp_get_current_user();
-        $roles = ( array ) $user->roles;
-        if(!in_array('administrator', $roles) && $table_name == 'wpl_users' && $item_id != get_current_user_id()) {
-		    $response = array('success'=> 0, 'message'=> 'Permission denied');
-			$this->response($response);
-        }
+	    $item_id = $this->assert_can_edit_user($item_id);
+	    $this->assert_editable_user_field($table_name, $table_column);
 
 		$field_type = wpl_global::get_db_field_type($table_name, $table_column);
 		if($field_type == 'datetime' or $field_type == 'date') $value = wpl_render::derender_date($value);
@@ -341,11 +478,16 @@ class wpl_users_controller extends wpl_controller
 	{
 		$dbst_id = wpl_request::getVar('dbst_id');
         $value = wpl_request::getVar('value');
-        $item_id = wpl_request::getVar('item_id');
+        $item_id = $this->assert_can_edit_user(wpl_request::getVar('item_id'));
         $lang = wpl_request::getVar('lang');
-        
-        $field = wpl_flex::get_field($dbst_id);
-        
+
+        /** dbst_id came from the request, so keep it inside the user kind **/
+        $field = $this->get_user_field($dbst_id);
+        if(!$field)
+        {
+            $this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('This field cannot be edited here.')));
+        }
+
         $table_name = $field->table_name;
         $table_column1 = wpl_addon_pro::get_column_lang_name($field->table_column, $lang, false);
         $default_language = wpl_addon_pro::get_default_language();
@@ -381,6 +523,9 @@ class wpl_users_controller extends wpl_controller
 	
 	private function location_save($table_name, $table_column, $value, $item_id)
 	{
+	    $item_id = $this->assert_can_edit_user($item_id);
+	    $this->assert_editable_user_field($table_name, $table_column);
+
 		$location_settings = wpl_global::get_settings('3'); # location settings
 		
 		$location_level = str_replace('_id', '', $table_column ?? '');
@@ -406,6 +551,8 @@ class wpl_users_controller extends wpl_controller
 	
 	private function finalize($user_id)
 	{
+	    $user_id = $this->assert_can_edit_user($user_id);
+
 		wpl_users::finalize($user_id);
 		
 		$res = 1;
@@ -419,16 +566,31 @@ class wpl_users_controller extends wpl_controller
 	
 	private function upload_file($file_name, $user_id)
 	{
+	    $user_id = $this->assert_can_edit_user($user_id);
+
 		$file = wpl_request::getVar($file_name, '', 'FILES');
-		$filename = $file['name'];
+
+		/**
+		 * $file['name'] is chosen by the client. It used to be written through unchanged, so a name
+		 * carrying path segments escaped the item folder and could overwrite files elsewhere.
+		 **/
+		$filename = sanitize_file_name(basename((string) ($file['name'] ?? '')));
+
 		$ext_array = array('jpg','png','gif','jpeg','webp');
+
+		/** field_id also came from the request, so only a user kind field may widen the list **/
 		$field_id = wpl_request::getVar('field_id');
-		if(!empty($field_id)) {
-			$field_options = wpl_flex::get_field_options($field_id);
-			if(!empty($field_options['ext_file'])) {
-				$ext_array = explode(',', $field_options['ext_file']);
+		$field = $this->get_user_field($field_id);
+
+		if($field)
+		{
+			$field_options = wpl_flex::get_field_options($field->id);
+			if(!empty($field_options['ext_file']))
+			{
+				$ext_array = wpl_global::filter_extensions(explode(',', $field_options['ext_file']));
 			}
 		}
+		else $field_id = '';
 
 		$error = "";
 		$message = "";
@@ -437,12 +599,16 @@ class wpl_users_controller extends wpl_controller
 		{
 			$error = wpl_esc::return_html_t('An error ocurred uploading your file.');
 		}
-		else 
+		elseif($filename === '')
 		{
-			// check the extension
-			$extension = strtolower(wpl_file::getExt($file['name']));
-			
-			if(!in_array($extension, $ext_array))
+			$error = wpl_esc::return_html_t('An error ocurred uploading your file.');
+		}
+		else
+		{
+			// check the extension of the sanitized name, which is what gets written
+			$extension = strtolower(wpl_file::getExt($filename));
+
+			if(!in_array($extension, $ext_array, true))
 			{
 				$error = wpl_esc::return_html_t('File extension should be .jpg, .png or .gif.');
 			}
@@ -479,37 +645,60 @@ class wpl_users_controller extends wpl_controller
 					/** save into db and add to items **/
 					wpl_db::set('wpl_users', $user_id, 'agent_cover', $new_file_name);
 				}
-				else {
+				elseif($field and $field->table_name == 'wpl_users')
+				{
 					$new_file_name = $filename;
-					if(!empty($field_id)) {
-						$flex_row = wpl_flex::get_field($field_id);
-						if(!empty($flex_row) && $flex_row->table_name == 'wpl_users') {
-							$this->delete_file($field_id, $user_id, false);
-							wpl_db::set('wpl_users', $user_id, $flex_row->table_column, $new_file_name);
-						}
-					}
 
+					$this->delete_file($field->id, $user_id, false);
+					wpl_db::set('wpl_users', $user_id, $field->table_column, $new_file_name);
 				}
-				
-				$dest = wpl_items::get_path($user_id, 2). $new_file_name;
-				wpl_file::upload($file['tmp_name'], $dest);
+				else
+				{
+					/** nothing identifies where this file belongs, so do not write it **/
+					$error = wpl_esc::return_html_t('Invalid upload target.');
+				}
+
+				if($error == '')
+				{
+					$dest = wpl_items::get_path($user_id, 2). $new_file_name;
+					wpl_file::upload($file['tmp_name'], $dest);
+				}
 			}
 		}
-		
-		$res = 1;
+
+		$res = $error == '' ? 1 : 0;
 		$message = $res ? wpl_esc::return_html_t('Saved.') : wpl_esc::return_html_t('Error Occured.');
-		$data = NULL;
-		
-		$response = array('error'=>$error, 'message'=>$message);
+
+		$response = array('success'=>$res, 'error'=>$error, 'message'=>$message);
 		$this->response($response);
 	}
-	
+
 	private function delete_file($field_id, $user_id, $output = true)
 	{
-		$field_data = (array) wpl_db::get('*', 'wpl_dbst', 'id', $field_id);
+		$user_id = $this->assert_can_edit_user($user_id);
+
+		/** field_id reaches here from the request, so keep it inside the user kind **/
+		$field = $this->get_user_field($field_id);
+
+		if(!$field or $field->table_name != 'wpl_users')
+		{
+			if(!$output) return;
+			$this->response(array('success'=>0, 'message'=>wpl_esc::return_html_t('This field cannot be edited here.')));
+		}
+
+		$field_data = (array) $field;
 		$user_data = (array) wpl_users::get_wpl_user($user_id);
-		$path = wpl_items::get_path($user_id, $field_data['kind'], null, false). $user_data[$field_data['table_column']];
-		
+
+		/** the stored value is a bare file name; strip any path in case an older row carries one **/
+		$stored_name = basename((string) ($user_data[$field_data['table_column']] ?? ''));
+		if($stored_name === '')
+		{
+			if(!$output) return;
+			$this->response(array('success'=>1, 'message'=>wpl_esc::return_html_t('Saved.'), 'data'=>NULL));
+		}
+
+		$path = wpl_items::get_path($user_id, $field_data['kind'], null, false). $stored_name;
+
 		/** delete file and reset db **/
 		wpl_file::delete($path);
 		wpl_db::set('wpl_users', $user_id, $field_data['table_column'], '');

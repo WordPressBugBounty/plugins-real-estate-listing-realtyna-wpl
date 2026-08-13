@@ -4,9 +4,9 @@ Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
 Requires at least: 5.3
 Tested up to: 7.0
-Stable tag: 5.4.0
+Stable tag: 5.4.1
 Requires PHP: 7.4
-Version: 5.4.0
+Version: 5.4.1
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 
@@ -46,6 +46,25 @@ Submit a support ticket on Realtyna ticketing system: [https://support.realtyna.
 7. Agent listing
 
 == Changelog ==
+= 5.4.1 =
+- Security: The permission check behind the agent-level admin endpoints did not enforce the role it named, leaving those endpoints open to any visitor
+- Security: The inline field editors on the listing and user wizards accepted any database table and column from the request, and are now limited to the fields those forms render
+- Security: Listing images, attachments, videos, rooms and inline fields can now only be changed by users who have access to that listing
+- Security: Reassigning, cloning and setting additional agents on a listing now check access to that specific listing
+- Security: WPL admin pages are registered with WordPress capabilities instead of role names, so the pages meant for administrators are limited to them
+- Security: The listing manager sort and paging parameters are now bound before they reach the query
+- Security: Uploads are restricted to an allowlist of media types, replacing a blocklist that missed several executable extensions
+- Security: Uploaded file names are sanitised, so a crafted name can no longer be written outside the item folder
+- Security: Membership renewal, expiry and agent reassignment are restricted to administrators
+- Security: The access level lookup is now a bound query
+- Security: PRO Add-on: the public agents and users REST endpoints bind their filter parameters, which were previously placed into the query as given
+- Security: PRO Add-on: the multi-agents REST endpoint no longer accepts a listing id from the query string in place of the one in the route
+- Security: PRO Add-on: the Zapier trigger endpoints escape their filter parameters
+- Security: PRO Add-on: payment endpoints confirm a transaction belongs to the current user, and a transaction can no longer be raised against another user's account
+- Security: PRO Add-on: the Stripe webhook and password reset queries are bound
+- Fixed: The map was missing for some visitors, most often on Android, because the crawler check compared the visitor's browser against search engine names such as "Google" instead of the crawler user agents themselves
+- Improved: Upload fields fall back to the image and video defaults when their configured extension list is empty or unusable
+
 = 5.4.0 =
 - Security: Restricted the IDX AJAX endpoints to administrators and limited dispatch to a known list of functions
 - Security: Required the site's IDX token before the IDX REST API import and update routes run

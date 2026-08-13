@@ -36,6 +36,61 @@ class wpl_flex
      * @param string $condition
      * @return array of objects
      */
+    /**
+     * Extra columns wpl_flex stores next to a dbst field, keyed by field type
+     *
+     * Mirrors the column list change_storage() builds, so a field is accepted together with the
+     * companion columns its editor posts.
+     *
+     * @var array
+     */
+    public static $column_suffixes = array(
+        'feature'      => array('_options'),
+        'neighborhood' => array('_distance', '_distance_by'),
+        'area'         => array('_si', '_unit'),
+        'length'       => array('_si', '_unit'),
+        'volume'       => array('_si', '_unit'),
+        'price'        => array('_si', '_unit'),
+        'mmarea'       => array('_si', '_max', '_max_si', '_unit'),
+        'mmlength'     => array('_si', '_max', '_max_si', '_unit'),
+        'mmvolume'     => array('_si', '_max', '_max_si', '_unit'),
+        'mmprice'      => array('_si', '_max', '_max_si', '_unit'),
+        'mmnumber'     => array('_max'),
+    );
+
+    /**
+     * Returns the writable columns of a kind, as table_name => array of columns
+     *
+     * The inline editors post table_name and table_column, and the controllers behind them used to
+     * write whatever arrived. This turns the dbst definitions into the set those endpoints may
+     * touch, so a request cannot name an unrelated table or a column the form never renders.
+     *
+     * @author Howard R <howard@realtyna.com>
+     * @static
+     * @param int $kind
+     * @param string $key Optional dbst flag to require, e.g. 'pwizard'
+     * @param string $value Minimum value for that flag
+     * @return array
+     */
+    public static function get_kind_field_map($kind = 0, $key = '', $value = '')
+    {
+        $map = array();
+
+        foreach((array) wpl_flex::get_fields('', 0, $kind, $key, $value) as $field)
+        {
+            if(!trim($field->table_name ?? '') or !trim($field->table_column ?? '')) continue;
+
+            $map[$field->table_name][] = $field->table_column;
+
+            foreach((self::$column_suffixes[$field->type] ?? array()) as $suffix)
+            {
+                $map[$field->table_name][] = $field->table_column.$suffix;
+            }
+        }
+
+        return $map;
+    }
+
 	public static function get_fields($category = NULL, $enabled = 0, $kind = 0, $key = '', $value = '', $condition = '')
 	{
 		if(!$condition)

@@ -60,9 +60,13 @@ class wpl_listings_controller extends wpl_controller
         $settings = wpl_settings::get_settings();
 
         /** listing settings **/
-		$this->page_number = wpl_request::getVar('wplpage', 1);
-        $limit = wpl_request::getVar('limit', $settings['default_page_size']);
-        $start = wpl_request::getVar('start', (($this->page_number-1)*$limit));
+		/** these end up in the LIMIT clause, so cast them the way the frontend listing does **/
+		$this->page_number = max(1, (int) wpl_request::getVar('wplpage', 1));
+        $limit = (int) wpl_request::getVar('limit', $settings['default_page_size']);
+        if($limit <= 0) $limit = (int) $settings['default_page_size'];
+        if($limit <= 0) $limit = 10;
+
+        $start = max(0, (int) wpl_request::getVar('start', (($this->page_number-1)*$limit)));
         $orderby = wpl_request::getVar('orderby', apply_filters('wpl_property/backend/default_orderby', $settings['default_orderby']));
         $order = wpl_request::getVar('order', $settings['default_order']);
 		$current_user_id = wpl_users::get_cur_user_id();

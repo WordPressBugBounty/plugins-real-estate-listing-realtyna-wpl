@@ -408,6 +408,33 @@ class wpl_users
 	}
 	
     /**
+     * Resolves a WPL role alias to the WordPress role it maps to
+     *
+     * get_wpl_roles() is keyed by WPL alias ('admin', 'agent', ...) and holds the WordPress
+     * role as the value ('administrator', 'author', ...). Both forms reach this code: callers
+     * such as min_access('agent') pass an alias, while get_role() returns a WordPress role.
+     * Validating an alias with in_array() against the values never matched, so 'agent' and
+     * 'admin' silently degraded to 'guest', which scores 0 and is satisfied by everyone.
+     *
+     * @author Howard R <howard@realtyna.com>
+     * @static
+     * @param string $role Role alias or WordPress role name
+     * @return string|boolean WordPress role name, or false when the role is unknown
+     */
+	public static function normalize_role($role)
+	{
+		$roles = self::get_wpl_roles();
+
+		/** already a WordPress role name **/
+		if(in_array($role, $roles, true)) return $role;
+
+		/** a WPL alias, e.g. 'agent' => 'author' **/
+		if(is_string($role) and isset($roles[$role])) return $roles[$role];
+
+		return false;
+	}
+
+    /**
      * Get role point
      * @author Howard R <howard@realtyna.com>
      * @static
@@ -416,12 +443,10 @@ class wpl_users
      */
 	public static function get_role_point($role)
 	{
-		/** get all roles **/
-		$roles = self::get_wpl_roles();
-		
-		/** role validation **/
-		if(!in_array($role, $roles)) $role = 'guest';
-		
+		/** resolve aliases; an unrecognised role is treated as the lowest rank **/
+		$role = self::normalize_role($role);
+		if($role === false) $role = 'guest';
+
 		$roles_point = array();
         $roles_point['superadmin'] = 6;
 		$roles_point['administrator'] = 5;
@@ -430,8 +455,8 @@ class wpl_users
 		$roles_point['Contributor'] = 2;
 		$roles_point['subscriber'] = 1;
 		$roles_point['guest'] = 0;
-		
-		return $roles_point[$role];
+
+		return $roles_point[$role] ?? 0;
 	}
 	
     /**
