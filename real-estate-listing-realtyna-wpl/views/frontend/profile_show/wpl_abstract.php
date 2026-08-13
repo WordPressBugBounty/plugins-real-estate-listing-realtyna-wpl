@@ -40,7 +40,7 @@ abstract class wpl_profile_show_controller_abstract extends wpl_controller
             
             $this->uid = apply_filters('wpl_profile_show_controller_abstract/display/uid', $this->uid);
 
-			$check_access = wpl_global::check_access('public_profile',$this->uid);
+			$check_access = wpl_global::check_access('public_profile',$this->uid, false);
             /** check user id **/
             if(!$this->uid or !$check_access)
             {

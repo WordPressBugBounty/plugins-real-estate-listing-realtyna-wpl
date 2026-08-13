@@ -45,7 +45,7 @@ class wpl_listing_controller extends wpl_controller
 					'item_type'=>'video',
 					'item_cat'=>'video_embed',
 					'item_name'=>wpl_request::getVar('title'),
-					'creation_date'=>date("Y-m-d H:i:s"),
+					'creation_date'=>gmdate("Y-m-d H:i:s"),
 					'item_extra1'=>wpl_request::getVar('desc'),
 					'item_extra2'=>$embed,
 					'item_extra3'=>wpl_request::getVar('thumbnail'),
@@ -100,7 +100,7 @@ class wpl_listing_controller extends wpl_controller
 		$index = floatval(wpl_items::get_maximum_index($property_id, wpl_request::getVar('type'), $kind, $item_cat))+1.00;
 		
 		$item = array('parent_id'=>$property_id,'parent_kind'=>$kind,'item_type'=>wpl_request::getVar('type'),
-				'item_cat'=>$item_cat,'item_name'=>$response->files[0]->name,'creation_date'=>date("Y-m-d H:i:s"),'index'=>$index);
+				'item_cat'=>$item_cat,'item_name'=>$response->files[0]->name,'creation_date'=>gmdate("Y-m-d H:i:s"),'index'=>$index);
 		
 		wpl_items::save($item);
 	}

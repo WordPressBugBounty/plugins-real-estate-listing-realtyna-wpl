@@ -8,7 +8,12 @@ defined('_WPLEXEC') or die('Restricted access');
  * @since WPL2.5.0
  * @date 05/06/2015
  * @package WPL
+ *
+ * Most of this file is the bundled scssphp compiler, kept as released upstream so it can be replaced by a
+ * newer version. The sniffs below are turned off for the file rather than patching library internals, and
+ * the compiler streams its output to disk, which WP_Filesystem cannot express.
  */
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_mkdir, WordPress.DateTime.RestrictedFunctions.date_date
 class wpl_scss
 {
     /**
@@ -1679,6 +1684,7 @@ class wpl_scssc {
 			$parser->insertComments  = true;
 
 			if ( ! $parser->valueList($value)) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- bundled scssphp library, the message is never sent to the browser
 				throw new Exception("failed to parse passed in variable $name: $strValue");
 			}
 
@@ -2589,6 +2595,7 @@ class wpl_scssc {
 			$this->sourceParser->throwParseError($msg, $this->sourcePos);
 		}
 
+		// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- bundled scssphp library, the message is never sent to the browser
 		throw new Exception($msg);
 	}
 
@@ -4146,11 +4153,13 @@ class wpl_scss_parser {
 			$loc = "line: $line";
 		}
 
+		// phpcs:disable WordPress.Security.EscapeOutput.ExceptionNotEscaped -- bundled scssphp library, the message is never sent to the browser
 		if ($this->peek("(.*?)(\n|$)", $m, $count)) {
 			throw new Exception("$msg: failed at `$m[1]` $loc");
 		} else {
 			throw new Exception("$msg: $loc");
 		}
+		// phpcs:enable WordPress.Security.EscapeOutput.ExceptionNotEscaped
 	}
 
 	public function getLineNo($pos) {

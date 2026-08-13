@@ -541,7 +541,8 @@ class wpl_users_controller extends wpl_controller
 		
 		$res = 1;
 		$message = $res ? wpl_esc::return_html_t('Operation was successful.') : wpl_esc::return_html_t('Error Occured.');
-		$data = array('expiry_date'=>date('Y-m-d', strtotime($user_data->expiry_date)));
+		/** An unlimited membership has no expiry date, it is NULL on MySQL 8 and '0000-00-00 00:00:00' on databases that were not migrated **/
+		$data = array('expiry_date'=>$membership->render_date($user_data->expiry_date ?? ''));
 		
 		$response = array('success'=>$res, 'message'=>$message, 'data'=>$data);
 		

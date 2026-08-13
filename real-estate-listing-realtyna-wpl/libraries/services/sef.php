@@ -218,7 +218,7 @@ class wpl_service_sef
 		$html->set_meta_keywords($this->property_keywords);
 		
 		// Set Meta Description
-		$html->set_meta_description(apply_filters('wpl_service_sef/set_property_page_params/property_description', strip_tags($this->property_description ?? ''), $property_data));
+		$html->set_meta_description(apply_filters('wpl_service_sef/set_property_page_params/property_description', wp_strip_all_tags($this->property_description ?? ''), $property_data));
         
         // SET Canonical URL
         $property_link = wpl_property::get_property_link($property_data);
@@ -233,11 +233,11 @@ class wpl_service_sef
 
 		$metaTags['og:url'] = ['content' => str_replace('&', '&amp;', $property_link)];
 		$metaTags['og:title'] = ['data-page-subject' => 'true', 'content' => wpl_esc::return_attr($this->property_page_title)];
-		$metaTags['og:description'] = ['content' => wpl_esc::return_attr(strip_tags(stripslashes($property_data[$content_column] ?? "")))];
+		$metaTags['og:description'] = ['content' => wpl_esc::return_attr(wp_strip_all_tags(stripslashes($property_data[$content_column] ?? "")))];
 
 		$metaTags['twitter:card'] = ['content' => 'summary'];
 		$metaTags['twitter:title'] = ['content' => wpl_esc::return_attr($this->property_page_title)];
-		$metaTags['twitter:description'] = ['content' => wpl_esc::return_attr(strip_tags(stripslashes($property_data[$content_column] ?? "")))];
+		$metaTags['twitter:description'] = ['content' => wpl_esc::return_attr(wp_strip_all_tags(stripslashes($property_data[$content_column] ?? "")))];
 		$metaTags['twitter:url'] = ['content' => str_replace('&', '&amp;', $property_link)];
         
         $gallery = wpl_items::get_gallery($property_id, $property_data['kind']);
@@ -372,6 +372,11 @@ class wpl_service_sef
         
 		// Set Title
 		$html->set_title(wpl_esc::return_html_t('Members'));
+		add_filter('wpseo_robots', '__return_false');
+		 if(class_exists('RankMath')) {
+			remove_all_actions('rank_math/head', 10);
+		}
+		add_action( 'wp_head', 'wp_no_robots', 10);
     }
     
     /**

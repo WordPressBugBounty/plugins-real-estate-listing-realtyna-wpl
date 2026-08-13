@@ -68,7 +68,7 @@ if(empty($id)) {
 			wplj.ajax({
 				type: 'GET',
 				dataType: 'JSON',
-				url: '<?php echo wpl_global::get_full_url(); ?>',
+				url: '<?php echo esc_url(wpl_global::get_full_url()); ?>',
 				data: 'wpl_format=b:users:ajax&wpl_function=autocomplete&_wpnonce=<?php wpl_esc::attr(wpl_security::create_nonce('wpl_users')); ?>&search=' + search_value,
 				success: function (data) {
 					wplj('#<?php wpl_esc::js($id); ?> option:not(:selected)').remove();

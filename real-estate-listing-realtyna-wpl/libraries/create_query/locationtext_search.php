@@ -37,7 +37,7 @@ if($format == 'locationtextsearch' and !$done_this)
 
         foreach($values as $val)
         {
-            if(strlen($val) < 2) continue;
+            if(strlen($val) < 2 and !is_numeric($val)) continue;
 			$qq[] = wpl_db::prepare('+"LOC-%1$s"', $val);
         } 
 

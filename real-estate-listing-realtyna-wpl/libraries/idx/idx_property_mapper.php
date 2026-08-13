@@ -389,24 +389,57 @@ class idx_property_mapper
         return $pKeys;
     }
 
+    protected static $allowedImageExtensions = array('jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp');
+
     protected function saveLiveImages($imgs, $pid, $db)
     {
         if (is_array($imgs) && count($imgs) > 0) {
             $i = 0;
             foreach ($imgs as $img) {
+                if (!is_string($img)) continue;
+
+                $img = trim($img);
+
+                $scheme = strtolower((string) wp_parse_url($img, PHP_URL_SCHEME));
+                if (!in_array($scheme, array('http', 'https'), true)) continue;
+
+                /** wp_safe_remote_get keeps a crafted image URL from reaching the local network or an unusual port **/
+                $response = wp_safe_remote_get($img, array('timeout' => 60));
+                if (is_wp_error($response) or wp_remote_retrieve_response_code($response) != 200) continue;
+
+                $contents = wp_remote_retrieve_body($response);
+                if ($contents === '') continue;
+
+                $ext = $this->getImageExtension($contents);
+                if ($ext === '') continue;
+
                 $i++;
                 $property_folder = wpl_items::get_path($pid);
-                $ext = pathinfo($img, PATHINFO_EXTENSION);
                 $imagename = $pid . "-" . $i . "." . $ext;
                 $imagedestination = $property_folder . DS . $imagename;
-                if(file_get_contents($img))
-                {
-                    file_put_contents($imagedestination, file_get_contents($img));
-                    wpl_items::save(array('parent_kind'=>'0', 'parent_id'=>$pid, 'item_type'=>'gallery', 'item_cat'=>'image', 'item_name'=>$imagename, 'item_extra3'=>'mls'));
-                }
+
+                file_put_contents($imagedestination, $contents);
+                wpl_items::save(array('parent_kind'=>'0', 'parent_id'=>$pid, 'item_type'=>'gallery', 'item_cat'=>'image', 'item_name'=>$imagename, 'item_extra3'=>'mls'));
             }
         }
         return $this;
+    }
+
+    protected function getImageExtension($contents)
+    {
+        $info = @getimagesizefromstring($contents);
+
+        if ($info === false or !isset($info[2])) return '';
+
+        $ext = image_type_to_extension((int) $info[2], false);
+
+        if (!is_string($ext)) return '';
+
+        $ext = strtolower($ext);
+
+        if (!in_array($ext, self::$allowedImageExtensions, true)) return '';
+
+        return $ext;
     }
 
     protected function saveExternalImages($imgs, $pid, $db)
@@ -416,7 +449,7 @@ class idx_property_mapper
             foreach ($imgs as $img) {
                 $db->insert($db->prefix . 'wpl_items', array(
                     'parent_id' => $pid,
-                    'creation_date' => date("Y-m-d H:i:s"),
+                    'creation_date' => gmdate("Y-m-d H:i:s"),
                     'item_type' => 'gallery',
                     'item_cat' => 'external',
                     'item_name' => 'external_image' . $pid,

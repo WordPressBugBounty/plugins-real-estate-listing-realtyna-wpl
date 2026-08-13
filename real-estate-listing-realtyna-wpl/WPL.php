@@ -4,10 +4,14 @@
  * Plugin URI: https://realtyna.com/
  * Description: WPL is a professional WordPress real estate plugin created by Realtyna.
  * Author: Realtyna
- * Version: 5.3.0
+ * Version: 5.4.0
+ * Requires at least: 5.3
+ * Requires PHP: 7.4
  * Text Domain: real-estate-listing-realtyna-wpl
  * Domain Path: /languages
  * Author URI: https://realtyna.com/
+ * License: GPL-2.0-or-later
+ * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  */
 
 // WPL Execution
@@ -27,7 +31,7 @@ define('WPL_UP_ABSPATH', ABSPATH .'wp-content' .DS. 'uploads' .DS. 'WPL' .DS);
  * @deprecated since version 3.0.0
  */
 define('WPL_TEXTDOMAIN', 'real-estate-listing-realtyna-wpl');
-define('WPL_VERSION', '5.3.0'); // WPL Version
+define('WPL_VERSION', '5.4.0'); // WPL Version
 
 require WPL_ABSPATH.'config.php';
 

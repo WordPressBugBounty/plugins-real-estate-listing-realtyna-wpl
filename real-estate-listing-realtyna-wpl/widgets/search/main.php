@@ -47,7 +47,7 @@ class wpl_search_widget extends wpl_widget
         if($this->widget_id < 0) $this->widget_id = abs($this->widget_id)+1000;
 
         // Fix Widget ID in some cases
-        if($this->widget_id === false) $this->widget_id = mt_rand(100, 999);
+        if($this->widget_id === false) $this->widget_id = wp_rand(100, 999);
 
         $this->widget_uq_name = 'wpls'.$this->widget_id;
         
@@ -129,7 +129,7 @@ class wpl_search_widget extends wpl_widget
 	public function update($new_instance, $old_instance)
 	{
 		$instance = array();
-		$instance['title'] = strip_tags($new_instance['title'] ?? '');
+		$instance['title'] = wp_strip_all_tags($new_instance['title'] ?? '');
         $instance['kind'] = $new_instance['kind'] ?? 0;
 		$instance['layout'] = $new_instance['layout'];
         $instance['wpltarget'] = $new_instance['wpltarget'];

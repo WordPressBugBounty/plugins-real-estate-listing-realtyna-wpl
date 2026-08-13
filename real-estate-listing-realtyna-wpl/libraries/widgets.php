@@ -138,6 +138,11 @@ class wpl_widget extends WP_Widget
      */
 	public static function get_existing_widgets()
 	{
+		/**
+		 * WordPress exposes no public API that returns the sidebar to widget map, and this only reads it to
+		 * build an admin picker, so the core helper is used directly.
+		 */
+		// phpcs:ignore Generic.PHP.ForbiddenFunctions.Found -- no public equivalent exists, read only usage
 		$sidebar_widgets = wp_get_sidebars_widgets();
 	    $widgets_with_title = array();
         

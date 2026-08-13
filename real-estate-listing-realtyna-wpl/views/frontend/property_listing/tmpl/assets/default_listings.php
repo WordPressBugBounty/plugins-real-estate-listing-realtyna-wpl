@@ -36,7 +36,7 @@ foreach($this->wpl_properties as $key=>$property)
 	$property_price = isset($property['materials']['price']['value']) ? $property['materials']['price']['value'] : '&nbsp;';
 
 	$cut_position = 399;
-	$description = stripslashes(strip_tags($property['raw'][$description_column] ?? ""));
+	$description = stripslashes(wp_strip_all_tags($property['raw'][$description_column] ?? ""));
 	if($description) {
 		$cut_position = (trim($description) ? strrpos(substr($description, 0, 400), '.', -1) : 0);
 	}

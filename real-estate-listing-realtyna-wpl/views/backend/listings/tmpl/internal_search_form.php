@@ -18,9 +18,9 @@ defined('_WPLEXEC') or die('Restricted access');
 					<?php $current_value = stripslashes(wpl_request::getVar('sf_select_source', 'RF')); ?>
 					<div class="wpl_listing_manager_search_form_element_cnt">
 						<select name="sf_select_source" id="sf_select_source">
-							<option value=""><?php echo __('Property Source', 'real-estate-listing-realtyna-wpl'); ?></option>
-							<option value="rf" <?php echo($current_value == 'rf' ? 'selected="selected"' : ''); ?>><?php echo __('MLS On The Fly™', 'real-estate-listing-realtyna-wpl'); ?></option>
-							<option value="wpl" <?php echo($current_value == 'wpl' ? 'selected="selected"' : ''); ?>><?php echo __('WPL', 'real-estate-listing-realtyna-wpl'); ?></option>
+							<option value=""><?php esc_html_e('Property Source', 'real-estate-listing-realtyna-wpl'); ?></option>
+							<option value="rf" <?php echo($current_value == 'rf' ? 'selected="selected"' : ''); ?>><?php esc_html_e('MLS On The Fly™', 'real-estate-listing-realtyna-wpl'); ?></option>
+							<option value="wpl" <?php echo($current_value == 'wpl' ? 'selected="selected"' : ''); ?>><?php esc_html_e('WPL', 'real-estate-listing-realtyna-wpl'); ?></option>
 						</select>
 					</div>
 					<?php endif; ?>

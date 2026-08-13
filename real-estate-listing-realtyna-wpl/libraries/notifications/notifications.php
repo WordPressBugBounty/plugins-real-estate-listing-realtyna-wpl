@@ -209,7 +209,7 @@ class wpl_notifications
         }
         elseif($this->mode == 'sms')
         {
-            $sms_message = strip_tags($this->rendered_content);
+            $sms_message = wp_strip_all_tags($this->rendered_content);
             $sms_message = str_replace(array('\r\n','\n', '\r'), ' - ', $sms_message);
             $array_unique = array();
             

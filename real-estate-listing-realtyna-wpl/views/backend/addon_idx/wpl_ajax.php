@@ -6,6 +6,25 @@ _wpl_import('libraries.idx.addon_idxn');
 
 class wpl_addon_idx_controller extends wpl_controller
 {
+    protected static $allowed_functions = array(
+        'registration'        => 'manage_options',
+        'providers'           => 'manage_options',
+        'save'                => 'manage_options',
+        'price'               => 'manage_options',
+        'configuration'       => 'manage_options',
+        'get_step'            => 'manage_options',
+        'status'              => 'manage_options',
+        'get_keys'            => 'manage_options',
+        'back_step'           => 'manage_options',
+        'is_user_registered'  => 'manage_options',
+        'load_trial_data'     => 'manage_options',
+        'protect_idx_trial'   => 'manage_options',
+        'reset_trial'         => 'manage_options',
+        'save_client_request' => 'manage_options',
+        'cancel_subscription' => 'manage_options',
+        'check_payment'       => 'manage_options',
+    );
+
     public function display()
     {
         // first check php version
@@ -18,20 +37,38 @@ class wpl_addon_idx_controller extends wpl_controller
 
             wp_send_json($return);
         }
-      
-        wpl_global::min_access('guest');
-        
+
         if (!is_user_logged_in()) {
            wp_send_json(array(
              'status' => 500,
              'message' => 'Log in please'
            ));
         }
-        
+
+        if (!wpl_request::verify_nonce(wpl_request::getVar('_wpnonce'), 'wpl_addon_idx')) {
+            wp_send_json(array(
+                'status'  => 403,
+                'message' => 'Invalid or expired security token, please reload the page.'
+            ));
+        }
+
         // init function name
         $function = wpl_request::getVar('wpl_function');
 
-        
+        if (!is_string($function) || !isset(self::$allowed_functions[$function])) {
+            wp_send_json(array(
+                'status'  => 400,
+                'message' => 'Unknown function'
+            ));
+        }
+
+        if (!current_user_can(self::$allowed_functions[$function])) {
+            wp_send_json(array(
+                'status'  => 403,
+                'message' => 'You are not allowed to do this.'
+            ));
+        }
+
         // Execute it
        if ( $function == 'registration' ) {
           self::$function();
@@ -253,7 +290,7 @@ class wpl_addon_idx_controller extends wpl_controller
         wp_send_json($return);
     }
 
-    protected function check_payment(addon_idxn $idxClient)
+    protected static function check_payment(addon_idxn $idxClient)
     {
         $current_user = wp_get_current_user();
 

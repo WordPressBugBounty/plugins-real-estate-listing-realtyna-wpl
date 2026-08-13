@@ -34,7 +34,7 @@ class wpl_render
 		$date_format_arr = explode(':', wpl_global::get_setting('main_date_format'));
 		$date_format = $date_format_arr[0];
 
-		return date($date_format, strtotime($date));
+		return gmdate($date_format, strtotime($date));
 	}
 
 	/**

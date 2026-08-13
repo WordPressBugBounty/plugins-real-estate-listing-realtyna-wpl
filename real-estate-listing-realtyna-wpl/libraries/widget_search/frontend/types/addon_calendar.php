@@ -16,7 +16,7 @@ function widget_search_frontend_general_addon_calendar(
         $date_format_arr = explode(':', wpl_global::get_setting('main_date_format'));
         $jqdate_format = $date_format_arr[1];
 
-        $min_value = date("Y-m-d");
+        $min_value = gmdate("Y-m-d");
         $mindate = explode('-', $min_value);
         $show_icon = 0;
 

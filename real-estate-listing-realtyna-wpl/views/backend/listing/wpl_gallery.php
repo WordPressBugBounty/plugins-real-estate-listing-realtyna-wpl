@@ -71,7 +71,7 @@ class wpl_listing_controller extends wpl_controller
 		$uploadedFile = apply_filters('wpl_listing_controller/gallery/upload/before_save', $uploadedFile, $property_id);
 
 		$item = array('parent_id'=>$property_id, 'parent_kind'=>$kind, 'item_type'=>wpl_request::getVar('type'),
-				'item_cat'=>$item_cat, 'item_name'=>$uploadedFile->name, 'creation_date'=>date("Y-m-d H:i:s"), 'index'=>$index);
+				'item_cat'=>$item_cat, 'item_name'=>$uploadedFile->name, 'creation_date'=>gmdate("Y-m-d H:i:s"), 'index'=>$index);
 		
 		wpl_items::save($item);
 	}
@@ -99,7 +99,7 @@ class wpl_listing_controller extends wpl_controller
             $index = floatval(wpl_items::get_maximum_index($pid, $type, $kind, $category))+1.00;
             $name = 'external_image'.$index;
         
-            $item = array('parent_id'=>$pid, 'parent_kind'=>$kind, 'item_type'=>$type, 'item_cat'=>$category, 'item_name'=>$name, 'creation_date'=>date("Y-m-d H:i:s"), 'index'=>$index, 'item_extra3'=>$link);
+            $item = array('parent_id'=>$pid, 'parent_kind'=>$kind, 'item_type'=>$type, 'item_cat'=>$category, 'item_name'=>$name, 'creation_date'=>gmdate("Y-m-d H:i:s"), 'index'=>$index, 'item_extra3'=>$link);
             wpl_items::save($item);
         }
 		

@@ -30,9 +30,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -69,9 +69,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -121,9 +121,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -162,9 +162,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -210,9 +210,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -271,9 +271,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -318,9 +318,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -364,9 +364,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -412,9 +412,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -466,9 +466,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -519,9 +519,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -565,9 +565,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -626,9 +626,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -663,9 +663,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -708,9 +708,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -760,9 +760,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -800,9 +800,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -840,9 +840,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php
@@ -877,9 +877,9 @@ if ($type == 'gallery' and !$done_this) {
                 ?>
                 <div class="erow">
                     <input min="1" max="12" style="width: 100%" placeholder="grid size" type="number" value="<?php
-                    echo(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
-                    echo $this->get_field_name('data'); ?>[<?php
-                    echo $field->id; ?>][grid_size]"/>
+                    echo esc_attr(isset($value['grid_size']) ? $value['grid_size'] : ''); ?>" name="<?php
+                    echo esc_attr($this->get_field_name('data')); ?>[<?php
+                    echo esc_attr($field->id); ?>][grid_size]"/>
                 </div>
 
                 <?php

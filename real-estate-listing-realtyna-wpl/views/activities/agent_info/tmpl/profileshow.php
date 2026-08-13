@@ -35,7 +35,7 @@ $agent_name = $wpl_user['materials']['first_name']['value'] ?? '';
 $agent_l_name = $wpl_user['materials']['last_name']['value'] ?? '';
 $company_name = $wpl_user['materials']['company_name']['value'] ?? '';
 $description = stripslashes($wpl_user['raw'][$description_column] ?? '');
-$description = (!preg_match('!!u', $description) ? utf8_decode($description) : $description);
+$description = (!preg_match('!!u', $description) ? wpl_global::convert_encoding($description, 'ISO-8859-1', 'UTF-8') : $description);
 
 /** Preparing website URL **/
 $website = '';

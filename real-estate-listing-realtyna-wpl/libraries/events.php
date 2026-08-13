@@ -174,7 +174,7 @@ class wpl_events
      */
 	public static function get_cronjobs($enabled = 1)
 	{
-		return wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_cronjobs` WHERE DATE_ADD(`latest_run`, INTERVAL `period` HOUR) < %s AND `enabled` >= %d", date("Y-m-d H:i:s"), $enabled));
+		return wpl_db::select(wpl_db::prepare("SELECT * FROM `#__wpl_cronjobs` WHERE DATE_ADD(`latest_run`, INTERVAL `period` HOUR) < %s AND `enabled` >= %d", gmdate("Y-m-d H:i:s"), $enabled));
 	}
 	
     /**
@@ -188,6 +188,6 @@ class wpl_events
 		/** first validation **/
 		if(!trim($cronjob_id ?? '')) return false;
 		
-		return wpl_db::q(wpl_db::prepare('UPDATE `#__wpl_cronjobs` SET `latest_run` = %s WHERE `id` = %d', date("Y-m-d H:i:s"), $cronjob_id));
+		return wpl_db::q(wpl_db::prepare('UPDATE `#__wpl_cronjobs` SET `latest_run` = %s WHERE `id` = %d', gmdate("Y-m-d H:i:s"), $cronjob_id));
 	}
 }

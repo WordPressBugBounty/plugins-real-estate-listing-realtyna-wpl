@@ -345,7 +345,7 @@ class wpl_property_listing_controller extends wpl_controller
 
         // WHERE statement
         $searchurl = wpl_request::getVar('searchurl');
-        $searchurl = !empty($searchurl) ? parse_url($searchurl) : '';
+        $searchurl = !empty($searchurl) ? wp_parse_url($searchurl) : '';
         parse_str($searchurl['query'], $params);
 
         $vars = array_merge(wpl_request::get('POST'), wpl_request::get('GET'), $params);

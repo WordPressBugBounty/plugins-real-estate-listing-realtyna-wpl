@@ -2,12 +2,14 @@
 
 class wpl_esc {
 	public static function translate($string) {
+		// phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- this is WPL's translation wrapper, the literal strings live at the call sites
 		return __($string, 'real-estate-listing-realtyna-wpl');
 	}
 	public static function return_t($string) {
 		return wpl_esc::translate($string);
 	}
 	public static function html_t($string) {
+		// phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- this is WPL's translation wrapper, the literal strings live at the call sites
 		esc_html_e($string, 'real-estate-listing-realtyna-wpl');
 	}
 	public static function return_html_t($string) {
@@ -142,6 +144,7 @@ class wpl_esc {
 		wpl_esc::url(wpl_global::get_wp_site_url());
 	}
 	public static function e($string) {
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- deliberate raw output helper, callers pass markup they have already escaped
 		echo $string;
 	}
 }

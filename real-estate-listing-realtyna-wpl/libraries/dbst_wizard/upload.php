@@ -25,7 +25,7 @@ if($type == 'upload' and !$done_this)
 <div class="upload-preview-wp preview_upload" id="preview_upload<?php wpl_esc::numeric($field->id); ?>">
     <div class="upload-preview">
 		<?php if(in_array(wpl_file::getExt($value), ['png', 'jpg', 'jpeg', 'gif'])): ?>
-        	<img src="<?php wpl_esc::url(wpl_items::get_folder($item_id, $field->kind) . $value); ?>?c=<?php wpl_esc::e(rand(1000, 9999)); ?>" />
+        	<img src="<?php wpl_esc::url(wpl_items::get_folder($item_id, $field->kind) . $value); ?>?c=<?php wpl_esc::e(wp_rand(1000, 9999)); ?>" />
 		<?php else: ?>
 			<a target="_blank" href="<?php wpl_esc::url(wpl_items::get_folder($item_id, $field->kind) . $value);
 			?>"><?php wpl_esc::html($value); ?></a>

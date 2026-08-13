@@ -2,11 +2,11 @@
 Contributors: realtyna
 Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
-Requires at least: 4.7.0
-Tested up to: 6.8.2
-Stable tag: 5.3.0
+Requires at least: 5.3
+Tested up to: 7.0
+Stable tag: 5.4.0
 Requires PHP: 7.4
-Version: 5.3.0
+Version: 5.4.0
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 
@@ -46,6 +46,34 @@ Submit a support ticket on Realtyna ticketing system: [https://support.realtyna.
 7. Agent listing
 
 == Changelog ==
+= 5.4.0 =
+- Security: Restricted the IDX AJAX endpoints to administrators and limited dispatch to a known list of functions
+- Security: Required the site's IDX token before the IDX REST API import and update routes run
+- Security: Listing images downloaded during an IDX import are now stored under an extension derived from the verified image content
+- Security: Added nonce verification to the Organic IDX wizard AJAX endpoints to block cross-site request forgery
+- Security: Restricted the IDX payment status check to administrators
+- Security: Escaped the min/max number search field, which reflected a URL parameter into the page unescaped
+- Security: IDX listing images are now downloaded through wp_safe_remote_get so a crafted URL cannot reach the local network
+- Security: Removed the benchmarker self-update, which downloaded and executed PHP from a remote server
+- Security: The reCAPTCHA site key is no longer passed through a translation function
+- Security: Public profile visibility now honors the configured access level for administrators
+- Security: Escaped output across admin screens, search widgets, map scripts and listing templates
+- Fixed: MySQL 8 compatibility for membership expiry, listing expiry notices and custom date fields, which failed with "Incorrect DATETIME value" on strict servers
+- Fixed: Map clusters never split into individual markers however far you zoomed in
+- Fixed: Stale cluster icons left behind after the map reloaded, showing the same listings twice
+- Fixed: Google Maps drawing library is only requested when the APS addon needs it, and pinned to a version that still provides it, resolving the DrawingManager console error
+- Fixed: Location text search ignored single character numeric terms such as street numbers
+- Fixed: Area search min/max fields showed the configured range as if it were an entered value
+- Fixed: Duplicate robots meta output on property pages when Yoast SEO or Rank Math is active
+- Fixed: First language tab is now visible by default on multi-language textarea fields
+- Improved: Replaced utf8_decode/utf8_encode, which are removed in current PHP versions
+- Improved: Chart.js and imagesLoaded now load from the bundled copy and WordPress core instead of a CDN
+- Improved: Outgoing requests and geocoding now use the WordPress HTTP API
+- Improved: Migration and benchmarker files are written to the uploads folder, so they survive plugin updates
+- Improved: Removed bundled copies of libraries already included in WordPress
+- Improved: Correct plural forms for rooms, bedrooms and bathrooms, and corrected text domains
+- Improved: Minimum supported WordPress version is now 5.3
+
 = 5.3.0 =
 - Added: Useful filters
 - Fixed: Removed deprecated mobile_application

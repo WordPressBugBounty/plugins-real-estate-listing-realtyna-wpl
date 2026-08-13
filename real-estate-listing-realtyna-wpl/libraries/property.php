@@ -134,7 +134,7 @@ class wpl_property
 		if($generate_mls_id) {
 			$mls_id = self::get_new_mls_id();
 		}
-        $property_id = wpl_db::q(wpl_db::prepare("INSERT INTO `#__wpl_properties` (".(trim($query ?? '') != '' ? $query . ", " : '')." `kind`, `user_id`, `finalized`, `add_date`, `mls_id`) VALUES (".(trim($values ?? '') != '' ? $values.", " : '')." %d, %d, '0', %s, %s)", $kind, $user_id, date("Y-m-d H:i:s"), $mls_id), 'insert');
+        $property_id = wpl_db::q(wpl_db::prepare("INSERT INTO `#__wpl_properties` (".(trim($query ?? '') != '' ? $query . ", " : '')." `kind`, `user_id`, `finalized`, `add_date`, `mls_id`) VALUES (".(trim($values ?? '') != '' ? $values.", " : '')." %d, %d, '0', %s, %s)", $kind, $user_id, gmdate("Y-m-d H:i:s"), $mls_id), 'insert');
 
         list($query2, $values2) = self::generate_default_query($fields, $user_id, 'wpl_properties2');
 
@@ -1157,7 +1157,7 @@ class wpl_property
                     if(!trim( $location_field->table_column ?? '' ) ) continue;
                     if(!isset($rendered[$location_field->id]['value']) or (isset($rendered[$location_field->id]['value']) and !trim( $rendered[$location_field->id]['value'] ?? '' ) ) ) continue;
 
-                    $ex_space = explode(' ', strip_tags($rendered[$location_field->id]['value'] ?? ''));
+                    $ex_space = explode(' ', wp_strip_all_tags($rendered[$location_field->id]['value'] ?? ''));
                     foreach($ex_space as $value_raw) array_push($location_values, stripslashes_deep($value_raw ?? ''));
                 }
 
@@ -1181,8 +1181,8 @@ class wpl_property
             }
 
             /** set value in text search data **/
-            if(trim($value ?? '') != '') $text_search_data[] = strip_tags($value ?? '');
-            if(trim($value2 ?? '') != '') $text_search_data[] = strip_tags($value2 ?? '');
+            if(trim($value ?? '') != '') $text_search_data[] = wp_strip_all_tags($value ?? '');
+            if(trim($value2 ?? '') != '') $text_search_data[] = wp_strip_all_tags($value2 ?? '');
         }
 
         $column = 'textsearch';
@@ -1660,7 +1660,7 @@ class wpl_property
 
         if($current_user_id != $property_user_id)
         {
-            wpl_db::q(wpl_db::prepare("UPDATE `#__wpl_properties2` SET `visit_time` = visit_time+1, `visit_date` = %s WHERE `id` = %d", date("Y-m-d H:i:s"), $property_id), 'update');
+            wpl_db::q(wpl_db::prepare("UPDATE `#__wpl_properties2` SET `visit_time` = visit_time+1, `visit_date` = %s WHERE `id` = %d", gmdate("Y-m-d H:i:s"), $property_id), 'update');
         }
 
         // Adding page visits for multisite blogs

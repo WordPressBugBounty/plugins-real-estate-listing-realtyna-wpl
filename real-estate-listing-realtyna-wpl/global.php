@@ -87,7 +87,7 @@ class wpl_global
             }
 			return $return_data;
         }
-        return wpl_db::escape(strip_tags($parameter));
+        return wpl_db::escape(wp_strip_all_tags($parameter));
     }
 
     /**
@@ -325,12 +325,14 @@ class wpl_global
 		$qs_orderby = wpl_request::getVar('orderby');
 
 		$orderType = ($qs_orderby != $orderBy or ($qs_orderby == $orderBy and $qs_order == 'DESC')) ? 'ASC' : 'DESC';
-		if($qs_orderby == $orderBy and $class == true) $class = ($orderType == 'ASC') ? 'class="desc"' : 'class="asc"';
+		/** The class name is kept on its own so it can be escaped, callers only ever pass a boolean **/
+		$class_name = '';
+		if($qs_orderby == $orderBy and $class == true) $class_name = ($orderType == 'ASC') ? 'desc' : 'asc';
 
 		$url = self::add_qs_var('orderby', $orderBy, $url);
 		$url = self::add_qs_var('order', $orderType, $url);
 
-		echo '<a href="'.$url.'" '.$class.'>'.$thName.'</a>';
+		echo '<a href="'.esc_url($url).'"'.($class_name ? ' class="'.esc_attr($class_name).'"' : '').'>'.esc_html($thName).'</a>';
 	}
 
     /**
@@ -626,7 +628,7 @@ class wpl_global
 
 		if(!wpl_global::has_permission($role, $user_id))
 		{
-			echo __("Sorry, you currently don't have access to this page!", 'real-estate-listing-realtyna-wpl');
+			esc_html_e("Sorry, you currently don't have access to this page!", 'real-estate-listing-realtyna-wpl');
 			exit;
 		}
 	}
@@ -660,7 +662,7 @@ class wpl_global
      * @param int $user_id
      * @return int
      */
-	public static function check_access($access, $user_id = '')
+	public static function check_access($access, $user_id = '', $check_admin = true)
 	{
 		if($access == '') return 1000;
 
@@ -668,7 +670,7 @@ class wpl_global
 		if(!trim($user_id ?? '')) $user_id = wpl_users::get_cur_user_id();
 
 		/** return admin access **/
-		if(wpl_users::is_administrator($user_id)) return 1000;
+		if($check_admin && wpl_users::is_administrator($user_id)) return 1000;
 
 		if(!trim($user_id ?? '') or !wpl_users::is_wpl_user($user_id)) $query = "SELECT `access_".$access."` FROM `#__wpl_users` WHERE `id`='-2'";
 		else $query = "SELECT `access_".$access."` FROM `#__wpl_users` WHERE `id`='$user_id'";
@@ -1011,7 +1013,7 @@ class wpl_global
 			if($filesize > $max_file_size)
 			{
 				$error .= __('File size is not valid!', 'real-estate-listing-realtyna-wpl');
-				@unlink($file['tmp_name']);
+				wp_delete_file($file['tmp_name']);
 			}
 
 			/** upload file **/
@@ -1072,6 +1074,9 @@ class wpl_global
 
         $buffer_size = 4096;
         $fh = gzopen($file, 'rb');
+
+        /** The archive is streamed in chunks so a large import never has to sit in memory, WP_Filesystem has no streaming write **/
+        // phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         $ofh = fopen($dest, 'wb');
 
         while(!gzeof($fh))
@@ -1080,6 +1085,7 @@ class wpl_global
         }
 
         fclose($ofh);
+        // phpcs:enable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fwrite, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
         gzclose($fh);
 
         return $dest;
@@ -1279,7 +1285,7 @@ class wpl_global
             wpl_settings::save_setting('realtyna_envato_fullname', $name, 1);
             wpl_settings::save_setting('realtyna_envato_email', $email, 1);
             wpl_settings::save_setting('realtyna_envato_purchase', $purchase_code, 1);
-            return array('success'=>1, 'message'=> __( 'New credential sent to your email please check your inbox.', 'wpl' ), 'status' => 1);
+            return array('success'=>1, 'message'=> __( 'New credential sent to your email please check your inbox.', 'real-estate-listing-realtyna-wpl' ), 'status' => 1);
         }
 
         return array('success'=>1, 'message'=>$answer->message, 'status' => 0);
@@ -1318,41 +1324,32 @@ class wpl_global
 	{
 		$result = false;
 
-		// Doing the curl
-		if(function_exists('curl_version'))
+		/**
+		 * The WordPress HTTP API replaces the direct cURL calls. The options map one to one with what was
+		 * set before, including sslverify, which stays off so that MLS endpoints with self signed
+		 * certificates keep working. Enabling it would be safer, see the note in the 5.3.2 changelog.
+		 */
+		$args = array(
+			'timeout'     => 120,
+			'redirection' => 10,
+			'sslverify'   => false,
+		);
+
+		if($post)
 		{
-			$ch = curl_init($url);
-
-			if($ch !== false)
-			{
-				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-				curl_setopt($ch, CURLOPT_HEADER, false);
-				curl_setopt($ch, CURLOPT_AUTOREFERER, true);
-				curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 120);
-				curl_setopt($ch, CURLOPT_TIMEOUT, 120);
-
-                @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($ch, CURLOPT_MAXREDIRS, 10);
-
-				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-
-				if($post)
-				{
-					curl_setopt($ch, CURLOPT_POST, true);
-					curl_setopt($ch, CURLOPT_POSTFIELDS, (is_array($post) === true) ? http_build_query($post) : $post);
-				}
-
-                /** login needed **/
-                if($authentication)
-                {
-                    curl_setopt($ch, CURLOPT_USERPWD, $authentication);
-                }
-
-				$result = curl_exec($ch);
-				curl_close($ch);
-			}
+			$args['method'] = 'POST';
+			$args['body'] = $post;
 		}
+
+		/** login needed **/
+		if($authentication)
+		{
+			$args['headers']['Authorization'] = 'Basic '.base64_encode($authentication);
+		}
+
+		$response = wp_remote_request($url, $args);
+
+		if(!is_wp_error($response)) $result = wp_remote_retrieve_body($response);
 
 		// Doing FGC
 		if($result == false)
@@ -2033,6 +2030,27 @@ class wpl_global
     }
 
     /**
+     * Converts a string between two encodings
+     *
+     * This replaces utf8_decode()/utf8_encode(), which PHP deprecated. mbstring is an optional extension, so
+     * when it is missing the string is returned untouched rather than letting the call fatal. Only strings
+     * that already failed a UTF-8 check reach the conversion, so passing them through is a safe fallback.
+     *
+     * @author Howard <howard@realtyna.com>
+     * @static
+     * @param string $string
+     * @param string $to_encoding
+     * @param string $from_encoding
+     * @return string
+     */
+    public static function convert_encoding($string, $to_encoding, $from_encoding)
+    {
+        if(!function_exists('mb_convert_encoding')) return $string;
+
+        return mb_convert_encoding($string, $to_encoding, $from_encoding);
+    }
+
+    /**
      * Returns admin ID of website
      * @author Howard R <Howard@realtyna.com>
      * @static
@@ -2307,6 +2325,7 @@ class wpl_global
         if(is_null($data))
         {
             $data = array();
+            // phpcs:disable WordPress.WP.I18n.NonSingularStringLiteralText -- property type, listing type and location names are WPL table values, their English strings are in the .pot file
             $data['property_type'] = __($property_type, 'real-estate-listing-realtyna-wpl');
             $data['listing'] = __($listing, 'real-estate-listing-realtyna-wpl');
             $data['listing_type'] = __($listing, 'real-estate-listing-realtyna-wpl');
@@ -2323,19 +2342,21 @@ class wpl_global
             // Location Abbr Names
             if(trim($property_data['location1_name'] ?? '')) $data['location1_abbr'] = __(wpl_locations::get_location_abbr_by_name($property_data['location1_name'], 1), 'real-estate-listing-realtyna-wpl');
             if(trim($property_data['location2_name'] ?? '')) $data['location2_abbr'] = __(wpl_locations::get_location_abbr_by_name($property_data['location2_name'], 2), 'real-estate-listing-realtyna-wpl');
+            // phpcs:enable WordPress.WP.I18n.NonSingularStringLiteralText
 
+            /** The counts can be fractional, for example 1.5 bathrooms, so the plural form is chosen the same way the concatenated strings used to do it **/
             if(trim($property_data['rooms'] ?? "")) {
-                $data['rooms'] = $property_data['rooms'].' '.__('Room'.($property_data['rooms'] > 1 ? 's': ''), 'real-estate-listing-realtyna-wpl');
+                $data['rooms'] = $property_data['rooms'].' '._n('Room', 'Rooms', ($property_data['rooms'] > 1 ? 2 : 1), 'real-estate-listing-realtyna-wpl');
                 $data['rooms_raw'] = $property_data['rooms'];
             }
 
             if(trim($property_data['bedrooms'] ?? "")) {
-                $data['bedrooms'] = $property_data['bedrooms'].' '.__('Bedroom'.($property_data['bedrooms'] > 1 ? 's': ''), 'real-estate-listing-realtyna-wpl');
+                $data['bedrooms'] = $property_data['bedrooms'].' '._n('Bedroom', 'Bedrooms', ($property_data['bedrooms'] > 1 ? 2 : 1), 'real-estate-listing-realtyna-wpl');
                 $data['bedrooms_raw'] = $property_data['bedrooms'];
             }
 
             if(trim($property_data['bathrooms'] ?? "")) {
-                $data['bathrooms'] = $property_data['bathrooms'].' '.__('Bathroom'.($property_data['bathrooms'] > 1 ? 's': ''), 'real-estate-listing-realtyna-wpl');
+                $data['bathrooms'] = $property_data['bathrooms'].' '._n('Bathroom', 'Bathrooms', ($property_data['bathrooms'] > 1 ? 2 : 1), 'real-estate-listing-realtyna-wpl');
                 $data['bathrooms_raw'] = $property_data['bathrooms'];
             }
 
@@ -2479,7 +2500,24 @@ class wpl_global
         @extract(wpl_filters::apply('wpl_googlemaps_api_key', array('API_key'=>$API_key)));
 
         // Include Google Maps Library
-        $javascript = (object) array('param1'=>'google-maps-wpl', 'param2'=>'http'.(stristr(wpl_global::get_full_url(), 'https://') != '' ? 's' : '').'://maps.googleapis.com/maps/api/js?libraries=places,drawing&loading=async&callback=wpl_do_googlemaps_callbacks'.(trim($API_key ?? "") != '' ? '&key='.$API_key : ''), 'param4'=>'1', 'external'=>true);
+        $libraries = array('places');
+        $version = '';
+
+        if(wpl_global::check_addon('aps'))
+        {
+            $libraries[] = 'drawing';
+            $version = apply_filters('wpl_googlemaps_api_version', '3.64');
+        }
+
+        $libraries = apply_filters('wpl_googlemaps_api_libraries', $libraries);
+
+        $url = 'http'.(stristr(wpl_global::get_full_url(), 'https://') != '' ? 's' : '').'://maps.googleapis.com/maps/api/js'
+            .'?libraries='.implode(',', $libraries)
+            .'&loading=async&callback=wpl_do_googlemaps_callbacks'
+            .(trim($version ?? '') != '' ? '&v='.rawurlencode($version) : '')
+            .(trim($API_key ?? "") != '' ? '&key='.$API_key : '');
+
+        $javascript = (object) array('param1'=>'google-maps-wpl', 'param2'=>$url, 'param4'=>'1', 'external'=>true);
         wpl_extensions::import_javascript($javascript);
 
         return true;
@@ -2528,7 +2566,7 @@ class wpl_global
         $script  = '';
 
         // Genrate id attr and script for captchas which need dynamically creation
-	    $unique_id = $property_id ? sprintf('wpl-captcha-%d-%d', $property_id, mt_rand()) : '';
+	    $unique_id = $property_id ? sprintf('wpl-captcha-%d-%d', $property_id, wp_rand()) : '';
         if($property_id !== NULL)
         {
             $id_attr = 'id="'. $unique_id .'"';
@@ -2538,7 +2576,8 @@ class wpl_global
             </script>";
         }
 
-        if($gre_section === '1') return '<div '.$id_attr.' class="g-recaptcha" data-sitekey="'. esc_attr__($g_site_key) .'"></div>'.$script;
+        /** The site key is a credential, not translatable text, so it is only escaped **/
+        if($gre_section === '1') return '<div '.$id_attr.' class="g-recaptcha" data-sitekey="'. esc_attr($g_site_key) .'"></div>'.$script;
         return true;
     }
 
@@ -2958,8 +2997,8 @@ class wpl_global
 
     public static function hour($hour, $format = 12)
     {
-        if($format == 12) $formatted = date('g:i A', $hour*3600);
-        else $formatted = date('G:i', $hour*3600);
+        if($format == 12) $formatted = gmdate('g:i A', $hour*3600);
+        else $formatted = gmdate('G:i', $hour*3600);
 
         return $formatted;
     }

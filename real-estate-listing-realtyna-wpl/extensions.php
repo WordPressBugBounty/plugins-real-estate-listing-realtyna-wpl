@@ -159,7 +159,7 @@ class wpl_extensions
 			$deps = explode(',', $extension->param3);
 		}
         if(trim($extension->param2 ?? '') != '') {
-			wp_register_script($extension->param1, $script_url, $deps, false, $in_footer);
+			wp_register_script($extension->param1, $script_url, $deps, WPL_VERSION, $in_footer);
 		}
 
         wp_enqueue_script($extension->param1);
@@ -275,8 +275,10 @@ class wpl_extensions
         $after_title = ( trim($extension->param5 ?? '' ) ) ? $extension->param5 : '</h3>';
 
         register_sidebar(array(
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- sidebar labels are stored in the WPL extensions table, their English strings are in the .pot file
             'name'          => __($name, 'real-estate-listing-realtyna-wpl'),
             'id'            => $id,
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- sidebar labels are stored in the WPL extensions table, their English strings are in the .pot file
             'description'   => __($description, 'real-estate-listing-realtyna-wpl'),
             'before_widget' => $before_widget,
             'after_widget'  => $after_widget,
@@ -385,6 +387,20 @@ class wpl_extensions
     }
 
 	/**
+	 * Path of the migration log. It lives in the uploads folder because the plugin folder is wiped on every update
+	 *
+	 * @return string
+	 */
+	private function installLogFile() {
+		$uploads = wp_upload_dir();
+		$directory = trailingslashit($uploads['basedir']) . 'WPL';
+
+		if(!is_dir($directory)) wp_mkdir_p($directory);
+
+		return $directory . DS . 'install-' . $_SERVER['WPL_INSTALL_LOG'] . '.log';
+	}
+
+	/**
 	 * To use PRO migrations we have to implement $this->runQuery method
 	 *
 	 * @param $query
@@ -392,7 +408,7 @@ class wpl_extensions
 	 * @throws Exception
 	 */
 	private function runQuery($query) {
-		file_put_contents(__DIR__ . '/assets/tmp/install-' . $_SERVER['WPL_INSTALL_LOG'] . '.log', date('Y-m-d H:i:s ') . $query. "\n", FILE_APPEND);
+		file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . $query. "\n", FILE_APPEND);
 		$wpdb = wpl_db::get_DBO();
 		$error_message = '';
 		try {
@@ -404,7 +420,7 @@ class wpl_extensions
 			$error_message = $e->getMessage();
 		}
 		if(!empty($error_message)) {
-			file_put_contents(__DIR__ . '/assets/tmp/install-' . $_SERVER['WPL_INSTALL_LOG'] . '.log', date('Y-m-d H:i:s ') . '(ERROR) ' . $error_message . ' - ' . $query . "\n", FILE_APPEND);
+			file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . '(ERROR) ' . $error_message . ' - ' . $query . "\n", FILE_APPEND);
 			/** ignore the following errors */
 			if(strpos($error_message, 'Duplicate column name') === 0) {
 				return true;
@@ -415,8 +431,8 @@ class wpl_extensions
 			if(strpos($error_message, 'Unknown column') === 0) {
 				return true;
 			}
-			file_put_contents(__DIR__ . '/assets/tmp/install-' . $_SERVER['WPL_INSTALL_LOG'] . '.log', date('Y-m-d H:i:s ') . '(EXCEPTION) ' . $error_message . ' - ' . $query . "\n", FILE_APPEND);
-			throw new Exception($error_message);
+			file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . '(EXCEPTION) ' . $error_message . ' - ' . $query . "\n", FILE_APPEND);
+			throw new Exception(esc_html($error_message));
 		}
 		return $result;
 	}
@@ -468,7 +484,7 @@ class wpl_extensions
 				$version = str_replace('.' . $fileType, '', $file);
 				if(version_compare($version, $installed_version, '>')) {
 					$filePath = $queries . $file;
-					file_put_contents(__DIR__ . '/assets/tmp/install-' . $_SERVER['WPL_INSTALL_LOG'] . '.log', date('Y-m-d H:i:s ') . $file. "\n", FILE_APPEND);
+					file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . $file. "\n", FILE_APPEND);
 					if($fileType == 'php') {
 						$this->includeOnce($filePath);
 					} else {
@@ -657,8 +673,8 @@ class wpl_extensions
     public function import_dynamic_js()
     {
         echo '<script type="text/javascript">';
-        echo 'wpl_baseUrl="'.wpl_global::get_wordpress_url().'";';
-        echo 'wpl_baseName="'.WPL_BASENAME.'";';
+        echo 'wpl_baseUrl="'.esc_url(wpl_global::get_wordpress_url()).'";';
+        echo 'wpl_baseName="'.esc_js(WPL_BASENAME).'";';
         echo '</script>';
     }
 
@@ -719,8 +735,10 @@ class wpl_extensions
             {
                 $role = $menu->capability == 'current' ? $cur_role : $wpl_roles[$menu->capability];
                 $position = $menu->position ? $menu->position : NULL;
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 $menu_title = __($menu->menu_title, 'real-estate-listing-realtyna-wpl').((wpl_users::is_administrator($cur_user_id) and $available_updates >= 1) ? '<span class="update-plugins update-wpl count-'.$available_updates.'"><span class="wpl-count">'.$available_updates.'</span></span>' : '');
 
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 add_menu_page(__($menu->page_title, 'real-estate-listing-realtyna-wpl'), $menu_title, $role, $menu->menu_slug, array($controller, $menu->function), '', $position);
             }
 
@@ -730,8 +748,10 @@ class wpl_extensions
                 if(!wpl_users::has_menu_access($submenu->menu_slug, $cur_user_id)) continue;
 
                 $role = $submenu->capability == 'current' ? $cur_role : $wpl_roles[$submenu->capability];
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 $menu_title = $submenu->separator ? $controller->wpl_add_separator().__($submenu->menu_title, 'real-estate-listing-realtyna-wpl') : __($submenu->menu_title, 'real-estate-listing-realtyna-wpl');
 
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 add_submenu_page($submenu->parent, __($submenu->page_title, 'real-estate-listing-realtyna-wpl'), $menu_title, $role, $submenu->menu_slug, array($controller, $submenu->function));
             }
         }
@@ -768,6 +788,7 @@ class wpl_extensions
             foreach($menus as $menu)
             {
                 $menu_slug = (!wpl_users::is_administrator($cur_user_id) and $menu->capability != 'current') ? 'wpl_admin_profile' : $menu->menu_slug;
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 $menu_title = __($menu->menu_title, 'real-estate-listing-realtyna-wpl').((wpl_users::is_administrator($cur_user_id) and $available_updates >= 1) ? '<span class="wpl-update-plugin-admin-bar update-wpl count-'.$available_updates.'"><span class="wpl-count">'.$available_updates.'</span></span>' : '');
 
                 $wp_admin_bar->add_menu(array(
@@ -783,6 +804,7 @@ class wpl_extensions
                 if(!wpl_users::has_menu_access($submenu->menu_slug)) continue;
                 if(!wpl_users::is_administrator($cur_user_id) and $submenu->capability != 'current') continue;
 
+                // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- menu titles are seeded by WPL in the wpl_menus table, their English strings are in the .pot file
                 $menu_title = $submenu->separator ? $controller->wpl_add_separator().__($submenu->menu_title, 'real-estate-listing-realtyna-wpl') : __($submenu->menu_title, 'real-estate-listing-realtyna-wpl');
 
                 $wp_admin_bar->add_menu(array(
@@ -819,6 +841,7 @@ class wpl_extensions
             }
             elseif(is_array($title))
             {
+                /* translators: %s: page number */
                 $title['title'] .= ' -- '.sprintf(__('Page %s', 'real-estate-listing-realtyna-wpl'), $wplpage);
             }
         }
@@ -990,7 +1013,10 @@ class wpl_extensions
 		if(strtolower($propertiesTableEngine) != 'innodb'){
 			?>
             <div class="notice notice-warning">
-                <p><?php _e('Realtyna WPL : wpl_properties table has ' . $propertiesTableEngine . ' Engine, We highly recommend to convert it to the InnoDB Engine for better performance.'); ?></p>
+                <p><?php
+					/* translators: %s: storage engine currently used by the wpl_properties table, for example MyISAM */
+					printf(esc_html__('Realtyna WPL : wpl_properties table has %s Engine, We highly recommend to convert it to the InnoDB Engine for better performance.', 'real-estate-listing-realtyna-wpl'), esc_html($propertiesTableEngine));
+				?></p>
             </div>
 			<?php
 		}

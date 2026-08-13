@@ -42,8 +42,8 @@ var wpl_map_set_default_geo_point<?php wpl_esc::js($this->activity_id); ?> = tru
 var wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>;
 var wpl_current_url = '<?php wpl_esc::current_url(); ?>';
 
-var wpl_enable_cluster<?php echo $this->activity_id; ?> = <?php echo ($this->clustering and wpl_global::check_addon('aps')) ? 'true' : 'false' ?>;
-var wpl_enable_cluster_method<?php echo $this->activity_id; ?> = '<?php echo ($this->clustering and wpl_global::check_addon('aps')) ? $this->clustering_method : '' ?>';
+var wpl_enable_cluster<?php echo esc_js($this->activity_id); ?> = <?php echo ($this->clustering and wpl_global::check_addon('aps')) ? 'true' : 'false' ?>;
+var wpl_enable_cluster_method<?php echo esc_js($this->activity_id); ?> = '<?php echo ($this->clustering and wpl_global::check_addon('aps')) ? esc_js($this->clustering_method) : '' ?>';
 if(typeof google_place_radius == 'undefined') var google_place_radius = 1100;
 
 <?php do_action('wpl_view/activities/googlemap/scripts/js/vars'); ?>
@@ -229,9 +229,9 @@ function wpl_marker<?php wpl_esc::js($this->activity_id); ?>(dataMarker)
 			marker_width = 45;
 		}
 		marker_content = '<div style="height: ' + marker_width + 'px;line-height: 45px;width: ' + marker_width + 'px;text-align: center;cursor: pointer;color: white;font-size: 10px;background-color: #1f59b7;border: 2px solid #1448ad;border-radius: 100%;display: flex;justify-content: center;align-items: center;" >' + dataMarker.count + '</div>';
-		wpl_enable_cluster<?php echo $this->activity_id; ?> = false;
+		wpl_enable_cluster<?php echo esc_js($this->activity_id); ?> = false;
 	} else {
-		wpl_enable_cluster<?php echo $this->activity_id; ?> = <?php echo ($this->clustering and wpl_global::check_addon('aps')) ? 'true' : 'false' ?>;
+		wpl_enable_cluster<?php echo esc_js($this->activity_id); ?> = <?php echo ($this->clustering and wpl_global::check_addon('aps')) ? 'true' : 'false' ?>;
 	}
   	marker = new RichMarker({
 		position: new google.maps.LatLng(dataMarker.googlemap_lt, dataMarker.googlemap_ln),
@@ -251,10 +251,10 @@ function wpl_marker<?php wpl_esc::js($this->activity_id); ?>(dataMarker)
 	loaded_markers<?php wpl_esc::js($this->activity_id); ?>.push(dataMarker.id);
   	markers_array<?php wpl_esc::js($this->activity_id); ?>.push(marker);
 	if(dataMarker.count) {
-		google.maps.event.addListener(marker, "<?php echo $this->infowindow_event; ?>", function (event) {
-			wpl_map<?php echo $this->activity_id; ?>.panTo(this.getPosition());
-			if(wpl_map<?php echo $this->activity_id; ?>.zoom < 20) {
-				wpl_map<?php echo $this->activity_id; ?>.setZoom(wpl_map<?php echo $this->activity_id; ?>.zoom + 2);
+		google.maps.event.addListener(marker, "<?php echo esc_js($this->infowindow_event); ?>", function (event) {
+			wpl_map<?php echo esc_js($this->activity_id); ?>.panTo(this.getPosition());
+			if(wpl_map<?php echo esc_js($this->activity_id); ?>.zoom < 20) {
+				wpl_map<?php echo esc_js($this->activity_id); ?>.setZoom(wpl_map<?php echo esc_js($this->activity_id); ?>.zoom + 2);
 			}
 		});
 	} else {
@@ -270,9 +270,9 @@ function wpl_marker<?php wpl_esc::js($this->activity_id); ?>(dataMarker)
 			}
 			else
 			{
-				const loading_info_window = `<?php echo apply_filters('wpl_view/activities/googlemap/js/loading_info_window', '<div><img src="' . wpl_global::get_wpl_asset_url('img/ajax-loader1.gif') . '" /></div>'); ?>`;
+				const loading_info_window = `<?php echo wp_kses_post(apply_filters('wpl_view/activities/googlemap/js/loading_info_window', '<div><img src="' . wpl_global::get_wpl_asset_url('img/ajax-loader1.gif') . '" /></div>')); ?>`;
 				/** AJAX loader **/
-				wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<?php echo apply_filters('wpl_view/activities/googlemap/js/ajax_loader', '<div class="map_search_ajax_loader"><img src="' .  wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')  . '" /></div>'); ?>`);
+				wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<?php echo wp_kses_post(apply_filters('wpl_view/activities/googlemap/js/ajax_loader', '<div class="map_search_ajax_loader"><img src="' .  wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')  . '" /></div>')); ?>`);
 
 				infowindow<?php wpl_esc::js($this->activity_id); ?>.close();
 				infowindow<?php wpl_esc::js($this->activity_id); ?>.open(wpl_map<?php wpl_esc::js($this->activity_id); ?>, this);
@@ -300,7 +300,7 @@ function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, dele
 		bounds<?php wpl_esc::js($this->activity_id); ?> = new google.maps.LatLngBounds();
 	}
 	let zoom = wpl_map<?php wpl_esc::js($this->activity_id); ?>.zoom || 2;
-	if(wpl_enable_cluster_method<?php echo $this->activity_id; ?> === 'super_cluster' && zoom <= 16 && total > 0 && markers.length < total) {
+	if(wpl_enable_cluster_method<?php echo esc_js($this->activity_id); ?> === 'super_cluster' && zoom <= 16 && total > 0 && markers.length < total) {
 		if(markers.length === 0) {
 			return;
 		}
@@ -403,7 +403,11 @@ function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, dele
             (
                 wpl_map<?php wpl_esc::js($this->activity_id); ?>,
                 markers_array<?php wpl_esc::js($this->activity_id); ?>,
-				{styles:[{
+				<?php /** Cluster.updateIcon only breaks a cluster apart while `maxZoom && zoom > maxZoom` holds, and the option defaults to null, so without this the cluster icon survives every zoom level. 16 is the threshold the super_cluster method already uses. **/ ?>
+				{
+				// Above this zoom level the cluster splits into its individual markers
+				maxZoom: <?php wpl_esc::numeric(apply_filters('wpl_view/activities/googlemap/js/clusterer_max_zoom', 16)); ?>,
+				styles:[{
 					url: '<?php wpl_esc::wpl_url(); ?>assets/packages/markerclusterer/img/<?php wpl_esc::js($this->clusterer_iconset); ?>1.png',
 					width: 53,
 					height: 52,
@@ -443,7 +447,8 @@ function wpl_load_markers<?php wpl_esc::js($this->activity_id); ?>(markers, dele
         }
         else
         {
-            if(delete_markers) wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>.clearMarkers();
+            <?php /** markers_array always holds the complete current set, so the clusterer is emptied every time before it is refilled. Clearing only when delete_markers was set left the previous cluster icons on the map and pushed the same markers into the clusterer twice, which is what produced a stale "3" sitting next to a fresh "2" and a single marker. **/ ?>
+            wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>.clearMarkers();
             wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>.addMarkers(markers_array<?php wpl_esc::js($this->activity_id); ?>, false);
             wpl_marker_cluster<?php wpl_esc::js($this->activity_id); ?>.redraw();
         }
@@ -553,7 +558,7 @@ function wpl_load_map_markers(request_str, delete_markers, extend_bound = false)
     if(typeof delete_markers == 'undefined') delete_markers = false;
 
     /** AJAX loader **/
-    wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<?php echo apply_filters('wpl_view/activities/googlemap/js/ajax_loader', '<div class="map_search_ajax_loader"><img src="' .  wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')  . '" /></div>'); ?>`);
+    wplj("#wpl_map_canvas<?php wpl_esc::js($this->activity_id); ?>").append(`<?php echo wp_kses_post(apply_filters('wpl_view/activities/googlemap/js/ajax_loader', '<div class="map_search_ajax_loader"><img src="' .  wpl_global::get_wpl_asset_url('img/ajax-loader4.gif')  . '" /></div>')); ?>`);
 
     request_str = 'wpl_format=f:property_listing:raw&wplmethod=get_markers&'+request_str;
 	let markers;

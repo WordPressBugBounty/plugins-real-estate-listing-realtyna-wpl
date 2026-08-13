@@ -3,6 +3,13 @@
 defined('_WPLEXEC') or die('Restricted access');
 
 _wpl_import($this->tpl_path.'.scripts.js');
+
+/**
+ * Stripe.js has to be served from js.stripe.com, self hosting it breaks Stripe's terms and their fraud
+ * checks, so it cannot be bundled or enqueued from a local copy. It is also loaded as a blocking tag on
+ * purpose, the payment step below expects the Stripe global to exist.
+ */
+// phpcs:ignore WordPress.WP.EnqueuedResources.NonEnqueuedScript -- Stripe requires its script to load from their domain
 ?>
 <script src="https://js.stripe.com/v3/"></script>
 <div class="wpl-idx-addon wrap wpl-wp settings-wp">

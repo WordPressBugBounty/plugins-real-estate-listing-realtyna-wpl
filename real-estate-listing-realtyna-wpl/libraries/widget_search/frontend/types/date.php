@@ -21,13 +21,13 @@ function widget_search_frontend_general_date(
         if (isset($extoptions[0]) and trim(
                 $extoptions[0] ?? ''
             ) != '' and ($extoptions[0] == 'now' or $extoptions[0] == 'minimum_date')) {
-            $min_value = date("Y-m-d");
+            $min_value = gmdate("Y-m-d");
         } else {
             $min_value = (isset($extoptions[0]) and trim($extoptions[0] ?? '') != '') ? $extoptions[0] : '1990-01-01';
         }
 
         if (isset($extoptions[1]) and trim($extoptions[1] ?? '') != '' and $extoptions[1] == 'now') {
-            $max_value = date("Y-m-d");
+            $max_value = gmdate("Y-m-d");
         } else {
             $max_value = (isset($extoptions[1]) and trim($extoptions[1] ?? '') != '') ? $extoptions[1] : '2030-01-01';
         }

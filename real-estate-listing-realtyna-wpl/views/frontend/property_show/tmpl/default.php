@@ -325,7 +325,9 @@ $this->_wpl_import($this->tpl_path.'.scripts.js', true, true);
                                     <?php if(wpl_global::get_setting('show_plisting_visits')): ?>
                                     <div class="wpl-property-visit">
                                         <dt><?php wpl_esc::html('Visits:'); ?></dt>
-                                        <?php wpl_esc::e('<dd class="value">'.$visits.($days ? ' '.sprintf(__('in %d days'), $days) : '').'</dd>'); ?>
+                                        <?php
+                                        /* translators: %d: number of days the visit counter covers */
+                                        wpl_esc::e('<dd class="value">'.esc_html($visits).($days ? ' '.sprintf(esc_html__('in %d days', 'real-estate-listing-realtyna-wpl'), (int) $days) : '').'</dd>'); ?>
                                     </div>
                                     <?php endif; ?>
                                     <?php if(wpl_global::check_addon('MLS') && $this->show_agent_name || $this->show_office_name): ?>

@@ -160,7 +160,7 @@ class wpl_property_import
 
                 // Normalize The Value
                 if (gettype($wpl_value) == 'string' and !empty($wpl_value)){
-                    $wpl_value = !preg_match('!!u', $wpl_value) ? htmlentities(utf8_decode($wpl_value), ENT_NOQUOTES) : htmlentities($wpl_value, ENT_NOQUOTES);
+                    $wpl_value = !preg_match('!!u', $wpl_value) ? htmlentities(wpl_global::convert_encoding($wpl_value, 'ISO-8859-1', 'UTF-8'), ENT_NOQUOTES) : htmlentities($wpl_value, ENT_NOQUOTES);
                 }
 
                 // Set Unique Value
@@ -193,7 +193,7 @@ class wpl_property_import
             // Add source and last sync date
             if(in_array('source', $this->all_possible_columns) and in_array('last_sync_date', $this->all_possible_columns))
             {
-                $last_sync_date = date('Y-m-d H:i:s');
+                $last_sync_date = gmdate('Y-m-d H:i:s');
 
                 $values['source'] = $this->source;
                 $values['last_sync_date'] = $last_sync_date;
@@ -350,7 +350,7 @@ class wpl_property_import
             if(!isset($values['user_id'])) $values['user_id'] = $this->user_id;
 
             // Add Date
-            if(!isset($values['add_date'])) $values['add_date'] = date("Y-m-d H:i:s");
+            if(!isset($values['add_date'])) $values['add_date'] = gmdate("Y-m-d H:i:s");
 
             // Finalized
             if(!isset($values['finalized'])) $values['finalized'] = 0;

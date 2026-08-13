@@ -10,7 +10,13 @@ _wpl_import('libraries.path');
  * @since WPL1.0.0
  * @date 03/05/2013
  * @package WPL
+ *
+ * This is WPL's low level file layer. It exposes a streaming handle with a configurable chunk size, which
+ * WP_Filesystem has no equivalent for, it runs during cron and on the frontend where WP_Filesystem is not
+ * initialised, and move_uploaded_file() is what makes an upload verifiable. The native calls below are
+ * therefore deliberate, so the matching sniffs are turned off for this file only.
  */
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fread, WordPress.WP.AlternativeFunctions.file_system_operations_fclose, WordPress.WP.AlternativeFunctions.file_system_operations_chmod, WordPress.WP.AlternativeFunctions.file_system_operations_is_writable, WordPress.WP.AlternativeFunctions.rename_rename, Generic.PHP.ForbiddenFunctions.Found
 class wpl_file
 {
     /**
@@ -107,7 +113,7 @@ class wpl_file
 			$file = wpl_path::clean($file);
 			
 			@chmod($file, 0777);
-			@unlink($file);
+			wp_delete_file($file);
 		}
 
 		return true;
@@ -630,7 +636,7 @@ class wpl_chunk
         // check the file exists
         if(!file_exists($this->file))
         {
-            throw new Exception('Cannot load file: '.$this->file);
+            throw new Exception('Cannot load file: '.esc_html($this->file));
         }
 
         // open the file

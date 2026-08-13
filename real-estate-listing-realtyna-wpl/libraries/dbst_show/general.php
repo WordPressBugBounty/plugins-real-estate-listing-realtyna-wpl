@@ -42,7 +42,7 @@ elseif($type == 'text' and !$done_this) //////////////////////////// text //////
             }
 
 			// UTF8 encoded
-			if(!preg_match('!!u', $value)) $value = utf8_decode($value);
+			if(!preg_match('!!u', $value)) $value = wpl_global::convert_encoding($value, 'ISO-8859-1', 'UTF-8');
 
             $return['value'] = $value;
         }
@@ -99,7 +99,7 @@ elseif($type == 'textarea' and !$done_this) //////////////////////////// textare
         $value = wpl_global::do_shortcode($value);
 
 		// UTF8 encoded
-		if(!preg_match('!!u', $value)) $value = utf8_decode($value);
+		if(!preg_match('!!u', $value)) $value = wpl_global::convert_encoding($value, 'ISO-8859-1', 'UTF-8');
 
         $return['value'] = $value;
 		if(!empty($options['iframe'])) {

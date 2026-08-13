@@ -41,7 +41,7 @@ if (!count($videos) or !is_array($videos)) return;
 				<?php if (!empty($video['title'])) wpl_esc::e('<h3 class="wpl-util-hidden" itemprop="name">' . wpl_esc::return_html_t($video['title']) . '</h3>'); ?>
 				<?php if (!empty($video['description'])) wpl_esc::e('<p class="wpl-util-hidden" itemprop="description">' . wpl_esc::return_kses($video['description']) . '</p>'); ?>
 				<?php if (!empty($video['thumbnail'])) wpl_esc::e('<p class="wpl-util-hidden" itemprop="thumbnailUrl" content="' . wpl_esc::return_url($video['thumbnail']) . '"></p>'); ?>
-				<?php if (!empty($video['date'])) wpl_esc::e('<p class="wpl-util-hidden" itemprop="uploadDate" content="' . wpl_esc::return_attr(date('c', strtotime($video['date']))) . '"></p>'); ?>
+				<?php if (!empty($video['date'])) wpl_esc::e('<p class="wpl-util-hidden" itemprop="uploadDate" content="' . wpl_esc::return_attr(gmdate('c', strtotime($video['date']))) . '"></p>'); ?>
 				<?php if (!empty($video['embedUrl'])) wpl_esc::e('<p class="wpl-util-hidden" itemprop="embedUrl" content="' . wpl_esc::return_attr($video['embedUrl']) . '"></p>'); ?>
 			</li>
 		<?php endforeach; ?>

@@ -13,6 +13,13 @@ defined('_WPLEXEC') or die('Restricted access');
  * http://www.opensource.org/licenses/MIT
  */
 
+/**
+ * This is the unmodified blueimp upload handler. It streams uploads in chunks, which needs the native file
+ * functions, and move_uploaded_file() is what makes an upload verifiable, so the WordPress alternatives do
+ * not apply here. Callers gate it with min_access('agent'), a nonce and an accept_file_types allowlist.
+ */
+// phpcs:disable WordPress.WP.AlternativeFunctions, Generic.PHP.ForbiddenFunctions -- bundled third-party library, see the note above
+
 class wpl_UploadHandler
 {
     protected $options;

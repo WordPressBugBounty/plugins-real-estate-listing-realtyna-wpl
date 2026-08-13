@@ -18,7 +18,7 @@ foreach($this->wpl_profiles as $key=>$profile)
     $agent_name   = ($profile['materials']['first_name']['value'] ?? '') ;
     $agent_l_name = ($profile['materials']['last_name']['value'] ?? '');
 
-    $description = stripslashes(strip_tags($profile['raw'][$description_column] ?? ''));
+    $description = stripslashes(wp_strip_all_tags($profile['raw'][$description_column] ?? ''));
     ?>
     <div class="wpl-column">
       <div <?php wpl_esc::item_type($this->microdata, 'RealEstateAgent'); ?> class="wpl_profile_container <?php wpl_esc::attr($this->property_css_class ?? ''); ?>" id="wpl_profile_container<?php wpl_esc::attr($profile['data']['id']); ?>">

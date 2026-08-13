@@ -8,7 +8,11 @@ defined('_WPLEXEC') or die('Restricted access');
  * @since WPL1.0.0
  * @date 03/05/2013
  * @package WPL
+ *
+ * Setting permissions is the whole purpose of this class, and it runs during cron and on the frontend
+ * where WP_Filesystem is not initialised, so the native chmod calls below are deliberate.
  */
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_chmod
 class wpl_path
 {
     /**

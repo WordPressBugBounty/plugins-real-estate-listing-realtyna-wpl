@@ -83,11 +83,11 @@ class wpl_html
 	{
 		if(is_array($keywords))
 		{
-			foreach($keywords as $keyword) array_push(self::$meta_keywords, (!preg_match('!!u', $keyword) ? utf8_decode($keyword) : $keyword));
+			foreach($keywords as $keyword) array_push(self::$meta_keywords, (!preg_match('!!u', $keyword) ? wpl_global::convert_encoding($keyword, 'ISO-8859-1', 'UTF-8') : $keyword));
 		}
 		else
 		{
-			array_push(self::$meta_keywords, strip_tags((!preg_match('!!u', $keywords) ? utf8_decode($keywords) : $keywords)));
+			array_push(self::$meta_keywords, wp_strip_all_tags((!preg_match('!!u', $keywords) ? wpl_global::convert_encoding($keywords, 'ISO-8859-1', 'UTF-8') : $keywords)));
 		}
 	}
     
@@ -100,10 +100,10 @@ class wpl_html
      */
 	public static function set_meta_description($string)
 	{
-		$string = (string) strip_tags($string ?? '');
+		$string = (string) wp_strip_all_tags($string ?? '');
 		if(trim($string ?? '') == '') return false;
 		
-		self::$meta_description = !preg_match('!!u', $string) ? utf8_decode($string) : $string;
+		self::$meta_description = !preg_match('!!u', $string) ? wpl_global::convert_encoding($string, 'ISO-8859-1', 'UTF-8') : $string;
 		return true;
 	}
 	
@@ -116,10 +116,10 @@ class wpl_html
      */
 	public static function set_title($string = '')
 	{
-		$string = (string) strip_tags($string ?? '');
+		$string = (string) wp_strip_all_tags($string ?? '');
 		if(trim($string ?? '') == '') return false;
 		
-		self::$title = !preg_match('!!u', $string) ? utf8_decode($string) : $string;
+		self::$title = !preg_match('!!u', $string) ? wpl_global::convert_encoding($string, 'ISO-8859-1', 'UTF-8') : $string;
 		return true;
 	}
     
@@ -174,7 +174,7 @@ class wpl_html
 		$string = (string) $string;
 		if(trim($string ?? '') == '') return false;
 		
-        array_push(self::$custom_strings, (!preg_match('!!u', $string) ? utf8_decode($string) : $string));
+        array_push(self::$custom_strings, (!preg_match('!!u', $string) ? wpl_global::convert_encoding($string, 'ISO-8859-1', 'UTF-8') : $string));
         return true;
 	}
     
@@ -260,7 +260,7 @@ class wpl_html
 		$string = (string) $string;
 		if(trim($string ?? '') == '') return false;
 		
-        array_push(self::$footer_strings, (!preg_match('!!u', $string) ? utf8_decode($string) : $string));
+        array_push(self::$footer_strings, (!preg_match('!!u', $string) ? wpl_global::convert_encoding($string, 'ISO-8859-1', 'UTF-8') : $string));
         return true;
 	}
     

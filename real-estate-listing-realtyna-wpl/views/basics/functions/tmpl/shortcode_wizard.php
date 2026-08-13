@@ -67,8 +67,8 @@ defined('_WPLEXEC') or die('Restricted access');
 			}
 			?>
 			<div class="plugin-row wpl_shortcode_parameter wpl_hidden_element pr_property_listing">
-				<label for="pr_location<?php echo $i ?>_name"><?php wpl_esc::html_t($location_name); ?></label>
-				<input type="text" id="pr_location<?php echo $i ?>_name" name="sf_text_location<?php echo $i ?>_name" placeholder="<?php wpl_esc::attr_t($location_name); ?>" />
+				<label for="pr_location<?php echo esc_attr($i) ?>_name"><?php wpl_esc::html_t($location_name); ?></label>
+				<input type="text" id="pr_location<?php echo esc_attr($i) ?>_name" name="sf_text_location<?php echo esc_attr($i) ?>_name" placeholder="<?php wpl_esc::attr_t($location_name); ?>" />
 			</div>
 		<?php endfor; ?>
 

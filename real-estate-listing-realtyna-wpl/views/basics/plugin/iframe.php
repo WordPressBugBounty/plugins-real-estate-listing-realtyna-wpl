@@ -1,6 +1,13 @@
 <?php
 /** no direct access **/
 defined('_WPLEXEC') or die('Restricted access');
+
+/**
+ * This is a standalone document rendered into an iframe for the editor popup, not a WordPress page. It has
+ * no wp_head() or wp_footer(), so there is nowhere for wp_enqueue_script() to print and the tags below have
+ * to be written directly.
+ */
+// phpcs:disable WordPress.WP.EnqueuedResources.NonEnqueuedScript, WordPress.WP.EnqueuedResources.NonEnqueuedStylesheet
 ?>
 <!DOCTYPE html>
 <html>

@@ -111,7 +111,7 @@ function widget_search_frontend_general_area(
             }
             $html .= '<input name="sf' . $widget_id . '_min_' . $min_column . '" type="' . $input_type . '" id="sf' . $widget_id . '_min_' . $min_column . '" step="' . $division . '" min="' . $min_value . '" value="' . (trim(
                     wpl_request::getVar('sf_min_' . $min_column, '')
-                ) != '' ? $current_min_value : (isset($extoptions[0]) ? $extoptions[0] : '')) . '" placeholder="' . wpl_esc::return_attr_t(
+                ) != '' ? $current_min_value : '') . '" placeholder="' . wpl_esc::return_attr_t(
                     'Min'
                 ) . '" />';
 
@@ -122,7 +122,7 @@ function widget_search_frontend_general_area(
             }
             $html .= '<input name="sf' . $widget_id . '_max_' . $max_column . '" type="' . $input_type . '" id="sf' . $widget_id . '_max_' . $max_column . '" step="' . $division . '" min="' . $min_value . '" value="' . (trim(
                     wpl_request::getVar('sf_max_' . $max_column, '')
-                ) != '' ? $current_max_value : (isset($extoptions[1]) ? $extoptions[1] : '')) . '" placeholder="' . wpl_esc::return_attr_t(
+                ) != '' ? $current_max_value : '') . '" placeholder="' . wpl_esc::return_attr_t(
                     'Max'
                 ) . '" />';
         } elseif ($show == 'minmax_slider') {

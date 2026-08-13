@@ -5,7 +5,7 @@ defined('_WPLEXEC') or die('Restricted access');
 /** set params **/
 $js_function = $params['js_function'] ?? 'wpl_save_params';
 $element_class = $params['element_class'] ?? '';
-$element_id = $params['element_id'] ?? 'wpl_params_cnt' . rand(1, 100);
+$element_id = $params['element_id'] ?? 'wpl_params_cnt' . wp_rand(1, 100);
 $html_path_message = $params['html_path_message'] ?? '.wpl_params_activity .wpl_show_message';
 $html_ajax_loader = $params['html_ajax_loader'] ?? 'wpl_params_ajax_loader';
 $img_ajax_loader = $params['img_ajax_loader'] ?? 'ajax-loader3.gif';

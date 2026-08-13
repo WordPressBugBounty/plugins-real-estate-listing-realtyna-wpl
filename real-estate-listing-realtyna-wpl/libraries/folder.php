@@ -10,7 +10,11 @@ _wpl_import('libraries.path');
  * @since WPL1.0.0
  * @date 03/05/2013
  * @package WPL
+ *
+ * Companion to wpl_file, the same reasoning applies: this runs during cron and on the frontend, where
+ * WP_Filesystem is not initialised, so the native calls below are deliberate.
  */
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_mkdir, WordPress.WP.AlternativeFunctions.file_system_operations_rmdir, WordPress.WP.AlternativeFunctions.rename_rename
 class wpl_folder
 {
     /**

@@ -75,7 +75,7 @@ class wpl_db
 
 		if(!empty($errorMessage)) {
 			wpl_logs::add($errorMessage, 'Query Error', 1, null, null, 1, [substr(static::get_DBO()->last_query, 0, 50)]);
-			throw new Exception($errorMessage);
+			throw new Exception(esc_html($errorMessage));
 		}
 
 		return $result;

@@ -11,7 +11,7 @@ class wpl_activity_main_charts extends wpl_activity
 	{
         wpl_extensions::import_javascript((object) array('param1'=>'wpl-jqplot', 'param2'=>'packages/jqplot/jquery.jqplot.min.js'));
 		wpl_extensions::import_style((object) array('param1'=>'wpl-jqplot', 'param2'=>'packages/jqplot/jquery.jqplot.min.css'));
-        $params['unique_chart_id'] = md5(uniqid(time().mt_rand(0, mt_getrandmax()), true));
+        $params['unique_chart_id'] = md5(uniqid(time().wp_rand(0, mt_getrandmax()), true));
         
 		/** include layout **/
 		$layout_path = _wpl_import($layout, true, true);

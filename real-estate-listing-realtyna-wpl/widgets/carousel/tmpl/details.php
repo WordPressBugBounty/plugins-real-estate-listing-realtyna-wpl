@@ -40,7 +40,7 @@ $tags = wpl_flex::get_tag_fields(($this->instance['data']['kind'] ?? 0));
 
 				$image_title = wpl_property::update_property_title($gallery['raw']);
 
-				$description = stripslashes(strip_tags($gallery['raw'][$description_column] ?? ''));
+				$description = stripslashes(wp_strip_all_tags($gallery['raw'][$description_column] ?? ''));
 				$cut_position = (trim($description) ? strrpos(substr($description, 0, 130), '.', -1) : 0);
 				if (!$cut_position) $cut_position = 129;
 

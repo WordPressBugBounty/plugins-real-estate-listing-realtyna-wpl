@@ -314,7 +314,7 @@ class wpl_locations
 			wpl_db::q('DELETE FROM `#__wpl_location_tries`');
 			return;
 		}
-		$condition = "AND created_at < '" . date('Y-m-d H:i:s', strtotime('-15 days')) . "'";
+		$condition = "AND created_at < '" . gmdate('Y-m-d H:i:s', strtotime('-15 days')) . "'";
 		wpl_db::delete('wpl_location_tries', '', $condition);
 	}
 
@@ -359,7 +359,7 @@ class wpl_locations
 				'location' => $address,
 				'latitude' => $point[0],
 				'longitude' => $point[1],
-				'created_at' => date('Y-m-d H:i:s'),
+				'created_at' => gmdate('Y-m-d H:i:s'),
 			]);
 		}
 
@@ -379,6 +379,30 @@ class wpl_locations
      * @param string $address
      * @return array|bool
      */
+    /**
+     * Sends a geocoding request through the WordPress HTTP API
+     * @author Howard <howard@realtyna.com>
+     * @static
+     * @param string $url
+     * @return string|bool response body or false on failure
+     */
+    protected static function geocoding_request($url)
+    {
+        $args = array(
+            'timeout'     => 10,
+            'redirection' => 0,
+        );
+
+        /** The previous cURL code forwarded the visitor user agent, Nominatim asks callers to identify themselves **/
+        if(!empty($_SERVER['HTTP_USER_AGENT'])) $args['user-agent'] = sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT']));
+
+        $response = wp_remote_get($url, $args);
+
+        if(is_wp_error($response)) return false;
+
+        return wp_remote_retrieve_body($response);
+    }
+
     public static function get_LatLng_google($address)
     {
 		$enable = apply_filters('wpl_locations/get_LatLng_google/enable', true);
@@ -396,25 +420,13 @@ class wpl_locations
 		$url = apply_filters('wpl_locations/get_LatLng_google/url', $url, $address, $api_key);
 
         // Getting Geopoint Using Google
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-
-        $JSON = curl_exec($ch);
+        $JSON = self::geocoding_request($url);
         $data = json_decode($JSON ?? '', true);
 
         $location_point = isset($data['results'][0]) ? $data['results'][0]['geometry']['location'] : NULL;
 
         if((isset($location_point['lat']) and $location_point['lat']) and (isset($location_point['lng']) and $location_point['lng']))
         {
-            curl_close($ch);
             return array($location_point['lat'], $location_point['lng']);
         }
 
@@ -437,25 +449,13 @@ class wpl_locations
         $url = "https://nominatim.openstreetmap.org/search?format=json&q=".$address;
 
         // Getting Geopoint Using OSM Server
-        $ch = curl_init();
-
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
-        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-
-        $JSON = curl_exec($ch);
+        $JSON = self::geocoding_request($url);
         $data = json_decode($JSON ?? '', true);
 
         $place = isset($data[0]) ? $data[0] : array();
 
         if((isset($place['lat']) and $place['lat']) and (isset($place['lon']) and $place['lon']))
         {
-            curl_close($ch);
             return array($place['lat'], $place['lon']);
         }
 
@@ -478,19 +478,7 @@ class wpl_locations
 		$url = "https://maps.googleapis.com/maps/api/geocode/json?latlng=".$latitude.",".$longitude."&sensor=false".($api_key ? "&key=".$api_key : "");
 
 		/** getting address **/
-		$ch = curl_init();
-
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, 0); /** Change this to a 1 to return headers **/
-		curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER["HTTP_USER_AGENT"]);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 0);
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-
-		$data = curl_exec($ch);
-		curl_close($ch);
+		$data = self::geocoding_request($url);
 
 		$data = json_decode($data ?? '', true);
 

@@ -2,6 +2,24 @@
 /** no direct access **/
 defined('_WPLEXEC') or die('Restricted access');
 
+if (!function_exists('wpl_idx_api_permission_callback'))
+{
+    function wpl_idx_api_permission_callback(WP_REST_Request $request)
+    {
+        $credentials = get_option('wpl_addon_idx_user_credentials');
+
+        $expected = (is_array($credentials) && isset($credentials['token'])) ? $credentials['token'] : '';
+        $provided = $request->get_param('token');
+
+        if (!is_string($expected) || $expected === '' || !is_string($provided) || $provided === '' || !hash_equals($expected, $provided))
+        {
+            return new WP_Error('wpl_idx_forbidden', __('Wrong Token!', 'real-estate-listing-realtyna-wpl'), array('status' => 401));
+        }
+
+        return true;
+    }
+}
+
 // API
 add_action('rest_api_init', function()
 {
@@ -12,7 +30,7 @@ add_action('rest_api_init', function()
             _wpl_import('libraries.idx.addon_idxn');
             (new addon_idxn)->import($request);
         },
-        'permission_callback' => '__return_true',
+        'permission_callback' => 'wpl_idx_api_permission_callback',
         'args' => array(
             'listing_type' => array(
                 'required' => true,
@@ -96,7 +114,7 @@ add_action('rest_api_init', function()
             _wpl_import('libraries.idx.addon_idxn');
             (new addon_idxn)->update($request);
         },
-        'permission_callback' => '__return_true',
+        'permission_callback' => 'wpl_idx_api_permission_callback',
         'args' => array(
             'status' => array(
                 'required' => true,
@@ -117,7 +135,7 @@ add_action('rest_api_init', function()
             _wpl_import('libraries.idx.addon_idxn');
             (new addon_idxn)->updateViaJsonFile($request);
         },
-        'permission_callback' => '__return_true',
+        'permission_callback' => 'wpl_idx_api_permission_callback',
     ));
 
     // Import via json file
@@ -128,6 +146,6 @@ add_action('rest_api_init', function()
             _wpl_import('libraries.idx.addon_idxn');
             (new addon_idxn)->importViaJsonFile($request);
         },
-        'permission_callback' => '__return_true',
+        'permission_callback' => 'wpl_idx_api_permission_callback',
     ));
 });

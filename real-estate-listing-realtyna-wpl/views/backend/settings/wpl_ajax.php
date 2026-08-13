@@ -337,23 +337,23 @@ class wpl_settings_controller extends wpl_controller
 					$pos = array_rand($types);
 					$value = $types[$pos]['id'];
 				} elseif ($field->type == 'price') {
-					$value = rand(100, 999) * 1000;
+					$value = wp_rand(100, 999) * 1000;
 				} elseif ($field->type == 'select') {
 					$params = wpl_flex::get_field_options($field->id);
 					$params = array_keys($params['params']);
 					$value = array_rand($params);
 				} elseif ($field->type == 'number') {
-					$value = ($field->id == 12) ? rand(1950, 2015) : rand(1, 9);
+					$value = ($field->id == 12) ? wp_rand(1950, 2015) : wp_rand(1, 9);
 				} elseif ($field->type == 'area') {
-					$value = rand(200, 999);
+					$value = wp_rand(200, 999);
 				} elseif ($field->type == 'feature' or $field->type == 'tag') {
-					$value = rand(0, 1);
+					$value = wp_rand(0, 1);
 				} elseif ($field->type == 'neighborhood') {
-					$value = rand(0, 1);
+					$value = wp_rand(0, 1);
 
 					if ($value == 1) {
-						$dist = rand(5, 90);
-						$dist_by = rand(1, 3);
+						$dist = wp_rand(5, 90);
+						$dist_by = wp_rand(1, 3);
 
 						if ($field->table_name == 'wpl_properties2') $query2 .= wpl_db::prepare('%i = %d, %i = %d, ', "{$field->table_column}_distance", $dist, "{$field->table_column}_distance_by", $dist_by);
 						else $query .= wpl_db::prepare('%i = %d, %i = %d, ', "{$field->table_column}_distance", $dist, "{$field->table_column}_distance_by", $dist_by);
@@ -370,8 +370,8 @@ class wpl_settings_controller extends wpl_controller
 			$county = $data->counties[array_rand($data->counties)];
 			$city = $data->cities[array_rand($data->cities)];
 			$street = $data->streets[array_rand($data->streets)];
-			$street_no = rand(500, 3000);
-			$zipcode = rand(10000, 90000);
+			$street_no = wp_rand(500, 3000);
+			$zipcode = wp_rand(10000, 90000);
 
 			$query .= wpl_db::prepare("`field_42` = %s, `street_no` = %s, `post_code` = %s, ", $street, $street_no, $zipcode);
 			$query .= wpl_db::prepare("`location2_id` = %s, `location2_name` = %s, `location3_name` = %s, `location4_name` = %s", $state_id, $state_name, $county, $city);
@@ -392,7 +392,7 @@ class wpl_settings_controller extends wpl_controller
 				'item_type' => 'gallery',
 				'item_cat' => 'image',
 				'item_name' => basename($image),
-				'creation_date' => date("Y-m-d H:i:s"),
+				'creation_date' => gmdate("Y-m-d H:i:s"),
 				'index' => 0
 			));
 			wpl_property::update_numbs($pid);

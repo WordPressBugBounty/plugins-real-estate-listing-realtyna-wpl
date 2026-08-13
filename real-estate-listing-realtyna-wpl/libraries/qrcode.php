@@ -2,6 +2,12 @@
 /** no direct access **/
 defined('_WPLEXEC') or die('Restricted access');
 
+/**
+ * Bundled third-party library, kept as released upstream so it can be re-merged from a newer version.
+ * The sniffs below are turned off for the file rather than patching library internals.
+ */
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_mkdir, WordPress.WP.AlternativeFunctions.rand_rand, WordPress.DateTime.RestrictedFunctions.date_date
+
 /*
  * PHP QR Code encoder
  *
@@ -1016,6 +1022,7 @@ class QRinputItem {
 		}
 	
 		if(!QRinput::check($mode, $size, $setData)) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- bundled PHP QR Code library, the message is never sent to the browser
 			throw new Exception('Error m:'.$mode.',s:'.$size.',d:'.join(',',$setData));
 			return null;
 		}

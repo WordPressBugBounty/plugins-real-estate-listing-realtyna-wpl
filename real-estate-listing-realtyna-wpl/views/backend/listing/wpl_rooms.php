@@ -34,7 +34,7 @@ class wpl_listing_controller extends wpl_controller
 		$index = floatval(wpl_items::get_maximum_index($pid, 'rooms', $kind))+1.00;
         
 		$item = array('parent_id'=>$pid, 'parent_kind'=>$kind, 'item_type'=>'rooms', 'item_cat'=>$room_type_id, 'item_name'=>$room_name, 
-					  'creation_date'=>date("Y-m-d H:i:s"), 'index'=>$index, 'item_extra1'=>$x, 'item_extra2'=>$y);
+					  'creation_date'=>gmdate("Y-m-d H:i:s"), 'index'=>$index, 'item_extra1'=>$x, 'item_extra2'=>$y);
 		
 		$id = wpl_items::save($item);
 		

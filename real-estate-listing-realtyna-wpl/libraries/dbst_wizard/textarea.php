@@ -32,9 +32,9 @@ if($type == 'textarea' and !$done_this)
 
                 <div class="wpl-multilang-field-cnt">
 
-                    <?php foreach($wpllangs as $wpllang): $lang_column = wpl_addon_pro::get_column_lang_name($field->table_column, $wpllang, false); ?>
+                    <?php $wpllang_index = 0; foreach($wpllangs as $wpllang): $wpllang_index++; $lang_column = wpl_addon_pro::get_column_lang_name($field->table_column, $wpllang, false); ?>
 
-                        <div class="wpl-lang-cnt" id="wpl_langs_cnt_<?php wpl_esc::numeric($field->id); ?>_<?php wpl_esc::attr(strtolower($wpllang)); ?>">
+                        <div class="wpl-lang-cnt" id="wpl_langs_cnt_<?php wpl_esc::numeric($field->id); ?>_<?php wpl_esc::attr(strtolower($wpllang)); ?>" <?php if($wpllang_index == 1) { echo 'style="display: block"'; } ?>>
 
                             <?php if(isset($options['advanced_editor']) and $options['advanced_editor'] and wpl_global::check_addon('pro')): ?>
 

@@ -47,13 +47,18 @@ function widget_search_frontend_general_mmnumber(
             /** current values **/
             $current_value = stripslashes(wpl_request::getVar('sf_mmnumber_'.$field_data['table_column'], NULL));
 
-            $html .= '<input name="sf'.$widget_id.'_mmnumber_'.$field_data['table_column'].'" type="text" id="sf'.$widget_id.'_mmnumber_'.$field_data['table_column'].'" value="'.$current_value.'" placeholder="'.__($field['name'], 'real-estate-listing-realtyna-wpl').'" />';
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- field labels are WPL table values, their English strings are in the .pot file
+            $placeholder = __($field['name'], 'real-estate-listing-realtyna-wpl');
+
+            $html .= '<input name="sf'.$widget_id.'_mmnumber_'.$field_data['table_column'].'" type="text" id="sf'.$widget_id.'_mmnumber_'.$field_data['table_column'].'" value="'.esc_attr($current_value).'" placeholder="'.esc_attr($placeholder).'" />';
         }
         elseif($show == 'selectbox') {
             $i = $min_value;
 
             $html .= '<select name="sf'.$widget_id.'_mmnumber_'.$field_data['table_column'].'" id="sf'.$widget_id.'_mmnumber_'.$field_data['table_column'].'">';
-            $html .= '<option value="-1" '.($current_value == $i ? 'selected="selected"' : '').'>'.__($field['name'], 'real-estate-listing-realtyna-wpl').'</option>';
+            // phpcs:ignore WordPress.WP.I18n.NonSingularStringLiteralText -- field labels are WPL table values, their English strings are in the .pot file
+            $label = __($field['name'], 'real-estate-listing-realtyna-wpl');
+            $html .= '<option value="-1" '.($current_value == $i ? 'selected="selected"' : '').'>'.esc_html($label).'</option>';
 
             $selected_printed = false;
             if($current_value == $i) $selected_printed = true;

@@ -76,7 +76,7 @@ $this->_wpl_import('widgets.agents.scripts.js', true, true);
 					<li class="website wpl-tooltip-top">
 						<a <?php wpl_esc::item_prop($this->microdata, 'url'); ?>  href="<?php
 						$urlStr = $profile['materials']['website']['value'] ?? '';
-						$parsed = parse_url($urlStr);
+						$parsed = wp_parse_url($urlStr);
 						if (empty($parsed['scheme'])) {
 							$urlStr = 'http://' . ltrim($urlStr, '/');
 						}

@@ -1016,7 +1016,7 @@ class addon_idxn extends idx_property_mapper
             
         }
         
-       @unlink($actualFile);
+       @wp_delete_file($actualFile);
        wp_send_json_success(array(
            'message' => $listOfUpdateTypes['update'].' properties updated and '.$listOfUpdateTypes['delete'].' deleted'
        )); 

@@ -287,7 +287,7 @@ class wpl_security
 			'item_type' => 'security',
 			'item_cat' => 'token',
 			'item_name' => $token,
-			'creation_date' => date("Y-m-d H:i:s"),
+			'creation_date' => gmdate("Y-m-d H:i:s"),
 		]);
         
         return $token;
@@ -470,7 +470,12 @@ class wpl_cookie
  * @author Howard R. <howard@realtyna.com>
  * @since WPL4.0.3
  * @package WPL
+ *
+ * Concurrency is the entire point of this class. The WordPress HTTP API sends one request at a time and
+ * has no multiplexing, so replacing curl_multi here would turn a parallel gallery import into a serial
+ * one and multiply import times. The cURL calls below are therefore deliberate.
  */
+// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_multi_init, WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_multi_add_handle, WordPress.WP.AlternativeFunctions.curl_curl_multi_exec, WordPress.WP.AlternativeFunctions.curl_curl_getinfo, WordPress.WP.AlternativeFunctions.curl_curl_multi_getcontent, WordPress.WP.AlternativeFunctions.curl_curl_multi_remove_handle, WordPress.WP.AlternativeFunctions.curl_curl_close, WordPress.WP.AlternativeFunctions.curl_curl_multi_close
 class wpl_download
 {
     /**

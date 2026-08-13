@@ -1,6 +1,12 @@
 <?php
 /** no direct access **/
 defined('_WPLEXEC') or die('Restricted access');
+
+/**
+ * This screen reports on the real filesystem to the administrator, so is_writable() is the subject of the
+ * check rather than a way of doing work. WP_Filesystem would report on its own abstraction instead.
+ */
+// phpcs:disable WordPress.WP.AlternativeFunctions.file_system_operations_is_writable
 ?>
 <div class="wpl-requirements-container">
 	<ul>

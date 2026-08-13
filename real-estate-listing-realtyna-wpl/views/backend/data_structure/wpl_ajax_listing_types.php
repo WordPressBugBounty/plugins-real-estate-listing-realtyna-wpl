@@ -132,7 +132,7 @@ class wpl_data_structure_controller extends wpl_controller
 			if($filesize> 500*1024)
 			{
 				$error .= wpl_esc::return_html_t("Icons should not be bigger than 500KB!");
-				@unlink($file);
+				@wp_delete_file($file);
 			}
             
 			if($error == "")

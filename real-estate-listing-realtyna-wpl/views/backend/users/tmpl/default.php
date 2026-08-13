@@ -189,14 +189,14 @@ if (wpl_global::check_addon('rets')) $this->_wpl_import($this->tpl_path . '.scri
 						</td>
 					<?php endif; ?>
 					<td><?php wpl_esc::html($wp_user->user_email); ?></td>
-					<td><?php wpl_esc::html(date('Y-m-d', strtotime($wp_user->user_registered))); ?></td>
+					<td><?php wpl_esc::html(gmdate('Y-m-d', strtotime($wp_user->user_registered))); ?></td>
 					<?php if (wpl_global::check_addon('membership')): ?>
 						<td>
                         <span id="wpl_user_expiry_date<?php wpl_esc::attr($wp_user->ID); ?>">
                         <?php
 						if (!trim($wp_user->expiry_date ?? '') or $wp_user->expiry_date == '-1' or $wp_user->expiry_date == '0000-00-00 00:00:00'): wpl_esc::html_t('Unlimited') . '</span>';
 						else:
-						wpl_esc::html(date('Y-m-d', strtotime($wp_user->expiry_date)));
+						wpl_esc::html(gmdate('Y-m-d', strtotime($wp_user->expiry_date)));
 						?>
                         </span>
 							<span id="wpl_user_renew<?php wpl_esc::attr($wp_user->ID); ?>" class="action-btn wpl-gen-icon-refresh"

@@ -25,8 +25,8 @@ if ($type == 'boolean' and !$done_this) {
 	$date_format_arr = explode(':', wpl_global::get_setting('main_date_format'));
 	$jqdate_format = $date_format_arr[1];
 
-	if (is_array($options) and isset($options['minimum_date']) and $options['minimum_date'] == 'now' or $options['minimum_date'] == 'minimum_date') $options['minimum_date'] = date("Y-m-d");
-	if (is_array($options) and isset($options['minimum_date']) and $options['maximum_date'] == 'now') $options['maximum_date'] = date("Y-m-d");
+	if (is_array($options) and isset($options['minimum_date']) and $options['minimum_date'] == 'now' or $options['minimum_date'] == 'minimum_date') $options['minimum_date'] = gmdate("Y-m-d");
+	if (is_array($options) and isset($options['minimum_date']) and $options['maximum_date'] == 'now') $options['maximum_date'] = gmdate("Y-m-d");
 
 	if (!$value) $value = '0000-00-00';
 
@@ -37,9 +37,9 @@ if ($type == 'boolean' and !$done_this) {
 	$mindate[1] = array_key_exists(1, $mindate) ? intval($mindate[1]) : '01';
 	$mindate[2] = array_key_exists(2, $mindate) ? intval($mindate[2]) : '01';
 
-	$maxdate[0] = (array_key_exists(0, $maxdate) and $maxdate[0]) ? $maxdate[0] : date('Y');
-	$maxdate[1] = array_key_exists(1, $maxdate) ? intval($maxdate[1]) : date('m');
-	$maxdate[2] = array_key_exists(2, $maxdate) ? intval($maxdate[2]) : date('d');
+	$maxdate[0] = (array_key_exists(0, $maxdate) and $maxdate[0]) ? $maxdate[0] : gmdate('Y');
+	$maxdate[1] = array_key_exists(1, $maxdate) ? intval($maxdate[1]) : gmdate('m');
+	$maxdate[2] = array_key_exists(2, $maxdate) ? intval($maxdate[2]) : gmdate('d');
 	?>
 	<div class="date-wp">
 		<label for="wpl_c_<?php wpl_esc::attr($field->id); ?>"><?php wpl_esc::html_t($label); ?><?php if (in_array($mandatory, array(1, 2))): ?>
@@ -86,8 +86,8 @@ if ($type == 'boolean' and !$done_this) {
 	$date_format_arr = explode(':', wpl_global::get_setting('main_date_format'));
 	$jqdate_format = $date_format_arr[0];
 
-	if ($options['minimum_date'] == 'now' or $options['minimum_date'] == 'minimum_date') $options['minimum_date'] = date("Y-m-d");
-	if ($options['maximum_date'] == 'now') $options['maximum_date'] = date("Y-m-d");
+	if ($options['minimum_date'] == 'now' or $options['minimum_date'] == 'minimum_date') $options['minimum_date'] = gmdate("Y-m-d");
+	if ($options['maximum_date'] == 'now') $options['maximum_date'] = gmdate("Y-m-d");
 
 	$mindate = explode('-', $options['minimum_date']);
 	$maxdate = explode('-', $options['maximum_date']);
@@ -96,9 +96,9 @@ if ($type == 'boolean' and !$done_this) {
 	$mindate[1] = array_key_exists(1, $mindate) ? intval($mindate[1]) : '01';
 	$mindate[2] = array_key_exists(2, $mindate) ? intval($mindate[2]) : '01';
 
-	$maxdate[0] = (array_key_exists(0, $maxdate) and $maxdate[0]) ? $maxdate[0] : date('Y');
-	$maxdate[1] = array_key_exists(1, $maxdate) ? intval($maxdate[1]) : date('m');
-	$maxdate[2] = array_key_exists(2, $maxdate) ? intval($maxdate[2]) : date('d');
+	$maxdate[0] = (array_key_exists(0, $maxdate) and $maxdate[0]) ? $maxdate[0] : gmdate('Y');
+	$maxdate[1] = array_key_exists(1, $maxdate) ? intval($maxdate[1]) : gmdate('m');
+	$maxdate[2] = array_key_exists(2, $maxdate) ? intval($maxdate[2]) : gmdate('d');
 	?>
 	<div class="date-wp">
 		<label for="wpl_c_<?php wpl_esc::attr($field->id); ?>"><?php wpl_esc::html_t($label); ?><?php if (in_array($mandatory, array(1, 2))): ?>

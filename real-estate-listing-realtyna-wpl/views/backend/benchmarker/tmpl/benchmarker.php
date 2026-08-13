@@ -4,7 +4,12 @@
  * Realtyna Benchmarker
  * Copyright (C) 2022 Realtyna Inc.
  * All rights reserved.
+ *
+ * This tool measures raw hosting throughput, so it streams straight to a file handle with CURLOPT_FILE and
+ * reads cURL's own transfer counters. Routing it through the WordPress HTTP API would buffer the payload in
+ * memory and measure WordPress rather than the host, so the calls below are deliberate.
  */
+// phpcs:disable WordPress.WP.AlternativeFunctions.curl_curl_init, WordPress.WP.AlternativeFunctions.curl_curl_setopt, WordPress.WP.AlternativeFunctions.curl_curl_exec, WordPress.WP.AlternativeFunctions.curl_curl_errno, WordPress.WP.AlternativeFunctions.curl_curl_getinfo, WordPress.WP.AlternativeFunctions.curl_curl_close, WordPress.WP.AlternativeFunctions.file_system_operations_fopen, WordPress.WP.AlternativeFunctions.file_system_operations_fclose
 
 /**
  * Realtyna Benchmarker - client
@@ -139,27 +144,16 @@ class RealtynaBenchmarker
      */
     public function update()
     {
-        $request = [
-            'op' => 'get-update-package'
-        ];
-
-        $update_package = self::api_request($request);
-        if(!strlen($update_package)) return ['error' => 'Failed to download update package'];
-
-        // Remove last byte to match MD5
-        $update_package = substr($update_package, 0, -1);
-
-        $request = [
-            'op' => 'get-update-package-md5'
-        ];
-
-        $source_md5 = trim(self::api_request($request) ?? '');
-
-        if(md5($update_package) !== $source_md5) return ['error' => 'Failed to verify update package integrity'];
-
-        file_put_contents(__FILE__, $update_package);
-
-        return ['success' => 1];
+        /**
+         * This used to download a PHP payload from the Realtyna API and overwrite this file with it.
+         *
+         * That is removed for two reasons. Plugins distributed through wordpress.org may not fetch and run
+         * executable code from an external server, and the integrity check compared the payload against a
+         * checksum fetched from the same endpoint, so it could show the download was intact but never that
+         * it came from Realtyna. Anyone able to answer for that endpoint could place arbitrary PHP inside
+         * the plugin folder. The benchmarker now ships with WPL and updates with it.
+         */
+        return ['error' => 'The benchmarker is part of WPL now. Update the plugin from your WordPress dashboard to get the latest version.'];
     }
 
 
@@ -216,7 +210,7 @@ class RealtynaBenchmarker
 
         $file_size = filesize($file_path);
 
-        unlink($file_path);
+        wp_delete_file($file_path);
 
         $speed = ($file_size * 8) / $time;
 
@@ -233,10 +227,12 @@ class RealtynaBenchmarker
      */
     public function test_disk()
     {
-        $file_path = __DIR__ . '/test.txt';
+        /** The plugin folder is wiped on every update, so the scratch file lives in the uploads folder **/
+        $uploads = wp_upload_dir();
+        $file_path = trailingslashit($uploads['basedir']) . 'wpl-benchmarker-test.txt';
         $write_size = self::$diskspace_required * 1.00;
         $block_size = 2 * pow(1024, 2);
-        $phrase = mt_rand(10000, 99999);
+        $phrase = wp_rand(10000, 99999);
         $data = str_repeat($phrase, round($block_size / strlen($phrase)));
 
         $start = microtime(true);
@@ -251,7 +247,7 @@ class RealtynaBenchmarker
         }
 
         $time = microtime(true) - $start;
-        unlink($file_path);
+        wp_delete_file($file_path);
 
         $written = $written / pow(1024, 2);
         $rate = $written / $time;
@@ -605,7 +601,7 @@ class RealtynaBenchmarker
         $file_path = __DIR__ . '/test.jpg';
         if(self::download_file($url, $file_path)) {
             $content = file_get_contents($file_path);
-            unlink($file_path);
+            wp_delete_file($file_path);
         }
         return $content;
     }
@@ -703,7 +699,7 @@ class CPUTest
         $options = 0;
 
         $iv = '';
-        for($i = 0; $i < $iv_length; $i++) $iv .= mt_rand(0,9);
+        for($i = 0; $i < $iv_length; $i++) $iv .= wp_rand(0,9);
         $encryption_key = "RealtynaBenchmarkerCPUTest";
 
         $encrypted = openssl_encrypt(self::$test_data, $ciphering, $encryption_key, $options, $iv);

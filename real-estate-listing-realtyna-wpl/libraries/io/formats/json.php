@@ -43,7 +43,7 @@ class wpl_io_format_json extends wpl_io_format_base
         }
         elseif(is_string($d))
         {
-            return utf8_encode($d);
+            return wpl_global::convert_encoding($d, 'UTF-8', 'ISO-8859-1');
         }
         
         return $d;

@@ -74,7 +74,7 @@ class wpl_service_wpl
 		wpl_events::do_cronjobs();
         
         // Save the latest cronjob run
-        $now = date('Y-m-d H:i:s');
+        $now = gmdate('Y-m-d H:i:s');
         wpl_settings::save_setting('wpl_last_cpanel_cronjobs', $now);
         
         // Exit the execution because it's a cPanel cronjob
@@ -119,16 +119,18 @@ class wpl_service_wpl
             $style = 'styles/x/main.css';
             $js = 'styles/x/main.min.js';
 
-            // Fix for imagesLoaded conflict in themex
-            wp_enqueue_script('imageloaded', 'https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js', array('x-site-body','jquery'), null, true);
+            // Fix for imagesLoaded conflict in themex. WordPress registers imagesLoaded itself, so its copy is
+            // used instead of a CDN one, which also means only one copy of the library ends up on the page.
+            wp_enqueue_script('imagesloaded');
         }
         elseif($current_theme == 'pro')
         {
             $style = 'styles/pro/main.css';
             $js = 'styles/pro/main.min.js';
 
-            // Fix for imagesLoaded conflict in themex
-            wp_enqueue_script('imageloaded', 'https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js', array('x-site-body','jquery'), null, true);
+            // Fix for imagesLoaded conflict in themex. WordPress registers imagesLoaded itself, so its copy is
+            // used instead of a CDN one, which also means only one copy of the library ends up on the page.
+            wp_enqueue_script('imagesloaded');
         }
         elseif($current_theme == 'genesis')
         {
@@ -148,7 +150,8 @@ class wpl_service_wpl
             $style = 'styles/houzez/main.css';
             $js = 'styles/houzez/main.min.js';
 
-            wp_enqueue_script('chart', 'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js',array(), null, true);
+            /** Chart.js ships with WPL, loading it from a CDN is not allowed on wordpress.org **/
+            wp_enqueue_script('chart', wpl_global::get_wpl_asset_url('packages/chartjs/chart.min.js'), array(), WPL_VERSION, true);
         }
         elseif($current_theme == 'webify')
         {

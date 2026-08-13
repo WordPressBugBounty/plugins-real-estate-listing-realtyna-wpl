@@ -4,10 +4,38 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.4.0 (<span class="wpl_log_date">08/04/2026</span>)</h4>
+		- Security: Restricted the IDX AJAX endpoints to administrators and limited dispatch to a known list of functions<br>
+		- Security: Required the site's IDX token before the IDX REST API import and update routes run<br>
+		- Security: Listing images downloaded during an IDX import are now stored under an extension derived from the verified image content<br>
+		- Security: Added nonce verification to the Organic IDX wizard AJAX endpoints to block cross-site request forgery<br>
+		- Security: Restricted the IDX payment status check to administrators<br>
+		- Security: Escaped the min/max number search field, which reflected a URL parameter into the page unescaped<br>
+		- Security: IDX listing images are now downloaded through wp_safe_remote_get so a crafted URL cannot reach the local network<br>
+		- Security: Removed the benchmarker self-update, which downloaded and executed PHP from a remote server<br>
+		- Security: The reCAPTCHA site key is no longer passed through a translation function<br>
+		- Security: Public profile visibility now honors the configured access level for administrators<br>
+		- Security: Escaped output across admin screens, search widgets, map scripts and listing templates<br>
+		- Fixed: MySQL 8 compatibility for membership expiry, listing expiry notices and custom date fields, which failed with "Incorrect DATETIME value" on strict servers<br>
+		- Fixed: Map clusters never split into individual markers however far you zoomed in<br>
+		- Fixed: Stale cluster icons left behind after the map reloaded, showing the same listings twice<br>
+		- Fixed: Google Maps drawing library is only requested when the APS addon needs it, and pinned to a version that still provides it, resolving the DrawingManager console error<br>
+		- Fixed: Location text search ignored single character numeric terms such as street numbers<br>
+		- Fixed: Area search min/max fields showed the configured range as if it were an entered value<br>
+		- Fixed: Duplicate robots meta output on property pages when Yoast SEO or Rank Math is active<br>
+		- Fixed: First language tab is now visible by default on multi-language textarea fields<br>
+		- Improved: Replaced utf8_decode/utf8_encode, which are removed in current PHP versions<br>
+		- Improved: Chart.js and imagesLoaded now load from the bundled copy and WordPress core instead of a CDN<br>
+		- Improved: Outgoing requests and geocoding now use the WordPress HTTP API<br>
+		- Improved: Migration and benchmarker files are written to the uploads folder, so t>
+		- Improved: Removed bundled copies of libraries already included in WordPress<br>
+		- Improved: Correct plural forms for rooms, bedrooms and bathrooms, and corrected text domains<br>
+		- Improved: Minimum supported WordPress version is now 5.3<br>
+
 		<h4>WPL5.3.0 (<span class="wpl_log_date">06/30/2026</span>)</h4>
-		- Added: Useful filters
-		- Fixed: Removed deprecated mobile_application
-		- Fixed: MOF issues
+		- Added: Useful filters<br>
+		- Fixed: Removed deprecated mobile_application<br>
+		- Fixed: MOF issues<br>
 
 		<h4>WPL5.2.0 (<span class="wpl_log_date">05/22/2026</span>)</h4>
 		- Added: New `mmnumber` search field type with text, selectbox, and min/max selectbox display modes<br>

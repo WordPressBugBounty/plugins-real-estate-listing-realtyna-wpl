@@ -207,7 +207,7 @@ class wpl_listing_controller extends wpl_controller
         $item_id = wpl_db::select(wpl_db::prepare("SELECT `id` FROM `#__wpl_items` WHERE `parent_kind` = %d AND `parent_id` = %d AND `item_type` = %s AND `item_cat` = %s", $kind, $parent_id, $item_type, $item_cat), 'loadResult');
         
         $item = array('parent_id'=>$parent_id, 'parent_kind'=>$kind, 'item_type'=>$item_type, 'item_cat'=>$item_cat, 'item_name'=>$item_name, 
-					  'creation_date'=>date("Y-m-d H:i:s"), 'index'=>'1.00', 'item_extra1'=>$item_extra1, 'item_extra2'=>$item_extra2, 'item_extra3'=>$item_extra3);
+					  'creation_date'=>gmdate("Y-m-d H:i:s"), 'index'=>'1.00', 'item_extra1'=>$item_extra1, 'item_extra2'=>$item_extra2, 'item_extra3'=>$item_extra3);
 		
 		wpl_items::save($item, $item_id);
         

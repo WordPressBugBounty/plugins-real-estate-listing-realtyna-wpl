@@ -457,6 +457,7 @@ class Client {
         $jsonData = curl_exec($ch);
 
         if (false === $jsonData) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- bundled Instagram API client, the message is never sent to the browser
             throw new CurlException('_makeCall() - cURL error: ' . curl_error($ch));
         }
         curl_close($ch);
@@ -483,6 +484,7 @@ class Client {
 
         $jsonData = curl_exec($ch);
         if (false === $jsonData) {
+            // phpcs:ignore WordPress.Security.EscapeOutput.ExceptionNotEscaped -- bundled Instagram API client, the message is never sent to the browser
             throw new CurlException('_makeOAuthCall() - cURL error: ' . curl_error($ch));
         }
         curl_close($ch);

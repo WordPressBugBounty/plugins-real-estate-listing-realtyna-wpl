@@ -103,7 +103,7 @@ class wpl_property_finalize
         $this->confirm = wpl_global::check_access('confirm', $this->user_id);
 
 	    // Current Timestamp
-	    $this->now = date('Y-m-d H:i:s');
+	    $this->now = gmdate('Y-m-d H:i:s');
 
 	    // Multilingual Status
         $this->multilingual = wpl_global::check_multilingual_status();
@@ -415,7 +415,7 @@ class wpl_property_finalize
                     if(!trim($location_field->table_column ?? '')) continue;
                     if( !trim($rendered[$location_field->id]['value'] ?? '') ) continue;
 
-                    $ex_space = explode(' ', strip_tags($rendered[$location_field->id]['value'] ?? ''));
+                    $ex_space = explode(' ', wp_strip_all_tags($rendered[$location_field->id]['value'] ?? ''));
                     foreach($ex_space as $value_raw) array_push($location_values, stripslashes_deep($value_raw ?? ''));
                 }
 
@@ -438,8 +438,8 @@ class wpl_property_finalize
             }
 
             // Set value in text search data
-            if(trim($value ?? '') != '') $text_search_data[] = strip_tags($value ?? '');
-            if(trim($value2 ?? '') != '') $text_search_data[] = strip_tags($value2 ?? '');
+            if(trim($value ?? '') != '') $text_search_data[] = wp_strip_all_tags($value ?? '');
+            if(trim($value2 ?? '') != '') $text_search_data[] = wp_strip_all_tags($value2 ?? '');
         }
 
         $column = 'textsearch';
