@@ -45,10 +45,15 @@ if (wpl_global::check_addon('rets')) $this->_wpl_import($this->tpl_path . '.scri
 	<div class="wpl-users-search-form">
 		<form method="GET" id="wpl_users_search_form">
 			<input type="hidden" name="page" value="wpl_admin_user_manager"/>
-			<label for="sf_filter"><?php wpl_esc::html_t('Filter'); ?>: </label>
-			<input type="text" id="sf_filter" name="filter" value="<?php wpl_esc::attr($this->filter); ?>"
-				   placeholder="<?php wpl_esc::attr_t('Name, Email'); ?>"
-				   class="long"/>
+			<?php /** The search glyph names the field now, so the visible "Filter:" is
+			         dropped - but the label stays for assistive tech. **/ ?>
+			<label for="sf_filter" class="screen-reader-text"><?php wpl_esc::html_t('Filter'); ?></label>
+			<span class="wpl-filter-wp wpl-filter-inline">
+				<span class="wpl-filter-icon"></span>
+				<input type="text" id="sf_filter" name="filter" value="<?php wpl_esc::attr($this->filter); ?>"
+					   placeholder="<?php wpl_esc::attr_t('Name, Email'); ?>"
+					   class="long"/>
+			</span>
 			<select name="show_all" id="show_all" data-has-chosen=""
 					title="<?php wpl_esc::attr_t('WPL / WordPress Users'); ?>">
 				<option value="0" <?php if ($this->show_all == 0) wpl_esc::e('selected="selected"'); ?>><?php wpl_esc::html_t('Only WPL users'); ?></option>

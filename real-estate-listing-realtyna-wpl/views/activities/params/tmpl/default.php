@@ -20,20 +20,24 @@ if (!$params_array) $params_array = array('' => '');
 <div class="<?php wpl_esc::attr($element_class); ?> fanc-params-wp fanc-content size-width-1" id="<?php wpl_esc::html($element_id); ?>">
     <h2><?php wpl_esc::html_t('Parameters'); ?></h2>
     <div class="fanc-body">
+        <div class="fanc-row fanc-button-add">
+            <span class="action-btn icon-plus" onclick="wpl_add_param();"><?php wpl_esc::html_t('Add'); ?></span>
+        </div>
+        <?php /** Rows live in their own container so new ones append above the footer, not after it **/ ?>
+        <div class="wpl-params-rows">
+            <?php $i = 1; foreach($params_array as $key=>$value): ?>
+            <div class="fanc-row" id="wpl_param_row<?php wpl_esc::e($i); ?>">
+                <input type="text" name="wpl_params[keys][]" placeholder="<?php wpl_esc::attr_t('Key'); ?>" value="<?php wpl_esc::html($key); ?>" />
+                <input type="text" name="wpl_params[values][]" placeholder="<?php wpl_esc::attr_t('Value'); ?>" value="<?php wpl_esc::html($value); ?>" />
+                <span class="action-btn icon-recycle" onclick="event.stopPropagation(); wpl_remove_param(<?php wpl_esc::e($i); ?>);"></span>
+            </div>
+            <?php $i++; endforeach; ?>
+        </div>
+        <?php /** Save moved below the rows so it reads as the dialog's footer **/ ?>
         <div class="fanc-row fanc-button-row-2">
             <span class="ajax-inline-save" id="<?php wpl_esc::html($html_ajax_loader); ?>"></span>
             <input class="wpl-button button-1" type="button" value="<?php wpl_esc::attr_t('Save'); ?>" onclick="<?php wpl_esc::e($js_function); ?>();" />
         </div>
-        <div class="fanc-row fanc-button-add">
-            <span class="action-btn icon-plus" onclick="wpl_add_param();"><?php wpl_esc::html_t('Add'); ?></span>
-        </div>
-        <?php $i = 1; foreach($params_array as $key=>$value): ?>
-        <div class="fanc-row" id="wpl_param_row<?php wpl_esc::e($i); ?>">
-            <input type="text" name="wpl_params[keys][]" placeholder="<?php wpl_esc::attr_t('Key'); ?>" value="<?php wpl_esc::html($key); ?>" />
-            <input type="text" name="wpl_params[values][]" placeholder="<?php wpl_esc::attr_t('Value'); ?>" value="<?php wpl_esc::html($value); ?>" />
-            <span class="action-btn icon-recycle" onclick="event.stopPropagation(); wpl_remove_param(<?php wpl_esc::e($i); ?>);"></span>
-        </div>
-		<?php $i++; endforeach; ?>
     </div>
     <div class="wpl_show_message wpl_hidden"></div>
 </div>
@@ -46,14 +50,14 @@ function wpl_add_param()
 			'<input type="text" name="wpl_params[keys][]" placeholder="<?php wpl_esc::attr_t('Key'); ?>" /> '+
 			'<input type="text" name="wpl_params[values][]" placeholder="<?php wpl_esc::attr_t('Value'); ?>" /> '+
 			'<span class="action-btn icon-recycle" onclick="event.stopPropagation(); wpl_remove_param(' + wpl_params_i + ');"></span></div>';
-	wplj(".fanc-body").append(html);
+	wplj("#<?php wpl_esc::attr($element_id); ?> .wpl-params-rows").append(html);
 
 	wpl_params_i++;
 }
 
 function wpl_remove_param(element_id)
 {
-	wplj(".fanc-body #wpl_param_row" + element_id).remove();
+	wplj("#<?php wpl_esc::attr($element_id); ?> #wpl_param_row" + element_id).remove();
 }
 
 function <?php wpl_esc::e($js_function); ?>()

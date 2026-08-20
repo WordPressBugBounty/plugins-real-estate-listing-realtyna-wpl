@@ -26,7 +26,7 @@ defined('_WPLEXEC') or die('Restricted access');
                 </select>
             </aside>
             <aside class="wpl-center">
-                <a id="add_memberships" class="button button-primary wpl-add" name="add_memberships" onclick="add_recipients('memberships','additional_memberships','');" />
+                <a id="add_memberships" class="button button-primary wpl-add" name="add_memberships" onclick="add_recipients('memberships','additional_memberships','');">
                 <?php wpl_esc::html_t('Add'); ?>
                 </a>
                 <a id="remove_memberships" class="button wpl-remove" name="remove_memberships" onclick="remove_recipients('memberships','additional_memberships','');" >
@@ -69,7 +69,7 @@ defined('_WPLEXEC') or die('Restricted access');
                 </select>
             </aside>
             <aside class="wpl-center">
-                <a id="add_recipient" class="button button-primary wpl-add" name="add_memberships" onclick="add_recipients('users','additional_users','');" />
+                <a id="add_recipient" class="button button-primary wpl-add" name="add_memberships" onclick="add_recipients('users','additional_users','');">
                     <?php wpl_esc::html_t('Add'); ?>
                 </a>
                 <a id="remove_recipient" class="button wpl-remove" name="remove_memberships" onclick="remove_recipients('users','additional_users','');" >
@@ -106,7 +106,7 @@ defined('_WPLEXEC') or die('Restricted access');
                 <input type="text" name="email_address" id="email_address" />
             </aside>
             <aside class="wpl-center">
-                <a id="add_email" class="button button-primary wpl-add" name="add_memberships" onclick="add_recipients('emails','additional_emails','email_recipients');" />
+                <a id="add_email" class="button button-primary wpl-add" name="add_memberships" onclick="add_recipients('emails','additional_emails','email_recipients');">
                     <?php wpl_esc::html_t('Add'); ?>
                 </a>
                 <a id="remove_email" class="button wpl-remove" name="remove_memberships" onclick="remove_recipients('emails','additional_emails','email_recipients');" >

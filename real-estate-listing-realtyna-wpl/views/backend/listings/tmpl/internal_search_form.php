@@ -108,3 +108,24 @@ defined('_WPLEXEC') or die('Restricted access');
         </div>
     </div>
 </div>
+<script type="text/javascript">
+/**
+ * Enter submits the search.
+ *
+ * This panel is a <div>, not a <form> - the Search button just calls
+ * wpl_search_listings() - so pressing Enter in a field did nothing at all and the
+ * only way to run a search was to reach for the mouse. Bound on the panel so it
+ * also covers fields added later, and restricted to text-ish inputs so it cannot
+ * hijack Enter inside a select or a textarea.
+ */
+wplj(function () {
+    wplj('#wpl_listing_manager_search_form_cnt').on('keydown', 'input', function (e) {
+        if (e.which !== 13 && e.keyCode !== 13) return;
+        var type = (this.type || '').toLowerCase();
+        if (type !== 'text' && type !== 'search' && type !== 'number' && type !== 'email') return;
+
+        e.preventDefault();
+        if (typeof wpl_search_listings === 'function') wpl_search_listings();
+    });
+});
+</script>

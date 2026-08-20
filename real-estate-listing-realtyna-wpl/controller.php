@@ -238,7 +238,18 @@ class wpl_controller
      */
 	public function response($response = array())
     {
-        echo json_encode($response ?? '');
+        // Encode with the HTML-hex flags so any '<', '>', '&', or quote inside the
+        // payload is emitted as a \uXXXX escape rather than live markup. This neutralizes
+        // reflected/stored XSS even though the response keeps WordPress's default
+        // text/html content type. It is non-breaking: consumers that JSON.parse /
+        // json_decode the response get the identical decoded value.
+        //
+        // NOTE: do NOT add a `Content-Type: application/json` header here. Several
+        // consumers call this endpoint with no jQuery `dataType` and then run
+        // $.parseJSON(msg) on the result (e.g. locationtext_search.php). With text/html
+        // they receive a string and parse it; switching to application/json makes jQuery
+        // auto-parse to an object and $.parseJSON(object) then fails.
+        echo json_encode($response ?? '', JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT);
         exit;
     }
 

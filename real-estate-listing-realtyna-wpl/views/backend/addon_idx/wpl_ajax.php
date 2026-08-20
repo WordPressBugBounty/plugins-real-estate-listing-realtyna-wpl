@@ -45,7 +45,7 @@ class wpl_addon_idx_controller extends wpl_controller
            ));
         }
 
-        if (!wpl_request::verify_nonce(wpl_request::getVar('_wpnonce'), 'wpl_addon_idx')) {
+        if (!wpl_security::verify_nonce(wpl_request::getVar('_wpnonce'), 'wpl_addon_idx')) {
             wp_send_json(array(
                 'status'  => 403,
                 'message' => 'Invalid or expired security token, please reload the page.'

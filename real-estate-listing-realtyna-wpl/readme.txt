@@ -2,11 +2,11 @@
 Contributors: realtyna
 Donate link: https://realtyna.com/
 Tags: RESO Web API, IDX, MLS, Real Estate, Realty
-Requires at least: 5.3
+Requires at least: 6.2
 Tested up to: 7.0
-Stable tag: 5.4.1
+Stable tag: 5.4.2
 Requires PHP: 7.4
-Version: 5.4.1
+Version: 5.4.2
 License: GPL-2.0-or-later
 License URI: https://www.gnu.org/licenses/license-list.html#GPLv2
 
@@ -46,6 +46,25 @@ Submit a support ticket on Realtyna ticketing system: [https://support.realtyna.
 7. Agent listing
 
 == Changelog ==
+= 5.4.2 =
+- Security: The search widget location AJAX endpoint reflected the widget id, location level and current location id from the request straight into its HTML, allowing a crafted link to run script in a visitor's session (reflected XSS); these values are now constrained to integers
+- Security: The listing editor's location endpoint reflected the location level and field id the same way, and is now constrained as well
+- Security: AJAX responses now escape HTML characters when encoding JSON, so no response can carry live markup even when served with the default content type
+- Fixed: Property links returned a 404 when the WPL main page was not a standard WordPress page, a page builder template for example; the rewrite rules now address such a page by its ID instead of its slug. Re-save Settings > Permalinks once after updating for this to take effect
+- Fixed: When no WPL main page is configured, WPL no longer registers an empty rewrite rule that can never match a request
+- Fixed: A failed database migration no longer marks WPL as upgraded, so the migration files that did not run yet are picked up on the next request instead of being skipped for good and leaving the database half migrated
+- Fixed: The migration pointer is only seeded on the first upgrade, so a retry resumes where it stopped instead of replaying every migration from the start
+- Fixed: The dashboard statistics charts counted MLS On The Fly(tm) results as stored properties; they now count only properties held by WPL, the MLS add-on and the Importer add-on
+- Fixed: The parameters dialog appended new rows below the Save button, and adding or removing a row affected every parameters dialog open on the page; rows now stay above the button and each dialog is handled on its own
+- Fixed: The recipient "Add" buttons on the notification advanced tab were written as self-closing anchors and are now valid markup
+- Added: Realtyna brand style layer for the WPL admin screens. It is additive and restyles only - no markup, class name or behavior changes - and the public side is untouched. It can be switched off with add_filter('wpl/brand_style/enabled', '__return_false')
+- Added: Pressing Enter in the listing manager search panel now runs the search
+- Added: Filtering the data structure with no matching field now shows a "No fields found" message with a Clear filter button instead of a bare table head
+- Improved: The filter fields on the activity manager, notification and user manager screens carry a search icon
+- Improved: The search widget dropdowns in the block editor are marked as WPL dropdowns, so another plugin's Chosen stylesheet can no longer restyle them
+- Improved: The migration log that was written to the uploads folder on every upgrade has been removed
+- Improved: Minimum supported WordPress version is now 6.2
+
 = 5.4.1 =
 - Security: The permission check behind the agent-level admin endpoints did not enforce the role it named, leaving those endpoints open to any visitor
 - Security: The inline field editors on the listing and user wizards accepted any database table and column from the request, and are now limited to the fields those forms render

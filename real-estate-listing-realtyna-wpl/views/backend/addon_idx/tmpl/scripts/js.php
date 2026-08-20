@@ -4,7 +4,7 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <script type="text/javascript">
     /** Every addon_idx call below is a state changing admin action, the nonce stops them being triggered from another site **/
-    var wpl_idx_nonce = '<?php wpl_esc::js(wpl_request::create_nonce('wpl_addon_idx')); ?>';
+    var wpl_idx_nonce = '<?php wpl_esc::js(wpl_security::create_nonce('wpl_addon_idx')); ?>';
     wplj.ajaxPrefilter(function(options)
     {
         if(typeof options.data === 'string' && options.data.indexOf('wpl_format=b:addon_idx:ajax') !== -1 && options.data.indexOf('_wpnonce=') === -1)

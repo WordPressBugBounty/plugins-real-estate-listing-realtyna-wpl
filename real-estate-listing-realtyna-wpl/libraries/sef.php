@@ -416,49 +416,87 @@ class wpl_sef
         $main_permalink = wpl_sef::get_wpl_permalink();
         $neighborhood_main_permalink = wpl_sef::get_neighborhood_wpl_permalink();
         $complex_main_permalink = wpl_sef::get_complex_wpl_permalink();
+
+        $main_permalink_id = wpl_sef::get_wpl_permalink_id();
+        $neighborhood_permalink_id = wpl_sef::get_wpl_permalink_id(4);
+        $complex_permalink_id = wpl_sef::get_wpl_permalink_id(1);
+
+        /** the query the rule points to, "pagename" only works when the main page really is a page **/
+        $main_url = 'index.php?'.wpl_sef::get_rewrite_page_query($main_permalink_id, '$matches[1]').'&wpl_qs=$matches[2]';
+        $neighborhood_url = 'index.php?'.wpl_sef::get_rewrite_page_query($neighborhood_permalink_id, '$matches[1]').'&wpl_qs=$matches[2]';
+        $complex_url = 'index.php?'.wpl_sef::get_rewrite_page_query($complex_permalink_id, '$matches[1]').'&wpl_qs=$matches[2]';
+
+        $main_lang_url = 'index.php?'.wpl_sef::get_rewrite_page_query($main_permalink_id, '$matches[2]').'&wpl_qs=$matches[3]';
+        $neighborhood_lang_url = 'index.php?'.wpl_sef::get_rewrite_page_query($neighborhood_permalink_id, '$matches[2]').'&wpl_qs=$matches[3]';
+        $complex_lang_url = 'index.php?'.wpl_sef::get_rewrite_page_query($complex_permalink_id, '$matches[2]').'&wpl_qs=$matches[3]';
+
         $wpl_rules = array();
-        
+
         if(wpl_global::check_multilingual_status())
         {
             $lang_options = wpl_addon_pro::get_wpl_language_options();
-            
+
             $lang_str = '.+';
             foreach($lang_options as $lang_option) $lang_str .= $lang_option['shortcode'].'|';
             $lang_str = trim($lang_str ?? '', '|.+ ');
-            
-            $wpl_rules[] = array('regex'=>'('.$lang_str.')/('.$main_permalink.')/(.+)$', 'url'=>'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-            $wpl_rules[] = array('regex'=>'language/('.$lang_str.')/('.$main_permalink.')/(.+)$', 'url'=>'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-            if($main_permalink != $neighborhood_main_permalink) {
-                $wpl_rules[] = array('regex' => '(' . $lang_str . ')/(' . $neighborhood_main_permalink . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-                $wpl_rules[] = array('regex' => 'language/(' . $lang_str . ')/(' . $neighborhood_main_permalink . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
+
+            if(trim($main_permalink ?? '') != '') {
+                $wpl_rules[] = array('regex'=>'('.$lang_str.')/('.$main_permalink.')/(.+)$', 'url'=>$main_lang_url);
+                $wpl_rules[] = array('regex'=>'language/('.$lang_str.')/('.$main_permalink.')/(.+)$', 'url'=>$main_lang_url);
+            }
+            if(trim($neighborhood_main_permalink ?? '') != '' and $main_permalink != $neighborhood_main_permalink) {
+                $wpl_rules[] = array('regex' => '(' . $lang_str . ')/(' . $neighborhood_main_permalink . ')/(.+)$', 'url' => $neighborhood_lang_url);
+                $wpl_rules[] = array('regex' => 'language/(' . $lang_str . ')/(' . $neighborhood_main_permalink . ')/(.+)$', 'url' => $neighborhood_lang_url);
             }
 
-            if($main_permalink != $complex_main_permalink) {
-                $wpl_rules[] = array('regex' => '(' . $lang_str . ')/(' . $complex_main_permalink . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-                $wpl_rules[] = array('regex' => 'language/(' . $lang_str . ')/(' . $complex_main_permalink . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
+            if(trim($complex_main_permalink ?? '') != '' and $main_permalink != $complex_main_permalink) {
+                $wpl_rules[] = array('regex' => '(' . $lang_str . ')/(' . $complex_main_permalink . ')/(.+)$', 'url' => $complex_lang_url);
+                $wpl_rules[] = array('regex' => 'language/(' . $lang_str . ')/(' . $complex_main_permalink . ')/(.+)$', 'url' => $complex_lang_url);
             }
 
             foreach($lang_options as $lang_option)
 			{
-				$wpl_rules[] = array('regex'=>'('.$lang_option['shortcode'].')/('.wpl_sef::get_post_name((isset($lang_option['main_page']) ? $lang_option['main_page'] : $main_permalink)).')/(.+)$', 'url'=>'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-				$wpl_rules[] = array('regex'=>'language/('.$lang_option['shortcode'].')/('.wpl_sef::get_post_name((isset($lang_option['main_page']) ? $lang_option['main_page'] : $main_permalink)).')/(.+)$', 'url'=>'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-                if($main_permalink != $neighborhood_main_permalink) {
-                    $wpl_rules[] = array('regex' => '(' . $lang_option['shortcode'] . ')/(' . wpl_sef::get_post_name((isset($lang_option['main_page']) ? $lang_option['main_page'] : $neighborhood_main_permalink)) . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-                    $wpl_rules[] = array('regex' => 'language/(' . $lang_option['shortcode'] . ')/(' . wpl_sef::get_post_name((isset($lang_option['main_page']) ? $lang_option['main_page'] : $neighborhood_main_permalink)) . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
+                $lang_main_page = isset($lang_option['main_page']) ? $lang_option['main_page'] : $main_permalink_id;
+                $lang_main_permalink = wpl_sef::get_post_name($lang_main_page);
+                $lang_main_url = 'index.php?'.wpl_sef::get_rewrite_page_query($lang_main_page, '$matches[2]').'&wpl_qs=$matches[3]';
+
+                if(trim($lang_main_permalink ?? '') != '') {
+                    $wpl_rules[] = array('regex'=>'('.$lang_option['shortcode'].')/('.$lang_main_permalink.')/(.+)$', 'url'=>$lang_main_url);
+                    $wpl_rules[] = array('regex'=>'language/('.$lang_option['shortcode'].')/('.$lang_main_permalink.')/(.+)$', 'url'=>$lang_main_url);
                 }
-                if($main_permalink != $complex_main_permalink) {
-                    $wpl_rules[] = array('regex' => '(' . $lang_option['shortcode'] . ')/(' . wpl_sef::get_post_name((isset($lang_option['main_page']) ? $lang_option['main_page'] : $complex_main_permalink)) . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
-                    $wpl_rules[] = array('regex' => 'language/(' . $lang_option['shortcode'] . ')/(' . wpl_sef::get_post_name((isset($lang_option['main_page']) ? $lang_option['main_page'] : $complex_main_permalink)) . ')/(.+)$', 'url' => 'index.php?pagename=$matches[2]&wpl_qs=$matches[3]');
+
+                if(trim($neighborhood_main_permalink ?? '') != '' and $main_permalink != $neighborhood_main_permalink) {
+                    $lang_neighborhood_page = isset($lang_option['main_page']) ? $lang_option['main_page'] : $neighborhood_permalink_id;
+                    $lang_neighborhood_permalink = wpl_sef::get_post_name($lang_neighborhood_page);
+                    $lang_neighborhood_url = 'index.php?'.wpl_sef::get_rewrite_page_query($lang_neighborhood_page, '$matches[2]').'&wpl_qs=$matches[3]';
+
+                    if(trim($lang_neighborhood_permalink ?? '') != '') {
+                        $wpl_rules[] = array('regex' => '(' . $lang_option['shortcode'] . ')/(' . $lang_neighborhood_permalink . ')/(.+)$', 'url' => $lang_neighborhood_url);
+                        $wpl_rules[] = array('regex' => 'language/(' . $lang_option['shortcode'] . ')/(' . $lang_neighborhood_permalink . ')/(.+)$', 'url' => $lang_neighborhood_url);
+                    }
+                }
+                if(trim($complex_main_permalink ?? '') != '' and $main_permalink != $complex_main_permalink) {
+                    $lang_complex_page = isset($lang_option['main_page']) ? $lang_option['main_page'] : $complex_permalink_id;
+                    $lang_complex_permalink = wpl_sef::get_post_name($lang_complex_page);
+                    $lang_complex_url = 'index.php?'.wpl_sef::get_rewrite_page_query($lang_complex_page, '$matches[2]').'&wpl_qs=$matches[3]';
+
+                    if(trim($lang_complex_permalink ?? '') != '') {
+                        $wpl_rules[] = array('regex' => '(' . $lang_option['shortcode'] . ')/(' . $lang_complex_permalink . ')/(.+)$', 'url' => $lang_complex_url);
+                        $wpl_rules[] = array('regex' => 'language/(' . $lang_option['shortcode'] . ')/(' . $lang_complex_permalink . ')/(.+)$', 'url' => $lang_complex_url);
+                    }
                 }
 			}
         }
-        
-        $wpl_rules[] = array('regex'=>'('.$main_permalink.')/(.+)$', 'url'=>'index.php?pagename=$matches[1]&wpl_qs=$matches[2]');
-        if($main_permalink != $neighborhood_main_permalink) {
-            $wpl_rules[] = array('regex' => '(' . $neighborhood_main_permalink . ')/(.+)$', 'url' => 'index.php?pagename=$matches[1]&wpl_qs=$matches[2]');
+
+        /** an empty permalink builds a "()/(.+)$" rule, which can never route a request **/
+        if(trim($main_permalink ?? '') != '') {
+            $wpl_rules[] = array('regex'=>'('.$main_permalink.')/(.+)$', 'url'=>$main_url);
         }
-        if($main_permalink != $complex_main_permalink) {
-            $wpl_rules[] = array('regex' => '(' . $complex_main_permalink . ')/(.+)$', 'url' => 'index.php?pagename=$matches[1]&wpl_qs=$matches[2]');
+        if(trim($neighborhood_main_permalink ?? '') != '' and $main_permalink != $neighborhood_main_permalink) {
+            $wpl_rules[] = array('regex' => '(' . $neighborhood_main_permalink . ')/(.+)$', 'url' => $neighborhood_url);
+        }
+        if(trim($complex_main_permalink ?? '') != '' and $main_permalink != $complex_main_permalink) {
+            $wpl_rules[] = array('regex' => '(' . $complex_main_permalink . ')/(.+)$', 'url' => $complex_url);
         }
 
         // Apply Filters
@@ -529,27 +567,8 @@ class wpl_sef
      */
     public static function get_wpl_permalink($full = false, $kind = 0)
     {
-        $main_permalink_id = '';
-        if($kind == 1) {
-            $main_permalink_id = wpl_global::get_setting('complex_main_permalink');
-        } elseif($kind == 4) {
-            $main_permalink_id = wpl_global::get_setting('neighborhood_main_permalink');
-        }
-        if(empty($main_permalink_id)) {
-            $main_permalink_id = wpl_global::get_setting('main_permalink');
-        }
+        $main_permalink = wpl_sef::get_wpl_permalink_id($kind);
 
-        $main_permalink = apply_filters('wpl_change_permalink', $main_permalink_id);
-        if(!is_numeric($main_permalink)) $main_permalink = wpl_sef::get_post_id($main_permalink);
-        
-        /** Multilingual **/
-        if(wpl_global::check_multilingual_status())
-        {
-            _wpl_import('libraries.addon_pro');
-            $lang_permalink = wpl_addon_pro::get_lang_main_page($kind);
-            if($lang_permalink) $main_permalink = $lang_permalink;
-        }
-        
         if($full)
         {
             $url = wpl_sef::get_page_link($main_permalink);
@@ -571,6 +590,65 @@ class wpl_sef
     public static function get_complex_wpl_permalink($full = false)
     {
         return  static::get_wpl_permalink($full, 1);
+    }
+
+    /**
+     * Returns the post ID of the WPL main page of a kind
+     * @author David M <david.m@realtyna.com>
+     * @since WPL5.4.2
+     * @static
+     * @param int $kind
+     * @return int
+     */
+    public static function get_wpl_permalink_id($kind = 0)
+    {
+        $main_permalink_id = '';
+        if($kind == 1) {
+            $main_permalink_id = wpl_global::get_setting('complex_main_permalink');
+        } elseif($kind == 4) {
+            $main_permalink_id = wpl_global::get_setting('neighborhood_main_permalink');
+        }
+        if(empty($main_permalink_id)) {
+            $main_permalink_id = wpl_global::get_setting('main_permalink');
+        }
+
+        $main_permalink = apply_filters('wpl_change_permalink', $main_permalink_id);
+        if(!is_numeric($main_permalink)) $main_permalink = wpl_sef::get_post_id($main_permalink);
+
+        /** Multilingual **/
+        if(wpl_global::check_multilingual_status())
+        {
+            _wpl_import('libraries.addon_pro');
+            $lang_permalink = wpl_addon_pro::get_lang_main_page($kind);
+            if($lang_permalink) $main_permalink = $lang_permalink;
+        }
+
+        return $main_permalink;
+    }
+
+    /**
+     * Returns the query variable a rewrite rule has to use in order to address a WPL main page
+     *
+     * WordPress only resolves the "pagename" query variable against the "page" post type, an
+     * empty post type makes WP_Query fall back to `WHERE ID = 0` and answer with a 404. Main
+     * pages that live on another post type - a page builder template for instance, usually set
+     * through the "wpl_change_permalink" filter - are therefore addressed by their ID instead.
+     *
+     * @author David M <david.m@realtyna.com>
+     * @since WPL5.4.2
+     * @static
+     * @param int $post_id post ID of the main page
+     * @param string $slug_match rewrite match holding the page slug, e.g. '$matches[1]'
+     * @return string
+     */
+    public static function get_rewrite_page_query($post_id, $slug_match)
+    {
+        $post_id = (int) $post_id;
+        $post_type = $post_id ? wpl_db::get('post_type', 'posts', 'id', $post_id, true, '', true) : '';
+
+        if(trim($post_type ?? '') != '' and $post_type != 'page') return 'page_id='.$post_id;
+
+        return 'pagename='.$slug_match;
     }
 
     /**

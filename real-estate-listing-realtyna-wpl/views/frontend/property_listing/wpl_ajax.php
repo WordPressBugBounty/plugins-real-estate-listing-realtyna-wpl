@@ -55,9 +55,27 @@ class wpl_property_listing_controller extends wpl_controller
 
     private function get_locations($location_level = '', $parent = '', $current_location_id = '', $widget_id)
     {
+        // Sanitize request-controlled values that get echoed into the HTML built below.
+        // widget_id is a WP widget number and current_location_id / parent are location ids,
+        // so integers are their whole domain. Constraining them neutralizes any HTML or
+        // attribute injection (XSS) through these params, and keeps location_level safe for
+        // the "#__wpl_location{$level}" table name that wpl_locations::get_locations() builds.
+        //
+        // location_level is a numeric level OR the literal 'zips' sentinel: the search
+        // widget's JS switches to "zips" once next_level passes zipcode_parent_level (see
+        // libraries/widget_search/frontend/location_items/simple_location_database.php).
+        // Casting that to int silently made it level 0, which queries a #__wpl_location0 that
+        // does not exist, so the zipcode dropdown stopped appearing. Allow-list the sentinel
+        // instead of casting it - a fixed literal is just as safe to concatenate as an int.
+        $widget_id = (int) $widget_id;
+        $location_level = strtolower((string) $location_level) === 'zips' ? 'zips' : (int) $location_level;
+        $current_location_id = (int) $current_location_id;
+        $parent = (int) $parent;
+
         $location_settings = wpl_global::get_settings('3'); # location settings
 
-        if($location_settings['zipcode_parent_level'] == $location_level - 1)
+        // Only derive the sentinel for a numeric level - on PHP 8, 'zips' - 1 is a TypeError.
+        if($location_level !== 'zips' and $location_settings['zipcode_parent_level'] == $location_level - 1)
         {
             $location_level = 'zips';
         }

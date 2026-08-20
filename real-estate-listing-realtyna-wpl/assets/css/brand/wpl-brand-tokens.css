@@ -1,0 +1,138 @@
+/*!
+ * WPL Realtyna Brand Layer - Design Tokens
+ * Copyright Realtyna Inc. | realtyna.com
+ *
+ * Palette, radii, shadows, motion and icon geometry for the WPL brand layer.
+ * Derived from the live realtyna.com stylesheets:
+ *   - wp-content/themes/bridge/css/style_dynamic_callback.php
+ *   - wp-content/themes/bridge-child/assets/css/custom.css
+ *   - the /mls-on-the-fly/ landing page
+ *
+ * HAND-AUTHORED. This file is NOT generated from assets/scss - the SCSS tree is built
+ * with Ruby Compass, which is not part of this workflow. Edit this file directly.
+ *
+ * Every value below is overridable: set any --wpl-* property on :root (or on a
+ * narrower scope) from a theme, a child plugin, or the PRO UI Customizer, and the
+ * whole brand layer follows it. Nothing downstream hard-codes a colour.
+ */
+
+:root {
+    /* ---------------------------------------------------------------
+     * Brand palette
+     * ------------------------------------------------------------ */
+    --wpl-brand-primary:          #8e42f7;
+    --wpl-brand-primary-deep:     #5f1cc9;
+    --wpl-brand-primary-dark:     #7d24a3;
+
+    --wpl-brand-secondary:        #3483f2;
+    --wpl-brand-secondary-deep:   #1c56a7;
+    --wpl-brand-secondary-soft:   #ebf3fe;
+
+    /* Tints are declared twice on purpose: the literal is the floor, and the
+     * color-mix() re-declaration below it wins wherever color-mix is supported.
+     * That way a site (or the PRO UI Customizer) can change only
+     * --wpl-brand-primary and every tint follows it instead of staying purple. */
+    --wpl-brand-primary-soft:     #f4edff;
+    --wpl-brand-primary-soft:     color-mix(in srgb, var(--wpl-brand-primary) 10%, #ffffff);
+
+    --wpl-brand-navy:             #13113f;
+    --wpl-brand-navy-deep:        #090731;
+
+    --wpl-brand-cyan:             #0fb1db;
+    --wpl-brand-orange:           #ff7f00;
+    --wpl-brand-amber:            #f2c036;
+    --wpl-brand-coral:            #fd6a41;
+    --wpl-brand-green:            #4bc587;
+    --wpl-brand-red:              #e74c3c;
+
+    /* Semantic aliases - use these in the layer, not the raw names above */
+    --wpl-color-accent:           var(--wpl-brand-primary);
+    --wpl-color-accent-hover:     var(--wpl-brand-primary-deep);
+    --wpl-color-link:             var(--wpl-brand-secondary);
+    --wpl-color-link-hover:       var(--wpl-brand-secondary-deep);
+    --wpl-color-success:          var(--wpl-brand-green);
+    --wpl-color-warning:          var(--wpl-brand-orange);
+    --wpl-color-danger:           var(--wpl-brand-red);
+    --wpl-color-info:             var(--wpl-brand-cyan);
+
+    /* ---------------------------------------------------------------
+     * Neutrals
+     * ------------------------------------------------------------ */
+    --wpl-surface:                #ffffff;
+    --wpl-surface-alt:            #f7f8fb;
+    --wpl-surface-sunken:         #f2f2f2;
+    --wpl-border:                 #e5e7ec;
+    --wpl-border-strong:          #d3d7e0;
+    --wpl-text-muted:             #abb1b4;
+    --wpl-text-soft:              #707070;
+    --wpl-text:                   #303030;
+    --wpl-text-strong:            #1f1f1f;
+    --wpl-heading:                var(--wpl-brand-navy);
+
+    /* ---------------------------------------------------------------
+     * Gradients
+     * ------------------------------------------------------------ */
+    /* Built from the palette tokens rather than fixed hex, so overriding the brand
+     * colour re-tints the gradients too. */
+    --wpl-grad-primary:  linear-gradient(135deg, var(--wpl-brand-primary-deep) 0%, var(--wpl-brand-secondary) 100%);
+    --wpl-grad-brand:    linear-gradient(-45deg, var(--wpl-brand-secondary) 0%, var(--wpl-brand-primary) 100%);
+    --wpl-grad-hero:     linear-gradient(295deg, #45108a 2.27%, #3d065f 29.57%, #10054d 101.35%);
+    --wpl-grad-warm:     linear-gradient(133deg, #f2c036 1.35%, #fd6a41 100%);
+    --wpl-grad-tint:     linear-gradient(90.92deg, #f4edff 18.96%, #ebf3fe 82.06%);
+
+    /* ---------------------------------------------------------------
+     * Radii - matched to the dominant values on realtyna.com
+     * ------------------------------------------------------------ */
+    --wpl-radius-xs:              3px;
+    --wpl-radius-sm:              5px;
+    --wpl-radius:                 10px;
+    --wpl-radius-lg:              16px;
+    --wpl-radius-pill:            999px;
+
+    /* ---------------------------------------------------------------
+     * Elevation - tinted with the navy so shadows read as brand, not grey
+     * ------------------------------------------------------------ */
+    --wpl-shadow-xs:              0 1px 2px rgba(19, 17, 63, 0.06);
+    --wpl-shadow-sm:              0 2px 8px rgba(19, 17, 63, 0.08);
+    --wpl-shadow:                 0 6px 20px rgba(19, 17, 63, 0.10);
+    --wpl-shadow-lg:              0 14px 40px rgba(19, 17, 63, 0.14);
+    --wpl-shadow-focus:           0 0 0 3px rgba(142, 66, 247, 0.25);
+    --wpl-shadow-focus:           0 0 0 3px color-mix(in srgb, var(--wpl-brand-primary) 25%, transparent);
+
+    /* ---------------------------------------------------------------
+     * Typography
+     * No webfont is requested. These stacks pick up Raleway / Open Sans when the
+     * host theme already loads them, and fall back to the system UI stack when it
+     * does not - so WPL always looks native to the site it is installed on.
+     * ------------------------------------------------------------ */
+    --wpl-font-head: 'Raleway', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    --wpl-font-body: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    --wpl-weight-head:            600;
+    --wpl-weight-strong:          600;
+
+    /* ---------------------------------------------------------------
+     * Motion
+     * ------------------------------------------------------------ */
+    --wpl-dur:                    0.2s;
+    --wpl-dur-slow:               0.35s;
+    --wpl-ease:                   cubic-bezier(0.4, 0, 0.2, 1);
+    --wpl-transition:             all var(--wpl-dur) var(--wpl-ease);
+
+    /* ---------------------------------------------------------------
+     * Spacing scale
+     * ------------------------------------------------------------ */
+    --wpl-space-1:                4px;
+    --wpl-space-2:                8px;
+    --wpl-space-3:                12px;
+    --wpl-space-4:                16px;
+    --wpl-space-5:                24px;
+    --wpl-space-6:                32px;
+}
+
+/* Respect the visitor's motion preference across the whole brand layer. */
+@media (prefers-reduced-motion: reduce) {
+    :root {
+        --wpl-dur:      0.001ms;
+        --wpl-dur-slow: 0.001ms;
+    }
+}

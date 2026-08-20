@@ -6,8 +6,20 @@ defined('_WPLEXEC') or die('Restricted access');
 $this->_wpl_import($this->tpl_path . '.scripts.js');
 ?>
 <script>
+	function wpl_flex_toggle_no_results(empty, term)
+	{
+		wplj('.flex-wp').toggleClass('wpl-flex-filter-empty', empty);
+		wplj('#wpl_flex_no_results').toggleClass('wpl_hidden', !empty);
+		if(empty) wplj('#wpl_flex_no_results .wpl-flex-empty-term').text(term);
+	}
+
 	jQuery(document).ready(function()
 	{
+		wplj('#wpl_flex_no_results .wpl-flex-empty-reset').click(function()
+		{
+			wplj('#field_filter').val('').trigger('keyup').focus();
+		});
+
 		wplj("#field_filter").keyup(function()
 		{
 			var term = wplj(this).val().toLowerCase();
@@ -36,11 +48,17 @@ $this->_wpl_import($this->tpl_path . '.scripts.js');
 					}
 				}
 				elements.show();
+
+				/** Nothing matched: every category tab and every row is hidden, which
+				    otherwise leaves a bare table head and an empty category rail
+				    standing on the page. Say so instead. **/
+				wpl_flex_toggle_no_results(elements.length === 0, wplj(this).val());
 			}
 			else
 			{
 				wplj('.wpl_slide_label').show();
 				wplj(".wpl_slide_container tbody tr").show();
+				wpl_flex_toggle_no_results(false, '');
 			}
 		});
 	});
@@ -55,7 +73,8 @@ $this->_wpl_import($this->tpl_path . '.scripts.js');
     <div class="wpl_flex_list">
         <div class="wpl_show_message"></div>
     </div>
-	<div class="clearfix">
+	<div class="clearfix wpl-filter-wp">
+		<span class="wpl-filter-icon"></span>
 		<input type="text" name="field_filter" id="field_filter"  style="width: 500px" placeholder="<?php wpl_esc::attr_t('Filter'); ?>" autocomplete="off" />
 	</div>
     <div class="sidebar-wp">
@@ -82,6 +101,16 @@ $this->_wpl_import($this->tpl_path . '.scripts.js');
         <div class="wpl-side-9 side-content-wp flex-content wpl-util-no-padding">
             <!-- sidebar2 -->
             <div class="wpl_slide_container2" >
+                <?php /** Shown by the filter above when a search matches no field **/ ?>
+                <div class="wpl-flex-empty wpl_hidden" id="wpl_flex_no_results">
+                    <span class="wpl-flex-empty-icon"></span>
+                    <h3><?php wpl_esc::html_t('No fields found'); ?></h3>
+                    <p>
+                        <?php wpl_esc::html_t('Nothing in this data structure matches'); ?>
+                        <b class="wpl-flex-empty-term"></b>
+                    </p>
+                    <button type="button" class="wpl-button button-1 wpl-flex-empty-reset"><?php wpl_esc::html_t('Clear filter'); ?></button>
+                </div>
                 <?php if(in_array($this->kind, $this->dbcat_manager_kinds)): ?>
                     <div class="wpl_slide_container" id="wpl_slide_container_id0">
                         <table class="widefat page" cellspacing="0" width="100%">

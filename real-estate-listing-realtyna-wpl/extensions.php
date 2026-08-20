@@ -387,20 +387,6 @@ class wpl_extensions
     }
 
 	/**
-	 * Path of the migration log. It lives in the uploads folder because the plugin folder is wiped on every update
-	 *
-	 * @return string
-	 */
-	private function installLogFile() {
-		$uploads = wp_upload_dir();
-		$directory = trailingslashit($uploads['basedir']) . 'WPL';
-
-		if(!is_dir($directory)) wp_mkdir_p($directory);
-
-		return $directory . DS . 'install-' . $_SERVER['WPL_INSTALL_LOG'] . '.log';
-	}
-
-	/**
 	 * To use PRO migrations we have to implement $this->runQuery method
 	 *
 	 * @param $query
@@ -408,7 +394,6 @@ class wpl_extensions
 	 * @throws Exception
 	 */
 	private function runQuery($query) {
-		file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . $query. "\n", FILE_APPEND);
 		$wpdb = wpl_db::get_DBO();
 		$error_message = '';
 		try {
@@ -420,7 +405,6 @@ class wpl_extensions
 			$error_message = $e->getMessage();
 		}
 		if(!empty($error_message)) {
-			file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . '(ERROR) ' . $error_message . ' - ' . $query . "\n", FILE_APPEND);
 			/** ignore the following errors */
 			if(strpos($error_message, 'Duplicate column name') === 0) {
 				return true;
@@ -431,7 +415,6 @@ class wpl_extensions
 			if(strpos($error_message, 'Unknown column') === 0) {
 				return true;
 			}
-			file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . '(EXCEPTION) ' . $error_message . ' - ' . $query . "\n", FILE_APPEND);
 			throw new Exception(esc_html($error_message));
 		}
 		return $result;
@@ -466,9 +449,6 @@ class wpl_extensions
 	}
 
 	private function migrate($path, $version_key) {
-		if(empty($_SERVER['WPL_INSTALL_LOG'])) {
-			$_SERVER['WPL_INSTALL_LOG'] =  str_shuffle('defghijklmnopqrstuv') . '-' . time();
-		}
 		$queries = $path;
 		if(wpl_folder::exists($queries)) {
 			$installed_version = get_option( $version_key, '0.0.1' );
@@ -484,7 +464,6 @@ class wpl_extensions
 				$version = str_replace('.' . $fileType, '', $file);
 				if(version_compare($version, $installed_version, '>')) {
 					$filePath = $queries . $file;
-					file_put_contents($this->installLogFile(), gmdate('Y-m-d H:i:s ') . $file. "\n", FILE_APPEND);
 					if($fileType == 'php') {
 						$this->includeOnce($filePath);
 					} else {
@@ -606,6 +585,13 @@ class wpl_extensions
 			$this->migration();
 		} catch (Exception $e) {
 			error_log($e->getMessage());
+
+			/**
+			 * Do not mark WPL as upgraded, otherwise the migration files that did not run yet are
+			 * skipped for good and the installation is left on a half migrated database. Keeping
+			 * the old version makes the next request pick the migration up where it stopped.
+			 */
+			return;
 		}
 
         /** update WPL version in db **/
@@ -951,6 +937,48 @@ class wpl_extensions
 		}
     }
 
+    /**
+     * Imports the Realtyna brand style layer
+     *
+     * An additive stylesheet layer on top of backend.css that brings the WPL admin
+     * screens onto Realtyna's palette. It only restyles - no markup, class name or
+     * behaviour changes - so it can be switched off at any time without side effects.
+     *
+     * SCOPE: wp-admin only. The public side is untouched, which is why this is hooked
+     * on admin_enqueue_scripts alone and returns early for any non-admin client.
+     *
+     * Priority 20 so it lands after import_styles_scripts() (priority 0) has queued
+     * css/backend.css, the sheet this layer refines.
+     *
+     * To restore the previous look:
+     *   add_filter('wpl/brand_style/enabled', '__return_false');
+     *
+     * @author Realtyna <info@realtyna.com>
+     * @static
+     * @return void
+     */
+    public static function import_brand_styles()
+    {
+        if(!apply_filters('wpl/brand_style/enabled', true)) return;
+
+        if(!wpl_global::get_client()) return;
+
+        $brand_ver = function($file)
+        {
+            $path = WPL_ABSPATH . DS . 'assets' . DS . 'css' . DS . 'brand' . DS . $file;
+            $mtime = wpl_file::exists($path) ? filemtime($path) : false;
+
+            return $mtime ? WPL_VERSION . '.' . $mtime : WPL_VERSION;
+        };
+
+        wp_enqueue_style('wpl_brand_tokens', wpl_global::get_wpl_asset_url('css/brand/wpl-brand-tokens.css'), array(), $brand_ver('wpl-brand-tokens.css'));
+        wp_enqueue_style('wpl_brand_icons', wpl_global::get_wpl_asset_url('css/brand/wpl-brand-icons.css'), array('wpl_brand_tokens'), $brand_ver('wpl-brand-icons.css'));
+
+        wp_enqueue_style('wpl_brand_chosen', wpl_global::get_wpl_asset_url('css/brand/wpl-brand-chosen.css'), array('wpl_brand_tokens'), $brand_ver('wpl-brand-chosen.css'));
+
+        wp_enqueue_style('wpl_brand_backend', wpl_global::get_wpl_asset_url('css/brand/wpl-brand-backend.css'), array('wpl_brand_tokens'), $brand_ver('wpl-brand-backend.css'));
+    }
+
     public static function register_sidebars()
     {
         $wpl_extensions = new wpl_extensions();
@@ -1096,8 +1124,14 @@ if(wpl_global::get_wp_option('wpl_version'))
 
     if(version_compare(wpl_global::get_wp_option('wpl_version'), wpl_global::wpl_version(), '<'))
     {
-		// update basic migration
-		update_option('wpl_basic_migration', wpl_global::get_wp_option('wpl_version'));
+		/**
+		 * Seed the migration pointer for installations coming from a version that predates the
+		 * migration runner. It must not be reset afterwards, a retry after a failed migration
+		 * would otherwise replay every file from the start instead of resuming where it stopped.
+		 */
+		if(!wpl_global::get_wp_option('wpl_basic_migration')) {
+			update_option('wpl_basic_migration', wpl_global::get_wp_option('wpl_version'));
+		}
         /** upgrading WPL **/
         $wpl_extensions->upgrade_wpl();
     }
@@ -1116,6 +1150,10 @@ add_action('admin_print_scripts', array($wpl_extensions, 'import_dynamic_js'), 1
 // add javascripts and styles
 if(wpl_global::get_client() == '0') add_action('wp_enqueue_scripts', array($wpl_extensions, 'import_styles_scripts'), 0);
 elseif(wpl_global::get_client() == '1') add_action('admin_enqueue_scripts', array($wpl_extensions, 'import_styles_scripts'), 0);
+
+// Realtyna brand style layer - wp-admin only, deliberately not hooked on wp_enqueue_scripts.
+// Priority 20 so it lands after the main backend sheet (priority 0).
+if(wpl_global::get_client() == '1') add_action('admin_enqueue_scripts', array($wpl_extensions, 'import_brand_styles'), 20);
 
 // Registering sidebars
 add_action('widgets_init', array($wpl_extensions, 'register_sidebars'), 0);

@@ -16,7 +16,8 @@ if(wpl_global::check_multilingual_status()) $subject_column = wpl_addon_pro::get
     <div class="wpl_notification_list"><div class="wpl_show_message"></div></div>
     <div class="sidebar-wp">
         <div class="notification_top_bar">
-            <div class="wpl_left_section">
+            <div class="wpl_left_section wpl-filter-wp">
+                <span class="wpl-filter-icon"></span>
                 <input type="text" name="notification_filter" id="notification_filter" placeholder="<?php wpl_esc::attr_t('Filter'); ?>" autocomplete="off" />
             </div>
             <div class="clearfix"></div>

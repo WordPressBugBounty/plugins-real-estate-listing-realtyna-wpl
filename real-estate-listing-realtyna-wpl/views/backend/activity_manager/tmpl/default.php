@@ -12,7 +12,8 @@ $this->_wpl_import($this->tpl_path . '.scripts.css');
     <div class="wpl_activity_manager_list"><div class="wpl_show_message"></div></div>
     <div class="sidebar-wp">
         <div class="activity_manager_top_bar">
-        	<div class="wpl_left_section">
+        	<div class="wpl_left_section wpl-filter-wp">
+                <span class="wpl-filter-icon"></span>
             	<input type="text" name="activity_manager_filter" id="activity_manager_filter" placeholder="<?php wpl_esc::attr_t('Filter'); ?>" autocomplete="off" />
             </div>
             <div class="wpl_right_section">

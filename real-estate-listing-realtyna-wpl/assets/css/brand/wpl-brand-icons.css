@@ -1,0 +1,1441 @@
+/*!
+ * WPL Realtyna Brand Layer - Icons
+ * Copyright Realtyna Inc. | realtyna.com
+ *
+ * Replaces WPL's legacy iconography with modern line icons, without touching a
+ * single line of markup.
+ *
+ * WHY MASKS, NOT NEW GLYPHS OR IMAGES
+ * -----------------------------------
+ * WPL's frontend icons are not class-driven in the templates - they are baked
+ * into the compiled stylesheet as `content: "\eXXX"` on selectors such as
+ * `.wpl_prp_listing_icon_box div.bedroom:after` (see
+ * assets/scss/frontend/_property_listing.scss). The backend uses 135 raster PNG
+ * sprites. Either set could only be changed by regenerating the icon font or the
+ * Compass sprite map.
+ *
+ * Instead this layer re-targets those exact pseudo-elements, blanks the glyph and
+ * paints an SVG through `mask`. The result:
+ *   - `background-color: currentColor` means every icon inherits its colour, so
+ *     hover states, active states and the PRO UI Customizer colour all still work
+ *   - vector at any size, no more blurry sprites on HiDPI
+ *   - zero markup, class-name or behaviour change
+ *
+ * The whole file sits inside an @supports guard: a browser without mask support
+ * never enters these rules and keeps the original font glyph or sprite. There is
+ * no state in which an icon renders as an empty box.
+ *
+ *
+ * SCOPE: this layer is enqueued in wp-admin only (see
+ * wpl_extensions::import_brand_styles). The public site is deliberately left
+ * exactly as it was, so any rule below that targets a frontend-only selector is
+ * inert - it is kept because several of these surfaces (the listing wizard, the
+ * property manager bulk bar, the Realtyna lightbox) also render inside wp-admin.
+ *
+ * HAND-AUTHORED - not generated from assets/scss. See wpl-brand-tokens.css.
+ */
+
+/* ===================================================================
+ * Icon geometry
+ *
+ * Redrawn on a 24x24 grid with a 1.75 stroke and round caps/joins, matching the
+ * icon language used on realtyna.com.
+ *
+ * The stroke colour baked in below (%23000) does not reach the screen - a mask
+ * reads the alpha channel only, so the colour just has to be opaque.
+ * =================================================================== */
+
+:root {
+    /* --- Property features ------------------------------------------------ */
+    --wpl-i-bed: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 20v-8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v8'/%3E%3Cpath d='M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4'/%3E%3Cpath d='M12 4v6'/%3E%3Cpath d='M2 18h20'/%3E%3C/svg%3E");
+    --wpl-i-bath: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M9 6 6.5 3.5a1.5 1.5 0 0 0-1-.5C4.7 3 4 3.7 4 4.5V17a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5'/%3E%3Cpath d='M10 5 8 7'/%3E%3Cpath d='M2 12h20'/%3E%3Cpath d='M7 19v2'/%3E%3Cpath d='M17 19v2'/%3E%3C/svg%3E");
+    --wpl-i-car: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2'/%3E%3Ccircle cx='7' cy='17' r='2'/%3E%3Cpath d='M9 17h6'/%3E%3Ccircle cx='17' cy='17' r='2'/%3E%3C/svg%3E");
+    --wpl-i-camera: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3z'/%3E%3Ccircle cx='12' cy='13' r='3'/%3E%3C/svg%3E");
+    --wpl-i-area: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cpath d='M7 11V7h4'/%3E%3Cpath d='M17 13v4h-4'/%3E%3C/svg%3E");
+    --wpl-i-lot-area: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 4h4M10 4h4M16 4h4M20 4v4M20 10v4M20 16v4M20 20h-4M14 20h-4M8 20H4M4 20v-4M4 14v-4M4 8V4'/%3E%3C/svg%3E");
+    --wpl-i-eye: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z'/%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3C/svg%3E");
+    --wpl-i-eye-off: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.7 5.1A10.9 10.9 0 0 1 12 5c6.5 0 10 7 10 7a18.5 18.5 0 0 1-2.4 3.5M6.6 6.6A18.4 18.4 0 0 0 2 12s3.5 7 10 7a10.8 10.8 0 0 0 5.4-1.4'/%3E%3Cpath d='M14.1 14.1a3 3 0 1 1-4.2-4.2'/%3E%3Cpath d='m2 2 20 20'/%3E%3C/svg%3E");
+    --wpl-i-home: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z'/%3E%3Cpath d='M9 22V12h6v10'/%3E%3C/svg%3E");
+
+    /* --- Listing actions --------------------------------------------------- */
+    --wpl-i-heart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z'/%3E%3C/svg%3E");
+    --wpl-i-heart-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z'/%3E%3C/svg%3E");
+    --wpl-i-compare: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 8h14M13 4l4 4-4 4'/%3E%3Cpath d='M21 16H7M11 12l-4 4 4 4'/%3E%3C/svg%3E");
+    --wpl-i-print: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9V2h12v7'/%3E%3Cpath d='M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2'/%3E%3Crect x='6' y='14' width='12' height='8' rx='1'/%3E%3C/svg%3E");
+    --wpl-i-pdf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z'/%3E%3Cpath d='M14 2v5h5'/%3E%3Cpath d='M9 13h6M9 17h6'/%3E%3C/svg%3E");
+    --wpl-i-share: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='18' cy='5' r='3'/%3E%3Ccircle cx='6' cy='12' r='3'/%3E%3Ccircle cx='18' cy='19' r='3'/%3E%3Cpath d='m8.6 13.5 6.8 4M15.4 6.5 8.6 10.5'/%3E%3C/svg%3E");
+    --wpl-i-mail: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Cpath d='m22 7-10 6L2 7'/%3E%3C/svg%3E");
+    --wpl-i-phone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z'/%3E%3C/svg%3E");
+    --wpl-i-fax: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 8V3h12v5'/%3E%3Cpath d='M6 20H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-2'/%3E%3Crect x='8' y='14' width='8' height='7' rx='1'/%3E%3C/svg%3E");
+    --wpl-i-calendar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3C/svg%3E");
+    --wpl-i-bookmark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m19 21-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+    --wpl-i-external: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+    --wpl-i-expand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M16 21h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3'/%3E%3C/svg%3E");
+    --wpl-i-direction: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 11 19-9-9 19-2-8-8-2z'/%3E%3C/svg%3E");
+
+    /* --- Views, navigation and controls ------------------------------------ */
+    --wpl-i-map-pin: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z'/%3E%3Ccircle cx='12' cy='10' r='3'/%3E%3C/svg%3E");
+    --wpl-i-map: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3z'/%3E%3Cpath d='M9 3v15M15 6v15'/%3E%3C/svg%3E");
+    --wpl-i-grid: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7' height='7' rx='1.5'/%3E%3Crect x='14' y='3' width='7' height='7' rx='1.5'/%3E%3Crect x='3' y='14' width='7' height='7' rx='1.5'/%3E%3Crect x='14' y='14' width='7' height='7' rx='1.5'/%3E%3C/svg%3E");
+    --wpl-i-list: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01'/%3E%3C/svg%3E");
+    --wpl-i-search: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='m20 20-3.5-3.5'/%3E%3C/svg%3E");
+    --wpl-i-filter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 3H2l8 9.5V19l4 2v-8.5z'/%3E%3C/svg%3E");
+    --wpl-i-chevron-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m15 18-6-6 6-6'/%3E%3C/svg%3E");
+    --wpl-i-chevron-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m9 18 6-6-6-6'/%3E%3C/svg%3E");
+    --wpl-i-chevron-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m18 15-6-6-6 6'/%3E%3C/svg%3E");
+    --wpl-i-chevron-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+    --wpl-i-arrow-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M12 19l-7-7 7-7'/%3E%3C/svg%3E");
+    --wpl-i-arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M12 5l7 7-7 7'/%3E%3C/svg%3E");
+    --wpl-i-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 6 6 18M6 6l12 12'/%3E%3C/svg%3E");
+    --wpl-i-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+    --wpl-i-minus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14'/%3E%3C/svg%3E");
+    --wpl-i-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2.25' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m20 6-11 11-5-5'/%3E%3C/svg%3E");
+    --wpl-i-check-circle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m8.5 12.5 2.5 2.5 5-5'/%3E%3C/svg%3E");
+    --wpl-i-x-circle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='m15 9-6 6M9 9l6 6'/%3E%3C/svg%3E");
+    --wpl-i-star: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z'/%3E%3C/svg%3E");
+    --wpl-i-star-fill: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z'/%3E%3C/svg%3E");
+    --wpl-i-sort-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000' stroke='none'%3E%3Cpath d='M12 7 5 15h14z'/%3E%3C/svg%3E");
+    --wpl-i-sort-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000' stroke='none'%3E%3Cpath d='M12 17 5 9h14z'/%3E%3C/svg%3E");
+    --wpl-i-user: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='12' cy='7' r='4'/%3E%3C/svg%3E");
+    --wpl-i-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 16v-5M12 8h.01'/%3E%3C/svg%3E");
+    --wpl-i-warning: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z'/%3E%3Cpath d='M12 9v4M12 17h.01'/%3E%3C/svg%3E");
+
+    /* --- Backend: navigation and object types ------------------------------ */
+    --wpl-i-dashboard: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='7' height='9' rx='1.5'/%3E%3Crect x='14' y='3' width='7' height='5' rx='1.5'/%3E%3Crect x='14' y='12' width='7' height='9' rx='1.5'/%3E%3Crect x='3' y='16' width='7' height='5' rx='1.5'/%3E%3C/svg%3E");
+    --wpl-i-building: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='2' width='16' height='20' rx='2'/%3E%3Cpath d='M9 22v-4h6v4'/%3E%3Cpath d='M8 6h.01M12 6h.01M16 6h.01M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M16 14h.01'/%3E%3C/svg%3E");
+    --wpl-i-complex: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 21V8l6-4v17'/%3E%3Cpath d='M9 21V10l6-3v14'/%3E%3Cpath d='M15 21V12l6-2v11'/%3E%3Cpath d='M2 21h20'/%3E%3C/svg%3E");
+    --wpl-i-database: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cellipse cx='12' cy='5' rx='9' ry='3'/%3E%3Cpath d='M3 5v14c0 1.7 4 3 9 3s9-1.3 9-3V5'/%3E%3Cpath d='M3 12c0 1.7 4 3 9 3s9-1.3 9-3'/%3E%3C/svg%3E");
+    --wpl-i-layers: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m12 2 9 5-9 5-9-5z'/%3E%3Cpath d='m3 12 9 5 9-5'/%3E%3Cpath d='m3 17 9 5 9-5'/%3E%3C/svg%3E");
+    --wpl-i-locations: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 8c0 4.5-6 11-6 11S6 12.5 6 8a6 6 0 0 1 12 0z'/%3E%3Ccircle cx='12' cy='8' r='2'/%3E%3Cpath d='M8.8 15.5 5 21h14l-3.8-5.5'/%3E%3C/svg%3E");
+    --wpl-i-users: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2'/%3E%3Ccircle cx='9' cy='7' r='4'/%3E%3Cpath d='M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8'/%3E%3C/svg%3E");
+    --wpl-i-settings: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='3'/%3E%3Cpath d='M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1A1.7 1.7 0 0 0 9 19.4a1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1A1.7 1.7 0 0 0 4.6 9a1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z'/%3E%3C/svg%3E");
+    --wpl-i-activity: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 12h-4l-3 9L9 3l-3 9H2'/%3E%3C/svg%3E");
+    --wpl-i-log: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z'/%3E%3Cpath d='M14 2v5h5'/%3E%3Ccircle cx='12' cy='15' r='3'/%3E%3Cpath d='M12 14v1.4l1 .6'/%3E%3C/svg%3E");
+    --wpl-i-bell: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9'/%3E%3Cpath d='M13.7 21a2 2 0 0 1-3.4 0'/%3E%3C/svg%3E");
+    --wpl-i-payment: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='5' width='20' height='14' rx='2'/%3E%3Cpath d='M2 10h20'/%3E%3C/svg%3E");
+    --wpl-i-membership: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='6'/%3E%3Cpath d='m8.2 13.4-1.4 8L12 19l5.2 2.4-1.4-8'/%3E%3C/svg%3E");
+    --wpl-i-crm: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='4' width='20' height='16' rx='2'/%3E%3Ccircle cx='9' cy='10' r='2.5'/%3E%3Cpath d='M5 17c.7-1.8 2.2-2.8 4-2.8s3.3 1 4 2.8M15 9h4M15 13h4'/%3E%3C/svg%3E");
+    --wpl-i-mls: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='2' width='6' height='6' rx='1.5'/%3E%3Crect x='2' y='16' width='6' height='6' rx='1.5'/%3E%3Crect x='16' y='16' width='6' height='6' rx='1.5'/%3E%3Cpath d='M12 8v4M5 16v-2h14v2'/%3E%3C/svg%3E");
+    --wpl-i-import: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpath d='m7 10 5 5 5-5M12 15V3'/%3E%3C/svg%3E");
+    --wpl-i-export: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'/%3E%3Cpath d='m7 8 5-5 5 5M12 3v12'/%3E%3C/svg%3E");
+    --wpl-i-globe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18'/%3E%3Cpath d='M12 3a14 14 0 0 1 0 18 14 14 0 0 1 0-18z'/%3E%3C/svg%3E");
+    --wpl-i-chart: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.2 15.9A9 9 0 1 1 8.1 2.8'/%3E%3Cpath d='M22 12A10 10 0 0 0 12 2v10z'/%3E%3C/svg%3E");
+
+    /* --- Backend: row actions ---------------------------------------------- */
+    --wpl-i-edit: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5z'/%3E%3C/svg%3E");
+    --wpl-i-trash: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 6h18M8 6V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6'/%3E%3Cpath d='M10 11v6M14 11v6'/%3E%3C/svg%3E");
+    --wpl-i-restore: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 12a9 9 0 1 0 3-6.7L3 8'/%3E%3Cpath d='M3 3v5h5'/%3E%3C/svg%3E");
+    --wpl-i-refresh: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 12a9 9 0 1 1-3-6.7L21 8'/%3E%3Cpath d='M21 3v5h-5'/%3E%3C/svg%3E");
+    --wpl-i-copy: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='9' width='13' height='13' rx='2'/%3E%3Cpath d='M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1'/%3E%3C/svg%3E");
+    --wpl-i-move: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000' stroke='none'%3E%3Ccircle cx='9' cy='6' r='1.5'/%3E%3Ccircle cx='9' cy='12' r='1.5'/%3E%3Ccircle cx='9' cy='18' r='1.5'/%3E%3Ccircle cx='15' cy='6' r='1.5'/%3E%3Ccircle cx='15' cy='12' r='1.5'/%3E%3Ccircle cx='15' cy='18' r='1.5'/%3E%3C/svg%3E");
+    --wpl-i-lock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='11' width='18' height='11' rx='2'/%3E%3Cpath d='M7 11V7a5 5 0 0 1 10 0v4'/%3E%3C/svg%3E");
+    --wpl-i-link: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7'/%3E%3Cpath d='M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7'/%3E%3C/svg%3E");
+}
+
+:root {
+    /* --- Room types (property show) ---------------------------------------- */
+    --wpl-i-room: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 21V4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v17'/%3E%3Cpath d='M2 21h20'/%3E%3Cpath d='M15 12h.01'/%3E%3C/svg%3E");
+    --wpl-i-sofa: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 11V7a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4'/%3E%3Cpath d='M2 13a2 2 0 0 1 4 0v3h12v-3a2 2 0 0 1 4 0v6H2z'/%3E%3Cpath d='M6 19v2M18 19v2'/%3E%3C/svg%3E");
+    --wpl-i-utensils: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2'/%3E%3Cpath d='M7 2v20'/%3E%3Cpath d='M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3zm0 0v7'/%3E%3C/svg%3E");
+    --wpl-i-laundry: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='2' width='16' height='20' rx='2'/%3E%3Ccircle cx='12' cy='14' r='4.5'/%3E%3Cpath d='M8 6h.01M12 6h.01'/%3E%3C/svg%3E");
+    --wpl-i-wardrobe: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='2' width='18' height='20' rx='2'/%3E%3Cpath d='M12 2v20'/%3E%3Cpath d='M9 11v2M15 11v2'/%3E%3C/svg%3E");
+    --wpl-i-shelf: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 21V4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v17z'/%3E%3Cpath d='M9 21V6a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v15z'/%3E%3Cpath d='m14.5 21 3-14.6a1 1 0 0 1 1.2-.8l2.4.5-3.1 15z'/%3E%3Cpath d='M3 21h18'/%3E%3C/svg%3E");
+
+    /* --- Social and sharing ------------------------------------------------- */
+    --wpl-i-facebook: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z'/%3E%3C/svg%3E");
+    --wpl-i-twitter: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23000' stroke='none'%3E%3Cpath d='M18.9 2H22l-6.8 7.8L23 22h-6.3l-4.9-6.4L6.2 22H3l7.3-8.3L2.4 2h6.4l4.4 5.9zm-1.1 18h1.7L7.3 3.8H5.4z'/%3E%3C/svg%3E");
+    --wpl-i-pinterest: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'/%3E%3Cpath d='M9 20c1-3 1.5-5 1.5-5s-.4-.8-.4-2c0-1.9 1.1-3.3 2.5-3.3 1.2 0 1.7.9 1.7 2 0 1.2-.8 3-1.2 4.7-.3 1.4.7 2.5 2.1 2.5 2.5 0 4.3-3.2 4.3-6 0-2.5-1.8-4.3-4.9-4.3-3.6 0-5.7 2.7-5.7 5.4 0 1.1.4 2.2 1 2.8'/%3E%3C/svg%3E");
+    --wpl-i-linkedin: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6z'/%3E%3Crect x='2' y='9' width='4' height='12'/%3E%3Ccircle cx='4' cy='4' r='2'/%3E%3C/svg%3E");
+    --wpl-i-rss: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 11a9 9 0 0 1 9 9'/%3E%3Cpath d='M4 4a16 16 0 0 1 16 16'/%3E%3Ccircle cx='5' cy='19' r='1.5' fill='%23000'/%3E%3C/svg%3E");
+    --wpl-i-send: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M22 2 11 13'/%3E%3Cpath d='M22 2 15 22l-4-9-9-4z'/%3E%3C/svg%3E");
+    --wpl-i-message: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z'/%3E%3C/svg%3E");
+    --wpl-i-flag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 15s1-1 4-1 5 2 8 2 4-1 4-1V4s-1 1-4 1-5-2-8-2-4 1-4 1z'/%3E%3Cpath d='M4 22v-7'/%3E%3C/svg%3E");
+    --wpl-i-tag: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.6 13.4 12 22l-9-9V3h10z'/%3E%3Ccircle cx='7.5' cy='7.5' r='1.5' fill='%23000'/%3E%3C/svg%3E");
+    --wpl-i-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='9' cy='9' r='2'/%3E%3Cpath d='m21 15-5-5L5 21'/%3E%3C/svg%3E");
+
+    /* --- Bulk and toggle actions -------------------------------------------- */
+    --wpl-i-select-all: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cpath d='m8.5 12.5 2.5 2.5 5-5'/%3E%3C/svg%3E");
+    --wpl-i-deselect-all: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Cpath d='M8 12h8'/%3E%3C/svg%3E");
+    --wpl-i-toggle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='7' width='20' height='10' rx='5'/%3E%3Ccircle cx='8' cy='12' r='2.5' fill='%23000'/%3E%3C/svg%3E");
+    --wpl-i-thumbs-up: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3'/%3E%3Cpath d='M7 11 12 2a3 3 0 0 1 3 3v5h4.5a2.5 2.5 0 0 1 2.4 3.1l-1.9 7A2.5 2.5 0 0 1 17.6 22H7z'/%3E%3C/svg%3E");
+    --wpl-i-thumbs-down: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 2h3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-3'/%3E%3Cpath d='M17 13 12 22a3 3 0 0 1-3-3v-5H4.5a2.5 2.5 0 0 1-2.4-3.1l1.9-7A2.5 2.5 0 0 1 6.4 2H17z'/%3E%3C/svg%3E");
+}
+
+/* ===================================================================
+ * Application
+ *
+ * Everything below is wrapped in @supports. A browser without mask support never
+ * matches, so it keeps WPL's original icon font and nothing regresses.
+ *
+ * The pattern is deliberately non-invasive: the pseudo-element keeps the box the
+ * original stylesheet gave it (often `width:100%;height:100%` inside a fixed
+ * parent), and only `mask-size` controls how large the glyph reads. That means no
+ * layout shifts - only the paint changes.
+ *
+ * Pseudo-elements that carry their own `background` (the circular contact chips in
+ * .wpl_profile_container / .wpl_profile_show_container, and the skewed colour chip
+ * behind the active sort arrow) are deliberately NOT masked: a mask needs
+ * `background-color` for its paint, which would erase the chip. Those are
+ * re-coloured in wpl-brand-frontend.css instead and keep their font glyph.
+ * =================================================================== */
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+
+    /* --- Shared paint setup ------------------------------------------------
+     * Longhands only, never the `mask` shorthand - the shorthand would reset
+     * mask-image back to none and fight the per-icon rules below. */
+    .wpl_prp_listing_icon_box div.bedroom:after,
+    .wpl_prp_listing_icon_box div.room:after,
+    .wpl_prp_listing_icon_box div.bathroom:after,
+    .wpl_prp_listing_icon_box div.parking:after,
+    .wpl_prp_listing_icon_box div.pic_count:after,
+    .wpl_prp_listing_icon_box div.built_up_area::after,
+    .wpl_prp_listing_icon_box div.visits_box:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.bedroom:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.bathroom:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.room:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.parking:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.pic_count:after,
+    .infoBox .main_infowindow_r .wpl-infowindow-preview-bedroom:after,
+    .infoBox .main_infowindow_r .wpl-infowindow-preview-bathroom:after,
+    .wpl_prp_cont .wpl_prp_listing_like li:before,
+    .wpl_list_grid_switcher .list_view::before,
+    .wpl_list_grid_switcher .grid_view::before,
+    .wpl_list_grid_switcher .map_view::before,
+    .wpl_property_listing_container .map_view_handler::before,
+    .wpl_prp_show_container .listing_links li:before,
+    .wpl_prp_show_container .wpl_rooms_list_container li:before,
+    .wpl_search_from_box .more_search_option:after,
+    .wpl_search_from_box .wpl_search_reset:after,
+    .wpl_search_from_box .search_submit_box:after,
+    .wpl-current-search-list .wpl-current-search-clear-btn:after,
+    .wpl-current-search-list .wpl-current-search-fields.wpl-open-box-radius .wpl-open-box-radius-text:before,
+    .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-prev:before,
+    .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-next:before,
+    .bx-controls-direction .bx-prev:before,
+    .bx-controls-direction .bx-next:before,
+    .ei-slider-navigation .ei-slider-prev:after,
+    .ei-slider-navigation .ei-slider-next:after,
+    .wpl-listing-results-links-cnt .wpl-back-to-search-results > a:before,
+    .wpl-listing-results-links-cnt .wpl-previous-listing > a:before,
+    .wpl-listing-results-links-cnt .wpl-next-listing > a:after,
+    .wpl-print-rp-wp .wpl-print-rp-link i:after,
+    .wpl-rss-wp .wpl-rss-link::after,
+    .wpl-map-get-direction .wpl-map-get-direction-btn-cnt:after,
+    .wpl-map-get-direction .wpl-map-get-direction-reset:after,
+    .wpl-property-analytics-title:after,
+    .realtyna-lightbox-close-btn::before,
+    .no_image:before,
+    .wpl_prp_top_boxes .no_image_box::before,
+    .wpl_favorites_items .no_image_box:before,
+    #main_infowindow .main_infowindow_l a .no_image_box:before,
+    .infoBox .main_infowindow_l .no_image_box:before,
+    .gallery_no_image:before,
+    .mass-panel-wp .mass-actions-wp .mass-btn i:after,
+    .pwizard-wp .side-content-wp .gallary-images-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .video-list-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .attachment-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .gallary-images-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after,
+    .pwizard-wp .side-content-wp .video-list-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after,
+    .pwizard-wp .side-content-wp .attachment-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after {
+        content: "";
+        background-color: currentColor;
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+    }
+
+    /* --- Property feature strip (listing cards + map infowindows) ---------- */
+    .wpl_prp_listing_icon_box div.bedroom:after,
+    .wpl_prp_listing_icon_box div.room:after,
+    .wpl_prp_listing_icon_box div.bathroom:after,
+    .wpl_prp_listing_icon_box div.parking:after,
+    .wpl_prp_listing_icon_box div.pic_count:after,
+    .wpl_prp_listing_icon_box div.built_up_area::after,
+    .wpl_prp_listing_icon_box div.visits_box:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.bedroom:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.bathroom:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.room:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.parking:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.pic_count:after,
+    .infoBox .main_infowindow_r .wpl-infowindow-preview-bedroom:after,
+    .infoBox .main_infowindow_r .wpl-infowindow-preview-bathroom:after {
+        display: block;
+        width: 1.5em;
+        height: 1.5em;
+        margin: 2px auto 0;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+
+    .wpl_prp_listing_icon_box div.bedroom:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.bedroom:after,
+    .infoBox .main_infowindow_r .wpl-infowindow-preview-bedroom:after {
+        -webkit-mask-image: var(--wpl-i-bed);
+                mask-image: var(--wpl-i-bed);
+    }
+
+    .wpl_prp_listing_icon_box div.bathroom:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.bathroom:after,
+    .infoBox .main_infowindow_r .wpl-infowindow-preview-bathroom:after {
+        -webkit-mask-image: var(--wpl-i-bath);
+                mask-image: var(--wpl-i-bath);
+    }
+
+    .wpl_prp_listing_icon_box div.room:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.room:after {
+        -webkit-mask-image: var(--wpl-i-room);
+                mask-image: var(--wpl-i-room);
+    }
+
+    .wpl_prp_listing_icon_box div.parking:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.parking:after {
+        -webkit-mask-image: var(--wpl-i-car);
+                mask-image: var(--wpl-i-car);
+    }
+
+    .wpl_prp_listing_icon_box div.pic_count:after,
+    #main_infowindow .main_infowindow_r .main_infowindow_r_b div.pic_count:after {
+        -webkit-mask-image: var(--wpl-i-camera);
+                mask-image: var(--wpl-i-camera);
+    }
+
+    .wpl_prp_listing_icon_box div.built_up_area::after {
+        -webkit-mask-image: var(--wpl-i-area);
+                mask-image: var(--wpl-i-area);
+    }
+
+    .wpl_prp_listing_icon_box div.visits_box:after {
+        -webkit-mask-image: var(--wpl-i-eye);
+                mask-image: var(--wpl-i-eye);
+    }
+
+    /* --- Favourite heart on listing cards ---------------------------------
+     * Keeps the original grey/red colour switch: the heart paints in
+     * currentColor, and the existing `color` rules still apply. */
+    .wpl_prp_cont .wpl_prp_listing_like li:before {
+        display: block;
+        width: 23px;
+        height: 23px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-heart-fill);
+                mask-image: var(--wpl-i-heart-fill);
+    }
+
+    .wpl-property-listing-mapview .wpl-column .wpl_prp_listing_like li:before,
+    .wpl-property-listing-mapview .wpl-columns .wpl_prp_listing_like li:before {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* --- List / grid / map switcher ---------------------------------------- */
+    .wpl_list_grid_switcher .list_view::before,
+    .wpl_list_grid_switcher .grid_view::before,
+    .wpl_list_grid_switcher .map_view::before {
+        width: 22px;
+        height: 22px;
+        -webkit-mask-size: 20px;
+                mask-size: 20px;
+    }
+
+    .wpl_list_grid_switcher.wpl-list-grid-switcher-icon-text .list_view::before,
+    .wpl_list_grid_switcher.wpl-list-grid-switcher-icon-text .grid_view::before,
+    .wpl_list_grid_switcher.wpl-list-grid-switcher-icon-text .map_view::before {
+        width: 16px;
+        height: 16px;
+        -webkit-mask-size: 16px;
+                mask-size: 16px;
+    }
+
+    .wpl_list_grid_switcher .list_view::before {
+        -webkit-mask-image: var(--wpl-i-list);
+                mask-image: var(--wpl-i-list);
+    }
+
+    .wpl_list_grid_switcher .grid_view::before {
+        -webkit-mask-image: var(--wpl-i-grid);
+                mask-image: var(--wpl-i-grid);
+    }
+
+    .wpl_list_grid_switcher .map_view::before {
+        -webkit-mask-image: var(--wpl-i-map-pin);
+                mask-image: var(--wpl-i-map-pin);
+    }
+
+    /* --- Map / list toggle floating over the map view ---------------------- */
+    .wpl_property_listing_container .map_view_handler::before {
+        width: 22px;
+        height: 22px;
+        inset-inline-start: 50%;
+        top: 50%;
+        margin: -11px 0 0 -11px;
+        line-height: 0;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-list);
+                mask-image: var(--wpl-i-list);
+    }
+
+    .wpl_property_listing_container .map_view_handler.op::before {
+        -webkit-mask-image: var(--wpl-i-map);
+                mask-image: var(--wpl-i-map);
+    }
+
+    /* --- Property show: share / action tiles -------------------------------
+     * The pseudo-element keeps its 100%x100% box, so the 50px tile and all of
+     * its hover colours are untouched - only mask-size sets the glyph size. */
+    .wpl_prp_show_container .listing_links li:before {
+        -webkit-mask-size: 26px;
+                mask-size: 26px;
+    }
+
+    .wpl_prp_show_container .listing_links .facebook_link:before {
+        -webkit-mask-image: var(--wpl-i-facebook);
+                mask-image: var(--wpl-i-facebook);
+    }
+    .wpl_prp_show_container .listing_links .twitter_link:before {
+        -webkit-mask-image: var(--wpl-i-twitter);
+                mask-image: var(--wpl-i-twitter);
+    }
+    .wpl_prp_show_container .listing_links .pinterest_link:before {
+        -webkit-mask-image: var(--wpl-i-pinterest);
+                mask-image: var(--wpl-i-pinterest);
+    }
+    .wpl_prp_show_container .listing_links .linkedin_link:before {
+        -webkit-mask-image: var(--wpl-i-linkedin);
+                mask-image: var(--wpl-i-linkedin);
+    }
+    .wpl_prp_show_container .listing_links .google_plus_link:before {
+        -webkit-mask-image: var(--wpl-i-share);
+                mask-image: var(--wpl-i-share);
+    }
+    .wpl_prp_show_container .listing_links .pdf_link:before {
+        -webkit-mask-image: var(--wpl-i-pdf);
+                mask-image: var(--wpl-i-pdf);
+    }
+    .wpl_prp_show_container .listing_links .favorite_link:before {
+        -webkit-mask-image: var(--wpl-i-heart);
+                mask-image: var(--wpl-i-heart);
+    }
+    .wpl_prp_show_container .listing_links .favorite_link.added:before {
+        -webkit-mask-image: var(--wpl-i-heart-fill);
+                mask-image: var(--wpl-i-heart-fill);
+    }
+    .wpl_prp_show_container .listing_links .report_abuse_link:before {
+        -webkit-mask-image: var(--wpl-i-flag);
+                mask-image: var(--wpl-i-flag);
+    }
+    .wpl_prp_show_container .listing_links .crm_link:before {
+        -webkit-mask-image: var(--wpl-i-message);
+                mask-image: var(--wpl-i-message);
+    }
+    .wpl_prp_show_container .listing_links .send_to_friend_link:before {
+        -webkit-mask-image: var(--wpl-i-send);
+                mask-image: var(--wpl-i-send);
+    }
+    .wpl_prp_show_container .listing_links .request_a_visit_link:before {
+        -webkit-mask-image: var(--wpl-i-calendar);
+                mask-image: var(--wpl-i-calendar);
+    }
+    .wpl_prp_show_container .listing_links .adding_price_request_link:before {
+        -webkit-mask-image: var(--wpl-i-tag);
+                mask-image: var(--wpl-i-tag);
+    }
+    .wpl_prp_show_container .listing_links .watch_changes_link:before {
+        -webkit-mask-image: var(--wpl-i-bell);
+                mask-image: var(--wpl-i-bell);
+    }
+
+    /* --- Property show: room list ------------------------------------------ */
+    .wpl_prp_show_container .wpl_rooms_list_container li:before {
+        width: 32px;
+        height: 32px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-room);
+                mask-image: var(--wpl-i-room);
+    }
+    .wpl_prp_show_container .wpl_rooms_list_container .room_1:before {
+        -webkit-mask-image: var(--wpl-i-bed);
+                mask-image: var(--wpl-i-bed);
+    }
+    .wpl_prp_show_container .wpl_rooms_list_container .room_2:before,
+    .wpl_prp_show_container .wpl_rooms_list_container .room_3:before,
+    .wpl_prp_show_container .wpl_rooms_list_container .room_20:before,
+    .wpl_prp_show_container .wpl_rooms_list_container .room_23:before {
+        -webkit-mask-image: var(--wpl-i-sofa);
+                mask-image: var(--wpl-i-sofa);
+    }
+    .wpl_prp_show_container .wpl_rooms_list_container .room_4:before,
+    .wpl_prp_show_container .wpl_rooms_list_container .room_7:before,
+    .wpl_prp_show_container .wpl_rooms_list_container .room_21:before {
+        -webkit-mask-image: var(--wpl-i-utensils);
+                mask-image: var(--wpl-i-utensils);
+    }
+    .wpl_prp_show_container .wpl_rooms_list_container .room_5:before {
+        -webkit-mask-image: var(--wpl-i-bath);
+                mask-image: var(--wpl-i-bath);
+    }
+    .wpl_prp_show_container .wpl_rooms_list_container .room_6:before {
+        -webkit-mask-image: var(--wpl-i-laundry);
+                mask-image: var(--wpl-i-laundry);
+    }
+    .wpl_prp_show_container .wpl_rooms_list_container .room_8:before {
+        -webkit-mask-image: var(--wpl-i-wardrobe);
+                mask-image: var(--wpl-i-wardrobe);
+    }
+    .wpl_prp_show_container .wpl_rooms_list_container .room_9:before {
+        -webkit-mask-image: var(--wpl-i-shelf);
+                mask-image: var(--wpl-i-shelf);
+    }
+
+    /* --- Search form -------------------------------------------------------- */
+    .wpl_search_from_box .more_search_option:after {
+        width: 14px;
+        height: 14px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-chevron-down);
+                mask-image: var(--wpl-i-chevron-down);
+    }
+    .wpl_search_from_box .more_search_option.active:after {
+        -webkit-mask-image: var(--wpl-i-chevron-up);
+                mask-image: var(--wpl-i-chevron-up);
+    }
+    .wpl_search_from_box .wpl_search_reset:after {
+        width: 14px;
+        height: 14px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-refresh);
+                mask-image: var(--wpl-i-refresh);
+    }
+    .wpl_search_from_box .search_submit_box:after {
+        width: 16px;
+        height: 16px;
+        top: 50%;
+        margin-top: -8px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-search);
+                mask-image: var(--wpl-i-search);
+    }
+    .wpl-current-search-list .wpl-current-search-clear-btn:after {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        vertical-align: middle;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-close);
+                mask-image: var(--wpl-i-close);
+    }
+    .wpl-current-search-list .wpl-current-search-fields.wpl-open-box-radius .wpl-open-box-radius-text:before {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        vertical-align: middle;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-chevron-down);
+                mask-image: var(--wpl-i-chevron-down);
+    }
+
+    /* --- Sliders and result navigation --------------------------------------
+     * Direction icons are mirrored for RTL further down rather than relying on
+     * the separate frontend-rtl.css build. */
+    .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-prev:before,
+    .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-next:before {
+        width: 30px;
+        height: 30px;
+        inset-inline-start: 50%;
+        top: 50%;
+        margin: -15px 0 0 -15px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+    .bx-controls-direction .bx-prev:before,
+    .bx-controls-direction .bx-next:before,
+    .ei-slider-navigation .ei-slider-prev:after,
+    .ei-slider-navigation .ei-slider-next:after {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+    .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-prev:before,
+    .bx-controls-direction .bx-prev:before,
+    .ei-slider-navigation .ei-slider-prev:after {
+        -webkit-mask-image: var(--wpl-i-chevron-left);
+                mask-image: var(--wpl-i-chevron-left);
+    }
+    .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-next:before,
+    .bx-controls-direction .bx-next:before,
+    .ei-slider-navigation .ei-slider-next:after {
+        -webkit-mask-image: var(--wpl-i-chevron-right);
+                mask-image: var(--wpl-i-chevron-right);
+    }
+
+    .wpl-listing-results-links-cnt .wpl-back-to-search-results > a:before,
+    .wpl-listing-results-links-cnt .wpl-previous-listing > a:before,
+    .wpl-listing-results-links-cnt .wpl-next-listing > a:after {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.15em;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+    .wpl-listing-results-links-cnt .wpl-back-to-search-results > a:before,
+    .wpl-listing-results-links-cnt .wpl-previous-listing > a:before {
+        -webkit-mask-image: var(--wpl-i-arrow-left);
+                mask-image: var(--wpl-i-arrow-left);
+    }
+    .wpl-listing-results-links-cnt .wpl-next-listing > a:after {
+        -webkit-mask-image: var(--wpl-i-arrow-right);
+                mask-image: var(--wpl-i-arrow-right);
+    }
+
+    /* Mirror every directional icon under RTL. */
+    [dir="rtl"] .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-prev:before,
+    [dir="rtl"] .bx-controls-direction .bx-prev:before,
+    [dir="rtl"] .ei-slider-navigation .ei-slider-prev:after {
+        -webkit-mask-image: var(--wpl-i-chevron-right);
+                mask-image: var(--wpl-i-chevron-right);
+    }
+    [dir="rtl"] .wpl_carousel_container .bx-wrapper .bx-controls-direction a.bx-next:before,
+    [dir="rtl"] .bx-controls-direction .bx-next:before,
+    [dir="rtl"] .ei-slider-navigation .ei-slider-next:after {
+        -webkit-mask-image: var(--wpl-i-chevron-left);
+                mask-image: var(--wpl-i-chevron-left);
+    }
+    [dir="rtl"] .wpl-listing-results-links-cnt .wpl-back-to-search-results > a:before,
+    [dir="rtl"] .wpl-listing-results-links-cnt .wpl-previous-listing > a:before {
+        -webkit-mask-image: var(--wpl-i-arrow-right);
+                mask-image: var(--wpl-i-arrow-right);
+    }
+    [dir="rtl"] .wpl-listing-results-links-cnt .wpl-next-listing > a:after {
+        -webkit-mask-image: var(--wpl-i-arrow-left);
+                mask-image: var(--wpl-i-arrow-left);
+    }
+
+    /* --- Print, RSS, directions, analytics, lightbox ------------------------ */
+    .wpl-print-rp-wp .wpl-print-rp-link i:after,
+    .wpl-rss-wp .wpl-rss-link::after {
+        display: inline-block;
+        width: 1em;
+        height: 1em;
+        vertical-align: -0.15em;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+    .wpl-print-rp-wp .wpl-print-rp-link i:after {
+        -webkit-mask-image: var(--wpl-i-print);
+                mask-image: var(--wpl-i-print);
+    }
+    .wpl-rss-wp .wpl-rss-link::after {
+        -webkit-mask-image: var(--wpl-i-rss);
+                mask-image: var(--wpl-i-rss);
+    }
+    .wpl-map-get-direction .wpl-map-get-direction-btn-cnt:after {
+        width: 16px;
+        height: 16px;
+        top: 50%;
+        margin-top: -8px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-direction);
+                mask-image: var(--wpl-i-direction);
+    }
+    .wpl-map-get-direction .wpl-map-get-direction-reset:after {
+        display: inline-block;
+        width: 12px;
+        height: 12px;
+        vertical-align: middle;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-close);
+                mask-image: var(--wpl-i-close);
+    }
+    .wpl-property-analytics-title:after {
+        width: 20px;
+        height: 20px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-chevron-down);
+                mask-image: var(--wpl-i-chevron-down);
+    }
+    .realtyna-lightbox-close-btn::before {
+        display: block;
+        width: 16px;
+        height: 16px;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+        -webkit-mask-image: var(--wpl-i-close);
+                mask-image: var(--wpl-i-close);
+    }
+
+    /* --- Missing-image placeholders ---------------------------------------- */
+    .no_image:before,
+    .wpl_prp_top_boxes .no_image_box::before,
+    .wpl_favorites_items .no_image_box:before,
+    #main_infowindow .main_infowindow_l a .no_image_box:before,
+    .infoBox .main_infowindow_l .no_image_box:before,
+    .gallery_no_image:before {
+        -webkit-mask-image: var(--wpl-i-image);
+                mask-image: var(--wpl-i-image);
+        -webkit-mask-size: 40%;
+                mask-size: 40%;
+        opacity: 0.35;
+    }
+    .gallery_no_image:before {
+        -webkit-mask-size: 120px;
+                mask-size: 120px;
+    }
+
+    /* --- Property manager: bulk actions and gallery controls ---------------- */
+    .mass-panel-wp .mass-actions-wp .mass-btn i:after {
+        display: inline-block;
+        width: 1.1em;
+        height: 1.1em;
+        vertical-align: middle;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-select:after {
+        -webkit-mask-image: var(--wpl-i-select-all);
+                mask-image: var(--wpl-i-select-all);
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-unselect:after {
+        -webkit-mask-image: var(--wpl-i-deselect-all);
+                mask-image: var(--wpl-i-deselect-all);
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-toggle:after {
+        -webkit-mask-image: var(--wpl-i-toggle);
+                mask-image: var(--wpl-i-toggle);
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-confirm:after {
+        -webkit-mask-image: var(--wpl-i-thumbs-up);
+                mask-image: var(--wpl-i-thumbs-up);
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-unconfirm:after {
+        -webkit-mask-image: var(--wpl-i-thumbs-down);
+                mask-image: var(--wpl-i-thumbs-down);
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-trash:after {
+        -webkit-mask-image: var(--wpl-i-trash);
+                mask-image: var(--wpl-i-trash);
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-restore:after {
+        -webkit-mask-image: var(--wpl-i-restore);
+                mask-image: var(--wpl-i-restore);
+    }
+    .mass-panel-wp .mass-actions-wp .mass-btn i.icon-delete:after {
+        -webkit-mask-image: var(--wpl-i-x-circle);
+                mask-image: var(--wpl-i-x-circle);
+    }
+
+    .pwizard-wp .side-content-wp .gallary-images-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .video-list-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .attachment-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .gallary-images-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after,
+    .pwizard-wp .side-content-wp .video-list-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after,
+    .pwizard-wp .side-content-wp .attachment-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after {
+        display: inline-block;
+        width: 1.1em;
+        height: 1.1em;
+        vertical-align: middle;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+    .pwizard-wp .side-content-wp .gallary-images-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .video-list-wp > ul > li .actions-wp .action-gal-btn .icon-move:after,
+    .pwizard-wp .side-content-wp .attachment-wp > ul > li .actions-wp .action-gal-btn .icon-move:after {
+        -webkit-mask-image: var(--wpl-i-move);
+                mask-image: var(--wpl-i-move);
+    }
+    .pwizard-wp .side-content-wp .gallary-images-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after,
+    .pwizard-wp .side-content-wp .video-list-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after,
+    .pwizard-wp .side-content-wp .attachment-wp > ul > li .actions-wp .action-gal-btn .icon-enabled:after {
+        -webkit-mask-image: var(--wpl-i-check-circle);
+                mask-image: var(--wpl-i-check-circle);
+    }
+}
+
+/* ===================================================================
+ * Backend (wp-admin)
+ *
+ * WPL's admin row-action buttons are slices of a Compass-generated PNG sprite
+ * (assets/img/backend-s*.png), positioned with background-position and locked in
+ * with !important. They are the most-used controls in the plugin and the most
+ * obviously dated - fixed-size raster art that blurs on any HiDPI screen.
+ *
+ * Here the sprite is switched off and the same box is repainted with a mask, so
+ * the button keeps its exact dimensions and hit area. Because the icon now paints
+ * in currentColor, the hover and disabled states become plain `color` changes
+ * instead of second and third sprite slices.
+ * =================================================================== */
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+
+    /* --- Row action buttons -------------------------------------------------
+     * The sprite is declared !important upstream, so it has to be unset the
+     * same way. */
+    html[data-wpl-plugin] .action-btn.icon-enabled,
+    html[data-wpl-plugin] .action-btn.icon-enabled:hover,
+    html[data-wpl-plugin] .action-btn.icon-enabled.disable,
+    html[data-wpl-plugin] .action-btn.icon-enabled.disable:hover,
+    html[data-wpl-plugin] .action-btn.icon-disabled,
+    html[data-wpl-plugin] .action-btn.icon-disabled:hover,
+    html[data-wpl-plugin] .action-btn.icon-edit,
+    html[data-wpl-plugin] .action-btn.icon-edit:hover,
+    html[data-wpl-plugin] .action-btn.icon-move,
+    html[data-wpl-plugin] .action-btn.icon-move:hover,
+    html[data-wpl-plugin] .action-btn.icon-plus,
+    html[data-wpl-plugin] .action-btn.icon-plus:hover,
+    html[data-wpl-plugin] .action-btn.icon-gear,
+    html[data-wpl-plugin] .action-btn.icon-gear:hover,
+    html[data-wpl-plugin] .action-btn.icon-star,
+    html[data-wpl-plugin] .action-btn.icon-star:hover,
+    html[data-wpl-plugin] .action-btn.icon-recycle,
+    html[data-wpl-plugin] .action-btn.icon-recycle:hover {
+        background-image: none !important;
+        position: relative;
+        color: var(--wpl-text-soft);
+        transition: color var(--wpl-dur) var(--wpl-ease);
+    }
+
+    html[data-wpl-plugin] .action-btn.icon-enabled::before,
+    html[data-wpl-plugin] .action-btn.icon-disabled::before,
+    html[data-wpl-plugin] .action-btn.icon-edit::before,
+    html[data-wpl-plugin] .action-btn.icon-move::before,
+    html[data-wpl-plugin] .action-btn.icon-plus::before,
+    html[data-wpl-plugin] .action-btn.icon-gear::before,
+    html[data-wpl-plugin] .action-btn.icon-star::before,
+    html[data-wpl-plugin] .action-btn.icon-recycle::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        text-indent: 0;
+        background-color: currentColor;
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+
+    /* The old markup stacked a font-glyph cross on top of the sprite for the
+     * disabled state. The single masked icon says it on its own. */
+    html[data-wpl-plugin] .action-btn.icon-disabled:after,
+    html[data-wpl-plugin] .action-btn.icon-enabled:after {
+        content: none;
+    }
+
+    html[data-wpl-plugin] .action-btn.icon-enabled::before {
+        -webkit-mask-image: var(--wpl-i-check-circle);
+                mask-image: var(--wpl-i-check-circle);
+    }
+    html[data-wpl-plugin] .action-btn.icon-enabled {
+        color: var(--wpl-color-success);
+    }
+    html[data-wpl-plugin] .action-btn.icon-enabled.disable {
+        color: var(--wpl-text-muted);
+    }
+    html[data-wpl-plugin] .action-btn.icon-disabled::before {
+        -webkit-mask-image: var(--wpl-i-x-circle);
+                mask-image: var(--wpl-i-x-circle);
+    }
+    html[data-wpl-plugin] .action-btn.icon-edit::before {
+        -webkit-mask-image: var(--wpl-i-edit);
+                mask-image: var(--wpl-i-edit);
+    }
+    html[data-wpl-plugin] .action-btn.icon-move::before {
+        -webkit-mask-image: var(--wpl-i-move);
+                mask-image: var(--wpl-i-move);
+    }
+    html[data-wpl-plugin] .action-btn.icon-plus::before {
+        -webkit-mask-image: var(--wpl-i-plus);
+                mask-image: var(--wpl-i-plus);
+    }
+    html[data-wpl-plugin] .action-btn.icon-gear::before {
+        -webkit-mask-image: var(--wpl-i-settings);
+                mask-image: var(--wpl-i-settings);
+    }
+    html[data-wpl-plugin] .action-btn.icon-star::before {
+        -webkit-mask-image: var(--wpl-i-star);
+                mask-image: var(--wpl-i-star);
+    }
+    html[data-wpl-plugin] .action-btn.icon-recycle::before {
+        -webkit-mask-image: var(--wpl-i-trash);
+                mask-image: var(--wpl-i-trash);
+    }
+
+    html[data-wpl-plugin] .action-btn.icon-edit:hover,
+    html[data-wpl-plugin] .action-btn.icon-move:hover,
+    html[data-wpl-plugin] .action-btn.icon-plus:hover,
+    html[data-wpl-plugin] .action-btn.icon-gear:hover,
+    html[data-wpl-plugin] .action-btn.icon-star:hover {
+        color: var(--wpl-brand-primary);
+    }
+    html[data-wpl-plugin] .action-btn.icon-recycle:hover,
+    html[data-wpl-plugin] .action-btn.icon-disabled:hover {
+        color: var(--wpl-color-danger);
+    }
+
+    /* --- Property manager action bar --------------------------------------- */
+    .p-actions-wp .p-action-btn .icon-delete:before,
+    .p-actions-wp .p-action-btn .icon-edit:before,
+    .p-actions-wp .p-action-btn .icon-confirm:before,
+    .p-actions-wp .p-action-btn .icon-unconfirm:before,
+    .p-actions-wp .p-action-btn .icon-trash:before,
+    .p-actions-wp .p-action-btn .icon-select:before,
+    .p-actions-wp .p-action-btn .icon-unselect:before,
+    .p-actions-wp .p-action-btn .icon-toggle:before,
+    .p-actions-wp .p-action-btn .icon-restore:before,
+    .p-actions-wp .p-action-btn:hover .icon-delete:before,
+    .p-actions-wp .p-action-btn:hover .icon-edit:before,
+    .p-actions-wp .p-action-btn:hover .icon-confirm:before,
+    .p-actions-wp .p-action-btn:hover .icon-unconfirm:before,
+    .p-actions-wp .p-action-btn:hover .icon-trash:before,
+    .p-actions-wp .p-action-btn:hover .icon-select:before,
+    .p-actions-wp .p-action-btn:hover .icon-unselect:before,
+    .p-actions-wp .p-action-btn:hover .icon-toggle:before,
+    .p-actions-wp .p-action-btn:hover .icon-restore:before {
+        background-image: none;
+        background-color: currentColor;
+        width: 16px;
+        height: 16px;
+        margin-left: -8px;
+        margin-top: -8px;
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+
+    .p-actions-wp .p-action-btn .icon-delete:before {
+        -webkit-mask-image: var(--wpl-i-x-circle);
+                mask-image: var(--wpl-i-x-circle);
+    }
+    .p-actions-wp .p-action-btn .icon-edit:before {
+        -webkit-mask-image: var(--wpl-i-edit);
+                mask-image: var(--wpl-i-edit);
+    }
+    .p-actions-wp .p-action-btn .icon-confirm:before {
+        -webkit-mask-image: var(--wpl-i-thumbs-up);
+                mask-image: var(--wpl-i-thumbs-up);
+    }
+    .p-actions-wp .p-action-btn .icon-unconfirm:before {
+        -webkit-mask-image: var(--wpl-i-thumbs-down);
+                mask-image: var(--wpl-i-thumbs-down);
+    }
+    .p-actions-wp .p-action-btn .icon-trash:before {
+        -webkit-mask-image: var(--wpl-i-trash);
+                mask-image: var(--wpl-i-trash);
+    }
+    .p-actions-wp .p-action-btn .icon-select:before {
+        -webkit-mask-image: var(--wpl-i-select-all);
+                mask-image: var(--wpl-i-select-all);
+    }
+    .p-actions-wp .p-action-btn .icon-unselect:before {
+        -webkit-mask-image: var(--wpl-i-deselect-all);
+                mask-image: var(--wpl-i-deselect-all);
+    }
+    .p-actions-wp .p-action-btn .icon-toggle:before {
+        -webkit-mask-image: var(--wpl-i-toggle);
+                mask-image: var(--wpl-i-toggle);
+    }
+    .p-actions-wp .p-action-btn .icon-restore:before {
+        -webkit-mask-image: var(--wpl-i-restore);
+                mask-image: var(--wpl-i-restore);
+    }
+
+    /* --- Admin pagination arrows ------------------------------------------- */
+    .pagination li.prev:before,
+    .pagination li.next:before {
+        background-image: none;
+        background-color: currentColor;
+        width: 12px;
+        height: 12px;
+        margin-left: -6px;
+        margin-top: -6px;
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+    .pagination li.prev:before {
+        -webkit-mask-image: var(--wpl-i-chevron-left);
+                mask-image: var(--wpl-i-chevron-left);
+    }
+    .pagination li.next:before {
+        -webkit-mask-image: var(--wpl-i-chevron-right);
+                mask-image: var(--wpl-i-chevron-right);
+    }
+    [dir="rtl"] .pagination li.prev:before {
+        -webkit-mask-image: var(--wpl-i-chevron-right);
+                mask-image: var(--wpl-i-chevron-right);
+    }
+    [dir="rtl"] .pagination li.next:before {
+        -webkit-mask-image: var(--wpl-i-chevron-left);
+                mask-image: var(--wpl-i-chevron-left);
+    }
+}
+
+:root {
+    /* --- Data Structure category tabs --------------------------------------- */
+    --wpl-i-clipboard: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='8' y='2' width='8' height='4' rx='1'/%3E%3Cpath d='M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2'/%3E%3C/svg%3E");
+    --wpl-i-film: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='3' width='20' height='18' rx='2'/%3E%3Cpath d='M7 3v18M17 3v18M2 9h5M2 15h5M17 9h5M17 15h5'/%3E%3C/svg%3E");
+    --wpl-i-paperclip: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21.4 11.05 12.25 20.2a5.5 5.5 0 0 1-7.78-7.78l9.19-9.19a3.67 3.67 0 0 1 5.19 5.19l-9.2 9.19a1.83 1.83 0 0 1-2.59-2.59l8.49-8.48'/%3E%3C/svg%3E");
+}
+
+/* ===================================================================
+ * Dashboard tiles and page-header icons
+ *
+ * Two more legacy icon families, both full-colour art rather than class-driven
+ * glyphs:
+ *
+ *   - the dashboard tiles draw a flat black-and-cyan SVG per menu item from
+ *     assets/img/backend-svg/icon-*-dash.svg (see assets/scss/backend/
+ *     _view_dashboard.scss, which maps them by `li.link-<menu id>`)
+ *   - every page header draws a slice of the Compass PNG sprite through
+ *     `#icon-flex`, `#icon-settings` and friends
+ *
+ * Neither can be re-drawn without regenerating art WPL ships, so both are
+ * masked the same way the rest of this file works: blank the image, paint the
+ * line icon. The tokens below are the few shapes the rest of the layer did not
+ * already need.
+ * =================================================================== */
+
+:root {
+    /* --- Admin sections ----------------------------------------------------- */
+    --wpl-i-sliders: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 7h3M13 7h7M4 17h9M19 17h1'/%3E%3Ccircle cx='10' cy='7' r='2.5'/%3E%3Ccircle cx='16' cy='17' r='2.5'/%3E%3C/svg%3E");
+    --wpl-i-home-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 10 9-7 7 5.44'/%3E%3Cpath d='M5 12v8a2 2 0 0 0 2 2h5'/%3E%3Ccircle cx='18' cy='18' r='4'/%3E%3Cpath d='M18 16v4M16 18h4'/%3E%3C/svg%3E");
+    --wpl-i-calendar-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cpath d='M16 2v4M8 2v4M3 10h18'/%3E%3Cpath d='m9 15.5 2 2 4-4'/%3E%3C/svg%3E");
+    --wpl-i-network: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='9' y='2' width='6' height='6' rx='1.5'/%3E%3Crect x='2' y='16' width='6' height='6' rx='1.5'/%3E%3Crect x='16' y='16' width='6' height='6' rx='1.5'/%3E%3Cpath d='M12 8v3'/%3E%3Cpath d='M5 16v-3a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v3'/%3E%3C/svg%3E");
+    --wpl-i-gauge: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20.5 17a9.5 9.5 0 1 0-17 0'/%3E%3Cpath d='m12 15.5 4-5'/%3E%3Ccircle cx='12' cy='17' r='1.75'/%3E%3C/svg%3E");
+    --wpl-i-search-empty: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='10.5' cy='10.5' r='7'/%3E%3Cpath d='m21 21-5.6-5.6'/%3E%3Cpath d='m8.2 8.2 4.6 4.6M12.8 8.2l-4.6 4.6'/%3E%3C/svg%3E");
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+
+    /* --- Dashboard tiles ---------------------------------------------------- */
+
+    /* The <i> is already absolutely positioned at 60%/60% inside the 110px tile
+     * by backend.css. Only the paint changes: `background-image: none` drops the
+     * legacy art, `background-color` becomes the ink, and mask-size pulls the
+     * glyph in from that 66px box to 42px so the 1.75 stroke does not scale up
+     * into a slab. Nothing about the tile's geometry moves.
+     *
+     * The `[class*="link-"]` is load-bearing: upstream writes the per-tile art at
+     * `.wpl-dashboard-wp #dashboard-links-wp ul li.link-<id> i`, so a reset
+     * without it is one class short and the old artwork survives - masked into
+     * fragments rather than replaced. */
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li[class*="link-"] i {
+        background-image: none;
+        background-color: var(--wpl-brand-primary);
+        -webkit-mask-image: var(--wpl-i-grid);
+                mask-image: var(--wpl-i-grid);
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: 42px 42px;
+                mask-size: 42px 42px;
+        transition: background-color var(--wpl-dur) var(--wpl-ease);
+    }
+
+    /* The upstream hover was a white flood - `background-color: #fff` plus a
+     * `0 0 70px 45px #fff` box-shadow - which blew the icon out to nothing. With
+     * the mask in place that white simply erases the glyph, so it has to go. The
+     * tile already answers the hover by lifting and taking a brand border. */
+    .wpl-dashboard-wp #dashboard-links-wp ul li a:hover span.box i {
+        box-shadow: none;
+        background-color: var(--wpl-brand-primary-deep);
+    }
+
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-2 i {
+        -webkit-mask-image: var(--wpl-i-database);
+                mask-image: var(--wpl-i-database);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-11 i {
+        -webkit-mask-image: var(--wpl-i-sliders);
+                mask-image: var(--wpl-i-sliders);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-8 i {
+        -webkit-mask-image: var(--wpl-i-locations);
+                mask-image: var(--wpl-i-locations);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-3 i {
+        -webkit-mask-image: var(--wpl-i-settings);
+                mask-image: var(--wpl-i-settings);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-4 i {
+        -webkit-mask-image: var(--wpl-i-users);
+                mask-image: var(--wpl-i-users);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-5 i {
+        -webkit-mask-image: var(--wpl-i-user);
+                mask-image: var(--wpl-i-user);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-6 i {
+        -webkit-mask-image: var(--wpl-i-home-plus);
+                mask-image: var(--wpl-i-home-plus);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-7 i {
+        -webkit-mask-image: var(--wpl-i-list);
+                mask-image: var(--wpl-i-list);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-9 i,
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-191 i {
+        -webkit-mask-image: var(--wpl-i-membership);
+                mask-image: var(--wpl-i-membership);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-99 i {
+        -webkit-mask-image: var(--wpl-i-message);
+                mask-image: var(--wpl-i-message);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-101 i {
+        -webkit-mask-image: var(--wpl-i-mls);
+                mask-image: var(--wpl-i-mls);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-121 i {
+        -webkit-mask-image: var(--wpl-i-payment);
+                mask-image: var(--wpl-i-payment);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-151 i {
+        -webkit-mask-image: var(--wpl-i-import);
+                mask-image: var(--wpl-i-import);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-171 i {
+        -webkit-mask-image: var(--wpl-i-complex);
+                mask-image: var(--wpl-i-complex);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-211 i {
+        -webkit-mask-image: var(--wpl-i-chart);
+                mask-image: var(--wpl-i-chart);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-221 i {
+        -webkit-mask-image: var(--wpl-i-calendar);
+                mask-image: var(--wpl-i-calendar);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-231 i {
+        -webkit-mask-image: var(--wpl-i-crm);
+                mask-image: var(--wpl-i-crm);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-271 i {
+        -webkit-mask-image: var(--wpl-i-calendar-check);
+                mask-image: var(--wpl-i-calendar-check);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-291 i {
+        -webkit-mask-image: var(--wpl-i-network);
+                mask-image: var(--wpl-i-network);
+    }
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-341 i {
+        -webkit-mask-image: var(--wpl-i-globe);
+                mask-image: var(--wpl-i-globe);
+    }
+    /* Hosting BenchMarker (menu id 999, assets/migrations/basic/4.12.0.sql) has no
+     * rule of its own upstream, so it fell through to the generic tile art. */
+    .wpl-wp.wpl-dashboard-wp #dashboard-links-wp ul li.link-999 i {
+        -webkit-mask-image: var(--wpl-i-gauge);
+                mask-image: var(--wpl-i-gauge);
+    }
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+
+    /* --- Page-header icons (.icon48) ---------------------------------------- */
+
+    /* Every admin screen opens with `<div id="icon-<screen>" class="icon48">`,
+     * filled from the Compass PNG sprite. The ids carry the sprite offset at id
+     * specificity, and `#icon-flex` also overrides the 48x48 box to 63x45 - so
+     * the shared reset has to be written at id specificity too, or half of these
+     * keep their old size and the mask lands off-centre.
+     *
+     * They are re-drawn at 40px: the sprite slices were 48px of dense two-colour
+     * artwork, and a line icon at that size next to a 20px title reads as a
+     * second heading. */
+    .wpl-wp header #icon-data-structure,
+    .wpl-wp header #icon-flex,
+    .wpl-wp header #icon-location,
+    .wpl-wp header #icon-pmanager,
+    .wpl-wp header #icon-profile,
+    .wpl-wp header #icon-pwizard,
+    .wpl-wp header #icon-settings,
+    .wpl-wp header #icon-logs,
+    .wpl-wp header #icon-membership,
+    .wpl-wp header #icon-payments,
+    .wpl-wp header #icon-pstats,
+    .wpl-wp header #icon-user {
+        background-image: none;
+        background-color: var(--wpl-brand-primary-soft);
+        border-radius: var(--wpl-radius);
+        position: relative;
+        float: none;
+        flex: 0 0 auto;
+        width: 44px;
+        height: 44px;
+        margin: 0;
+    }
+
+    /* The glyph goes on ::before, not on the box itself: a mask paints through
+     * `background-color`, so masking the div directly would take the tinted plate
+     * with it. */
+    .wpl-wp header #icon-data-structure::before,
+    .wpl-wp header #icon-flex::before,
+    .wpl-wp header #icon-location::before,
+    .wpl-wp header #icon-pmanager::before,
+    .wpl-wp header #icon-profile::before,
+    .wpl-wp header #icon-pwizard::before,
+    .wpl-wp header #icon-settings::before,
+    .wpl-wp header #icon-logs::before,
+    .wpl-wp header #icon-membership::before,
+    .wpl-wp header #icon-payments::before,
+    .wpl-wp header #icon-pstats::before,
+    .wpl-wp header #icon-user::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background-color: var(--wpl-brand-primary);
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: 24px 24px;
+                mask-size: 24px 24px;
+    }
+
+    .wpl-wp header #icon-data-structure::before {
+        -webkit-mask-image: var(--wpl-i-database);
+                mask-image: var(--wpl-i-database);
+    }
+    .wpl-wp header #icon-flex::before {
+        -webkit-mask-image: var(--wpl-i-sliders);
+                mask-image: var(--wpl-i-sliders);
+    }
+    .wpl-wp header #icon-location::before {
+        -webkit-mask-image: var(--wpl-i-locations);
+                mask-image: var(--wpl-i-locations);
+    }
+    .wpl-wp header #icon-pmanager::before {
+        -webkit-mask-image: var(--wpl-i-list);
+                mask-image: var(--wpl-i-list);
+    }
+    .wpl-wp header #icon-profile::before {
+        -webkit-mask-image: var(--wpl-i-user);
+                mask-image: var(--wpl-i-user);
+    }
+    .wpl-wp header #icon-pwizard::before {
+        -webkit-mask-image: var(--wpl-i-home-plus);
+                mask-image: var(--wpl-i-home-plus);
+    }
+    .wpl-wp header #icon-settings::before {
+        -webkit-mask-image: var(--wpl-i-settings);
+                mask-image: var(--wpl-i-settings);
+    }
+    .wpl-wp header #icon-user::before {
+        -webkit-mask-image: var(--wpl-i-users);
+                mask-image: var(--wpl-i-users);
+    }
+
+    /* Memberships and User Types are two screens of the membership add-on and
+     * both open with the same `<div id="icon-membership" class="icon48">`, so
+     * the id cannot tell them apart. The wrap can: `user_types.php` is the only
+     * one that carries `#wpl_membership_user_types`. Memberships keeps the
+     * medal, User Types takes the people glyph - a roles table under an award
+     * badge reads as the wrong screen. */
+    .wpl-wp header #icon-membership::before {
+        -webkit-mask-image: var(--wpl-i-membership);
+                mask-image: var(--wpl-i-membership);
+    }
+    .wpl-wp#wpl_membership_user_types header #icon-membership::before {
+        -webkit-mask-image: var(--wpl-i-users);
+                mask-image: var(--wpl-i-users);
+    }
+
+    /* --- Flex: no-results state --------------------------------------------- */
+    .wpl-wp .wpl-flex-empty .wpl-flex-empty-icon {
+        background-color: var(--wpl-brand-primary);
+        -webkit-mask-image: var(--wpl-i-search-empty);
+                mask-image: var(--wpl-i-search-empty);
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+
+    /* The dashboard's own header mark is the WPL logo (icon-wpl-logo.svg), drawn
+     * in black with the legacy cyan bars. It is masked with itself: the alpha
+     * channel keeps the logo's exact silhouette while the paint comes from the
+     * brand colour, so the mark stays recognisable instead of being swapped for
+     * a generic glyph. */
+    .wpl-wp header .wpl-icon-header.wpl-icon-dashboard {
+        background-image: none;
+        background-color: var(--wpl-brand-primary);
+        -webkit-mask-image: url("../../img/backend-svg/icon-wpl-logo.svg");
+                mask-image: url("../../img/backend-svg/icon-wpl-logo.svg");
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+}
+
+:root {
+    /* --- Data Structure Manager rail ---------------------------------------- */
+    --wpl-i-ruler: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='8' width='20' height='8' rx='2'/%3E%3Cpath d='M6 8v3M10 8v4.5M14 8v3M18 8v4.5'/%3E%3C/svg%3E");
+    --wpl-i-sort-list: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3 15 4 4 4-4'/%3E%3Cpath d='M7 19V5'/%3E%3Cpath d='M14 6h7M14 11h5M14 16h3'/%3E%3C/svg%3E");
+}
+
+:root {
+    /* --- Settings categories ------------------------------------------------ */
+    --wpl-i-languages: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5h8M7 3v2c0 4.5-1.8 7.6-4 9'/%3E%3Cpath d='M4.5 9.5c0 2.5 2.5 5 6.5 6'/%3E%3Cpath d='m12.5 21 4.25-9.5L21 21'/%3E%3Cpath d='M14 17.5h5.5'/%3E%3C/svg%3E");
+    --wpl-i-mobile: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='6' y='2' width='12' height='20' rx='2.5'/%3E%3Cpath d='M11 18.5h2'/%3E%3C/svg%3E");
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+
+    /* --- Payment gateway rail ------------------------------------------------
+     *
+     * Payments numbers its gateways from 1, so it shares the
+     * `#wpl_slide_label_id{N}` id space with the Settings categories - which is
+     * why the Settings block above is scoped to `.wpl-gen-side-tabs-wp`.
+     *
+     * Upstream already ships a distinct SVG per gateway and pins it with
+     * `!important`. Rather than replace recognisable brand marks (PayPal, PayFast)
+     * with generic glyphs, each is masked with its own file: the silhouette is
+     * kept and only the paint changes, so the rail matches the rest of the admin
+     * and the gateway is still identifiable. */
+    /* Listed by id, not by `a[id^=…]`: upstream pins each gateway's artwork with
+     * `.wpl-payments-wp #wpl_slide_label_id{N}::before { background: … !important }`,
+     * and an id beats any number of classes - so a class-level reset loses even
+     * with !important of its own, and the old artwork just gets clipped to the
+     * mask instead of replaced. */
+    .wpl-payments-wp #wpl_slide_label_id1::before,
+    .wpl-payments-wp #wpl_slide_label_id2::before,
+    .wpl-payments-wp #wpl_slide_label_id3::before,
+    .wpl-payments-wp #wpl_slide_label_id4::before,
+    .wpl-payments-wp #wpl_slide_label_id6::before,
+    .wpl-payments-wp #wpl_slide_label_id7::before,
+    .wpl-payments-wp #wpl_slide_label_id5::before {
+        /* The box itself came from the Settings block until that was scoped to
+         * `.wpl-gen-side-tabs-wp`; upstream only ever sets `background` here, so
+         * the geometry has to be stated for this rail too or the glyph has no
+         * area to paint into. */
+        content: " ";
+        display: block;
+        position: absolute;
+        top: 16px;
+        left: 50%;
+        width: 30px;
+        height: 30px;
+        margin-left: -15px;
+        /* Both need !important: upstream sets `background: transparent url(…)` as a
+         * shorthand, so it pins background-COLOR to transparent as well - and a
+         * mask with nothing to paint is an invisible element, not a fallback. */
+        background-image: none !important;
+        background-color: currentColor !important;
+        opacity: 0.9;
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+
+    .wpl-payments-wp #wpl_slide_label_id1::before {
+        -webkit-mask-image: url("../../img/backend-svg/icon-sidebar-paypel.svg");
+                mask-image: url("../../img/backend-svg/icon-sidebar-paypel.svg");
+    }
+    .wpl-payments-wp #wpl_slide_label_id2::before {
+        -webkit-mask-image: url("../../img/backend-svg/icon-sidebar-bank.svg");
+                mask-image: url("../../img/backend-svg/icon-sidebar-bank.svg");
+    }
+    .wpl-payments-wp #wpl_slide_label_id3::before {
+        -webkit-mask-image: url("../../img/backend-svg/icon-sidebar-wallet.svg");
+                mask-image: url("../../img/backend-svg/icon-sidebar-wallet.svg");
+    }
+    .wpl-payments-wp #wpl_slide_label_id4::before {
+        -webkit-mask-image: url("../../img/backend-svg/icon-sidebar-multisafepay.svg");
+                mask-image: url("../../img/backend-svg/icon-sidebar-multisafepay.svg");
+    }
+    .wpl-payments-wp #wpl_slide_label_id5::before {
+        -webkit-mask-image: url("../../img/backend-svg/icon-sidebar-payfast.svg");
+                mask-image: url("../../img/backend-svg/icon-sidebar-payfast.svg");
+    }
+
+    /* Braintree ("Paypal Payment", id 6) and Stripe (id 7) ship no artwork at
+     * all, so those two tabs had no mark. They take line icons from the set. */
+    .wpl-payments-wp #wpl_slide_label_id6::before {
+        -webkit-mask-image: var(--wpl-i-payment);
+                mask-image: var(--wpl-i-payment);
+    }
+    .wpl-payments-wp #wpl_slide_label_id7::before {
+        -webkit-mask-image: var(--wpl-i-cards);
+                mask-image: var(--wpl-i-cards);
+    }
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+    /* Three PRO screens whose header sprites were never mapped - Logs showed no
+     * mark at all, Listing Stats and Payments still drew the legacy artwork. */
+    .wpl-wp header #icon-logs::before {
+        -webkit-mask-image: var(--wpl-i-log);
+                mask-image: var(--wpl-i-log);
+    }
+    .wpl-wp header #icon-pstats::before {
+        -webkit-mask-image: var(--wpl-i-chart);
+                mask-image: var(--wpl-i-chart);
+    }
+    .wpl-wp header #icon-payments::before {
+        -webkit-mask-image: var(--wpl-i-payment);
+                mask-image: var(--wpl-i-payment);
+    }
+}
+
+:root {
+    /* --- Payment gateways without shipped artwork --------------------------- */
+    --wpl-i-cards: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='2' y='7' width='15' height='11' rx='2'/%3E%3Cpath d='M2 11h15'/%3E%3Cpath d='M7 4h13a2 2 0 0 1 2 2v9'/%3E%3C/svg%3E");
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+    /* The row-action info button is the odd one out: it is a `wpl-backend` font
+     * glyph on ::after (content "\e60f"), not a sprite on ::before like the edit,
+     * trash and enable buttons beside it - so it kept a serif "i" at a different
+     * weight, and a cyan hover, while everything around it had become a line
+     * icon. Blank the glyph and paint the matching mask. */
+    .wpl-wp .action-btn.icon-info::after {
+        content: "";
+        display: block;
+        width: 18px;
+        height: 18px;
+        background-color: currentColor;
+        -webkit-mask-image: var(--wpl-i-info);
+                mask-image: var(--wpl-i-info);
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: contain;
+                mask-size: contain;
+    }
+}

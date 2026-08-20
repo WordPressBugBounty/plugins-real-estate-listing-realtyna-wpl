@@ -4,6 +4,25 @@ defined('_WPLEXEC') or die('Restricted access');
 ?>
 <div>
     <div class="wpl_rev_container">
+		<h4>WPL5.4.2 (<span class="wpl_log_date">08/20/2026</span>)</h4>
+		- Security: The search widget location AJAX endpoint reflected the widget id, location level and current location id from the request straight into its HTML, allowing a crafted link to run script in a visitor's session (reflected XSS); these values are now constrained to integers<br>
+		- Security: The listing editor's location endpoint reflected the location level and field id the same way, and is now constrained as well<br>
+		- Security: AJAX responses now escape HTML characters when encoding JSON, so no response can carry live markup even when served with the default content type<br>
+		- Fixed: Property links returned a 404 when the WPL main page was not a standard WordPress page, a page builder template for example; the rewrite rules now address such a page by its ID instead of its slug. Re-save Settings > Permalinks once after updating for this to take effect<br>
+		- Fixed: When no WPL main page is configured, WPL no longer registers an empty rewrite rule that can never match a request<br>
+		- Fixed: A failed database migration no longer marks WPL as upgraded, so the migration files that did not run yet are picked up on the next request instead of being skipped for good and leaving the database half migrated<br>
+		- Fixed: The migration pointer is only seeded on the first upgrade, so a retry resumes where it stopped instead of replaying every migration from the start<br>
+		- Fixed: The dashboard statistics charts counted MLS On The Fly(tm) results as stored properties; they now count only properties held by WPL, the MLS add-on and the Importer add-on<br>
+		- Fixed: The parameters dialog appended new rows below the Save button, and adding or removing a row affected every parameters dialog open on the page; rows now stay above the button and each dialog is handled on its own<br>
+		- Fixed: The recipient "Add" buttons on the notification advanced tab were written as self-closing anchors and are now valid markup<br>
+		- Added: Realtyna brand style layer for the WPL admin screens. It is additive and restyles only - no markup, class name or behavior changes - and the public side is untouched. It can be switched off with add_filter('wpl/brand_style/enabled', '__return_false')<br>
+		- Added: Pressing Enter in the listing manager search panel now runs the search<br>
+		- Added: Filtering the data structure with no matching field now shows a "No fields found" message with a Clear filter button instead of a bare table head<br>
+		- Improved: The filter fields on the activity manager, notification and user manager screens carry a search icon<br>
+		- Improved: The search widget dropdowns in the block editor are marked as WPL dropdowns, so another plugin's Chosen stylesheet can no longer restyle them<br>
+		- Improved: The migration log that was written to the uploads folder on every upgrade has been removed<br>
+		- Improved: Minimum supported WordPress version is now 6.2<br>
+
 		<h4>WPL5.4.1 (<span class="wpl_log_date">08/12/2026</span>)</h4>
 		- Security: The permission check behind the agent-level admin endpoints did not enforce the role it named, leaving those endpoints open to any visitor<br>
 		- Security: The inline field editors on the listing and user wizards accepted any database table and column from the request, and are now limited to the fields those forms render<br>
@@ -46,7 +65,7 @@ defined('_WPLEXEC') or die('Restricted access');
 		- Improved: Replaced utf8_decode/utf8_encode, which are removed in current PHP versions<br>
 		- Improved: Chart.js and imagesLoaded now load from the bundled copy and WordPress core instead of a CDN<br>
 		- Improved: Outgoing requests and geocoding now use the WordPress HTTP API<br>
-		- Improved: Migration and benchmarker files are written to the uploads folder, so t>
+		- Improved: Migration and benchmarker files are written to the uploads folder, so they survive plugin updates<br>
 		- Improved: Removed bundled copies of libraries already included in WordPress<br>
 		- Improved: Correct plural forms for rooms, bedrooms and bathrooms, and corrected text domains<br>
 		- Improved: Minimum supported WordPress version is now 5.3<br>

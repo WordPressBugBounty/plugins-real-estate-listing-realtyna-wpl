@@ -302,7 +302,11 @@
                     $('#wpl_view_fields_'+widget_number).parents('.widget').find('.widget-title h4').on('click.wpl-search-event',function(){
             
                         if(!window['isChosenInit'+widget_number]){
-                            $(this).parents('.widget').find('select').chosen(rta.config.chosen);
+                            // .wpl-chosen-inited is how the brand layer's Chosen shield recognises a
+                            // WPL dropdown (see assets/css/brand/wpl-brand-chosen.css). Every other
+                            // init site in backend.js / frontend.js already sets it; without it these
+                            // widget-editor selects pick up whichever chosen.css loaded last.
+                            $(this).parents('.widget').find('select').addClass('wpl-chosen-inited').chosen(rta.config.chosen);
                             window['isChosenInit'+widget_number] = true;
             
                             $('#wpl_view_fields_'+widget_number).parents('.widget').find('.widget-title h4').off('click.wpl-search-event');

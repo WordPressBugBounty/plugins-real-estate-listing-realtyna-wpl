@@ -188,6 +188,28 @@ class wpl_listing_controller extends wpl_controller
 	
 	private function get_locations($location_level, $parent, $current_location_id = '', $field_id = 41)
 	{
+		// Sanitize the request-controlled values that get echoed into the HTML built below.
+		// $location_level and $field_id were concatenated raw into attribute values and into
+		// the inline onchange handler, and that markup is returned as $response['html'] and
+		// injected into the page with .after() by wpl_load_location_select() in
+		// libraries/dbst_wizard/locations.php. A payload closing the attribute and the tag
+		// would therefore execute in the listing editor's session.
+		//
+		// Both have a narrow real domain, so they are constrained rather than escaped:
+		// $location_level is a numeric level or the literal 'zips' sentinel the wizard sends
+		// past zipcode_parent_level, and $field_id is a flex field id. This also keeps
+		// $location_level safe for the "#__wpl_location{$level}" table name that
+		// wpl_locations::get_locations() builds, and it fixes 'zips' <= 2 style comparisons
+		// that PHP 8 evaluates differently from PHP 7.
+		//
+		// $current_location_id is only compared (==) against a row id below and never
+		// echoed, so it is deliberately left alone.
+		//
+		// Mirrors the fix in views/frontend/property_listing/wpl_ajax.php. Unlike that one,
+		// this controller is already behind wpl_global::min_access('agent') and a nonce check
+		// in display(), so this is defence in depth rather than an anonymous entry point.
+		$location_level = strtolower((string) $location_level) === 'zips' ? 'zips' : (int) $location_level;
+		$field_id = (int) $field_id;
 
 		$location_data = wpl_locations::get_locations($location_level, $parent, '', '', '`name` ASC', '');
 		$location_settings = wpl_global::get_settings('3'); # location settings

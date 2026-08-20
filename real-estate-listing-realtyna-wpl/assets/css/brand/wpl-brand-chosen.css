@@ -1,0 +1,482 @@
+/*!
+ * WPL Realtyna Brand Layer - Chosen shield
+ * Copyright Realtyna Inc. | realtyna.com
+ *
+ * THE PROBLEM
+ * -----------
+ * WPL bundles its own Chosen build (assets/js/libraries/wpl.jquery.chosen.min.js)
+ * but that build emits the *stock* class names - .chosen-container,
+ * .chosen-single, .chosen-drop and friends. Chosen is bundled by a great many
+ * WordPress plugins, and every one of them ships a chosen.css written against
+ * those same unnamespaced selectors.
+ *
+ * WPL's own rules are unnamespaced too, so whichever stylesheet loads last wins
+ * every tie. When another plugin's copy loads after WPL's, its geometry lands on
+ * WPL's dropdowns: the selected text drops out of vertical centre and gets
+ * clipped by the 30px box, and the sprite arrow moves or disappears because the
+ * other plugin's sprite sits at a different path and offset.
+ *
+ * THE FIX
+ * -------
+ * Re-assert the geometry through selectors that no generic chosen.css can
+ * outrank. Two handles are used:
+ *
+ *   1. `select.wpl-chosen-inited + .chosen-container` - WPL already tags every
+ *      select it initialises with .wpl-chosen-inited (see assets/js/backend.js
+ *      and frontend.js), and Chosen inserts its container with `.after()`, i.e.
+ *      as the select's immediate next sibling. So this pair identifies a WPL
+ *      dropdown exactly, anywhere on the page, with no markup or JS change.
+ *
+ *   2. WPL region ancestors - covers the two init sites that predate the marker
+ *      (the PRO unit switcher, and the widget block editor).
+ *
+ * Both are more specific than the `.chosen-container-single .chosen-single`
+ * pattern every stock chosen.css is built from, so WPL wins regardless of load
+ * order. Nothing here uses !important: the aim is to outrank generic third-party
+ * CSS, not to make WPL's own dropdowns unstyleable.
+ *
+ * SCOPE NOTE - this only shields WPL *from* other plugins, which is the reported
+ * direction. The reverse leak is still open: WPL's own chosen rules in
+ * assets/scss/{frontend/_chosen,backend/_plugin_chosen}.scss are global, so they
+ * still land on other plugins' dropdowns. Closing that means namespacing those
+ * two partials behind the same marker and rebuilding with Compass, which cannot
+ * be done from here - see the note in wpl-brand-tokens.css.
+ *
+ *
+ * SCOPE: this layer is enqueued in wp-admin only (see
+ * wpl_extensions::import_brand_styles). The public site is deliberately left
+ * exactly as it was, so any rule below that targets a frontend-only selector is
+ * inert - it is kept because several of these surfaces (the listing wizard, the
+ * property manager bulk bar, the Realtyna lightbox) also render inside wp-admin.
+ *
+ * HAND-AUTHORED - not generated from assets/scss.
+ */
+
+/* ===================================================================
+ * Container
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container,
+.wpl-wp .chosen-container,
+.wpl_search_from_box .chosen-container,
+.wpl-gen-form-wp .chosen-container,
+.pwizard-wp .chosen-container,
+.wpl_property_listing_container .chosen-container,
+.wpl_prp_show_container .chosen-container,
+.wpl_unit_switcher_activity .chosen-container {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    box-sizing: border-box;
+    font-size: 13px;
+    user-select: none;
+}
+
+/* ===================================================================
+ * Closed control
+ *
+ * The height/line-height pair is the whole bug. WPL's box is 30px with a 1px
+ * border, so 28px of content: any other line-height pushes the label off centre
+ * and `overflow: hidden` then clips it. Stated here as border-box so the 30px
+ * holds whatever box-sizing the surrounding theme has set.
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container.chosen-container-single .chosen-single,
+.wpl-wp .chosen-container-single .chosen-single,
+.wpl_search_from_box .chosen-container-single .chosen-single,
+.wpl-gen-form-wp .chosen-container-single .chosen-single,
+.pwizard-wp .chosen-container-single .chosen-single,
+.wpl_property_listing_container .chosen-container-single .chosen-single,
+.wpl_prp_show_container .chosen-container-single .chosen-single,
+.wpl_unit_switcher_activity .chosen-container-single .chosen-single {
+    position: relative;
+    display: block;
+    box-sizing: border-box;
+    overflow: hidden;
+    height: var(--wpl-chosen-h, 30px);
+    line-height: calc(var(--wpl-chosen-h, 30px) - 2px);
+    margin: 0;
+    padding-block: 0;
+    padding-inline: 12px 0;
+    white-space: nowrap;
+    text-decoration: none;
+    background-clip: padding-box;
+    background-color: var(--wpl-surface, #fff);
+    border: 1px solid var(--wpl-border-strong, #d3d7e0);
+    border-radius: var(--wpl-radius, 10px);
+    cursor: pointer;
+    color: var(--wpl-text, #303030);
+    transition: border-color var(--wpl-dur, 0.2s) var(--wpl-ease, ease),
+                box-shadow var(--wpl-dur, 0.2s) var(--wpl-ease, ease);
+}
+
+/* The label.
+ *
+ * backend.css pins this with `font: 15px/28px "Archivo Narrow" !important`, which
+ * caused two visible faults. The 28px line box sits inside a 36px content box and
+ * the span is display:block, so the text stacked at the top instead of centring -
+ * the label rode about 4px high in the control. And the narrow 15px face did not
+ * match the options in the list below, so the same string was set in two different
+ * fonts depending on whether the list was open.
+ *
+ * The three longhands are restated with !important because that is the only way to
+ * beat a shorthand that already carries it - specificity alone loses. Inheriting
+ * rather than hard-coding means the label always tracks the container. */
+select.wpl-chosen-inited + .chosen-container.chosen-container-single .chosen-single > span,
+.wpl-wp .chosen-container-single .chosen-single > span,
+.wpl_search_from_box .chosen-container-single .chosen-single > span,
+.wpl-gen-form-wp .chosen-container-single .chosen-single > span,
+.pwizard-wp .chosen-container-single .chosen-single > span,
+.wpl_property_listing_container .chosen-container-single .chosen-single > span,
+.wpl_prp_show_container .chosen-container-single .chosen-single > span,
+.wpl_unit_switcher_activity .chosen-container-single .chosen-single > span {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    margin-block: 0;
+    margin-inline: 0 28px;
+    font-family: inherit !important;
+    font-size: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+}
+
+/* ===================================================================
+ * Arrow
+ *
+ * Stock Chosen draws this from a sprite, so a competing chosen.css only has to
+ * point at its own sprite - or shift the offset - to break it. Replacing it with
+ * a masked chevron removes the shared dependency completely: the mark is drawn
+ * from this layer's own geometry and paints in currentColor.
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container.chosen-container-single .chosen-single > div,
+.wpl-wp .chosen-container-single .chosen-single > div,
+.wpl_search_from_box .chosen-container-single .chosen-single > div,
+.wpl-gen-form-wp .chosen-container-single .chosen-single > div,
+.pwizard-wp .chosen-container-single .chosen-single > div,
+.wpl_property_listing_container .chosen-container-single .chosen-single > div,
+.wpl_prp_show_container .chosen-container-single .chosen-single > div,
+.wpl_unit_switcher_activity .chosen-container-single .chosen-single > div {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 0;
+    display: block;
+    width: 30px;
+    height: 100%;
+    background: none;
+    pointer-events: none;
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+    select.wpl-chosen-inited + .chosen-container.chosen-container-single .chosen-single > div > b,
+    .wpl-wp .chosen-container-single .chosen-single > div > b,
+    .wpl_search_from_box .chosen-container-single .chosen-single > div > b,
+    .wpl-gen-form-wp .chosen-container-single .chosen-single > div > b,
+    .pwizard-wp .chosen-container-single .chosen-single > div > b,
+    .wpl_property_listing_container .chosen-container-single .chosen-single > div > b,
+    .wpl_prp_show_container .chosen-container-single .chosen-single > div > b,
+    .wpl_unit_switcher_activity .chosen-container-single .chosen-single > div > b {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-image: none;
+        background-color: currentColor;
+        opacity: 0.75;
+        transition: transform var(--wpl-dur, 0.2s) var(--wpl-ease, ease),
+                    opacity var(--wpl-dur, 0.2s) var(--wpl-ease, ease);
+        -webkit-mask-image: var(--wpl-i-chevron-down);
+                mask-image: var(--wpl-i-chevron-down);
+        -webkit-mask-repeat: no-repeat;
+                mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+                mask-position: center;
+        -webkit-mask-size: 14px;
+                mask-size: 14px;
+    }
+
+    /* Flip the chevron while the list is open. */
+    select.wpl-chosen-inited + .chosen-container.chosen-with-drop .chosen-single > div > b,
+    .wpl-wp .chosen-container.chosen-with-drop .chosen-single > div > b,
+    .wpl_search_from_box .chosen-container.chosen-with-drop .chosen-single > div > b,
+    .wpl-gen-form-wp .chosen-container.chosen-with-drop .chosen-single > div > b,
+    .pwizard-wp .chosen-container.chosen-with-drop .chosen-single > div > b,
+    .wpl_property_listing_container .chosen-container.chosen-with-drop .chosen-single > div > b,
+    .wpl_prp_show_container .chosen-container.chosen-with-drop .chosen-single > div > b,
+    .wpl_unit_switcher_activity .chosen-container.chosen-with-drop .chosen-single > div > b {
+        transform: rotate(180deg);
+        opacity: 1;
+    }
+}
+
+/* ===================================================================
+ * Focus / open state
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container.chosen-container-active .chosen-single,
+.wpl-wp .chosen-container-active .chosen-single,
+.wpl_search_from_box .chosen-container-active .chosen-single,
+.wpl-gen-form-wp .chosen-container-active .chosen-single,
+.pwizard-wp .chosen-container-active .chosen-single,
+.wpl_property_listing_container .chosen-container-active .chosen-single,
+.wpl_prp_show_container .chosen-container-active .chosen-single,
+.wpl_unit_switcher_activity .chosen-container-active .chosen-single {
+    border-color: var(--wpl-brand-primary, #8e42f7);
+    box-shadow: var(--wpl-shadow-focus, 0 0 0 3px rgba(142, 66, 247, 0.25));
+}
+
+/* ===================================================================
+ * Drop-down panel
+ *
+ * Chosen parks the closed panel at left:-9999px and slides it to 0 when open.
+ * A third-party sheet that gets this wrong leaves the list either permanently
+ * off-screen or permanently visible, so both halves are restated.
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container .chosen-drop,
+.wpl-wp .chosen-container .chosen-drop,
+.wpl_search_from_box .chosen-container .chosen-drop,
+.wpl-gen-form-wp .chosen-container .chosen-drop,
+.pwizard-wp .chosen-container .chosen-drop,
+.wpl_property_listing_container .chosen-container .chosen-drop,
+.wpl_prp_show_container .chosen-container .chosen-drop,
+.wpl_unit_switcher_activity .chosen-container .chosen-drop {
+    position: absolute;
+    top: 100%;
+    left: -9999px;
+    z-index: 1010;
+    box-sizing: border-box;
+    /* auto + min-width, not a flat 100%: the frontend sheet lets the panel grow
+     * past the control (with max-width:none !important) so long location names
+     * stay readable. Pinning it to 100% would silently start truncating them. */
+    width: auto;
+    min-width: 100%;
+    margin-top: 2px;
+    background: var(--wpl-surface, #fff);
+    border: 1px solid var(--wpl-border, #e5e7ec);
+    border-radius: var(--wpl-radius, 10px);
+    box-shadow: var(--wpl-shadow-sm, 0 2px 8px rgba(19, 17, 63, 0.08));
+}
+
+select.wpl-chosen-inited + .chosen-container.chosen-with-drop .chosen-drop,
+.wpl-wp .chosen-container.chosen-with-drop .chosen-drop,
+.wpl_search_from_box .chosen-container.chosen-with-drop .chosen-drop,
+.wpl-gen-form-wp .chosen-container.chosen-with-drop .chosen-drop,
+.pwizard-wp .chosen-container.chosen-with-drop .chosen-drop,
+.wpl_property_listing_container .chosen-container.chosen-with-drop .chosen-drop,
+.wpl_prp_show_container .chosen-container.chosen-with-drop .chosen-drop,
+.wpl_unit_switcher_activity .chosen-container.chosen-with-drop .chosen-drop {
+    left: 0;
+}
+
+/* ===================================================================
+ * Search box and results
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container .chosen-search input[type="text"],
+.wpl-wp .chosen-container .chosen-search input[type="text"],
+.wpl_search_from_box .chosen-container .chosen-search input[type="text"],
+.wpl-gen-form-wp .chosen-container .chosen-search input[type="text"],
+.pwizard-wp .chosen-container .chosen-search input[type="text"],
+.wpl_property_listing_container .chosen-container .chosen-search input[type="text"],
+.wpl_prp_show_container .chosen-container .chosen-search input[type="text"],
+.wpl_unit_switcher_activity .chosen-container .chosen-search input[type="text"] {
+    box-sizing: border-box;
+    width: 100%;
+    height: auto;
+    margin: 1px 0;
+    padding: 6px 8px;
+    outline: 0;
+    background-image: none;
+    border: 1px solid var(--wpl-border, #e5e7ec);
+    border-radius: var(--wpl-radius-xs, 3px);
+    line-height: normal;
+}
+
+select.wpl-chosen-inited + .chosen-container .chosen-results,
+.wpl-wp .chosen-container .chosen-results,
+.wpl_search_from_box .chosen-container .chosen-results,
+.wpl-gen-form-wp .chosen-container .chosen-results,
+.pwizard-wp .chosen-container .chosen-results,
+.wpl_property_listing_container .chosen-container .chosen-results,
+.wpl_prp_show_container .chosen-container .chosen-results,
+.wpl_unit_switcher_activity .chosen-container .chosen-results {
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
+    max-height: 240px;
+    margin: 0;
+    padding: 4px;
+    -webkit-overflow-scrolling: touch;
+}
+
+select.wpl-chosen-inited + .chosen-container .chosen-results li,
+.wpl-wp .chosen-container .chosen-results li,
+.wpl_search_from_box .chosen-container .chosen-results li,
+.wpl-gen-form-wp .chosen-container .chosen-results li,
+.pwizard-wp .chosen-container .chosen-results li,
+.wpl_property_listing_container .chosen-container .chosen-results li,
+.wpl_prp_show_container .chosen-container .chosen-results li,
+.wpl_unit_switcher_activity .chosen-container .chosen-results li {
+    display: none;
+    margin: 0;
+    padding: 8px;
+    line-height: 1.5;
+    list-style: none;
+    word-wrap: break-word;
+    border-radius: var(--wpl-radius-xs, 3px);
+}
+
+select.wpl-chosen-inited + .chosen-container .chosen-results li.active-result,
+.wpl-wp .chosen-container .chosen-results li.active-result,
+.wpl_search_from_box .chosen-container .chosen-results li.active-result,
+.wpl-gen-form-wp .chosen-container .chosen-results li.active-result,
+.pwizard-wp .chosen-container .chosen-results li.active-result,
+.wpl_property_listing_container .chosen-container .chosen-results li.active-result,
+.wpl_prp_show_container .chosen-container .chosen-results li.active-result,
+.wpl_unit_switcher_activity .chosen-container .chosen-results li.active-result {
+    display: list-item;
+    cursor: pointer;
+}
+
+/* Hover / keyboard cursor.
+ *
+ * This was a saturated purple-to-blue gradient with white text. At option size a
+ * full-bleed brand fill is far louder than the choice it is marking, and stacked
+ * under an already purple-outlined open control it made the whole dropdown read
+ * as one solid block. A soft tint with brand-coloured text marks the row just as
+ * clearly and lets the text stay readable. */
+select.wpl-chosen-inited + .chosen-container .chosen-results li.highlighted,
+.wpl-wp .chosen-container .chosen-results li.highlighted,
+.wpl_search_from_box .chosen-container .chosen-results li.highlighted,
+.wpl-gen-form-wp .chosen-container .chosen-results li.highlighted,
+.pwizard-wp .chosen-container .chosen-results li.highlighted,
+.wpl_property_listing_container .chosen-container .chosen-results li.highlighted,
+.wpl_prp_show_container .chosen-container .chosen-results li.highlighted,
+.wpl_unit_switcher_activity .chosen-container .chosen-results li.highlighted {
+    background: var(--wpl-brand-primary-soft, #f4edff);
+    color: var(--wpl-brand-primary-dark, #7d24a3);
+}
+
+/* The option currently in effect. Carried by weight and colour rather than a fill,
+ * so it stays legible when the cursor is on a different row. */
+select.wpl-chosen-inited + .chosen-container .chosen-results li.result-selected,
+.wpl-wp .chosen-container .chosen-results li.result-selected,
+.wpl_search_from_box .chosen-container .chosen-results li.result-selected,
+.wpl-gen-form-wp .chosen-container .chosen-results li.result-selected,
+.pwizard-wp .chosen-container .chosen-results li.result-selected,
+.wpl_property_listing_container .chosen-container .chosen-results li.result-selected,
+.wpl_prp_show_container .chosen-container .chosen-results li.result-selected,
+.wpl_unit_switcher_activity .chosen-container .chosen-results li.result-selected {
+    color: var(--wpl-brand-primary-dark, #7d24a3);
+    font-weight: 600;
+}
+
+select.wpl-chosen-inited + .chosen-container .chosen-results li.no-results,
+.wpl-wp .chosen-container .chosen-results li.no-results,
+.wpl_search_from_box .chosen-container .chosen-results li.no-results,
+.wpl-gen-form-wp .chosen-container .chosen-results li.no-results,
+.pwizard-wp .chosen-container .chosen-results li.no-results,
+.wpl_property_listing_container .chosen-container .chosen-results li.no-results,
+.wpl_prp_show_container .chosen-container .chosen-results li.no-results,
+.wpl_unit_switcher_activity .chosen-container .chosen-results li.no-results {
+    display: list-item;
+    color: var(--wpl-text-muted, #abb1b4);
+    background: transparent;
+}
+
+/* ===================================================================
+ * Multi-select
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container.chosen-container-multi .chosen-choices,
+.wpl-wp .chosen-container-multi .chosen-choices,
+.wpl_search_from_box .chosen-container-multi .chosen-choices,
+.wpl-gen-form-wp .chosen-container-multi .chosen-choices,
+.pwizard-wp .chosen-container-multi .chosen-choices,
+.wpl_property_listing_container .chosen-container-multi .chosen-choices,
+.wpl_prp_show_container .chosen-container-multi .chosen-choices {
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    width: 100%;
+    min-height: var(--wpl-chosen-h, 30px);
+    margin: 0;
+    padding: 2px 5px;
+    background-image: none;
+    border: 1px solid var(--wpl-border, #e5e7ec);
+    border-radius: var(--wpl-radius-sm, 5px);
+    cursor: text;
+}
+
+select.wpl-chosen-inited + .chosen-container.chosen-container-multi .chosen-choices li.search-choice,
+.wpl-wp .chosen-container-multi .chosen-choices li.search-choice,
+.wpl_search_from_box .chosen-container-multi .chosen-choices li.search-choice,
+.wpl-gen-form-wp .chosen-container-multi .chosen-choices li.search-choice,
+.pwizard-wp .chosen-container-multi .chosen-choices li.search-choice,
+.wpl_property_listing_container .chosen-container-multi .chosen-choices li.search-choice,
+.wpl_prp_show_container .chosen-container-multi .chosen-choices li.search-choice {
+    position: relative;
+    float: inline-start;
+    box-sizing: border-box;
+    margin: 3px 5px 3px 0;
+    padding: 3px 22px 3px 8px;
+    max-width: 100%;
+    background-image: none;
+    background-color: var(--wpl-brand-primary-soft, #f4edff);
+    border: 1px solid var(--wpl-brand-primary, #8e42f7);
+    border-radius: var(--wpl-radius-pill, 999px);
+    color: var(--wpl-brand-primary-dark, #7d24a3);
+    line-height: 15px;
+    cursor: default;
+}
+
+/* ===================================================================
+ * Disabled
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container.chosen-disabled,
+.wpl-wp .chosen-container.chosen-disabled,
+.wpl_search_from_box .chosen-container.chosen-disabled,
+.wpl-gen-form-wp .chosen-container.chosen-disabled,
+.pwizard-wp .chosen-container.chosen-disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+
+/* ===================================================================
+ * Hover + open affordance
+ *
+ * A select that looks identical whether you are pointing at it or not reads as
+ * a disabled text box. These give it the same feedback the buttons next to it
+ * have, and square off the join between control and panel while it is open.
+ * =================================================================== */
+
+select.wpl-chosen-inited + .chosen-container:hover .chosen-single,
+.wpl-wp .chosen-container:hover .chosen-single,
+.wpl_search_from_box .chosen-container:hover .chosen-single,
+.wpl-gen-form-wp .chosen-container:hover .chosen-single,
+.pwizard-wp .chosen-container:hover .chosen-single {
+    border-color: var(--wpl-brand-primary, #8e42f7);
+}
+
+select.wpl-chosen-inited + .chosen-container.chosen-with-drop .chosen-single,
+.wpl-wp .chosen-container.chosen-with-drop .chosen-single,
+.wpl_search_from_box .chosen-container.chosen-with-drop .chosen-single,
+.wpl-gen-form-wp .chosen-container.chosen-with-drop .chosen-single,
+.pwizard-wp .chosen-container.chosen-with-drop .chosen-single {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+}
+
+select.wpl-chosen-inited + .chosen-container.chosen-with-drop .chosen-drop,
+.wpl-wp .chosen-container.chosen-with-drop .chosen-drop,
+.wpl_search_from_box .chosen-container.chosen-with-drop .chosen-drop,
+.wpl-gen-form-wp .chosen-container.chosen-with-drop .chosen-drop,
+.pwizard-wp .chosen-container.chosen-with-drop .chosen-drop {
+    margin-top: -1px;
+    border-color: var(--wpl-brand-primary, #8e42f7);
+    border-start-start-radius: 0;
+    border-start-end-radius: 0;
+}
